@@ -1,0 +1,35 @@
+{
+  "project_name": "Vigor",
+  "project_type": "EMS platform foundation in a single TypeScript repository with a working client and local seed-driven content domain",
+  "architecture": "Single runtime entry (index.ts -> App.tsx) with UI module in app/mobile and domain/content/permission modules in src",
+  "primary_modules": [
+    "app/mobile/navigation",
+    "app/mobile/screens",
+    "src/data",
+    "src/schemas",
+    "src/search",
+    "src/store",
+    "src/protocols",
+    "src/hooks",
+    "tests",
+    "docs",
+    ".godai/agents"
+  ],
+  "domain": "Emergency medical content domain (Algorithm, Medication, Disease, Symptom) with Organization-scoped profile and Content Package controls",
+  "status": "Foundation transition: working UI and local content pipeline, with partial Organization/Permission/Content Package infrastructure",
+  "multi_tenant_ready": false,
+  "versioning": true,
+  "content_system": true,
+  "offline_support": false,
+  "ui_state": "Functional multi-screen mobile UI with navigation, list/detail/search/favorites/settings screens",
+  "data_layer": "Local JSON seed files validated with Zod, loaded through async loaders, stored in Zustand with AsyncStorage persistence",
+  "auth": "No authentication system found",
+  "notes": [
+    "Repository includes partial Organization-aware content control via ProtocolProfile, ContentBundle (Content Package), and PermissionRule models.",
+    "Current default profile setup supports only profile:default; other profiles throw unsupported errors.",
+    "BundleManager can hydrate empty default bundle from seed loaders and merge definitions by bundle priority.",
+    "Search index is local (FlexSearch) and built at runtime from loaded data.",
+    "Legacy agent system exists under .godai/agents with active-with-legacy-import status.",
+    "Multiple documentation files contain stale statements that conflict with current code state."
+  ]
+}
