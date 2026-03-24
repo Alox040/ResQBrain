@@ -4,6 +4,7 @@ import { SolutionSection } from "@/components/sections/solution";
 import { FeaturesSection } from "@/components/sections/features";
 import { UseCasesSection } from "@/components/sections/usecases";
 import { StatusSection } from "@/components/sections/status";
+import { SurveysSection } from "@/components/sections/SurveysSection";
 import { CtaSection } from "@/components/sections/cta";
 import { FooterSection } from "@/components/sections/footer";
 
@@ -14,6 +15,7 @@ export default function Page() {
       <ProblemSection />
       <SolutionSection />
       <FeaturesSection />
+      <SurveysSection />
       <UseCasesSection />
       <StatusSection />
       <CtaSection />

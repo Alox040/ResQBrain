@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+.next/
+dist/
+build/
+out/
+.env
+.env.local
+
+# next
+.next/
+out/
+
+# builds
+dist/
+build/
+
+# env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# misc
+.DS_Store
+*.log

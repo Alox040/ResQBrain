@@ -1,0 +1,50 @@
+import { Container } from "../layout/Container";
+
+export function CTASection() {
+  return (
+    <section id="cta" className="section">
+      <Container>
+        <div
+          className="card"
+          style={{
+            background: "linear-gradient(135deg, #0f1b2d 0%, #16243b 56%, #1f2f49 100%)",
+            color: "#f5f7fb",
+            borderColor: "rgba(255,255,255,0.08)",
+            textAlign: "center",
+            padding: "3rem 1.5rem",
+          }}
+        >
+          <span
+            style={{
+              display: "inline-flex",
+              padding: "0.45rem 0.8rem",
+              borderRadius: "999px",
+              background: "rgba(240, 180, 76, 0.14)",
+              color: "#f0b44c",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+            }}
+          >
+            Naechster Schritt
+          </span>
+          <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
+            Suche nach Pilotpartnern und fachlichem Feedback.
+          </h2>
+          <p style={{ margin: "1rem auto 0", maxWidth: "42rem", color: "rgba(245,247,251,0.76)" }}>
+            Wenn du ResQBrain in deiner Organisation evaluieren oder den Funktionsumfang mitgestalten
+            willst, freuen wir uns auf den Austausch.
+          </p>
+          <div className="button-row" style={{ justifyContent: "center", marginTop: "2rem" }}>
+            <a className="button-primary" href="mailto:pilot@resqbrain.de">
+              Kontakt aufnehmen
+            </a>
+            <a className="button-secondary" href="#top">
+              Zurueck nach oben
+            </a>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
