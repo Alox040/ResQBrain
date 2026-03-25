@@ -1,0 +1,13 @@
+export type AlgorithmId = string & { readonly _brand: 'AlgorithmId' };
+export type MedicationId = string & { readonly _brand: 'MedicationId' };
+export type ProtocolId = string & { readonly _brand: 'ProtocolId' };
+export type GuidelineId = string & { readonly _brand: 'GuidelineId' };
+export type ContentPackageId = string & { readonly _brand: 'ContentPackageId' };
+export type RegionId = string & { readonly _brand: 'RegionId' };
+export type CountyId = string & { readonly _brand: 'CountyId' };
+export type StationId = string & { readonly _brand: 'StationId' };
+export type PermissionId = string & { readonly _brand: 'PermissionId' };
+export type ApprovalPolicyId = string & { readonly _brand: 'ApprovalPolicyId' };
+export type ApprovalDecisionId = string & { readonly _brand: 'ApprovalDecisionId' };
+export type ReleaseVersionRecordId = string & { readonly _brand: 'ReleaseVersionRecordId' };
+export type SurveyInsightId = string & { readonly _brand: 'SurveyInsightId' };
