@@ -2,11 +2,19 @@
   "name": "@resqbrain/website",
   "private": true,
   "version": "0.1.0",
+  "packageManager": "pnpm@10.8.1",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check:umlauts": "node scripts/check-german-umlauts.js",
+    "validate:routing": "tsx ../../scripts/validate-routing.ts",
+    "validate:isolation": "tsx ../../scripts/validate-content-isolation.ts",
+    "phase11:website": "pnpm run validate:routing && pnpm run validate:isolation && pnpm run build"
   },
   "dependencies": {
     "next": "^16.2.1",
@@ -14,9 +22,10 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
+    "@types/node": "25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "typescript": "^6.0.2",
-    "@types/node": "25.5.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
   }
 }

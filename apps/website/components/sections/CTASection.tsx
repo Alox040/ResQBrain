@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Container } from "../layout/Container";
 
 export function CTASection() {
@@ -43,6 +45,27 @@ export function CTASection() {
               Zurueck nach oben
             </a>
           </div>
+          <p
+            style={{
+              margin: "1.25rem auto 0",
+              maxWidth: "42rem",
+              fontSize: "0.85rem",
+              lineHeight: 1.55,
+              color: "rgba(245,247,251,0.55)",
+            }}
+          >
+            Mit Absenden akzeptierst du die{" "}
+            <Link
+              href="/datenschutz"
+              style={{
+                color: "#f0b44c",
+                textDecoration: "underline",
+                textUnderlineOffset: "0.15em",
+              }}
+            >
+              Datenschutzerklärung
+            </Link>
+          </p>
         </div>
       </Container>
     </section>

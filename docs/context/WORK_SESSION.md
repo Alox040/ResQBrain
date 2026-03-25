@@ -104,6 +104,43 @@ Hinweis: Unter `src/domain/` sind die meisten `.ts`-Dateien derzeit leer oder Pl
 - **Zwei Domain-Spuren:** committedes Paket `packages/domain/models/` vs. neues, noch untrackedes Gerüst unter `src/domain/` (Spiegelung der Architektur-Ordner: content, governance, tenant, insights, common).
 - **Konkret in Bearbeitung:** Agenten-/Cursor-Regeln (`AGENT_RULES.md`, `.cursor/rules/`, `prompts/system/codex-rules.md`) und Start der ausführbaren Domain-Baseline unter `src/` — zuletzt sichtbar an `src/domain/common/ids.ts`.
 
+## Website / Routing
+
+### Routen-Status
+| Route | Datei | Status |
+|-------|-------|--------|
+| /impressum | apps/website/app/impressum/page.tsx | vorhanden |
+| /datenschutz | apps/website/app/datenschutz/page.tsx | vorhanden |
+
+### Linkquellen
+| Komponente | Ziel | Status |
+|------------|------|--------|
+| Footer | /impressum | gesetzt |
+| Footer | /datenschutz | gesetzt |
+| HeroSection | #cta | gesetzt |
+| CTASection | mailto:pilot@resqbrain.de | gesetzt |
+| SurveysSection | #feedback | gesetzt |
+
+### Build-Status
+| Zeitpunkt | Ergebnis | Fehler |
+|-----------|----------|--------|
+| 2026-03-24 21:47 | pass | Next.js Build und TypeScript erfolgreich; Warnung zu mehrfachen lockfiles / `turbopack.root` |
+
+## Content Isolation
+
+| Check | Status | Hinweis |
+|------|--------|--------|
+| Root = apps/website | pass | app-level `apps/website/vercel.json` vorhanden; Vercel Root Directory auf `apps/website` setzen |
+| keine repo files exposed | pass | kein Repo-`public/`; keine verbotenen Verzeichnisse unter `apps/website/public` |
+| nur erlaubte routes | pass | `/`, `/impressum`, `/datenschutz` |
+| keine monorepo leaks | pass | keine verbotenen Route-Segmente; keine zusaetzliche statische Root-Exposition |
+
+## Deployment
+
+| Zeitpunkt | Ziel | Status | URL |
+|-----------|------|--------|-----|
+| 2026-03-24 22:50 | vercel production | pass | https://website-aunsahre8-alox040s-projects.vercel.app |
+
 ## Offene TODOs (Projekt, aus Roadmap)
 
 Aus `docs/context/12-next-steps.md` — *Immediate Priorities* (gekürzt):

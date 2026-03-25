@@ -1,0 +1,17 @@
+{
+  "name": "resqbrain",
+  "private": true,
+  "packageManager": "pnpm@10.8.1",
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "render:website-status": "tsx scripts/status/render-website-status.ts",
+    "build": "pnpm --filter @resqbrain/website build",
+    "build:website": "pnpm --filter @resqbrain/website build"
+  }
+}

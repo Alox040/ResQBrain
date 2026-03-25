@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 import "./globals.css";
 
@@ -25,7 +26,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="de">
       <body className="site-shell">
         <Header />
-        {children}
+        <div className="site-main">{children}</div>
+        <footer className="site-legal-footer">
+          <Link href="/impressum">Impressum</Link>
+          <Link href="/datenschutz">Datenschutz</Link>
+        </footer>
       </body>
     </html>
   );

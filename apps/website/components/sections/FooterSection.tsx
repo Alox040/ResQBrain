@@ -47,6 +47,16 @@ export function FooterSection() {
                     </a>
                   </li>
                 ))}
+                <li key="/impressum">
+                  <a href="/impressum" style={{ color: "rgba(245,247,251,0.8)" }}>
+                    Impressum
+                  </a>
+                </li>
+                <li key="/datenschutz">
+                  <a href="/datenschutz" style={{ color: "rgba(245,247,251,0.8)" }}>
+                    Datenschutz
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>
