@@ -1,3 +1,2 @@
-export * from './ApprovalStatus';
-export * from './ContentLifecycle';
-export * from './TransitionPolicy';
+export * from './entities';
+export * from './policies';

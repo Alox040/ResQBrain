@@ -1,10 +1,10 @@
-import type { ApprovalStatus } from '../common/ApprovalStatus';
-import type {
-  TransitionActor,
-  TransitionPolicyEvaluation,
-} from '../lifecycle/TransitionPolicy';
-import { evaluateTransitionPolicy } from '../lifecycle/TransitionPolicy';
-import type { LifecycleState } from '../lifecycle/ContentLifecycle';
+import {
+  evaluateTransitionPolicy,
+  type ApprovalStatus,
+  type LifecycleState,
+  type TransitionActor,
+  type TransitionPolicyEvaluation,
+} from '../lifecycle';
 
 export interface TransitionAuthorizationRequest {
   readonly state: LifecycleState;
@@ -15,8 +15,6 @@ export interface TransitionAuthorizationRequest {
 export type TransitionAuthorizationDenyReason =
   | 'no-policy-rule-defined'
   | 'cross-tenant-transition-forbidden'
-  | 'required-role-not-held'
-  | 'required-permission-not-granted'
   | 'lifecycle-state-does-not-allow-transition';
 
 export interface TransitionAuthorizationDecision {
@@ -34,14 +32,6 @@ function deriveTransitionAuthorizationDenyReason(
 
   if (!evaluation.sameOrganization) {
     return 'cross-tenant-transition-forbidden';
-  }
-
-  if (!evaluation.hasRequiredRole) {
-    return 'required-role-not-held';
-  }
-
-  if (!evaluation.hasRequiredPermission) {
-    return 'required-permission-not-granted';
   }
 
   if (!evaluation.lifecycleAllowsTransition) {

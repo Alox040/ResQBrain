@@ -1,44 +1,30 @@
+/**
+ * Compatibility surface for content/release code paths that historically imported
+ * `ApprovalStatus` from `common/`. Canonical definitions (transition graph, terminals,
+ * immutability helpers) live in `lifecycle/entities/ApprovalStatus.ts`.
+ */
+export * from '../lifecycle/entities/ApprovalStatus';
+
+import { ApprovalStatus as ApprovalStatusValues } from '../lifecycle/entities/ApprovalStatus';
+import type { ApprovalStatus } from '../lifecycle/entities/ApprovalStatus';
+
+/** Prefer {@link ApprovalStatusValues} object keys; kept for legacy iteration. */
 export const APPROVAL_STATUSES = [
-  'Draft',
-  'InReview',
-  'Approved',
-  'Rejected',
-  'Released',
-  'Deprecated',
+  ApprovalStatusValues.DRAFT,
+  ApprovalStatusValues.IN_REVIEW,
+  ApprovalStatusValues.APPROVED,
+  ApprovalStatusValues.REJECTED,
+  ApprovalStatusValues.RELEASED,
+  ApprovalStatusValues.DEPRECATED,
 ] as const;
-
-export type ApprovalStatus = (typeof APPROVAL_STATUSES)[number];
-
-export const IMMUTABLE_APPROVAL_STATUSES = [
-  'Released',
-  'Deprecated',
-] as const;
-
-export const TERMINAL_APPROVAL_STATUSES = ['Deprecated'] as const;
 
 export const RELEASE_SOURCE_APPROVAL_STATUSES = [
-  'Approved',
-  'Released',
+  ApprovalStatusValues.APPROVED,
+  ApprovalStatusValues.RELEASED,
 ] as const;
 
 export type ReleaseSourceApprovalStatus =
   (typeof RELEASE_SOURCE_APPROVAL_STATUSES)[number];
-
-export function isImmutableApprovalStatus(
-  status: ApprovalStatus,
-): status is (typeof IMMUTABLE_APPROVAL_STATUSES)[number] {
-  return IMMUTABLE_APPROVAL_STATUSES.includes(
-    status as (typeof IMMUTABLE_APPROVAL_STATUSES)[number],
-  );
-}
-
-export function isTerminalApprovalStatus(
-  status: ApprovalStatus,
-): status is (typeof TERMINAL_APPROVAL_STATUSES)[number] {
-  return TERMINAL_APPROVAL_STATUSES.includes(
-    status as (typeof TERMINAL_APPROVAL_STATUSES)[number],
-  );
-}
 
 export function isReleaseSourceApprovalStatus(
   status: ApprovalStatus,

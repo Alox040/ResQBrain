@@ -5,7 +5,7 @@ import type {
   AccessSubject,
 } from './AccessPolicy';
 import { evaluateOrganizationAccess } from './OrganizationScopedAccessPolicy';
-import type { LifecycleAggregateKind } from '../lifecycle/ContentLifecycle';
+import type { LifecycleAggregateKind } from '../lifecycle';
 
 export interface ApprovalAuthorizationRequest {
   readonly subject: AccessSubject;

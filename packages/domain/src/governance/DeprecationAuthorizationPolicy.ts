@@ -1,4 +1,4 @@
-import type { ApprovalStatus } from '../common/ApprovalStatus';
+import type { ApprovalStatus } from '../lifecycle';
 import type { PermissionKey } from '../common/permissionKey';
 import type {
   AccessContext,
@@ -6,7 +6,7 @@ import type {
   AccessSubject,
 } from './AccessPolicy';
 import { evaluateOrganizationAccess } from './OrganizationScopedAccessPolicy';
-import type { LifecycleAggregateKind } from '../lifecycle/ContentLifecycle';
+import type { LifecycleAggregateKind } from '../lifecycle';
 
 export interface DeprecationAuthorizationRequest {
   readonly subject: AccessSubject;
