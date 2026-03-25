@@ -82,10 +82,10 @@ const linkChecks: LinkCheck[] = [
   },
   {
     component: "SurveysSection",
-    target: "#feedback",
+    target: "#surveys",
     status:
-      fileContains("apps/website/components/sections/SurveysSection.tsx", 'href="#feedback"') ||
-      fileContains("apps/website/components/sections/SurveysSection.tsx", 'surveyUrl: "#feedback"')
+      fileContains("apps/website/components/sections/SurveysSection.tsx", 'href="#surveys"') ||
+      fileContains("apps/website/components/sections/SurveysSection.tsx", 'surveyUrl: "#surveys"')
         ? "gesetzt"
         : "fehlt",
   },

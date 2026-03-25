@@ -73,7 +73,7 @@ export function FeatureVotingSection() {
 
           <div className="mt-8">
             <a
-              href="#contact"
+              href="#cta"
               className="inline-flex items-center rounded-full border border-slate-900 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-slate-700"
             >
               Feedback geben

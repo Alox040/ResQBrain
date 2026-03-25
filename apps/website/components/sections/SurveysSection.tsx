@@ -32,7 +32,7 @@ const SURVEYS: Survey[] = [
       "Rueckmeldungen aus Stadt- und Landkreisen",
       "Auswertung fliesst direkt in den MVP-Backlog ein",
     ],
-    surveyUrl: "#feedback",
+    surveyUrl: "#surveys",
   },
   {
     id: "survey-002",
@@ -276,7 +276,7 @@ export function SurveysSection({ surveys = SURVEYS }: { surveys?: Survey[] }) {
 
             <div className="flex w-full flex-col items-stretch md:w-auto md:items-end">
               <a
-                href="#feedback"
+                href="#surveys"
                 className="inline-flex items-center justify-center rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-red-700"
               >
                 Zur naechsten Umfrage
