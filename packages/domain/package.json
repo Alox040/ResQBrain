@@ -8,5 +8,13 @@
     ".": "./src/index.ts",
     "./shared": "./src/shared/index.ts"
   },
-  "types": "./src/index.ts"
+  "types": "./src/index.ts",
+  "scripts": {
+    "compile:versioning": "tsc -p tsconfig.versioning.json",
+    "test:versioning": "tsx --test src/versioning/versioning.entities.test.ts src/versioning/versioning.invariants.test.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
 }

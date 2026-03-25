@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataIntegrityViolation = exports.AuditWriteFailure = exports.TenantIsolationViolation = exports.DomainDenial = exports.DomainError = void 0;
+var DomainError_1 = require("./DomainError");
+Object.defineProperty(exports, "DomainError", { enumerable: true, get: function () { return DomainError_1.DomainError; } });
+var DomainDenial_1 = require("./DomainDenial");
+Object.defineProperty(exports, "DomainDenial", { enumerable: true, get: function () { return DomainDenial_1.DomainDenial; } });
+var TenantIsolationViolation_1 = require("./TenantIsolationViolation");
+Object.defineProperty(exports, "TenantIsolationViolation", { enumerable: true, get: function () { return TenantIsolationViolation_1.TenantIsolationViolation; } });
+var AuditWriteFailure_1 = require("./AuditWriteFailure");
+Object.defineProperty(exports, "AuditWriteFailure", { enumerable: true, get: function () { return AuditWriteFailure_1.AuditWriteFailure; } });
+var DataIntegrityViolation_1 = require("./DataIntegrityViolation");
+Object.defineProperty(exports, "DataIntegrityViolation", { enumerable: true, get: function () { return DataIntegrityViolation_1.DataIntegrityViolation; } });
