@@ -54,8 +54,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentEntity',
       operation: 'submit',
-      from: ApprovalStatus.DRAFT,
-      to: ApprovalStatus.IN_REVIEW,
+      from: ApprovalStatus.Draft,
+      to: ApprovalStatus.InReview,
       requiresOrganizationActive: true,
       requiresStructuralCompleteness: true,
       requiresNoDeprecatedReferences: true,
@@ -66,8 +66,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentEntity',
       operation: 'approve',
-      from: ApprovalStatus.IN_REVIEW,
-      to: ApprovalStatus.APPROVED,
+      from: ApprovalStatus.InReview,
+      to: ApprovalStatus.Approved,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -78,8 +78,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentEntity',
       operation: 'reject',
-      from: ApprovalStatus.IN_REVIEW,
-      to: ApprovalStatus.REJECTED,
+      from: ApprovalStatus.InReview,
+      to: ApprovalStatus.Rejected,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -90,8 +90,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentEntity',
       operation: 'release',
-      from: ApprovalStatus.APPROVED,
-      to: ApprovalStatus.RELEASED,
+      from: ApprovalStatus.Approved,
+      to: ApprovalStatus.Released,
       releaseChannel: 'content-package',
       requiresOrganizationActive: true,
       requiresStructuralCompleteness: false,
@@ -103,8 +103,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentEntity',
       operation: 'recall',
-      from: ApprovalStatus.APPROVED,
-      to: ApprovalStatus.IN_REVIEW,
+      from: ApprovalStatus.Approved,
+      to: ApprovalStatus.InReview,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -115,8 +115,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentEntity',
       operation: 'deprecate',
-      from: ApprovalStatus.RELEASED,
-      to: ApprovalStatus.DEPRECATED,
+      from: ApprovalStatus.Released,
+      to: ApprovalStatus.Deprecated,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -127,8 +127,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentPackage',
       operation: 'submit',
-      from: ApprovalStatus.DRAFT,
-      to: ApprovalStatus.IN_REVIEW,
+      from: ApprovalStatus.Draft,
+      to: ApprovalStatus.InReview,
       requiresOrganizationActive: true,
       requiresStructuralCompleteness: true,
       requiresNoDeprecatedReferences: false,
@@ -139,8 +139,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentPackage',
       operation: 'approve',
-      from: ApprovalStatus.IN_REVIEW,
-      to: ApprovalStatus.APPROVED,
+      from: ApprovalStatus.InReview,
+      to: ApprovalStatus.Approved,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -151,8 +151,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentPackage',
       operation: 'reject',
-      from: ApprovalStatus.IN_REVIEW,
-      to: ApprovalStatus.REJECTED,
+      from: ApprovalStatus.InReview,
+      to: ApprovalStatus.Rejected,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -163,8 +163,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentPackage',
       operation: 'release',
-      from: ApprovalStatus.APPROVED,
-      to: ApprovalStatus.RELEASED,
+      from: ApprovalStatus.Approved,
+      to: ApprovalStatus.Released,
       releaseChannel: 'direct',
       requiresOrganizationActive: true,
       requiresStructuralCompleteness: false,
@@ -176,8 +176,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentPackage',
       operation: 'recall',
-      from: ApprovalStatus.APPROVED,
-      to: ApprovalStatus.IN_REVIEW,
+      from: ApprovalStatus.Approved,
+      to: ApprovalStatus.InReview,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -188,8 +188,8 @@ export const TRANSITION_POLICY_RULES: readonly Readonly<LifecycleTransitionRule>
     freezeRule({
       aggregate: 'ContentPackage',
       operation: 'deprecate',
-      from: ApprovalStatus.RELEASED,
-      to: ApprovalStatus.DEPRECATED,
+      from: ApprovalStatus.Released,
+      to: ApprovalStatus.Deprecated,
       requiresOrganizationActive: false,
       requiresStructuralCompleteness: false,
       requiresNoDeprecatedReferences: false,
@@ -255,8 +255,8 @@ export function evaluateLifecycleTransition(
   if (
     isImmutableApprovalStatus(context.state.approvalStatus) &&
     !(
-      context.state.approvalStatus === ApprovalStatus.RELEASED &&
-      context.targetStatus === ApprovalStatus.DEPRECATED &&
+      context.state.approvalStatus === ApprovalStatus.Released &&
+      context.targetStatus === ApprovalStatus.Deprecated &&
       context.operation === 'deprecate'
     )
   ) {

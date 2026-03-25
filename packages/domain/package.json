@@ -10,7 +10,9 @@
   },
   "types": "./src/index.ts",
   "scripts": {
+    "compile:content": "tsc -p tsconfig.content.json",
     "compile:versioning": "tsc -p tsconfig.versioning.json",
+    "test:content": "tsx --test src/content/content.entities.test.ts src/content/entities.invariants.test.ts",
     "test:versioning": "tsx --test src/versioning/versioning.entities.test.ts src/versioning/versioning.invariants.test.ts"
   },
   "devDependencies": {

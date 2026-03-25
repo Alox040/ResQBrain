@@ -1,96 +1,49 @@
 /**
- * Canonical `ApprovalStatus` value type and transition graph for the domain.
- * `common/ApprovalStatus` re-exports this module for legacy import paths.
+ * Lifecycle-owned transition graph for `ApprovalStatus`.
+ * Canonical value literals are defined in `content/entities/ApprovalStatus.ts`.
  */
-export const ApprovalStatus = {
-  DRAFT: 'Draft',
-  IN_REVIEW: 'InReview',
-  APPROVED: 'Approved',
-  REJECTED: 'Rejected',
-  RELEASED: 'Released',
-  DEPRECATED: 'Deprecated',
-} as const;
+export * from '../../content/entities/ApprovalStatus';
 
-export type ApprovalStatus =
-  (typeof ApprovalStatus)[keyof typeof ApprovalStatus];
+import { ApprovalStatus as S } from '../../content/entities/ApprovalStatus';
+import type { ApprovalStatus as ApprovalStatusLiteral } from '../../content/entities/ApprovalStatus';
 
 export type ApprovalStatusTransitionMap = Readonly<
-  Record<ApprovalStatus, readonly ApprovalStatus[]>
+  Record<ApprovalStatusLiteral, readonly ApprovalStatusLiteral[]>
 >;
 
 export const APPROVAL_STATUS_TRANSITIONS: ApprovalStatusTransitionMap =
   Object.freeze({
-    [ApprovalStatus.DRAFT]: Object.freeze([ApprovalStatus.IN_REVIEW]),
-    [ApprovalStatus.IN_REVIEW]: Object.freeze([
-      ApprovalStatus.APPROVED,
-      ApprovalStatus.REJECTED,
-    ]),
-    [ApprovalStatus.APPROVED]: Object.freeze([
-      ApprovalStatus.IN_REVIEW,
-      ApprovalStatus.RELEASED,
-    ]),
-    [ApprovalStatus.REJECTED]: Object.freeze([]),
-    [ApprovalStatus.RELEASED]: Object.freeze([ApprovalStatus.DEPRECATED]),
-    [ApprovalStatus.DEPRECATED]: Object.freeze([]),
+    [S.Draft]: Object.freeze([S.InReview]),
+    [S.InReview]: Object.freeze([S.Approved, S.Rejected]),
+    [S.Approved]: Object.freeze([S.InReview, S.Released]),
+    [S.Rejected]: Object.freeze([]),
+    [S.Released]: Object.freeze([S.Deprecated]),
+    [S.Deprecated]: Object.freeze([]),
   });
 
-export const EDITABLE_APPROVAL_STATUSES = Object.freeze([
-  ApprovalStatus.DRAFT,
-] as const);
+export const EDITABLE_APPROVAL_STATUSES = Object.freeze([S.Draft] as const);
 
 export const LOCKED_APPROVAL_STATUSES = Object.freeze([
-  ApprovalStatus.IN_REVIEW,
-  ApprovalStatus.APPROVED,
-  ApprovalStatus.REJECTED,
-  ApprovalStatus.RELEASED,
-  ApprovalStatus.DEPRECATED,
+  S.InReview,
+  S.Approved,
+  S.Rejected,
+  S.Released,
+  S.Deprecated,
 ] as const);
 
 export const IMMUTABLE_APPROVAL_STATUSES = Object.freeze([
-  ApprovalStatus.RELEASED,
-  ApprovalStatus.DEPRECATED,
+  S.Released,
+  S.Deprecated,
 ] as const);
 
 export const TERMINAL_APPROVAL_STATUSES = Object.freeze([
-  ApprovalStatus.REJECTED,
-  ApprovalStatus.DEPRECATED,
+  S.Rejected,
+  S.Deprecated,
 ] as const);
 
 export function canTransitionApprovalStatus(
-  from: ApprovalStatus,
-  to: ApprovalStatus,
+  from: ApprovalStatusLiteral,
+  to: ApprovalStatusLiteral,
 ): boolean {
   return APPROVAL_STATUS_TRANSITIONS[from].includes(to);
-}
-
-export function isEditableApprovalStatus(
-  status: ApprovalStatus,
-): status is (typeof EDITABLE_APPROVAL_STATUSES)[number] {
-  return EDITABLE_APPROVAL_STATUSES.includes(
-    status as (typeof EDITABLE_APPROVAL_STATUSES)[number],
-  );
-}
-
-export function isLockedApprovalStatus(
-  status: ApprovalStatus,
-): status is (typeof LOCKED_APPROVAL_STATUSES)[number] {
-  return LOCKED_APPROVAL_STATUSES.includes(
-    status as (typeof LOCKED_APPROVAL_STATUSES)[number],
-  );
-}
-
-export function isImmutableApprovalStatus(
-  status: ApprovalStatus,
-): status is (typeof IMMUTABLE_APPROVAL_STATUSES)[number] {
-  return IMMUTABLE_APPROVAL_STATUSES.includes(
-    status as (typeof IMMUTABLE_APPROVAL_STATUSES)[number],
-  );
-}
-
-export function isTerminalApprovalStatus(
-  status: ApprovalStatus,
-): status is (typeof TERMINAL_APPROVAL_STATUSES)[number] {
-  return TERMINAL_APPROVAL_STATUSES.includes(
-    status as (typeof TERMINAL_APPROVAL_STATUSES)[number],
-  );
 }

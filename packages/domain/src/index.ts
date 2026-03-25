@@ -1,7 +1,49 @@
 export * from './shared';
 export * from './common';
 export * from './tenant';
-export * from './content';
+export { ApprovalStatus } from './content';
+export {
+  createScopeTarget,
+  createScopeTargets,
+  createAlgorithm,
+  isAlgorithmEditable,
+  isAlgorithmImmutable,
+  isAlgorithmLocked,
+  isAlgorithmStructurallyComplete,
+  createMedication,
+  isMedicationEditable,
+  isMedicationImmutable,
+  isMedicationLocked,
+  isMedicationStructurallyComplete,
+  createProtocol,
+  isProtocolEditable,
+  isProtocolImmutable,
+  isProtocolLocked,
+  isProtocolStructurallyComplete,
+  createGuideline,
+  isGuidelineEditable,
+  isGuidelineImmutable,
+  isGuidelineLocked,
+  isGuidelineStructurallyComplete,
+  createContentPackage,
+  isContentPackageEditable,
+  isContentPackageImmutable,
+  isContentPackageLocked,
+} from './content';
+export type {
+  ScopeTarget,
+  Algorithm,
+  AlgorithmDecisionNode,
+  AlgorithmReference,
+  ContentAuditTrailEntry,
+  Medication,
+  MedicationDosageGuideline,
+  Protocol,
+  ProtocolReference,
+  Guideline,
+  GuidelineReference,
+  ContentPackage,
+} from './content';
 export * as Lifecycle from './lifecycle';
 export * from './governance';
 export * as Versioning from './versioning';

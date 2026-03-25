@@ -45,9 +45,9 @@ function createPackageState(
 
 test('T-LC-01: Draft -> InReview denies structurally incomplete content', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('DRAFT'),
+    state: createEntityState('Draft'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: orgA,
     organizationIsActive: true,
     structuralCompletenessSatisfied: false,
@@ -60,9 +60,9 @@ test('T-LC-01: Draft -> InReview denies structurally incomplete content', () => 
 
 test('T-LC-02: Draft -> InReview denies deprecated references at submission time', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('DRAFT'),
+    state: createEntityState('Draft'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: orgA,
     organizationIsActive: true,
     structuralCompletenessSatisfied: true,
@@ -75,9 +75,9 @@ test('T-LC-02: Draft -> InReview denies deprecated references at submission time
 
 test('T-LC-03: InReview -> Approved requires quorum resolution', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('IN_REVIEW'),
+    state: createEntityState('InReview'),
     operation: 'approve',
-    targetStatus: ApprovalStatus.APPROVED,
+    targetStatus: ApprovalStatus.Approved,
     organizationId: orgA,
     quorumResolved: false,
   });
@@ -88,9 +88,9 @@ test('T-LC-03: InReview -> Approved requires quorum resolution', () => {
 
 test('T-LC-04: Approved -> Released is forbidden for content outside ContentPackage release path', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('APPROVED'),
+    state: createEntityState('Approved'),
     operation: 'release',
-    targetStatus: ApprovalStatus.RELEASED,
+    targetStatus: ApprovalStatus.Released,
     organizationId: orgA,
     organizationIsActive: true,
     viaContentPackageRelease: false,
@@ -102,9 +102,9 @@ test('T-LC-04: Approved -> Released is forbidden for content outside ContentPack
 
 test('T-LC-05: Released -> Draft is denied as immutable', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('RELEASED'),
+    state: createEntityState('Released'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.DRAFT,
+    targetStatus: ApprovalStatus.Draft,
     organizationId: orgA,
   });
 
@@ -114,9 +114,9 @@ test('T-LC-05: Released -> Draft is denied as immutable', () => {
 
 test('T-LC-06: Rejected versions are terminal', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('REJECTED'),
+    state: createEntityState('Rejected'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: orgA,
   });
 
@@ -126,9 +126,9 @@ test('T-LC-06: Rejected versions are terminal', () => {
 
 test('T-LC-07: Deprecated versions are terminal', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('DEPRECATED'),
+    state: createEntityState('Deprecated'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: orgA,
   });
 
@@ -138,9 +138,9 @@ test('T-LC-07: Deprecated versions are terminal', () => {
 
 test('T-LC-08: recall is denied when the approved version is already released in a package', () => {
   const decision = evaluateLifecycleTransition({
-    state: createEntityState('APPROVED'),
+    state: createEntityState('Approved'),
     operation: 'recall',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: orgA,
     alreadyReleasedInPackage: true,
     rationale: 'clinical correction required',
@@ -152,18 +152,18 @@ test('T-LC-08: recall is denied when the approved version is already released in
 
 test('T-LC-09: suspended organizations block submissions but not structural approval resolution', () => {
   const submitDecision = evaluateLifecycleTransition({
-    state: createPackageState('DRAFT'),
+    state: createPackageState('Draft'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: orgA,
     organizationIsActive: false,
     structuralCompletenessSatisfied: true,
   });
 
   const approveDecision = evaluateLifecycleTransition({
-    state: createPackageState('IN_REVIEW'),
+    state: createPackageState('InReview'),
     operation: 'approve',
-    targetStatus: ApprovalStatus.APPROVED,
+    targetStatus: ApprovalStatus.Approved,
     organizationId: orgA,
     organizationIsActive: false,
     quorumResolved: true,

@@ -35,29 +35,29 @@ function createState(
 }
 
 test('INV-B-01/02/04: only Draft is editable and Released artifacts stay immutable', () => {
-  assert.equal(isEditableApprovalStatus(ApprovalStatus.DRAFT), true);
-  assert.equal(isEditableApprovalStatus(ApprovalStatus.IN_REVIEW), false);
-  assert.equal(isEditableApprovalStatus(ApprovalStatus.APPROVED), false);
-  assert.equal(isImmutableApprovalStatus(ApprovalStatus.RELEASED), true);
-  assert.equal(isImmutableApprovalStatus(ApprovalStatus.DEPRECATED), true);
+  assert.equal(isEditableApprovalStatus(ApprovalStatus.Draft), true);
+  assert.equal(isEditableApprovalStatus(ApprovalStatus.InReview), false);
+  assert.equal(isEditableApprovalStatus(ApprovalStatus.Approved), false);
+  assert.equal(isImmutableApprovalStatus(ApprovalStatus.Released), true);
+  assert.equal(isImmutableApprovalStatus(ApprovalStatus.Deprecated), true);
 });
 
 test('INV-B-05/06: Rejected and Deprecated are terminal states', () => {
-  assert.equal(isTerminalApprovalStatus(ApprovalStatus.REJECTED), true);
-  assert.equal(isTerminalApprovalStatus(ApprovalStatus.DEPRECATED), true);
-  assert.equal(isTerminalApprovalStatus(ApprovalStatus.APPROVED), false);
+  assert.equal(isTerminalApprovalStatus(ApprovalStatus.Rejected), true);
+  assert.equal(isTerminalApprovalStatus(ApprovalStatus.Deprecated), true);
+  assert.equal(isTerminalApprovalStatus(ApprovalStatus.Approved), false);
 });
 
 test('INV-B-03/07/08/09/10/11: prohibited transitions are absent from the explicit transition matrix', () => {
-  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.DRAFT], [
-    ApprovalStatus.IN_REVIEW,
+  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.Draft], [
+    ApprovalStatus.InReview,
   ]);
-  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.IN_REVIEW], [
-    ApprovalStatus.APPROVED,
-    ApprovalStatus.REJECTED,
+  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.InReview], [
+    ApprovalStatus.Approved,
+    ApprovalStatus.Rejected,
   ]);
-  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.REJECTED], []);
-  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.DEPRECATED], []);
+  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.Rejected], []);
+  assert.deepEqual(APPROVAL_STATUS_TRANSITIONS[ApprovalStatus.Deprecated], []);
 });
 
 test('LC-10: lifecycle exposes only explicit named operations with no auto-approval or auto-release path', () => {
@@ -84,7 +84,7 @@ test('P-11/INV-H-04: lifecycle foundation has no survey import path', () => {
 
   for (const fileName of lifecycleFiles) {
     const source = readFileSync(
-      join(process.cwd(), 'packages/domain/src/lifecycle', fileName),
+      join(process.cwd(), 'src/lifecycle', fileName),
       'utf8',
     );
     assert.equal(
@@ -104,7 +104,7 @@ test('implementation constraint: lifecycle foundation uses no common/* imports',
 
   for (const fileName of lifecycleFiles) {
     const source = readFileSync(
-      join(process.cwd(), 'packages/domain/src/lifecycle', fileName),
+      join(process.cwd(), 'src/lifecycle', fileName),
       'utf8',
     );
     assert.equal(
@@ -118,9 +118,9 @@ test('implementation constraint: lifecycle foundation uses no common/* imports',
 
 test('INV-B-12: transitions remain explicit structural checks and require tenant context', () => {
   const decision = evaluateLifecycleTransition({
-    state: createState('DRAFT'),
+    state: createState('Draft'),
     operation: 'submit',
-    targetStatus: ApprovalStatus.IN_REVIEW,
+    targetStatus: ApprovalStatus.InReview,
     organizationId: null,
     structuralCompletenessSatisfied: true,
     organizationIsActive: true,
