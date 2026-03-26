@@ -11,25 +11,25 @@ export function HeroSection() {
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-5xl font-bold tracking-tight text-slate-50 md:text-6xl">ResQBrain</h1>
           <p className="mt-5 text-lg text-slate-300 md:text-xl">
-            Die Wissensplattform für den Rettungsdienst
+            Medikamente. Algorithmen. Sofort griffbereit — auch offline.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <span className="rounded-full border border-red-500/30 bg-red-600/10 px-3 py-1 text-sm font-medium text-red-200">
+              Medikamente & Dosierungen
+            </span>
+            <span className="rounded-full border border-red-500/30 bg-red-600/10 px-3 py-1 text-sm font-medium text-red-200">
               Algorithmen
             </span>
             <span className="rounded-full border border-red-500/30 bg-red-600/10 px-3 py-1 text-sm font-medium text-red-200">
-              Medikamente
-            </span>
-            <span className="rounded-full border border-red-500/30 bg-red-600/10 px-3 py-1 text-sm font-medium text-red-200">
-              SOPs
+              Offline
             </span>
           </div>
 
           <ul className="mt-8 space-y-2 text-base text-slate-200">
-            <li>Versioniert</li>
-            <li>Organisationsspezifisch</li>
-            <li>Schnell im Einsatz verfügbar</li>
+            <li>Offline verfügbar — auch ohne Mobilfunk</li>
+            <li>Dosierungen und Kontraindikationen auf einen Blick</li>
+            <li>Freigegebene Protokolle eurer Wache</li>
           </ul>
 
           <p className="mx-auto mt-8 inline-flex rounded-full border border-yellow-500/30 bg-yellow-400/10 px-4 py-2 text-sm font-medium text-yellow-100">

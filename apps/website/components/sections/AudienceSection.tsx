@@ -2,16 +2,16 @@ import { Container } from "../layout/Container";
 
 const audiences = [
   {
-    title: "Rettungsdienste",
-    text: "Brauchen schnelle, robuste Zugriffe auf freigegebenes Einsatzwissen.",
+    title: "Jederzeit verfuegbar",
+    text: "Zuverlaessig abrufbar, auch ohne Mobilfunk oder WLAN.",
   },
   {
-    title: "Aerztliche Leitungen",
-    text: "Wollen Aenderungen nachvollziehbar pruefen und verantwortet freigeben.",
+    title: "Einheitlicher Stand",
+    text: "Alle im Team arbeiten mit demselben, geprueften Informationsstand.",
   },
   {
-    title: "Ausbildung und Qualitaetsmanagement",
-    text: "Profitieren von konsistenten Inhalten und sauber dokumentierten Versionen.",
+    title: "Schnell im Einsatz",
+    text: "Klare Struktur, schnelle Orientierung — wenn jede Sekunde zaehlt.",
   },
 ];
 
@@ -22,11 +22,11 @@ export function AudienceSection() {
         <div className="section-heading">
           <span className="eyebrow">Zielgruppen</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Entwickelt fuer operative Teams und fachliche Verantwortung.
+            Fuer alle, die im Einsatz auf verlassliche Informationen angewiesen sind.
           </h2>
           <p className="muted" style={{ marginTop: "1rem" }}>
-            Die Plattform adressiert sowohl den Einsatz vor Ort als auch Governance, Pflege und
-            Weiterentwicklung medizinischer Inhalte.
+            Von der Besatzung auf dem RTW bis zur aerztlichen Leitung — ResQBrain deckt die
+            operative Nutzung und die inhaltliche Verantwortung gemeinsam ab.
           </p>
         </div>
 

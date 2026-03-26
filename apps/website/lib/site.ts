@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "ResQBrain",
   title: "ResQBrain | Wissensplattform fuer den Rettungsdienst",
   description:
-    "ResQBrain buendelt Algorithmen, SOPs und Medikamentenwissen in einer klaren, versionierten Plattform fuer den Rettungsdienst.",
+    "ResQBrain buendelt Algorithmen und Medikamentenwissen in einer klaren Plattform fuer den Rettungsdienst — offline verfuegbar und schnell abrufbar.",
   url: "https://resqbrain.example.com",
   navigation: [
     { href: "#problem", label: "Problem" },

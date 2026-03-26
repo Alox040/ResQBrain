@@ -1,9 +1,9 @@
 import { Container } from "../layout/Container";
 
 const problems = [
-  "Wissen liegt in PDFs, Chats und lokalen Dateien verteilt.",
-  "Aktuelle Versionen sind im Einsatz schwer eindeutig erkennbar.",
-  "Organisationen muessen Inhalte an lokale Vorgaben anpassen koennen.",
+  "Im Einsatz keine Zeit zum Suchen — die Information muss sofort da sein.",
+  "Kein Mobilfunk, kein Zugriff — klassische Tools versagen genau dann, wenn es zaehlt.",
+  "Generische Inhalte passen nicht — jede Wache arbeitet nach eigenen Vorgaben.",
 ];
 
 export function ProblemSection() {
@@ -13,11 +13,11 @@ export function ProblemSection() {
         <div className="section-heading">
           <span className="eyebrow">Problem</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Kritisches Wissen ist oft nicht schnell genug verfuegbar.
+            Im Einsatz zaehlt jede Sekunde.
           </h2>
           <p className="muted" style={{ marginTop: "1rem" }}>
-            In dynamischen Einsatzlagen kostet fragmentierte Information Zeit. Genau dort muss eine
-            digitale Wissensplattform stabil, klar und nachvollziehbar funktionieren.
+            Die Dosierung. Der naechste Schritt im Algorithmus. Das lokale Protokoll. Wer dafuer
+            suchen muss, verliert Zeit — Zeit, die im Einsatz fehlt.
           </p>
         </div>
 

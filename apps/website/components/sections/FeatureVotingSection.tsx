@@ -34,8 +34,8 @@ const featureCandidates: FeatureCandidate[] = [
   },
   {
     id: "sop-update-push",
-    label: "SOP Update Push",
-    description: "Aenderungen an SOPs gezielt und sichtbar an Teams verteilen.",
+    label: "Automatische Updates",
+    description: "Aenderungen automatisch auf alle Geraete uebertragen, sobald Verbindung besteht.",
   },
 ];
 

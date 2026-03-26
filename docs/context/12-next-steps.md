@@ -1,34 +1,54 @@
 # Next Steps
 
-## Immediate Priorities
+**Stand:** 26. März 2026 — neu priorisiert nach Umfrage
 
-### 1. Lock the Domain Baseline
-Define the canonical domain model as executable types and contracts, aligned with `docs/architecture/domain-model.md`. This is the prerequisite for all subsequent implementation.
+## MVP-Fokus
 
-### 2. Decide Content Sourcing Architecture
-Determine whether initial content (Algorithms, Medications, Protocols, Guidelines) flows from migrated seed data, new authoring tooling, or an import contract. Define the authoritative store.
+Umfrage-Ergebnis: Einsatzkräfte brauchen Medikamentensuche, Algorithmen, Offline-Zugriff und schnelle Suche — keine Governance-Plattform.
 
-### 3. Define the Content Lifecycle as Domain Services
-Implement the Draft → InReview → Approved → Released state machine as domain-level services, not as UI-embedded logic. Tie ApprovalStatus transitions to UserRole and Permission checks.
+Der MVP ist damit ein **Einsatz-Tool**, nicht eine Content-Management-Plattform.
 
-### 4. Establish Organization and Tenant Scope
-Implement Organization as a runtime boundary. Every domain operation and query must include and enforce Organization context before any multi-Organization scenario is attempted.
+---
 
-### 5. Expand Profile and Role Support Beyond Default
-The prototype supports only a single default profile. The platform requires runtime-resolved UserRole and ContentPackage per Organization context.
+## Sofortige Prioritäten (MVP)
 
-### 6. Define API and Authentication Boundaries
-Specify what contracts exist between the domain layer and client consumers. Authentication and identity management are prerequisites for any production or multi-user deployment.
+### 1. Seed-Daten aufbereiten
+Medikamentenliste und Algorithmen als statische, versionierte Seed-Daten bereitstellen.
+- Bestehende Seed-Daten aus `data/schemas/` prüfen und bereinigen
+- Deduplizierung und Textqualität sicherstellen
+- Format definieren: was braucht die App zur Laufzeit?
 
-### 7. Define the ContentPackage Release Mechanism
-Determine how Releases are assembled, validated, published, and distributed to clients. This must include Version immutability guarantees and rollback capability.
+### 2. Offline-Datenhaltung definieren
+Entscheiden wie Inhalte auf dem Gerät gespeichert und geladen werden.
+- Lokal-erste Architektur (offline by default)
+- Synchronisationsstrategie bei Verbindung
 
-### 8. Resolve Seed Data Quality
-Finalize deduplication and text cleanup decisions for existing seed content before migrating it into a governed content store.
+### 3. Suchfunktion implementieren
+Schnelle, lokale Suche über Medikamente und Algorithmen.
+- Keine Server-Abhängigkeit im Einsatz
+- Treffsicherheit und Ladezeit < 3 Sekunden
 
-## Deferred Until Later Phases
+### 4. Einsatz-UI bauen (Mobile App)
+Erste Ansichten für Medikamentendetail und Algorithmus-Schritt-Ansicht.
+- Optimiert für Zeitdruck, Handschuhe, schlechte Lichtverhältnisse
+- Minimalnavigation
 
-- Offline synchronization engine and conflict resolution.
-- Survey data ingestion and SurveyInsight prioritization dashboards.
-- Release distribution automation and observability tooling.
-- Regional and County override workflows beyond basic scoping metadata.
+### 5. Eine Organisation, ein Stand
+Für den MVP reicht eine fest konfigurierte Organisation (Seed-Daten einer Wache).
+- Kein Login, kein Rollen-Modell im MVP
+- Inhalte für die Pilot-Wache fest eingebaut
+
+---
+
+## Zurückgestellt (Post MVP)
+
+- Content Lifecycle, Approval, Release Engine
+- Multi-Tenant / Organization Model
+- Rollen- und Rechtemodell
+- Audit Logging
+- Survey Engine und SurveyInsight
+- Editor UI für Algorithmen und Medikamente
+- API, Auth, produktive Deployment-Infra
+- Region/County Scoping
+- ContentPackage und Release-Bundles
+- Cross-Organization Features

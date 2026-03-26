@@ -8,44 +8,37 @@ export function CtaSection() {
     >
       <Container>
         <div id="feedback" className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold">Mach mit</h2>
+          <h2 className="text-3xl font-bold">Sei dabei.</h2>
           <p className="mt-3 text-base text-slate-300">
-            ResQBrain wird gemeinsam mit der Community entwickelt.
+            ResQBrain entsteht mit dem Rettungsdienst — nicht für ihn.
           </p>
-          <p className="mt-1 text-base text-slate-300">Dein Feedback formt das Produkt.</p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           <CtaCard
-            title="Feedback geben"
-            description="Teile deine Erfahrungen aus dem Rettungsdienst"
+            title="App für den Alltag im RD"
+            description="Frühzugang anfragen — teste ResQBrain auf deiner Wache"
+            buttonLabel="Frühzugang anfragen"
+            href="#"
+            strong
+          />
+          <CtaCard
+            title="Einsatzfeedback geben"
+            description="Was fehlt dir im Einsatz? Konkrete Situationen helfen uns mehr als Wunschlisten"
             buttonLabel="Feedback geben"
             href="#"
             strong
           />
           <CtaCard
-            title="Idee einreichen"
-            description="Schlage Features oder Verbesserungen vor"
-            buttonLabel="Idee einreichen"
+            title="Funktionen priorisieren"
+            description="Stimme ab, welche Features als nächstes kommen"
+            buttonLabel="Funktionen mitbestimmen"
             href="#"
           />
           <CtaCard
-            title="Pilotpartner werden"
-            description="Teste ResQBrain in deiner Organisation"
-            buttonLabel="Pilotpartner werden"
-            href="#"
-            strong
-          />
-          <CtaCard
-            title="Projekt folgen"
-            description="Bleib über Fortschritte informiert"
-            buttonLabel="Folgen"
-            href="#"
-          />
-          <CtaCard
-            title="Community beitreten"
-            description="Diskutiere mit anderen im Rettungsdienst"
-            buttonLabel="Community beitreten"
+            title="Auf dem Laufenden bleiben"
+            description="Informiert bleiben über neue Releases und Features"
+            buttonLabel="Updates folgen"
             href="#"
           />
         </div>

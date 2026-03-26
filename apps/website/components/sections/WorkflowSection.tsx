@@ -3,18 +3,18 @@ import { Container } from "../layout/Container";
 const workflow = [
   {
     step: "01",
-    title: "Inhalte erfassen",
-    text: "Algorithmen, SOPs und Medikationswissen werden strukturiert angelegt.",
+    title: "App oeffnen",
+    text: "Medikament oder Algorithmus aufrufen — Suchergebnis in unter drei Sekunden.",
   },
   {
     step: "02",
-    title: "Pruefen und freigeben",
-    text: "Verantwortliche Teams kontrollieren Versionen und markieren freigegebene Inhalte.",
+    title: "Einsatz begleiten",
+    text: "Schritt fuer Schritt durch den Algorithmus. Dosierung immer im Blick. Offline, auch im Funkloch.",
   },
   {
     step: "03",
-    title: "Im Einsatz nutzen",
-    text: "Mitarbeitende greifen ueber die Website schnell auf die passende Information zu.",
+    title: "Immer aktuelle Inhalte",
+    text: "Aenderungen eurer Wache werden automatisch uebertragen, sobald Verbindung besteht.",
   },
 ];
 
@@ -25,7 +25,7 @@ export function WorkflowSection() {
         <div className="section-heading">
           <span className="eyebrow">Ablauf</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Von der inhaltlichen Pflege bis zur Nutzung im Einsatz.
+            Drei Schritte. Kein Overhead.
           </h2>
         </div>
 

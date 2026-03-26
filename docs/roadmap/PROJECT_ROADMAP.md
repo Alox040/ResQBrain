@@ -1,53 +1,85 @@
 # Projekt-Roadmap
 
-**Stand:** 25. März 2026  
-Orientierung an `docs/context/12-next-steps.md` und Architektur-Dokumenten.
+**Stand:** 26. März 2026
 
 ## Legende
 
-- [x] Erreicht / für aktuelle Baseline erledigt
-- [~] Teilweise / läuft
+- [x] Abgeschlossen
+- [~] In Arbeit
 - [ ] Ausstehend
+- [–] Zurückgestellt
 
-## Phase 0 — Fundament
+---
 
-| Punkt | Status |
-|-------|--------|
-| Architektur- und Terminologie-Basis (`docs/architecture`, `docs/context`) | [x] |
-| Domain-Paket mit Typen, Invarianten, Versioning- und Content-Teilmengen | [~] |
-| Öffentliche Website (Landing, Legal, statischer Build) | [x] |
-| Routing- und Link-Validierung (Skripte + Build) | [x] |
+## Phase 0 — Lookup App
 
-## Phase 1 — Core Platform (MVP-Richtung)
+**Ziel:** Medikamente und Algorithmen finden — offline, in Sekunden.
 
 | Punkt | Status |
 |-------|--------|
-| Domain-Baseline final an `domain-model.md` binden | [ ] |
-| Content-Lifecycle (ApprovalStatus, Übergänge) als Domain-Services | [ ] |
-| Rollen/Rechte-Modell an Lifecycle koppeln | [ ] |
-| ContentPackage-Release-Mechanismus definieren | [ ] |
-| API- und Auth-Grenzen spezifizieren | [ ] |
+| Architektur- und Terminologie-Basis | [x] |
+| Domain-Paket (Typen, Invarianten) | [~] |
+| Öffentliche Website (Landing, Legal) | [x] |
+| Website Messaging auf Einsatzfokus | [x] |
+| Seed-Daten aufbereiten (Medikamente + Algorithmen) | [ ] |
+| Offline-Datenhaltung (lokal-erste Architektur) | [ ] |
+| Schnelle lokale Suche (< 3 Sekunden) | [ ] |
+| Mobile App — Medikament-Detail-Ansicht | [ ] |
+| Mobile App — Algorithmus-Schritt-Ansicht | [ ] |
+| Einsatz-optimierte UI (Schriftgroesse, Handschuhbedienung, Kontrast, schnelle Navigation) | [ ] |
+| Pilot-Wache als feste Konfiguration | [ ] |
 
-## Phase 2 — Multi-Tenant-Betrieb
+---
+
+## Phase 1 — Einsatz Features
 
 | Punkt | Status |
 |-------|--------|
-| Organization als Laufzeit-Grenze in allen Operationen | [ ] |
-| Region/County-Scoping über Metadaten hinaus ausbauen | [ ] |
+| Dosierungsrechner (gewichtsbasiert) | [–] |
+| Vitalwert-Referenzen nach Altersgruppe | [–] |
+| Favoriten (Medikamente + Algorithmen) | [–] |
+| Verlauf (zuletzt aufgerufen) | [–] |
+| Push-Updates bei Netzverbindung | [–] |
 
-## Phase 3 — Content-Management & Editor
+---
+
+## Phase 2 — Lernen
 
 | Punkt | Status |
 |-------|--------|
-| Authoring- bzw. Import-Pfade für Algorithm, Medication, Protocol, Guideline | [ ] |
-| Editor-Flows (nicht MVP-kritisch in früher Fassung) | [ ] |
+| Lernmodus für Algorithmen | [–] |
+| Quiz / Selbsttests | [–] |
+| Fortschritt-Tracking | [–] |
+| Fallbasiertes Lernen | [–] |
+| Spaced Repetition | [–] |
 
-## Nächste Phase (hervorgehoben)
+---
 
-**Phase 1 Einleitung:** Content-Lifecycle und Freigabe-Übergänge als explizite, testbare Domain-Services modellieren — ohne UI-Logik in den Entitäten, mit klarer Anbindung an `ApprovalStatus` und Versionierung.
+## Phase 3 — Organisation
 
-## Später / explizit zurückgestellt
+| Punkt | Status |
+|-------|--------|
+| Organisationsspezifische Inhalte | [–] |
+| Multi-Tenant / Tenant Isolation | [–] |
+| Freigabeprozesse (Draft → Approved → Released) | [–] |
+| Rollen-Modell | [–] |
+| Content-Editor (Algorithmen, Medikamente) | [–] |
+| Audit-Log | [–] |
 
-- Vollständige Offline-Synchronisation
-- Survey-Engine und SurveyInsight-Dashboards
-- Finale UI-Struktur der Fachanwendung (Mobile App noch nicht implementiert)
+---
+
+## Phase 4 — KI
+
+| Punkt | Status |
+|-------|--------|
+| Symptom-Suche → Algorithmus-Vorschlag | [–] |
+| Kontextbezogene Medikamenten-Vorschläge | [–] |
+| Dosierungsassistent | [–] |
+| Intelligente Suche (Synonyme, Tippfehler) | [–] |
+| Lücken-Erkennung je Organisation | [–] |
+
+---
+
+## Nächste Aktion
+
+**Phase 0:** Seed-Daten prüfen, Offline-Datenhaltung entscheiden, erste Mobile-App-Ansicht aufsetzen.

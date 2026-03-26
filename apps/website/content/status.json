@@ -13,14 +13,14 @@
   ],
   "nextSteps": [
     "Domain-Baseline festziehen.",
-    "Content-Sourcing-Architektur entscheiden.",
-    "Content-Lifecycle als Domain-Services umsetzen.",
-    "Organization- und Mandantenscope durchgaengig erzwingen."
+    "Content-Sourcing fuer Seed-Daten entscheiden (Pilot-Wache).",
+    "Offline-Datenhaltung (lokal-erste Architektur) umsetzen.",
+    "Schnelle lokale Suche und erste Mobile Views fertigstellen."
   ],
   "roadmap": [
-    "Phase 0: Architektur stabilisieren und Domain finalisieren.",
-    "Phase 1: Core Platform fuer Content Lifecycle, Approval und Release bauen.",
-    "Phase 2: Organization Model fuer Multi Tenant Betrieb umsetzen.",
-    "Phase 3: Content Management und Editor-Flows vorbereiten."
+    "Phase 0: Lookup App (offline, in Sekunden) fuer Medikamente und Algorithmen.",
+    "Phase 1: Einsatz Features (Dosierungsrechner, Favoriten, Verlauf, Push-Updates).",
+    "Phase 2: Lernen (Lernmodus, Quiz, fallbasiert).",
+    "Phase 3: Organisation (Rollen, Freigaben, Editor, Multi-Tenant)."
   ]
 }

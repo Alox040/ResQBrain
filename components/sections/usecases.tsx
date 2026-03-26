@@ -11,25 +11,25 @@ export function UseCasesSection() {
           <span className="inline-flex rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
             Zielgruppen
           </span>
-          <h2 className="mt-4 text-3xl font-bold">Für wen ist ResQBrain?</h2>
+          <h2 className="mt-4 text-3xl font-bold">Für alle, die im Einsatz auf verlässliche Informationen angewiesen sind.</h2>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
           <UseCaseCard
-            role="Notfallsanitäter"
-            benefit="Schneller Zugriff auf Algorithmen und Medikamente direkt im Einsatz"
+            role="RTW- und NEF-Besatzungen"
+            benefit="Dosierungen, Algorithmen und lokale Protokolle in Sekunden abrufbar — auch ohne Netz"
           />
           <UseCaseCard
             role="Rettungsdienstorganisationen"
-            benefit="Eigene Algorithmen und SOPs verwalten und freigeben"
+            benefit="Eigene freigegebene Inhalte zentral pflegen und auf alle Geräte übertragen"
           />
           <UseCaseCard
-            role="Bildungseinrichtungen im Rettungsdienst"
-            benefit="Lernalgorithmen bereitstellen und aktuell halten"
+            role="Leitender Notarzt / Ärztliche Leitung"
+            benefit="Protokolle versioniert freigeben — nur geprüfte Inhalte erreichen die Einsatzkräfte"
           />
           <UseCaseCard
-            role="Leitender Notarzt / Ärztliche Leitung Rettungsdienst"
-            benefit="Inhalte freigeben, Versionen kontrollieren, Änderungen nachvollziehen"
+            role="Disponenten und Einsatzleitung"
+            benefit="Einheitlicher Informationsstand auf allen Wachen — kein veraltetes Dokument im Umlauf"
           />
         </div>
       </Container>

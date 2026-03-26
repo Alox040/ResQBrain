@@ -1,220 +1,97 @@
 # RESQBRAIN MASTER ROADMAP
 
----
-
-# PHASE 0 — FOUNDATION (JETZT)
-
-Ziel:
-Architektur stabilisieren
-
-Aufgaben:
-
-Domain Entities finalisieren
-Tenant Modell stabilisieren
-Lifecycle definieren
-Approval Status definieren
-Version Modell definieren
-Content Package Modell definieren
-Governance Modell definieren
-
-Output:
-
-stabile Domain
-keine Architekturänderungen mehr
+**Stand:** 26. März 2026
 
 ---
 
-# PHASE 1 — CORE PLATFORM
+## PRIORITÄTEN
 
-Ziel:
-Content Plattform funktionsfähig
-
-Aufgaben:
-
-Content Entities implementieren
-Content Lifecycle Engine
-Approval Engine
-Permission Engine
-Release Engine
-Audit Logging
-
-Output:
-
-Content kann:
-
-erstellt werden
-reviewed werden
-approved werden
-released werden
+1. Geschwindigkeit — jede Funktion muss im Einsatz sofort nutzbar sein
+2. Offline — kein Feature darf Netz voraussetzen
+3. Einsatznutzen — nur bauen, was eine Einsatzkraft konkret braucht
 
 ---
 
-# PHASE 2 — ORGANIZATION MODEL
+# PHASE 0 — LOOKUP APP
 
-Ziel:
-Multi Tenant Betrieb
+**Ziel:** Medikamente und Algorithmen finden — offline, in Sekunden.
 
-Aufgaben:
+| Feature | Beschreibung |
+|---------|-------------|
+| Medikamentensuche | Name, Wirkstoff, Handelsname — Dosierung + Kontraindikationen |
+| Notfallalgorithmen | Schritt-für-Schritt-Ansicht, einsatzrelevante Protokolle |
+| Schnelle Suche | < 3 Sekunden, keine Anmeldung erforderlich |
+| Offline-Nutzung | Voller Zugriff ohne Mobilfunk oder WLAN |
+| Einsatz-optimierte UI | Große Schrift, Handschuhbedienung, hoher Kontrast, schnelle Navigation |
 
-Organization entity
-Region entity
-County entity
-Station entity
+Seed-Daten: Eine Pilot-Wache, fest konfiguriert.
+Kein Login. Kein Lifecycle. Kein Editor.
 
-Tenant Isolation
-
-Permissions scoped
-
-Output:
-
-mehrere Organisationen möglich
+Exit-Kriterium: Einsatzkraft findet Dosierung in unter 3 Klicks, offline.
 
 ---
 
-# PHASE 3 — CONTENT MANAGEMENT
+# PHASE 1 — EINSATZ FEATURES
 
-Ziel:
-Content Verwaltung
+**Ziel:** Die App begleitet den Einsatz aktiv.
 
-Aufgaben:
-
-Algorithm Editor
-Medication Editor
-Protocol Editor
-Guideline Editor
-
-Version Erstellung
-
-Release Erstellung
+| Feature | Beschreibung |
+|---------|-------------|
+| Dosierungsrechner | Gewichtsbasierte Berechnung direkt in der App |
+| Vitalwert-Referenzen | Normbereiche nach Alter und Patientengruppe |
+| Favoriten | Häufig genutzte Medikamente und Algorithmen fixieren |
+| Verlauf | Zuletzt aufgerufene Inhalte ohne erneute Suche |
+| Push-Updates | Neue Inhalte kommen automatisch, sobald Netz verfügbar |
 
 ---
 
-# PHASE 4 — RELEASE SYSTEM
+# PHASE 2 — LERNEN
 
-Ziel:
-Versionierte Distribution
+**Ziel:** Die App hilft beim Lernen und Wiederholen — außerhalb des Einsatzes.
 
-Aufgaben:
-
-Content Package Builder
-Release Versioning
-Rollback System
-Compatibility Checks
-
-Output:
-
-deterministische Releases
+| Feature | Beschreibung |
+|---------|-------------|
+| Lernmodus | Algorithmen und Medikamente im geführten Lernpfad |
+| Selbsttests / Quiz | Dosierungsfragen, Algorithmus-Abfragen |
+| Fortschritt-Tracking | Was wurde gelernt, was fehlt noch |
+| Fallbasiertes Lernen | Szenarien mit korrektem Protokoll als Lösung |
+| Wiederholungsintervalle | Spaced Repetition für Medikamente und SOPs |
 
 ---
 
-# PHASE 5 — SURVEY IMPORT (IN ~1 WOCHE)
+# PHASE 3 — ORGANISATION
 
-Diese Phase startet nach Eingang der Umfrage Daten.
+**Ziel:** Mehrere Wachen und Organisationen, eigene Inhalte, Freigabeprozesse.
 
-Input:
-
-Survey Ergebnisse
-Feature Votes
-Region Unterschiede
-Content Wünsche
-
-Aufgaben:
-
-Survey Parser
-Survey Insight Modell
-Aggregation Engine
-Prioritization Engine
-
-Output:
-
-Survey Insights
+| Feature | Beschreibung |
+|---------|-------------|
+| Organisationsspezifische Inhalte | Nur freigegebene Inhalte der eigenen Wache |
+| Multi-Tenant | Mehrere Organisationen isoliert voneinander |
+| Freigabeprozesse | Draft → Geprüft → Freigegeben |
+| Rollen-Modell | Einsatzkraft, Prüfer, Leitender Notarzt, Admin |
+| Content-Editor | Algorithmen und Medikamente pflegen und versionieren |
+| Audit-Log | Wer hat was wann freigegeben |
 
 ---
 
-# PHASE 6 — SURVEY BASED ROADMAP
+# PHASE 4 — KI
 
-Ziel:
-Roadmap datengetrieben
+**Ziel:** Die App denkt mit.
 
-Aufgaben:
-
-Feature Ranking
-Content Ranking
-Organization Unterschiede
-Gap Analyse
-
-Output:
-
-priorisierte Entwicklung
+| Feature | Beschreibung |
+|---------|-------------|
+| Symptom-Suche | Symptome eingeben → passender Algorithmus vorgeschlagen |
+| Kontextbezogene Vorschläge | Offener Algorithmus → passende Medikamente direkt verfügbar |
+| Dosierungsassistent | KI prüft Dosierung gegen Patientendaten |
+| Lücken-Erkennung | Welche Inhalte fehlen für diese Organisation |
+| Intelligente Suche | Synonyme, Tippfehler, Abkürzungen verstehen |
 
 ---
 
-# PHASE 7 — MVP
+# ROADMAP-REGELN
 
-MVP enthält:
-
-Multi Tenant
-Content Lifecycle
-Release System
-Survey Prioritization
-Versioning
-Governance
-
-Nicht im MVP:
-
-Editor UI vollständig
-Offline Sync
-Public API
-
----
-
-# PHASE 8 — POST MVP
-
-Offline Sync
-API
-Auth
-Deployment
-Organization onboarding
-
----
-
-# PHASE 9 — SCALE
-
-Cross Organization Sharing
-Marketplace
-Public Content
-Analytics
-Audit Compliance
-
----
-
-# ROADMAP REGELN
-
-Survey beeinflusst Priorisierung
-nicht Governance
-
-Approval bleibt verpflichtend
-
-Release bleibt versioniert
-
-Tenant bleibt isoliert
-
----
-
-# NÄCHSTE 7 TAGE
-
-Tag 1–2
-
-Domain stabilisieren
-
-Tag 3–4
-
-Lifecycle implementieren
-
-Tag 5–6
-
-Release Engine
-
-Tag 7
-
-Survey Import
+- Phase 0 muss offline funktionieren — ohne Ausnahme
+- Jede neue Phase baut auf der vorherigen auf
+- Einsatz-Features vor Lern-Features vor Org-Features
+- KI erst wenn Content-Basis stabil ist
+- Governance (Phase 3) ist Voraussetzung für KI auf Org-Daten (Phase 4)

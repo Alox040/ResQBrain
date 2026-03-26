@@ -2,28 +2,28 @@ import { Container } from "../layout/Container";
 
 const features = [
   {
-    title: "Versionierte Inhalte",
-    text: "Jede Aenderung bleibt nachvollziehbar. Teams arbeiten mit klar gekennzeichneten Stands.",
+    title: "Medikamente sofort finden",
+    text: "Dosierungen, Kontraindikationen und Handelsnamen auf einen Blick — ohne Scrollen, ohne Suchen.",
   },
   {
-    title: "Organisationsspezifische Varianten",
-    text: "Leitlinien und SOPs lassen sich auf lokale Vorgaben abbilden, ohne den Kern zu verlieren.",
+    title: "Algorithmen griffbereit",
+    text: "Einsatzprotokolle strukturiert und schrittweise abrufbar — auch unter Stress lesbar.",
   },
   {
-    title: "Schneller Zugriff",
-    text: "Karten, Suchpfade und klare Inhaltsstrukturen reduzieren Reibung im Einsatz.",
+    title: "Offline-Zugriff",
+    text: "Voller Funktionsumfang ohne Mobilfunk oder WLAN — im Keller, auf der Autobahn, im Funkloch.",
   },
   {
-    title: "Freigabeprozesse",
-    text: "Zustaendigkeiten und Status machen sichtbar, was in Produktion genutzt werden darf.",
+    title: "Einsatzmodus",
+    text: "Minimale Klicks, maximale Uebersicht. Die Oberflaeche ist fuer Zeitdruck und Handschuhe optimiert.",
   },
   {
-    title: "Modulare Architektur",
-    text: "Algorithmen, Medikamente und Richtlinien koennen getrennt gepflegt und ausgeliefert werden.",
+    title: "Inhalte eurer Wache",
+    text: "Gepruefte Inhalte und Dosierungen eurer Organisation — keine unverifizierten Fremddokumente.",
   },
   {
-    title: "Skalierbar fuer Pilot und Rollout",
-    text: "Die Website ist fuer erste Pilotpartner ebenso geeignet wie fuer spaetere Expansion.",
+    title: "Immer aktuell",
+    text: "Automatische Updates uebertragen Aenderungen auf alle Geraete, sobald Verbindung besteht.",
   },
 ];
 
@@ -34,7 +34,7 @@ export function FeatureSection() {
         <div className="section-heading">
           <span className="eyebrow">Features</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Die wichtigsten Bausteine fuer eine belastbare Wissensplattform.
+            Was dein Team im Einsatz braucht.
           </h2>
         </div>
 

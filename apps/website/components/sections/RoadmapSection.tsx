@@ -9,33 +9,34 @@ type RoadmapPhase = {
 
 const phases: RoadmapPhase[] = [
   {
-    id: "phase-1",
-    name: "Phase 1 Fundament",
+    id: "phase-0",
+    name: "Phase 0 Lookup App",
     status: "current",
-    items: ["Architektur", "Domain Modell", "Content Modell"],
-  },
-  {
-    id: "phase-2",
-    name: "Phase 2 MVP",
-    status: "upcoming",
     items: [
-      "Organisationsverwaltung",
-      "Content CRUD",
-      "Approval Workflow",
-      "Mobile Ansicht",
+      "Seed-Daten (Medikamente + Algorithmen)",
+      "Offline-Datenhaltung (lokal-erste Architektur)",
+      "Schnelle lokale Suche (< 3 Sekunden)",
+      "Mobile Views: Medikament-Detail + Algorithmus-Schritte",
+      "Einsatz-optimierte UI (Schrift, Kontrast, Handschuh, schnelle Navigation)",
     ],
   },
   {
-    id: "phase-3",
-    name: "Phase 3 Pilot",
-    status: "future",
-    items: ["Pilotorganisationen", "Feedback Integration", "Offline Sync"],
+    id: "phase-1",
+    name: "Phase 1 Einsatz Features",
+    status: "upcoming",
+    items: ["Dosierungsrechner (gewichtsbasiert)", "Favoriten", "Verlauf (zuletzt aufgerufen)", "Push-Updates bei Netzverbindung"],
   },
   {
-    id: "phase-4",
-    name: "Phase 4 Ausbau",
+    id: "phase-2",
+    name: "Phase 2 Lernen",
     status: "future",
-    items: ["Feature Voting", "weitere Inhaltstypen", "Leitstellenintegration"],
+    items: ["Lernmodus fuer Algorithmen", "Quiz / Selbsttests", "Fallbasiertes Lernen"],
+  },
+  {
+    id: "phase-3",
+    name: "Phase 3 Organisation",
+    status: "future",
+    items: ["Organisationsspezifische Inhalte", "Rollen & Freigabeprozesse", "Content Editor", "Multi-Tenant Isolation"],
   },
 ];
 

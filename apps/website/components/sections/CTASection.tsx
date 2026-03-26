@@ -31,18 +31,18 @@ export function CTASection() {
             Naechster Schritt
           </span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Suche nach Pilotpartnern und fachlichem Feedback.
+            Sei dabei, wenn ResQBrain auf die ersten Wachen kommt.
           </h2>
           <p style={{ margin: "1rem auto 0", maxWidth: "42rem", color: "rgba(245,247,251,0.76)" }}>
-            Wenn du ResQBrain in deiner Organisation evaluieren oder den Funktionsumfang mitgestalten
-            willst, freuen wir uns auf den Austausch.
+            Wir suchen Einsatzkraefte, die die App im Alltag testen und den Funktionsumfang
+            mitbestimmen wollen.
           </p>
           <div className="button-row" style={{ justifyContent: "center", marginTop: "2rem" }}>
             <a className="button-primary" href="mailto:pilot@resqbrain.de">
-              Kontakt aufnehmen
+              Fruehzugang anfragen
             </a>
-            <a className="button-secondary" href="#top">
-              Zurueck nach oben
+            <a className="button-secondary" href="#features">
+              Funktionen mitbestimmen
             </a>
           </div>
           <p

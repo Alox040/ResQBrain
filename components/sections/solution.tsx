@@ -8,20 +8,20 @@ export function SolutionSection() {
           <span className="inline-flex rounded-full bg-red-600/20 px-3 py-1 text-sm font-medium text-red-200">
             Unsere Antwort
           </span>
-          <h2 className="mt-4 text-3xl font-bold">Die Lösung</h2>
+          <h2 className="mt-4 text-3xl font-bold">Kein Suchen. Kein Scrollen.</h2>
           <p className="mt-3 text-base text-slate-300">
-            ResQBrain bringt medizinisches Wissen zentralisiert, versioniert und
-            organisationsspezifisch an jeden Einsatzort.
+            ResQBrain gibt Einsatzkräften direkten Zugriff auf Medikamente, Algorithmen und
+            Protokolle — offline verfügbar, auf die Wache abgestimmt, in Sekunden abrufbar.
           </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-          <SolutionItem text="Versionierte Algorithmen" />
-          <SolutionItem text="Organisationsspezifische Inhalte" />
-          <SolutionItem text="Zentrale Medikamentenlisten" />
-          <SolutionItem text="SOP Verwaltung" />
-          <SolutionItem text="Schnelle Einsatzsuche" />
-          <SolutionItem text="Offline Architektur" planned />
+          <SolutionItem text="Medikamente mit Dosierung und Kontraindikationen" />
+          <SolutionItem text="Algorithmen als Schritt-für-Schritt-Ansicht" />
+          <SolutionItem text="Einsatzmodus — optimiert für Zeitdruck und Handschuhe" />
+          <SolutionItem text="Nur freigegebene Inhalte eurer Wache" />
+          <SolutionItem text="Suche in unter drei Sekunden" />
+          <SolutionItem text="Offline — voller Zugriff ohne Netz" planned />
         </div>
       </Container>
     </section>

@@ -8,36 +8,36 @@ export function ProblemSection() {
           <span className="inline-flex rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
             Herausforderung
           </span>
-          <h2 className="mt-4 text-3xl font-bold">Das Problem</h2>
+          <h2 className="mt-4 text-3xl font-bold">Im Einsatz zählt jede Sekunde.</h2>
           <p className="mt-3 text-base text-slate-600">
-            Wissen im Rettungsdienst ist fragmentiert
+            Die Dosierung. Der nächste Schritt im Algorithmus. Das lokale Protokoll. Wer dafür suchen muss, verliert Zeit.
           </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
           <article className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <ProblemIcon />
-            <p className="text-base text-slate-800">Unterschiedliche Algorithmen je nach Region</p>
+            <p className="text-base text-slate-800">Kein Mobilfunk, kein Zugriff — im Keller oder auf der Autobahn versagen klassische Tools</p>
           </article>
           <article className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <ProblemIcon />
-            <p className="text-base text-slate-800">Medikamentenlisten nicht zentral gepflegt</p>
+            <p className="text-base text-slate-800">Medikamentendosierungen müssen erst gesucht werden — keine Zeit im Einsatz</p>
           </article>
           <article className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <ProblemIcon />
-            <p className="text-base text-slate-800">SOPs in PDFs oder Dokumenten verteilt</p>
+            <p className="text-base text-slate-800">Algorithmen in PDFs — im Einsatz kaum nutzbar</p>
           </article>
           <article className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <ProblemIcon />
-            <p className="text-base text-slate-800">Änderungen schwer nachvollziehbar</p>
+            <p className="text-base text-slate-800">Lokale Protokolle weichen von generischen Leitlinien ab — welche gilt?</p>
           </article>
           <article className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <ProblemIcon />
-            <p className="text-base text-slate-800">Wissen auf mehrere Quellen verteilt</p>
+            <p className="text-base text-slate-800">Informationen auf mehrere Quellen verteilt — kein einheitlicher Stand auf der Wache</p>
           </article>
           <article className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <ProblemIcon />
-            <p className="text-base text-slate-800">Keine zentrale Wissensplattform</p>
+            <p className="text-base text-slate-800">Einsatzrelevante Inhalte nicht für mobilen Zugriff unter Zeitdruck optimiert</p>
           </article>
         </div>
       </Container>

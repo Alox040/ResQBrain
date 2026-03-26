@@ -26,7 +26,7 @@ export function FooterSection() {
             <div>
               <strong>{siteConfig.name}</strong>
               <p style={{ margin: "0.5rem 0 0", color: "rgba(245,247,251,0.68)" }}>
-                Wissensplattform fuer versionierte Inhalte im Rettungsdienst.
+                Wissensplattform fuer gepruefte Inhalte im Rettungsdienst — offline verfuegbar.
               </p>
             </div>
 

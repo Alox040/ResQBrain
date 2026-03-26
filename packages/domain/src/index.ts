@@ -49,3 +49,4 @@ export * from './governance';
 export * as Versioning from './versioning';
 export * from './release';
 export * from './survey';
+export * as Lookup from './lookup';

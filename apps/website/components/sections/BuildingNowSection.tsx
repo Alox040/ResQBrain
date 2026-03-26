@@ -10,34 +10,34 @@ type WorkItem = {
 
 const workItems: WorkItem[] = [
   {
-    id: "content-model-versioning",
-    title: "Content-Modell & Versionierung",
+    id: "seed-data",
+    title: "Seed-Daten aufbereiten",
     description:
-      "Wir definieren die Struktur fuer versionierte Inhalte, damit Aenderungen nachvollziehbar bleiben und sauber freigegeben werden koennen.",
+      "Medikamente und Algorithmen fuer eine Pilot-Wache konsolidieren, normalisieren und als Seed-Bundle bereitstellen.",
     area: "Datenmodell",
     status: "in-progress",
   },
   {
-    id: "organization-structure",
-    title: "Organisationsstruktur",
+    id: "offline-store",
+    title: "Offline-Datenhaltung",
     description:
-      "Mandanten, Teams und Verantwortlichkeiten werden als belastbares Modell fuer unterschiedliche Organisationsformen aufgebaut.",
-    area: "Backend",
+      "Lokal-erste Datenhaltung umsetzen, damit die App immer aus dem Cache startet und ohne Netz voll nutzbar bleibt.",
+    area: "Frontend",
     status: "review",
   },
   {
-    id: "approval-workflow",
-    title: "Approval Workflow",
+    id: "local-search",
+    title: "Schnelle lokale Suche",
     description:
-      "Der Freigabeprozess fuer Inhalte wird als klarer Ablauf mit Rollen, Statuswechseln und Pruefschritten umgesetzt.",
-    area: "Auth",
+      "Index und Suche so auslegen, dass Ergebnisse in unter 3 Sekunden verfuegbar sind — ohne Server-Calls.",
+    area: "Backend",
     status: "in-progress",
   },
   {
-    id: "mobile-ui-foundation",
-    title: "Mobile UI Grundstruktur",
+    id: "mobile-ui",
+    title: "Einsatz-optimierte Mobile UI",
     description:
-      "Die mobile Oberflaeche bekommt ihre erste Navigations- und Screen-Struktur fuer einen schnellen MVP-Ausbau.",
+      "Grosse Schrift, Handschuhbedienung, hoher Kontrast und schnelle Navigation fuer den Einsatz sicherstellen.",
     area: "Mobile",
     status: "in-progress",
   },

@@ -1,23 +1,59 @@
 # MVP Scope
 
-## MVP Objective
-Deliver a safe, multi-tenant foundation for managing and releasing EMS content by Organization.
+**Stand:** 26. März 2026 — überarbeitet auf Basis Umfrageergebnisse
 
-## In Scope
-- Organization onboarding metadata and tenant isolation rules.
-- Domain entities for Algorithm, Medication, Protocol, Guideline, ContentPackage, Version, and ApprovalStatus.
-- Role and Permission model for content lifecycle actions.
-- Versioned content publishing model with explicit Release records.
-- Region and County scoping metadata for Organization-specific applicability.
-- Audit-ready change tracking for content and approvals.
+## Scope-Entscheidung
 
-## Out of Scope for MVP Implementation
-- Final UI structure and client experience decisions.
-- Backend technology selection.
-- Full offline synchronization implementation.
-- Survey engine implementation (only readiness model is required now).
+Der MVP-Fokus wurde auf Basis der Umfrage auf die vier meistgenannten Nutzerbedürfnisse reduziert.
 
-## MVP Exit Criteria
-- A content item can move from draft to approved to released under Role and Permission rules.
-- Releases are reproducible by Version and scoped to Organization.
-- Platform terminology is consistent across product and architecture documentation.
+**Leitfrage:** Was braucht eine Einsatzkraft im Einsatz, sofort, ohne Schulung?
+
+---
+
+## MVP — In Scope
+
+### 1. Medikamentensuche
+- Suche nach Medikament (Name, Wirkstoff, Handelsname)
+- Anzeige: Dosierung, Kontraindikationen, Besonderheiten
+- Gepruefte Inhalte aus einer Pilot-Wache (Seed-Daten)
+
+### 2. Notfallalgorithmen
+- Abruf von Einsatzalgorithmen (z. B. Polytrauma, Reanimation, Schlaganfall)
+- Schritt-für-Schritt-Ansicht, geeignet für Zeitdruck
+- Eine Pilot-Wache als feste Konfiguration (kein Organisationsmodell im MVP)
+
+### 3. Offline-Nutzung
+- Voller Zugriff auf Medikamente und Algorithmen ohne Mobilfunk oder WLAN
+- Lokale Datenhaltung auf dem Gerät
+- Synchronisation im Hintergrund, wenn Verbindung verfügbar
+
+### 4. Schnelle Suche
+- Suchergebnis in unter 3 Sekunden
+- Keine Anmeldung im Einsatz erforderlich
+- Klare, lesbare Darstellung unter Zeitdruck
+
+## MVP Exit-Kriterien
+
+- Eine Einsatzkraft findet die gesuchte Medikamentendosierung in unter 3 Klicks
+- Ein Algorithmus ist vollständig offline abrufbar
+- Die Inhalte stammen aus einer geprueften Seed-Quelle (Pilot-Wache)
+- Die App ist ohne Einweisung nutzbar
+
+---
+
+## Post MVP — Explizit zurückgestellt
+
+| Bereich | Begründung |
+|---------|-----------|
+| Content Lifecycle (Draft → Approved → Released) | Governance-Infra, nicht Einsatz-Nutzen |
+| Approval Engine / Freigabeprozesse | Admin-Workflow, kein MVP-Blocker |
+| Release Engine / Versioning | Infrastruktur, wird nach MVP ergänzt |
+| Multi-Tenant / Organization Model | Komplexität, eine Wache reicht für MVP |
+| Rollen- und Rechtemodell | Erst relevant bei Mehrbenutzerbetrieb |
+| Audit Logging | Compliance, Post-MVP |
+| Survey Engine / SurveyInsight | Datenauswertung, Post-MVP |
+| Editor UI (Algorithm, Medication) | Content wird initial als Seed-Daten importiert |
+| API / Auth / Deployment-Infra | Folgt nach validiertem MVP |
+| Region / County Scoping | Org-Modell folgt Post-MVP |
+| ContentPackage / Release-Bundles | Distribution erst nach Content-Basis |
+| Cross-Organization Sharing | Scale-Phase |

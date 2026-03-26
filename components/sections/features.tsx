@@ -8,16 +8,16 @@ export function FeaturesSection() {
           <span className="inline-flex rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
             Was ResQBrain kann
           </span>
-          <h2 className="mt-4 text-3xl font-bold">Features</h2>
+          <h2 className="mt-4 text-3xl font-bold">Was dein Team im Einsatz braucht.</h2>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <FeatureCard title="Versionierte Algorithmen" status="Verfügbar" />
-          <FeatureCard title="Medikamentenlisten" status="Verfügbar" />
-          <FeatureCard title="SOP Verwaltung" status="Verfügbar" />
-          <FeatureCard title="Mehrere Organisationen" status="Verfügbar" />
-          <FeatureCard title="Offline Zugriff" status="Geplant" />
-          <FeatureCard title="KI Suche" status="Geplant" />
+          <FeatureCard title="Medikamente sofort finden" status="Verfügbar" />
+          <FeatureCard title="Algorithmen griffbereit" status="Verfügbar" />
+          <FeatureCard title="Einsatzmodus" status="Verfügbar" />
+          <FeatureCard title="Inhalte eurer Wache" status="Verfügbar" />
+          <FeatureCard title="Offline-Zugriff" status="Geplant" />
+          <FeatureCard title="Schnelle Suche" status="Geplant" />
         </div>
       </Container>
     </section>

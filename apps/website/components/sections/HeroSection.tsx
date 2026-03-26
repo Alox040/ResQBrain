@@ -13,7 +13,7 @@ export function HeroSection() {
       <Container>
         <div className="hero-grid">
           <div style={{ maxWidth: "42rem" }}>
-            <span className="eyebrow">Digitales Wissen fuer den Einsatz</span>
+            <span className="eyebrow">Fuer Einsatzkraefte</span>
             <h1
               style={{
                 marginTop: "1.2rem",
@@ -21,7 +21,7 @@ export function HeroSection() {
                 letterSpacing: "-0.04em",
               }}
             >
-              Die Wissensplattform fuer schnelle und verlassliche Entscheidungen im Rettungsdienst.
+              Einsatzwissen. Ohne Netz. Ohne Umwege.
             </h1>
             <p
               className="muted"
@@ -31,12 +31,41 @@ export function HeroSection() {
                 maxWidth: "36rem",
               }}
             >
-              ResQBrain verbindet Algorithmen, SOPs, Medikamente und organisationsspezifisches
-              Wissen in einer zentralen, versionierten Website fuer Teams im Einsatz.
+              Medikamentendosierungen und Algorithmen — gepruefte Inhalte direkt auf dein Geraet, auch wenn
+              kein Mobilfunk verfuegbar ist.
             </p>
+            <ul
+              style={{
+                marginTop: "1.4rem",
+                paddingLeft: 0,
+                listStyle: "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.6rem",
+              }}
+            >
+              <li style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                <span style={{ marginTop: "0.1rem" }}>—</span>
+                <span>
+                  <strong>Offline-faehig</strong> — voller Zugriff ohne WLAN oder Mobilfunk
+                </span>
+              </li>
+              <li style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                <span style={{ marginTop: "0.1rem" }}>—</span>
+                <span>
+                  <strong>Medikamente</strong> — Dosierungen und Kontraindikationen auf einen Blick
+                </span>
+              </li>
+              <li style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                <span style={{ marginTop: "0.1rem" }}>—</span>
+                <span>
+                  <strong>Algorithmen</strong> — gepruefte Inhalte eurer Wache, keine Fremddokumente
+                </span>
+              </li>
+            </ul>
             <div className="button-row" style={{ marginTop: "2rem" }}>
               <a className="button-primary" href="#cta">
-                Pilotpartner werden
+                Fruehzugang anfragen
               </a>
               <a className="button-secondary" href="#features">
                 Features ansehen
@@ -72,7 +101,7 @@ export function HeroSection() {
               >
                 <strong>Polytrauma Algorithmus</strong>
                 <p style={{ margin: "0.6rem 0 0", color: "rgba(245,247,251,0.74)" }}>
-                  Versioniert, offline lesbar und mit organisationsspezifischen Anpassungen.
+                  Offline verfuegbar, schnell abrufbar.
                 </p>
               </div>
               <div className="preview-grid">
@@ -95,9 +124,9 @@ export function HeroSection() {
                     background: "rgba(31,157,104,0.14)",
                   }}
                 >
-                  <strong>SOPs</strong>
+                  <strong>Algorithmen</strong>
                   <p style={{ margin: "0.5rem 0 0", color: "rgba(245,247,251,0.74)" }}>
-                    Freigaben und Updates im Blick
+                    Schritt fuer Schritt abrufbar
                   </p>
                 </div>
               </div>
