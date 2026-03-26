@@ -12,6 +12,11 @@ import { DomainError } from '../../shared/errors';
 import { ScopeLevel } from '../../tenant/entities';
 import { createCompositionEntry, type CompositionEntry } from './CompositionEntry';
 import {
+  createContentPackageDependencyNote,
+  ContentPackageDependencyType,
+  type ContentPackageDependencyNote,
+} from './ContentPackageDependency';
+import {
   appendLineageStates,
   createLineageStateSet,
   type ImmutableLineageStateSet,
@@ -45,8 +50,11 @@ export interface ContentPackageVersion {
   readonly changeReason: string | null;
   readonly composition: ReadonlyArray<CompositionEntry>;
   readonly targetScope: VersionTargetScope;
+  readonly applicabilityScopes: ReadonlyArray<VersionTargetScope>;
+  readonly excludedScopes: ReadonlyArray<VersionTargetScope>;
   readonly releaseNotes: string | null;
   readonly compatibilityNotes: string | null;
+  readonly dependencyNotes: ReadonlyArray<ContentPackageDependencyNote>;
 }
 
 export interface CreateContentPackageVersionInput {
@@ -57,10 +65,13 @@ export interface CreateContentPackageVersionInput {
   readonly createdBy: UserRoleId;
   readonly composition: ReadonlyArray<CompositionEntry>;
   readonly targetScope: VersionTargetScope;
+  readonly applicabilityScopes?: ReadonlyArray<VersionTargetScope>;
+  readonly excludedScopes?: ReadonlyArray<VersionTargetScope>;
   readonly predecessor?: ContentPackageVersionPredecessor;
   readonly changeReason?: string | null;
   readonly releaseNotes?: string | null;
   readonly compatibilityNotes?: string | null;
+  readonly dependencyNotes?: ReadonlyArray<ContentPackageDependencyNote>;
 }
 
 export function createContentPackageVersion(
@@ -72,10 +83,19 @@ export function createContentPackageVersion(
   const createdAt = cloneDate(input.createdAt, 'createdAt');
   assertNonEmptyId(input.createdBy, 'createdBy');
   const targetScope = freezeTargetScope(input.targetScope);
+  const applicabilityScopes = freezeTargetScopes(input.applicabilityScopes);
+  const excludedScopes = freezeTargetScopes(input.excludedScopes);
   const composition = Object.freeze(
     input.composition.map((entry) => createCompositionEntry(entry)),
   );
+  validateUniqueComposition(composition);
   const predecessor = input.predecessor;
+  const dependencyNotes = Object.freeze(
+    (input.dependencyNotes ?? []).map((note) =>
+      createContentPackageDependencyNote(note),
+    ),
+  );
+  validateDependencyNotes(dependencyNotes);
 
   let versionNumber = 1;
   let predecessorVersionId: VersionId | null = null;
@@ -105,8 +125,11 @@ export function createContentPackageVersion(
     changeReason,
     composition,
     targetScope,
+    applicabilityScopes,
+    excludedScopes,
     releaseNotes: normalizeOptionalText(input.releaseNotes),
     compatibilityNotes: normalizeOptionalText(input.compatibilityNotes),
+    dependencyNotes,
   });
 }
 
@@ -173,6 +196,92 @@ export function freezeTargetScope(input: VersionTargetScope): VersionTargetScope
     scopeLevel: input.scopeLevel,
     scopeTargetId: input.scopeTargetId ?? null,
   });
+}
+
+function freezeTargetScopes(
+  inputs: ReadonlyArray<VersionTargetScope> | undefined,
+): ReadonlyArray<VersionTargetScope> {
+  return Object.freeze((inputs ?? []).map((input) => freezeTargetScope(input)));
+}
+
+function validateUniqueComposition(
+  composition: ReadonlyArray<CompositionEntry>,
+): void {
+  const seen = new Map<string, CompositionEntry>();
+
+  for (const entry of composition) {
+    const key = `${entry.entityType}:${entry.entityId}`;
+    const duplicate = seen.get(key);
+
+    if (duplicate) {
+      throw new DomainError(
+        'DATA_INTEGRITY_VIOLATION',
+        'A ContentPackageVersion cannot contain multiple versions of the same content entity.',
+        {
+          entityType: entry.entityType,
+          entityId: entry.entityId,
+          versionIds: [duplicate.versionId, entry.versionId],
+        },
+      );
+    }
+
+    seen.set(key, entry);
+  }
+}
+
+function validateDependencyNotes(
+  dependencyNotes: ReadonlyArray<ContentPackageDependencyNote>,
+): void {
+  const exactKeys = new Map<string, ContentPackageDependencyNote>();
+  const targetRelations = new Map<string, Set<ContentPackageDependencyType>>();
+
+  for (const note of dependencyNotes) {
+    const exactKey = [
+      note.dependencyType,
+      note.targetEntityType,
+      note.targetEntityId,
+      note.targetVersionId ?? '*',
+    ].join(':');
+    const targetKey = [
+      note.targetEntityType,
+      note.targetEntityId,
+      note.targetVersionId ?? '*',
+    ].join(':');
+    const existing = exactKeys.get(exactKey);
+
+    if (existing) {
+      throw new DomainError(
+        'DATA_INTEGRITY_VIOLATION',
+        'Duplicate dependencyNotes entries are not allowed.',
+        {
+          dependencyType: note.dependencyType,
+          targetEntityType: note.targetEntityType,
+          targetEntityId: note.targetEntityId,
+          targetVersionId: note.targetVersionId,
+        },
+      );
+    }
+
+    const relations = targetRelations.get(targetKey) ?? new Set<ContentPackageDependencyType>();
+    relations.add(note.dependencyType);
+    targetRelations.set(targetKey, relations);
+    exactKeys.set(exactKey, note);
+
+    if (
+      relations.has(ContentPackageDependencyType.REQUIRES) &&
+      relations.has(ContentPackageDependencyType.CONFLICTS)
+    ) {
+      throw new DomainError(
+        'DATA_INTEGRITY_VIOLATION',
+        'dependencyNotes cannot both require and conflict with the same target.',
+        {
+          targetEntityType: note.targetEntityType,
+          targetEntityId: note.targetEntityId,
+          targetVersionId: note.targetVersionId,
+        },
+      );
+    }
+  }
 }
 
 function assertOrgId(value: OrgId): OrgId {

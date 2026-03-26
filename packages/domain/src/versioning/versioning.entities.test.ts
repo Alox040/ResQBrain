@@ -17,6 +17,7 @@ import {
   ReleaseStatus,
   ReleaseType,
   createCompositionEntry,
+  createContentPackageDependencyNote,
   createContentEntityVersion,
   createContentPackageVersion,
   createReleaseVersion,
@@ -127,6 +128,119 @@ test('G1-10/T-VER-10: ContentPackageVersion freezes composition after write', ()
   });
 });
 
+test('T-CON-10: ContentPackageVersion rejects duplicate entityIds across versions in the same type', () => {
+  assert.throws(() => {
+    createContentPackageVersion({
+      id: 'pkg-ver-dup' as VersionId,
+      organizationId: orgA,
+      packageId,
+      createdAt: new Date('2026-03-25T08:30:00.000Z'),
+      createdBy: authorRoleId,
+      composition: [
+        createCompositionEntry({
+          entityId,
+          versionId: 'ver-1' as VersionId,
+          entityType: 'Algorithm',
+        }),
+        createCompositionEntry({
+          entityId,
+          versionId: 'ver-2' as VersionId,
+          entityType: 'Algorithm',
+        }),
+      ],
+      targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    });
+  });
+});
+
+test('ContentPackageVersion snapshots dependency notes and scope applicability immutably', () => {
+  const dependencyNote = createContentPackageDependencyNote({
+    dependencyType: 'Requires',
+    targetEntityType: 'Medication',
+    targetEntityId: 'med-1' as never,
+    targetVersionId: 'med-ver-1' as VersionId,
+    severity: 'HardBlock',
+    rationale: 'Medication must be active alongside the algorithm.',
+  });
+
+  const version = createContentPackageVersion({
+    id: 'pkg-ver-dependency' as VersionId,
+    organizationId: orgA,
+    packageId,
+    createdAt: new Date('2026-03-25T08:45:00.000Z'),
+    createdBy: authorRoleId,
+    composition: [
+      createCompositionEntry({
+        entityId,
+        versionId: 'ver-1' as VersionId,
+        entityType: 'Algorithm',
+      }),
+    ],
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    applicabilityScopes: [
+      {
+        scopeLevel: ScopeLevel.STATION,
+        scopeTargetId: 'station-1' as never,
+      },
+    ],
+    excludedScopes: [
+      {
+        scopeLevel: ScopeLevel.COUNTY,
+        scopeTargetId: 'county-1' as never,
+      },
+    ],
+    dependencyNotes: [dependencyNote],
+  });
+
+  assert.equal(version.applicabilityScopes.length, 1);
+  assert.equal(version.excludedScopes.length, 1);
+  assert.equal(version.dependencyNotes.length, 1);
+  assert.equal(version.dependencyNotes[0].severity, 'HardBlock');
+  assert.throws(() => {
+    (version.dependencyNotes as typeof version.dependencyNotes & unknown as Array<typeof dependencyNote>).push(
+      dependencyNote,
+    );
+  });
+});
+
+test('ContentPackageVersion rejects contradictory dependency notes for the same target', () => {
+  assert.throws(() => {
+    createContentPackageVersion({
+      id: 'pkg-ver-conflict' as VersionId,
+      organizationId: orgA,
+      packageId,
+      createdAt: new Date('2026-03-25T08:50:00.000Z'),
+      createdBy: authorRoleId,
+      composition: [
+        createCompositionEntry({
+          entityId,
+          versionId: 'ver-1' as VersionId,
+          entityType: 'Algorithm',
+        }),
+      ],
+      targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+      dependencyNotes: [
+        createContentPackageDependencyNote({
+          dependencyType: 'Requires',
+          targetEntityType: 'Medication',
+          targetEntityId: 'med-2' as never,
+          targetVersionId: 'med-ver-2' as VersionId,
+          severity: 'HardBlock',
+          rationale: 'Required for release.',
+        }),
+        createContentPackageDependencyNote({
+          dependencyType: 'Conflicts',
+          targetEntityType: 'Medication',
+          targetEntityId: 'med-2' as never,
+          targetVersionId: 'med-ver-2' as VersionId,
+          severity: 'HardBlock',
+          rationale: 'Cannot be active together.',
+        }),
+      ],
+    });
+  });
+});
+
 test('T-VER-07: rollback is represented as a new ReleaseVersion record', () => {
   const activeRelease = createReleaseVersion({
     id: 'rel-1' as ReleaseVersionRecordId,
@@ -181,6 +295,7 @@ test('implementation constraint: versioning foundation uses no common/* imports'
     'entities/ReleaseType.ts',
     'entities/ReleaseStatus.ts',
     'entities/CompositionEntry.ts',
+    'entities/ContentPackageDependency.ts',
     'entities/ContentEntityVersion.ts',
     'entities/ContentPackageVersion.ts',
     'entities/ReleaseVersion.ts',

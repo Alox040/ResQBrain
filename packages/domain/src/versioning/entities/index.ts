@@ -3,6 +3,7 @@ export * from './LineageState';
 export * from './ReleaseType';
 export * from './ReleaseStatus';
 export * from './CompositionEntry';
+export * from './ContentPackageDependency';
 export * from './ContentEntityVersion';
 export * from './ContentPackageVersion';
 export * from './ReleaseVersion';

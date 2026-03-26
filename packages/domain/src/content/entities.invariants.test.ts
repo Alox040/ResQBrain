@@ -13,6 +13,10 @@ import type {
 } from '../shared/types';
 import { ScopeLevel } from '../tenant/entities';
 import {
+  createContentPackageDependencyNote,
+  createContentPackageVersion,
+} from '../versioning';
+import {
   ApprovalStatus,
   createAlgorithm,
   createContentPackage,
@@ -27,9 +31,12 @@ import {
   isGuidelineStructurallyComplete,
   isMedicationStructurallyComplete,
   isProtocolStructurallyComplete,
+  validateContentPackageAssembly,
+  validateContentPackageRelease,
 } from './index';
 
 const orgA = 'org-A' as OrgId;
+const orgB = 'org-B' as OrgId;
 const versionId = 'ver-1' as VersionId;
 const actorRoleId = 'role-1' as UserRoleId;
 
@@ -252,4 +259,277 @@ test('INV-A-06: audit trail is append-only on content entities', () => {
       }>
     )[0].operation = 'mutated';
   });
+});
+
+test('T-CON-12/INV-F-03: package assembly blocks cross-tenant composition entries', () => {
+  const contentPackage = createContentPackage({
+    id: 'pkg-cross-tenant' as ContentPackageId,
+    organizationId: orgA,
+    title: 'Cross tenant package',
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    approvalStatus: ApprovalStatus.Draft,
+    currentVersionId: 'pkg-ver-cross-tenant' as VersionId,
+    createdAt: new Date('2026-03-25T10:00:00.000Z'),
+    createdBy: actorRoleId,
+  });
+
+  const packageVersion = createContentPackageVersion({
+    id: 'pkg-ver-cross-tenant' as VersionId,
+    organizationId: orgA,
+    packageId: contentPackage.id,
+    createdAt: new Date('2026-03-25T10:05:00.000Z'),
+    createdBy: actorRoleId,
+    composition: [
+      {
+        entityId: 'alg-cross-tenant' as AlgorithmId,
+        versionId: 'alg-ver-1' as VersionId,
+        entityType: 'Algorithm',
+      },
+    ],
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+  });
+
+  const result = validateContentPackageAssembly({
+    contentPackage,
+    packageVersion,
+    resolvedEntries: [
+      {
+        entry: packageVersion.composition[0],
+        versionExists: true,
+        entityOrganizationId: orgB,
+      },
+    ],
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(
+    result.errors.some((issue) => issue.code === 'CROSS_TENANT_COMPOSITION_ENTRY'),
+    true,
+  );
+});
+
+test('INV-F-09: HardBlock dependencies block release, Warning dependencies do not', () => {
+  const warningNote = createContentPackageDependencyNote({
+    dependencyType: 'RecommendsAlongside',
+    targetEntityType: 'Medication',
+    targetEntityId: 'med-sidecar' as MedicationId,
+    severity: 'Warning',
+    rationale: 'Operationally recommended.',
+  });
+  const hardBlockNote = createContentPackageDependencyNote({
+    dependencyType: 'Conflicts',
+    targetEntityType: 'Medication',
+    targetEntityId: 'med-conflict' as MedicationId,
+    targetVersionId: 'med-ver-2' as VersionId,
+    severity: 'HardBlock',
+    rationale: 'Clinically incompatible.',
+  });
+
+  const contentPackage = createContentPackage({
+    id: 'pkg-dependencies' as ContentPackageId,
+    organizationId: orgA,
+    title: 'Dependency package',
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    approvalStatus: ApprovalStatus.Approved,
+    currentVersionId: 'pkg-ver-dependencies' as VersionId,
+    createdAt: new Date('2026-03-25T10:00:00.000Z'),
+    createdBy: actorRoleId,
+  });
+
+  const packageVersion = createContentPackageVersion({
+    id: 'pkg-ver-dependencies' as VersionId,
+    organizationId: orgA,
+    packageId: contentPackage.id,
+    createdAt: new Date('2026-03-25T10:05:00.000Z'),
+    createdBy: actorRoleId,
+    composition: [
+      {
+        entityId: 'alg-dependency' as AlgorithmId,
+        versionId: 'alg-ver-1' as VersionId,
+        entityType: 'Algorithm',
+      },
+    ],
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    dependencyNotes: [warningNote, hardBlockNote],
+  });
+
+  const blockedResult = validateContentPackageRelease({
+    contentPackage,
+    packageVersion,
+    resolvedEntries: [
+      {
+        entry: packageVersion.composition[0],
+        versionExists: true,
+        entityOrganizationId: orgA,
+        entityApprovalStatus: ApprovalStatus.Approved,
+        entityCurrentVersionId: packageVersion.composition[0].versionId,
+      },
+    ],
+    dependencyEvaluations: [
+      {
+        note: warningNote,
+        satisfied: false,
+        message: 'Recommended companion medication is not active.',
+      },
+      {
+        note: hardBlockNote,
+        satisfied: false,
+        message: 'Conflicting medication is currently active.',
+      },
+    ],
+  });
+
+  assert.equal(blockedResult.ok, false);
+  assert.equal(
+    blockedResult.errors.some((issue) => issue.code === 'DEPENDENCY_HARD_BLOCK'),
+    true,
+  );
+  assert.equal(
+    blockedResult.warnings.some((issue) => issue.code === 'DEPENDENCY_WARNING'),
+    true,
+  );
+
+  const warningOnlyVersion = createContentPackageVersion({
+    id: 'pkg-ver-warning-only' as VersionId,
+    organizationId: orgA,
+    packageId: contentPackage.id,
+    createdAt: new Date('2026-03-25T10:06:00.000Z'),
+    createdBy: actorRoleId,
+    composition: packageVersion.composition,
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    predecessor: {
+      id: packageVersion.id,
+      organizationId: packageVersion.organizationId,
+      packageId: packageVersion.packageId,
+      versionNumber: packageVersion.versionNumber,
+    },
+    changeReason: 'Warning-only dependency snapshot',
+    dependencyNotes: [warningNote],
+  });
+
+  const warningOnlyResult = validateContentPackageRelease({
+    contentPackage: createContentPackage({
+      ...contentPackage,
+      currentVersionId: warningOnlyVersion.id,
+    }),
+    packageVersion: warningOnlyVersion,
+    resolvedEntries: [
+      {
+        entry: warningOnlyVersion.composition[0],
+        versionExists: true,
+        entityOrganizationId: orgA,
+        entityApprovalStatus: ApprovalStatus.Approved,
+        entityCurrentVersionId: warningOnlyVersion.composition[0].versionId,
+      },
+    ],
+    dependencyEvaluations: [
+      {
+        note: warningNote,
+        satisfied: false,
+        message: 'Recommended companion medication is not active.',
+      },
+    ],
+  });
+
+  assert.equal(warningOnlyResult.ok, true);
+  assert.equal(warningOnlyResult.errors.length, 0);
+  assert.equal(warningOnlyResult.warnings.length, 1);
+});
+
+test('INV-F-10: Deprecated content is not releasable under the foundation Approved-only rule', () => {
+  const contentPackage = createContentPackage({
+    id: 'pkg-deprecated' as ContentPackageId,
+    organizationId: orgA,
+    title: 'Deprecated package',
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    approvalStatus: ApprovalStatus.Approved,
+    currentVersionId: 'pkg-ver-deprecated' as VersionId,
+    createdAt: new Date('2026-03-25T10:00:00.000Z'),
+    createdBy: actorRoleId,
+  });
+
+  const packageVersion = createContentPackageVersion({
+    id: 'pkg-ver-deprecated' as VersionId,
+    organizationId: orgA,
+    packageId: contentPackage.id,
+    createdAt: new Date('2026-03-25T10:05:00.000Z'),
+    createdBy: actorRoleId,
+    composition: [
+      {
+        entityId: 'alg-deprecated' as AlgorithmId,
+        versionId: 'alg-ver-1' as VersionId,
+        entityType: 'Algorithm',
+      },
+    ],
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+  });
+
+  const result = validateContentPackageRelease({
+    contentPackage,
+    packageVersion,
+    resolvedEntries: [
+      {
+        entry: packageVersion.composition[0],
+        versionExists: true,
+        entityOrganizationId: orgA,
+        entityApprovalStatus: ApprovalStatus.Deprecated,
+        entityCurrentVersionId: packageVersion.composition[0].versionId,
+      },
+    ],
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(
+    result.errors.some((issue) => issue.code === 'COMPOSITION_ENTRY_NOT_APPROVED'),
+    true,
+  );
+});
+
+test('INV-F-05: versionId mismatch is reported as stale at release time', () => {
+  const contentPackage = createContentPackage({
+    id: 'pkg-stale' as ContentPackageId,
+    organizationId: orgA,
+    title: 'Stale package',
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+    approvalStatus: ApprovalStatus.Approved,
+    currentVersionId: 'pkg-ver-stale' as VersionId,
+    createdAt: new Date('2026-03-25T10:00:00.000Z'),
+    createdBy: actorRoleId,
+  });
+
+  const packageVersion = createContentPackageVersion({
+    id: 'pkg-ver-stale' as VersionId,
+    organizationId: orgA,
+    packageId: contentPackage.id,
+    createdAt: new Date('2026-03-25T10:05:00.000Z'),
+    createdBy: actorRoleId,
+    composition: [
+      {
+        entityId: 'alg-stale' as AlgorithmId,
+        versionId: 'alg-ver-2' as VersionId,
+        entityType: 'Algorithm',
+      },
+    ],
+    targetScope: { scopeLevel: ScopeLevel.ORGANIZATION },
+  });
+
+  const result = validateContentPackageRelease({
+    contentPackage,
+    packageVersion,
+    resolvedEntries: [
+      {
+        entry: packageVersion.composition[0],
+        versionExists: true,
+        entityOrganizationId: orgA,
+        entityApprovalStatus: ApprovalStatus.Approved,
+        entityCurrentVersionId: 'alg-ver-3' as VersionId,
+      },
+    ],
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(
+    result.errors.some((issue) => issue.code === 'COMPOSITION_VERSION_STALE'),
+    true,
+  );
 });

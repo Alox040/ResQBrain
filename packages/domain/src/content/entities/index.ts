@@ -5,3 +5,4 @@ export * from './Medication';
 export * from './Protocol';
 export * from './Guideline';
 export * from './ContentPackage';
+export * from './ContentPackageFoundation';

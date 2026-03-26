@@ -26,6 +26,9 @@ export {
   isGuidelineLocked,
   isGuidelineStructurallyComplete,
   createContentPackage,
+  validateContentPackageAssembly,
+  validateContentPackageRelease,
+  collectContentPackageValidationIssues,
   isContentPackageEditable,
   isContentPackageImmutable,
   isContentPackageLocked,
@@ -43,6 +46,13 @@ export type {
   Guideline,
   GuidelineReference,
   ContentPackage,
+  ContentPackageValidationIssue,
+  ContentPackageValidationResult,
+  ResolvedContentPackageEntry,
+  ResolvedContentPackageScope,
+  EvaluatedContentPackageDependency,
+  ValidateContentPackageAssemblyInput,
+  ValidateContentPackageReleaseInput,
 } from './content';
 export * as Lifecycle from './lifecycle';
 export {
