@@ -45,7 +45,30 @@ export type {
   ContentPackage,
 } from './content';
 export * as Lifecycle from './lifecycle';
-export * from './governance';
+export {
+  Capability,
+  RoleType,
+  QuorumType,
+  ApprovalOutcome,
+  DecisionStatus,
+  hasCapability,
+  evaluateAccess,
+  evaluateTransition,
+  evaluateQuorum,
+  evaluateRelease,
+  evaluateDeprecation,
+} from './governance';
+export type {
+  Permission,
+  UserRole,
+  ApprovalPolicy,
+  ApprovalDecision,
+  PolicyContext,
+  TransitionContext,
+  ApprovalContext,
+  QuorumOutcome,
+} from './governance';
+export type { ReleaseContext as GovernanceReleaseContext } from './governance';
 export * as Versioning from './versioning';
 export * from './release';
 export * from './survey';
