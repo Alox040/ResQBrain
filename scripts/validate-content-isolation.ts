@@ -43,7 +43,6 @@ const forbiddenRoutes = discoveredRoutes.filter((route) => forbiddenRouteSegment
 const repoLevelVercelConfig = safeExists("vercel.json");
 const appLevelVercelConfig = safeExists("apps", "website", "vercel.json");
 const repoPublicDir = safeExists("public");
-const websitePublicDir = safeExists("apps", "website", "public");
 const websiteForbiddenPublicDirs = ["docs", "packages", "scripts", "context", "domain", ".github"]
   .filter((dir) => safeExists("apps", "website", "public", dir));
 
@@ -71,10 +70,12 @@ const checks: IsolationCheck[] = [
   },
   {
     check: "keine monorepo leaks",
-    status: !repoPublicDir && !websitePublicDir && forbiddenRoutes.length === 0 ? "pass" : "fail",
-    hint: !repoPublicDir && !websitePublicDir && forbiddenRoutes.length === 0
-      ? "kein root/public, kein apps/website/public, keine verbotenen Route-Segmente"
-      : "statische Exposition oder verbotene Route-Segmente pruefen",
+    status: !repoPublicDir && websiteForbiddenPublicDirs.length === 0 && forbiddenRoutes.length === 0
+      ? "pass"
+      : "fail",
+    hint: !repoPublicDir && websiteForbiddenPublicDirs.length === 0 && forbiddenRoutes.length === 0
+      ? "kein root/public, keine verbotenen Verzeichnisse unter apps/website/public, keine verbotenen Route-Segmente"
+      : "root/public, verbotene Verzeichnisse unter apps/website/public oder verbotene Route-Segmente pruefen",
   },
 ];
 
