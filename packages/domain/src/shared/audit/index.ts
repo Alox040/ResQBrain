@@ -5,6 +5,7 @@ export {
 } from './AuditEvent';
 export type { AuditEvent } from './AuditEvent';
 export type { AuditableEvent, AuditRecordEvent } from './auditableEvents';
+export type { ApprovalDecisionAuditEvent } from './ApprovalDecisionAuditEvent';
 export type { LifecycleAuditEvent } from './LifecycleAuditEvent';
 export type { PolicyDecisionAuditEvent } from './PolicyDecisionAuditEvent';
 export type { VersionCreationAuditEvent } from './VersionCreationAuditEvent';

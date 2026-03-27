@@ -55,6 +55,7 @@ export type {
   ValidateContentPackageReleaseInput,
 } from './content';
 export * as Lifecycle from './lifecycle';
+export * as Approval from './governance/approval';
 export {
   Capability,
   RoleType,

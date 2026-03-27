@@ -16,6 +16,7 @@ export const Capability = {
   PACKAGE_DEPRECATE: 'package.deprecate',
   ROLE_ASSIGN: 'role.assign',
   POLICY_MANAGE: 'policy.manage',
+  GOVERNANCE_APPROVE: 'governance.approve',
   SURVEYINSIGHT_SUBMIT: 'surveyinsight.submit',
   SURVEYINSIGHT_PRIORITIZE: 'surveyinsight.prioritize',
 } as const;

@@ -1,0 +1,93 @@
+---
+alwaysApply: true
+---
+
+You are working on a real product codebase with evolving scope, not a throwaway prototype.
+
+Primary goals:
+- preserve clean architecture
+- protect long-term maintainability
+- avoid overengineering
+- implement only what is justified by the current phase
+- keep all changes consistent with the existing repository structure
+
+Core architecture rules:
+- respect domain-driven modular boundaries
+- domain code must remain pure and framework-agnostic
+- never place UI logic in domain modules
+- never place infrastructure concerns in domain entities or policies
+- orchestration belongs in services/application layers, not in policies
+- policies decide, services coordinate, adapters persist or communicate
+- avoid cross-module leakage and hidden coupling
+- prefer extension of existing modules over creation of parallel structures
+- do not introduce new top-level modules unless clearly necessary
+- preserve tenant safety and organization boundaries where relevant
+- avoid implicit permissions, unsafe fallbacks, and hidden side effects
+
+Implementation rules:
+- always inspect existing files before proposing structural changes
+- treat the repository as source of truth
+- prefer minimal, composable, readable solutions
+- prefer explicit naming over clever abstractions
+- avoid speculative architecture for hypothetical future needs
+- do not add complexity before its need is proven
+- reuse existing patterns if they are sound
+- when existing patterns are weak, improve conservatively rather than rewriting broadly
+- keep functions focused and deterministic where possible
+- avoid magic behavior and hidden data flow
+- preserve typed contracts and route/param consistency
+- avoid duplicate stacks, duplicate abstractions, duplicate helpers, and duplicate sources of truth
+
+Phase-aware product behavior:
+- implement according to the current product maturity, not maximum imaginable scope
+- for MVP or early-phase features, prefer simple static or deterministic solutions
+- block hidden feature creep
+- do not smuggle in AI, analytics, org logic, approval workflows, sync, versioning, or advanced automation unless explicitly required
+- for more mature phases, expand only along existing architectural boundaries
+- every addition must remain compatible with future governance, validation, deployment, and maintainability needs
+
+Validation and review behavior:
+- if asked to validate, verify only
+- do not implement when the task is validation-only
+- distinguish clearly between:
+  1. structurally verified
+  2. file-based verified
+  3. assumption only
+- call out PASS / WARN / FAIL conservatively
+- report real deviations, not stylistic preferences
+- do not invent missing evidence
+
+Navigation and app flow rules:
+- keep route names and typed params consistent
+- preserve logical back navigation
+- avoid unnecessary nesting and duplicate stack layers
+- keep list/detail and search/detail flows predictable
+- do not introduce navigation patterns that complicate the MVP without clear value
+
+Website and product surface rules:
+- website should show website content only
+- legal pages, CTA targets, survey integration, and funnel links must remain explicit and traceable
+- prefer clear content flow over flashy implementation
+- do not mix unfinished product logic into marketing pages unless explicitly intended
+
+Quality rules:
+- prefer solutions that compile cleanly and are easy to validate
+- when relevant, think in terms of build safety, routing safety, and integration safety
+- preserve readability for future iteration
+- document only where it adds operational clarity
+- avoid comment noise and redundant explanation
+
+Decision framework:
+Before making changes, ask internally:
+- Is this necessary now?
+- Is this the simplest correct solution?
+- Does it fit the current phase?
+- Does it preserve architecture?
+- Does it create future cleanup cost?
+If uncertain, choose the more conservative implementation.
+
+Output behavior:
+- be direct
+- be concrete
+- use the actual codebase structure
+- avoid generic advice when repo-specific reasoning is possible

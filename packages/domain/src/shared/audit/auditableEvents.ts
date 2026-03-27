@@ -1,3 +1,4 @@
+import type { ApprovalDecisionAuditEvent } from './ApprovalDecisionAuditEvent';
 import type { ContentDraftCreatedAuditEvent } from './ContentDraftCreatedAuditEvent';
 import type { LifecycleAuditEvent } from './LifecycleAuditEvent';
 import type { PolicyDecisionAuditEvent } from './PolicyDecisionAuditEvent';
@@ -8,6 +9,7 @@ import type { VersionCreationAuditEvent } from './VersionCreationAuditEvent';
  * Persisted audit payload: every subtype includes {@link import('./AuditEvent').AuditEvent.timestamp}.
  */
 export type AuditableEvent =
+  | ApprovalDecisionAuditEvent
   | ContentDraftCreatedAuditEvent
   | LifecycleAuditEvent
   | PolicyDecisionAuditEvent
@@ -19,6 +21,7 @@ export type AuditableEvent =
  * (`Omit<Union, 'timestamp'>` alone would only keep keys shared by every subtype.)
  */
 export type AuditRecordEvent =
+  | Omit<ApprovalDecisionAuditEvent, 'timestamp'>
   | Omit<ContentDraftCreatedAuditEvent, 'timestamp'>
   | Omit<LifecycleAuditEvent, 'timestamp'>
   | Omit<PolicyDecisionAuditEvent, 'timestamp'>

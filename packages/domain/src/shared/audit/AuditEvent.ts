@@ -6,6 +6,7 @@ import type { AuditOperation } from './AuditOperation';
 export const AuditEventType = {
   Lifecycle: 'lifecycle',
   PolicyDecision: 'policy_decision',
+  ApprovalDecision: 'approval_decision',
   VersionCreation: 'version_creation',
   Release: 'release',
   ContentDraftCreated: 'content_draft_created',

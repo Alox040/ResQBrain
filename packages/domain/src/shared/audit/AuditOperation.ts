@@ -2,6 +2,8 @@ export const AuditOperation = {
   Submit: 'submit',
   Approve: 'approve',
   Reject: 'reject',
+  RequestChanges: 'requestChanges',
+  Abstain: 'abstain',
   Release: 'release',
   Recall: 'recall',
   Deprecate: 'deprecate',

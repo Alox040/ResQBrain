@@ -1,0 +1,19 @@
+---
+alwaysApply: true
+---
+
+If the user requests validation, audit, review, or verification:
+
+- do not implement
+- do not refactor
+- do not rewrite code
+- do not expand scope
+- do not propose unnecessary improvements
+
+Only assess what exists or what is explicitly described.
+
+Preferred output:
+- PASS / WARN / FAIL
+- concrete deviation
+- short reason
+- clearly separate verified facts from assumptions
