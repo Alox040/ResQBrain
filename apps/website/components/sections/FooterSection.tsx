@@ -1,93 +1,95 @@
+import type { SVGProps } from "react";
+
+import { FileText, Heart, Mail } from "lucide-react";
+
 import { Container } from "../layout/Container";
-import { Footer } from "../layout/Footer";
-import { siteConfig } from "../../lib/site";
+
+function GithubIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+    </svg>
+  );
+}
 
 export function FooterSection() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <Footer>
-      <div
-        id="footer"
-        style={{
-          background: "var(--color-surface-strong)",
-          color: "var(--color-on-strong)",
-          padding: "clamp(2rem, 4vw, 2.75rem) 0",
-          borderTop: "1px solid color-mix(in srgb, var(--color-on-strong) 18%, var(--color-surface-strong))",
-        }}
-      >
-        <Container>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              gap: "1.5rem",
-            }}
-          >
-            <div style={{ maxWidth: "22rem" }}>
-              <strong style={{ fontSize: "1rem", color: "var(--color-on-strong)" }}>{siteConfig.name}</strong>
-              <p
-                style={{
-                  margin: "0.4rem 0 0",
-                  color: "color-mix(in srgb, var(--color-on-strong) 72%, transparent)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.55,
-                }}
-              >
-                Medikamente, Algorithmen, SOP \u2014 lokal, je Organisation.
+    <footer className="border-t-4 border-gray-800 bg-gray-900 text-gray-300">
+      <Container>
+        <div className="py-12">
+          <div className="mb-10 grid grid-cols-1 gap-10 md:grid-cols-3">
+            <div>
+              <div className="mb-6 flex items-center gap-3">
+                <Heart className="h-8 w-8 text-red-500" fill="currentColor" />
+                <span className="text-2xl font-black text-white">ResQBrain</span>
+              </div>
+              <p className="mb-4 text-lg font-medium text-gray-400">
+                Plattform für medizinische Algorithmen im Rettungsdienst
               </p>
+              <p className="text-base font-medium text-gray-500">Phase 0 - Lookup-first MVP</p>
             </div>
 
-            <nav aria-label="Footer Navigation">
-              <ul
-                className="list-reset"
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.75rem 1.25rem",
-                  justifyContent: "flex-end",
-                }}
-              >
-                {siteConfig.navigation.map((item) => (
-                  <li key={item.href}>
-                    <a
-                      href={item.href}
-                      style={{
-                        color: "color-mix(in srgb, var(--color-on-strong) 88%, transparent)",
-                        fontSize: "0.9rem",
-                      }}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
+            <div>
+              <h3 className="mb-6 text-xl font-black text-white">Rechtliches</h3>
+              <ul className="space-y-3">
                 <li>
-                  <a
-                    href="/impressum"
-                    style={{
-                      color: "color-mix(in srgb, var(--color-on-strong) 88%, transparent)",
-                      fontSize: "0.9rem",
-                    }}
-                  >
+                  <a href="/impressum" className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white">
+                    <FileText className="h-5 w-5" strokeWidth={2.5} />
                     Impressum
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/datenschutz"
-                    style={{
-                      color: "color-mix(in srgb, var(--color-on-strong) 88%, transparent)",
-                      fontSize: "0.9rem",
-                    }}
-                  >
+                  <a href="/datenschutz" className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white">
+                    <FileText className="h-5 w-5" strokeWidth={2.5} />
                     Datenschutz
                   </a>
                 </li>
               </ul>
-            </nav>
+            </div>
+
+            <div>
+              <h3 className="mb-6 text-xl font-black text-white">Kontakt</h3>
+              <ul className="space-y-3">
+                <li>
+                  <a
+                    href="https://github.com/Alox040/ResQBrain"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white"
+                  >
+                    <GithubIcon className="h-5 w-5" />
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:pilot@resqbrain.de"
+                    className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white"
+                  >
+                    <Mail className="h-5 w-5" strokeWidth={2.5} />
+                    Feedback
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </Container>
-      </div>
-    </Footer>
+
+          <div className="border-t-2 border-gray-800 pt-8 text-center">
+            <p className="text-base font-medium text-gray-500">© {currentYear} ResQBrain. Alle Rechte vorbehalten.</p>
+          </div>
+        </div>
+      </Container>
+    </footer>
   );
 }

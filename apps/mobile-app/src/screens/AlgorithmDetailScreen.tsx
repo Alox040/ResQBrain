@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { algorithmLookup } from '@/features/lookup';
+import { algorithmLookup } from '@/data/algorithms';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
@@ -25,7 +25,7 @@ export function AlgorithmDetailScreen({ route }: Props) {
     >
       <View style={styles.card}>
         <Text style={styles.label}>Titel</Text>
-        <Text style={styles.value}>{algorithm.title}</Text>
+        <Text style={styles.value}>{algorithm.label}</Text>
       </View>
 
       <View style={styles.card}>
@@ -37,7 +37,7 @@ export function AlgorithmDetailScreen({ route }: Props) {
         <Text style={styles.label}>Schritte</Text>
         <View style={styles.steps}>
           {algorithm.steps.map((step, index) => (
-            <View key={step.id} style={styles.stepCard}>
+            <View key={index} style={styles.stepCard}>
               <Text style={styles.stepLabel}>Schritt {index + 1}</Text>
               <Text style={styles.value}>{step.text}</Text>
             </View>

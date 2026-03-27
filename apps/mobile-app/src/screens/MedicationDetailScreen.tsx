@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { medicationLookup } from '@/features/lookup';
+import { medicationLookup } from '@/data/medications';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<
@@ -28,7 +28,7 @@ export function MedicationDetailScreen({ route }: Props) {
     >
       <View style={styles.card}>
         <Text style={styles.label}>Name</Text>
-        <Text style={styles.value}>{medication.name}</Text>
+        <Text style={styles.value}>{medication.label}</Text>
       </View>
 
       <View style={styles.card}>

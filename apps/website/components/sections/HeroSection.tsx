@@ -1,75 +1,67 @@
-import { Button } from "../ui/Button";
-import { Card } from "../ui/Card";
 import { Container } from "../layout/Container";
-import { Section } from "../ui/Section";
-import { cn } from "@/lib/cn";
-
-function AppMockup() {
-  return (
-    <div className="w-full max-w-84 justify-self-center lg:justify-self-end" aria-hidden="true">
-      <Card padding="none" className="p-3">
-        <div className="mb-2 flex h-6 items-center justify-center">
-          <span className="h-1 w-13 rounded-full bg-border" />
-        </div>
-        <div className="min-h-56 rounded-lg bg-surface-muted p-3 md:p-4">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="text-[0.7rem] font-semibold tracking-wide text-foreground">Medikamente</span>
-            <span className="h-5 w-5 rounded-md border border-border bg-surface" />
-          </div>
-          <div className="flex flex-col gap-2.5">
-            {[0.92, 0.78, 0.85].map((w, i) => (
-              <div key={i} className="rounded-lg border border-border/80 bg-surface p-2.5">
-                <div className="h-1.5 rounded-full bg-border" style={{ width: `${w * 100}%` }} />
-                <div className="mt-1.5 h-1 w-[55%] rounded-full bg-border/70" />
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 grid grid-cols-3 gap-1.5">
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className={cn(
-                  "h-1 rounded-full",
-                  i === 0 ? "bg-muted" : "bg-border opacity-50",
-                )}
-              />
-            ))}
-          </div>
-        </div>
-      </Card>
-    </div>
-  );
-}
+import { ArrowRight, BookOpen, Heart, Search } from "lucide-react";
+import { Button } from "../ui/Button";
 
 export function HeroSection() {
   return (
-    <Section
-      id="top"
-      flush
-      className="pt-[clamp(5rem,12vw,8rem)] pb-[clamp(3.5rem,8vw,6rem)]"
-    >
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1766325693423-69e9fe20605b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJhbWVkaWMlMjBlbWVyZ2VuY3klMjBtZWRpY2FsJTIwc2VydmljZXN8ZW58MXx8fHwxNzc0NTkzMjU3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+          alt="Emergency Medical Services"
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900/98 via-gray-900/95 to-gray-900/98" />
+      </div>
+
       <Container>
-        <div className="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(240px,0.42fr)] lg:items-center">
-          <div className="max-w-xl">
-            <h1 className="m-0 text-[clamp(3rem,9.5vw,5.25rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-foreground">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 lg:px-8">
+          <div className="text-center">
+            <div className="mb-12 inline-flex items-center gap-3 rounded-full bg-red-600 px-6 py-3">
+              <Heart className="h-6 w-6 text-white" fill="currentColor" />
+              <span className="text-lg font-semibold text-white">Für Rettungsdienst entwickelt</span>
+            </div>
+
+            <h1 className="mb-8 text-6xl leading-none font-black tracking-tight text-white md:text-8xl">
               ResQBrain
             </h1>
-            <p className="muted mt-6 max-w-md text-[clamp(1.05rem,2vw,1.25rem)] leading-normal md:mt-8">
-              Referenz auf dem Geraet: Medikamente, Algorithmen, SOP. Je Organisation. Versioniert.
+            <p className="mb-6 text-3xl font-bold text-white md:text-5xl">Wissen, wenn es zählt</p>
+            <p className="mx-auto mb-16 max-w-2xl text-xl leading-relaxed font-medium text-gray-300 md:text-2xl">
+              Algorithmen • Medikamente • Protokolle
+              <br />
+              Schnell. Offline. Immer verfügbar.
             </p>
-            <div className="mt-8 flex flex-wrap gap-6">
-              <Button variant="primary" href="/#cta" className="w-full sm:w-auto">
-                Pilot
+
+            <div className="mx-auto mb-20 flex max-w-lg flex-col gap-6">
+              <Button className="h-20 rounded-2xl border-4 border-red-500 bg-red-600 text-2xl font-bold text-white shadow-2xl transition-all hover:bg-red-700 hover:shadow-red-600/50">
+                Jetzt starten
+                <ArrowRight className="ml-3 h-8 w-8" strokeWidth={3} />
               </Button>
-              <Button variant="outline" href="/#cta" className="w-full sm:w-auto">
-                Kontakt
+              <Button
+                variant="outline"
+                className="h-16 rounded-2xl border-4 border-white bg-white text-xl font-bold text-gray-900 hover:bg-gray-100"
+              >
+                Demo ansehen
               </Button>
             </div>
-          </div>
 
-          <AppMockup />
+            <div className="mx-auto flex max-w-md flex-col gap-4">
+              <div className="flex items-center justify-center gap-3 rounded-xl border-4 border-gray-200 bg-white px-6 py-5 text-gray-900">
+                <Search className="h-7 w-7" strokeWidth={2.5} />
+                <span className="text-xl font-bold">Schnelle Suche</span>
+              </div>
+              <div className="flex items-center justify-center gap-3 rounded-xl border-4 border-gray-200 bg-white px-6 py-5 text-gray-900">
+                <BookOpen className="h-7 w-7" strokeWidth={2.5} />
+                <span className="text-xl font-bold">Alle Protokolle</span>
+              </div>
+              <div className="flex items-center justify-center gap-3 rounded-xl border-4 border-red-500 bg-red-600 px-6 py-5 text-white">
+                <Heart className="h-7 w-7" strokeWidth={2.5} fill="currentColor" />
+                <span className="text-xl font-bold">Offline verfügbar</span>
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

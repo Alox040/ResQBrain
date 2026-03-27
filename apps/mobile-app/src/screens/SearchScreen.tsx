@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { mockSearchResults } from '@/search/mockData';
+import { searchItems } from '@/search/mockData';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
-import type { SearchResultItem } from '@/search/types';
+import type { ContentListItem } from '@/types/content';
 
 export function SearchScreen() {
   const [query, setQuery] = useState('');
@@ -19,19 +19,13 @@ export function SearchScreen() {
 
   const normalizedQuery = query.trim().toLowerCase();
   const results = normalizedQuery
-    ? mockSearchResults.filter((item) => {
-        const primaryText =
-          item.kind === 'medication' ? item.name : item.title;
-        const secondaryText = item.subtitle ?? '';
-
-        return (
-          primaryText.toLowerCase().includes(normalizedQuery) ||
-          secondaryText.toLowerCase().includes(normalizedQuery)
-        );
-      })
+    ? searchItems.filter((item) =>
+        item.label.toLowerCase().includes(normalizedQuery) ||
+        item.subtitle.toLowerCase().includes(normalizedQuery),
+      )
     : [];
 
-  const handlePressResult = (item: SearchResultItem) => {
+  const handlePressResult = (item: ContentListItem) => {
     if (item.kind === 'medication') {
       navigation.navigate('MedicationList', {
         screen: 'MedicationDetail',
@@ -78,7 +72,6 @@ export function SearchScreen() {
             data={results}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              const title = item.kind === 'medication' ? item.name : item.title;
               const kindLabel =
                 item.kind === 'medication' ? 'Medikament' : 'Algorithmus';
 
@@ -88,10 +81,8 @@ export function SearchScreen() {
                   style={styles.resultRow}
                 >
                   <Text style={styles.resultKind}>{kindLabel}</Text>
-                  <Text style={styles.resultTitle}>{title}</Text>
-                  {item.subtitle ? (
-                    <Text style={styles.resultSubtitle}>{item.subtitle}</Text>
-                  ) : null}
+                  <Text style={styles.resultTitle}>{item.label}</Text>
+                  <Text style={styles.resultSubtitle}>{item.subtitle}</Text>
                 </Pressable>
               );
             }}

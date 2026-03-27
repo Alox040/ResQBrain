@@ -1,9 +1,7 @@
-import Link from "next/link";
+import { ArrowRight, Mail } from "lucide-react";
 
-import { Button } from "../ui/Button";
-import { Card } from "../ui/Card";
 import { Container } from "../layout/Container";
-import { Section } from "../ui/Section";
+import { Button } from "../ui/Button";
 
 const pilotMail = "mailto:pilot@resqbrain.de";
 const mail = (subject: string) => `${pilotMail}?subject=${encodeURIComponent(subject)}`;
@@ -11,34 +9,50 @@ const ENABLE_MOBILE_STICKY_CTA = false;
 
 export function CTASection() {
   return (
-    <Section id="cta">
+    <section id="cta" className="bg-white py-16">
       <Container>
-        <Card padding="roomy" className="mx-auto max-w-xl text-center">
-          <h2 className="m-0 text-[clamp(1.5rem,2.5vw,1.85rem)] font-semibold text-foreground">Kontakt</h2>
-          <p className="muted mx-auto mb-0 mt-4 max-w-md text-base leading-[1.55]">
-            Pilot oder Rueckmeldung. Kurz reicht.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
-            <Button variant="outline" href={mail("ResQBrain Rueckmeldung")} className="w-full sm:w-auto">
-              E-Mail
-            </Button>
-            <Button variant="primary" href={mail("ResQBrain Pilotpartner")} className="w-full sm:w-auto">
-              Pilot
-            </Button>
+        <div className="overflow-hidden rounded-3xl border-8 border-red-500 bg-gradient-to-br from-red-600 to-red-700 shadow-2xl">
+          <div className="p-12 text-center lg:p-16">
+            <h2 className="mb-8 text-5xl font-black text-white md:text-7xl">Jetzt testen</h2>
+            <p className="mx-auto mb-12 max-w-3xl text-2xl font-bold text-white md:text-3xl">
+              Werden Sie Early-Adopter
+            </p>
+
+            <div className="mx-auto mb-12 max-w-2xl space-y-4 text-left">
+              {["Kostenlos testen", "Direktes Feedback", "Mitgestalten"].map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-4 rounded-xl border-4 border-white/40 bg-white/20 p-5 backdrop-blur-sm"
+                >
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-white">
+                    <div className="h-3 w-3 rounded-full bg-red-600" />
+                  </div>
+                  <p className="text-xl font-bold text-white md:text-2xl">{item}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto flex max-w-lg flex-col gap-5">
+              <Button
+                href={mail("Kontakt ResQBrain")}
+                className="h-20 rounded-2xl border-4 border-white bg-white text-2xl font-black text-red-700 shadow-2xl hover:bg-gray-100"
+              >
+                <Mail className="mr-3 h-8 w-8" strokeWidth={3} />
+                Kontakt aufnehmen
+              </Button>
+              <Button
+                href={mail("Mehr erfahren ResQBrain")}
+                variant="outline"
+                className="h-16 rounded-2xl border-4 border-white bg-white/10 text-xl font-bold text-white backdrop-blur-sm hover:bg-white/20"
+              >
+                Mehr erfahren
+                <ArrowRight className="ml-2 h-6 w-6" strokeWidth={3} />
+              </Button>
+            </div>
           </div>
-          <p className="mx-auto mb-0 mt-6 max-w-md text-xs leading-normal text-muted md:text-[0.85rem] md:leading-normal">
-            Hinweise:{" "}
-            <Link
-              href="/datenschutz"
-              className="text-foreground underline decoration-foreground/30 underline-offset-[0.15em] hover:decoration-foreground/60"
-            >
-              Datenschutz
-            </Link>
-            .
-          </p>
-        </Card>
+        </div>
       </Container>
-    </Section>
+    </section>
   );
 }
 

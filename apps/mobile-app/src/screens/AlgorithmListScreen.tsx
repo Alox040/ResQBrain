@@ -1,45 +1,45 @@
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, Pressable, View } from 'react-native';
-import { algorithms } from '@/features/lookup';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { algorithms } from '@/data/algorithms';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
+import { TAG_CONFIG } from '@/utils/tagConfig';
 
-type AlgorithmListNavigationProp = NativeStackNavigationProp<
-  AlgorithmStackParamList,
-  'AlgorithmList'
->;
+type Nav = NativeStackNavigationProp<AlgorithmStackParamList, 'AlgorithmList'>;
 
 export function AlgorithmListScreen() {
-  const navigation = useNavigation<AlgorithmListNavigationProp>();
+  const navigation = useNavigation<Nav>();
 
   return (
-    <ScrollView
+    <FlatList
       style={styles.screen}
+      data={algorithms}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => {
+        const tag = TAG_CONFIG[item.tags[0]];
+        return (
+          <Pressable
+            onPress={() => navigation.navigate('AlgorithmDetail', { algorithmId: item.id })}
+            style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+          >
+            <View style={[styles.tagBadge, { backgroundColor: tag.backgroundColor }]}>
+              <Text style={[styles.tagText, { color: tag.textColor }]}>{tag.label}</Text>
+            </View>
+            <Text style={styles.label}>{item.label}</Text>
+            <Text style={styles.indication} numberOfLines={2}>{item.indication}</Text>
+          </Pressable>
+        );
+      }}
+      ListEmptyComponent={
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>Keine Algorithmen vorhanden.</Text>
+        </View>
+      }
       contentContainerStyle={styles.content}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
       showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.headerCard}>
-        <Text style={styles.headerTitle}>Algorithmen</Text>
-        <Text style={styles.headerText}>
-          Grosse Karten fuer Schrittfolgen und schnelle Orientierung.
-        </Text>
-      </View>
-
-      {algorithms.map((algorithm) => (
-        <Pressable
-          key={algorithm.id}
-          onPress={() =>
-            navigation.navigate('AlgorithmDetail', { algorithmId: algorithm.id })
-          }
-          style={styles.algorithmCard}
-        >
-          <Text style={styles.algorithmTitle}>{algorithm.title}</Text>
-          <Text style={styles.algorithmStage}>Lookup</Text>
-          <Text style={styles.algorithmText}>{algorithm.indication}</Text>
-        </Pressable>
-      ))}
-    </ScrollView>
+    />
   );
 }
 
@@ -51,50 +51,51 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     paddingBottom: 24,
-    gap: 10,
   },
-  headerCard: {
+  separator: {
+    height: 10,
+  },
+  row: {
     borderRadius: 16,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e5e7eb',
     gap: 6,
   },
-  headerTitle: {
-    color: '#111827',
-    fontSize: 24,
-    fontWeight: '700',
+  rowPressed: {
+    backgroundColor: '#eef2ff',
+    borderColor: '#c7d2fe',
   },
-  headerText: {
-    color: '#4b5563',
-    fontSize: 15,
-    lineHeight: 22,
+  tagBadge: {
+    alignSelf: 'flex-start',
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
   },
-  algorithmCard: {
-    minHeight: 112,
-    borderRadius: 16,
-    padding: 16,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    justifyContent: 'space-between',
-    gap: 8,
-  },
-  algorithmTitle: {
-    color: '#111827',
-    fontSize: 20,
-    fontWeight: '700',
-  },
-  algorithmStage: {
-    color: '#2563eb',
-    fontSize: 12,
+  tagText: {
+    fontSize: 11,
     fontWeight: '700',
     textTransform: 'uppercase',
+    letterSpacing: 0.4,
   },
-  algorithmText: {
-    color: '#4b5563',
+  label: {
+    fontSize: 19,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  indication: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#6b7280',
+  },
+  empty: {
+    paddingVertical: 48,
+    alignItems: 'center',
+  },
+  emptyText: {
     fontSize: 15,
-    lineHeight: 21,
+    color: '#9ca3af',
   },
 });

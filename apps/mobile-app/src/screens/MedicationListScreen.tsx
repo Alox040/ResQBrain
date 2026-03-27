@@ -2,41 +2,44 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { medications } from '@/features/lookup';
+import { medications } from '@/data/medications';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
+import { TAG_CONFIG } from '@/utils/tagConfig';
 
-type MedicationListNavigationProp = NativeStackNavigationProp<
-  MedicationStackParamList,
-  'MedicationList'
->;
+type Nav = NativeStackNavigationProp<MedicationStackParamList, 'MedicationList'>;
 
 export function MedicationListScreen() {
-  const navigation = useNavigation<MedicationListNavigationProp>();
+  const navigation = useNavigation<Nav>();
 
   return (
-    <View style={styles.screen}>
-      <FlatList
-        data={medications}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+    <FlatList
+      style={styles.screen}
+      data={medications}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => {
+        const tag = TAG_CONFIG[item.tags[0]];
+        return (
           <Pressable
-            onPress={() =>
-              navigation.navigate('MedicationDetail', { medicationId: item.id })
-            }
-            style={({ pressed }) => [
-              styles.row,
-              pressed ? styles.rowPressed : null,
-            ]}
+            onPress={() => navigation.navigate('MedicationDetail', { medicationId: item.id })}
+            style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
           >
-            <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.subtitle}>{item.indication}</Text>
+            <View style={[styles.tagBadge, { backgroundColor: tag.backgroundColor }]}>
+              <Text style={[styles.tagText, { color: tag.textColor }]}>{tag.label}</Text>
+            </View>
+            <Text style={styles.label}>{item.label}</Text>
+            <Text style={styles.indication} numberOfLines={2}>{item.indication}</Text>
           </Pressable>
-        )}
-        contentContainerStyle={styles.content}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+        );
+      }}
+      ListEmptyComponent={
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>Keine Medikamente vorhanden.</Text>
+        </View>
+      }
+      contentContainerStyle={styles.content}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      showsVerticalScrollIndicator={false}
+    />
   );
 }
 
@@ -53,28 +56,46 @@ const styles = StyleSheet.create({
     height: 10,
   },
   row: {
-    minHeight: 84,
     borderRadius: 16,
     paddingHorizontal: 16,
-    paddingVertical: 16,
-    justifyContent: 'center',
+    paddingVertical: 14,
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e5e7eb',
+    gap: 6,
   },
   rowPressed: {
     backgroundColor: '#eef2ff',
     borderColor: '#c7d2fe',
   },
-  name: {
-    fontSize: 20,
+  tagBadge: {
+    alignSelf: 'flex-start',
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  tagText: {
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+  },
+  label: {
+    fontSize: 19,
     fontWeight: '700',
     color: '#111827',
   },
-  subtitle: {
+  indication: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#6b7280',
+  },
+  empty: {
+    paddingVertical: 48,
+    alignItems: 'center',
+  },
+  emptyText: {
     fontSize: 15,
-    lineHeight: 21,
-    color: '#4b5563',
-    marginTop: 6,
+    color: '#9ca3af',
   },
 });
