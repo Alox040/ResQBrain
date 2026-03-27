@@ -23,7 +23,7 @@ export function StatusSection() {
             <div className="flex items-center gap-3 text-sm text-slate-500 md:justify-end">
               <span>Stand: {status.projectPhase.asOf}</span>
               <a
-                href="#roadmap"
+                href="/#roadmap"
                 className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 transition-colors duration-200 hover:border-slate-300 hover:text-slate-900"
               >
                 Zur Roadmap
@@ -34,7 +34,7 @@ export function StatusSection() {
           <div className="mt-8 grid gap-4 lg:grid-cols-2">
             <article className="rounded-3xl border border-slate-200 bg-white p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Current Focus
+                Aktueller Fokus
               </p>
               <ul className="mt-4 space-y-3">
                 {status.currentFocus.map((item) => (
@@ -48,7 +48,7 @@ export function StatusSection() {
 
             <article className="rounded-3xl border border-slate-200 bg-white p-5">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Next Steps
+                Naechste Schritte
               </p>
               <ol className="mt-4 space-y-3">
                 {status.nextSteps.map((item, index) => (

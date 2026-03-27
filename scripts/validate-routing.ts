@@ -65,29 +65,24 @@ const linkChecks: LinkCheck[] = [
   },
   {
     component: "HeroSection",
-    target: "#cta",
-    status: fileContains("apps/website/components/sections/HeroSection.tsx", 'href="#cta"')
+    target: "/#cta",
+    status: fileContains("apps/website/components/sections/HeroSection.tsx", 'href="/#cta"')
       ? "gesetzt"
       : "fehlt",
   },
   {
     component: "CTASection",
     target: "mailto:pilot@resqbrain.de",
-    status: fileContains(
-      "apps/website/components/sections/CTASection.tsx",
-      'href="mailto:pilot@resqbrain.de"',
-    )
+    status: fileContains("apps/website/components/sections/CTASection.tsx", "pilot@resqbrain.de")
       ? "gesetzt"
       : "fehlt",
   },
   {
     component: "SurveysSection",
-    target: "#surveys",
-    status:
-      fileContains("apps/website/components/sections/SurveysSection.tsx", 'href="#surveys"') ||
-      fileContains("apps/website/components/sections/SurveysSection.tsx", 'surveyUrl: "#surveys"')
-        ? "gesetzt"
-        : "fehlt",
+    target: "id=feedback",
+    status: fileContains("apps/website/components/sections/SurveysSection.tsx", 'id="feedback"')
+      ? "gesetzt"
+      : "fehlt",
   },
 ];
 

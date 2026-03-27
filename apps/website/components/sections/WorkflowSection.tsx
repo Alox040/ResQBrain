@@ -4,17 +4,17 @@ const workflow = [
   {
     step: "01",
     title: "App oeffnen",
-    text: "Medikament oder Algorithmus aufrufen — Suchergebnis in unter drei Sekunden.",
+    text: "App direkt starten und Medikament oder Algorithmus ueber Liste oder Suche aufrufen.",
   },
   {
     step: "02",
-    title: "Einsatz begleiten",
-    text: "Schritt fuer Schritt durch den Algorithmus. Dosierung immer im Blick. Offline, auch im Funkloch.",
+    title: "Inhalt lokal abrufen",
+    text: "Detailansichten zeigen die benoetigten Informationen direkt auf dem Geraet - auch im Funkloch.",
   },
   {
     step: "03",
-    title: "Immer aktuelle Inhalte",
-    text: "Aenderungen eurer Wache werden automatisch uebertragen, sobald Verbindung besteht.",
+    title: "Ohne Zusatzaufwand nutzen",
+    text: "Kein Login, kein Pflicht-Server, keine laufende Synchronisierung im kommunizierten Umfang.",
   },
 ];
 
@@ -25,7 +25,7 @@ export function WorkflowSection() {
         <div className="section-heading">
           <span className="eyebrow">Ablauf</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Drei Schritte. Kein Overhead.
+            Schneller Zugriff ohne Zusatzsysteme.
           </h2>
         </div>
 

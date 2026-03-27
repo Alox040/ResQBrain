@@ -3,28 +3,32 @@ import { Container } from "../layout/Container";
 type RoadmapPhase = {
   id: string;
   name: string;
-  status: "current" | "upcoming" | "future";
+  status: "done" | "upcoming" | "future";
   items: string[];
 };
 
 const phases: RoadmapPhase[] = [
   {
     id: "phase-0",
-    name: "Phase 0 Lookup App",
-    status: "current",
+    name: "Phase 0 — Lookup-Schwerpunkt",
+    status: "done",
     items: [
-      "Seed-Daten (Medikamente + Algorithmen)",
-      "Offline-Datenhaltung (lokal-erste Architektur)",
-      "Schnelle lokale Suche (< 3 Sekunden)",
-      "Mobile Views: Medikament-Detail + Algorithmus-Schritte",
-      "Einsatz-optimierte UI (Schrift, Kontrast, Handschuh, schnelle Navigation)",
+      "Algorithm Lookup",
+      "Medication Lookup",
+      "Statische Datenbasis aus definierter Quelle",
+      "Listen- und Detailansichten fuer Medikamente und Algorithmen",
+      "Lokaler Zugriff ohne Login und ohne Server-Zwang",
     ],
   },
   {
     id: "phase-1",
-    name: "Phase 1 Einsatz Features",
+    name: "Phase 1 Erweiterungen",
     status: "upcoming",
-    items: ["Dosierungsrechner (gewichtsbasiert)", "Favoriten", "Verlauf (zuletzt aufgerufen)", "Push-Updates bei Netzverbindung"],
+    items: [
+      "Pruefung sinnvoller Erweiterungen auf Basis von Pilot-Feedback",
+      "Moegliche Rechenhilfen fuer klar definierte Anwendungsfaelle",
+      "Weitere UI-Verbesserungen fuer schnelle Nutzung im Einsatz",
+    ],
   },
   {
     id: "phase-2",
@@ -49,20 +53,20 @@ const statusMeta: Record<
     dotClassName: string;
   }
 > = {
-  current: {
-    label: "Aktuell",
-    cardClassName: "border-red-300 bg-red-50 shadow-sm shadow-red-100/80",
-    badgeClassName: "border-red-200 bg-white text-red-700",
-    dotClassName: "bg-red-500",
+  done: {
+    label: "Abgedeckt",
+    cardClassName: "border-emerald-300 bg-emerald-50 shadow-sm shadow-emerald-100/80",
+    badgeClassName: "border-emerald-200 bg-white text-emerald-700",
+    dotClassName: "bg-emerald-500",
   },
   upcoming: {
-    label: "Als Nächstes",
+    label: "Als Naechstes",
     cardClassName: "border-amber-200 bg-amber-50/60",
     badgeClassName: "border-amber-200 bg-white text-amber-700",
     dotClassName: "bg-amber-500",
   },
   future: {
-    label: "Später",
+    label: "Spaeter",
     cardClassName: "border-slate-200 bg-slate-50",
     badgeClassName: "border-slate-200 bg-white text-slate-600",
     dotClassName: "bg-slate-400",
@@ -79,11 +83,11 @@ export function RoadmapSection() {
               Roadmap
             </span>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
-              Was als Nächstes entsteht
+              Was als Naechstes entsteht
             </h2>
             <p className="mt-3 text-sm leading-6 text-slate-600 md:text-base">
-              Die Roadmap zeigt die aktuelle Reihenfolge der Arbeitspakete. Sie dient
-              als Orientierung und wird mit neuen Erkenntnissen laufend geschärft.
+              Die Roadmap trennt den heute abgedeckten Lookup-Umfang (Phase 0) klar von spaeteren
+              Ausbaustufen. Sie dient zur Orientierung und ersetzt kein verbindliches Angebot.
             </p>
           </div>
 
@@ -132,8 +136,8 @@ export function RoadmapSection() {
           </div>
 
           <p className="mt-6 text-sm leading-6 text-slate-500">
-            Hinweis: Die Inhalte dieser Roadmap beschreiben den aktuellen Arbeitsstand,
-            nicht einen verbindlichen Leistungsumfang.
+            Hinweis: Die Roadmap beschreibt Planung und oeffentlich kommunizierten Stand,
+            keine vertraglich zugesicherten Leistungen.
           </p>
         </div>
       </Container>

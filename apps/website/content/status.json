@@ -1,26 +1,25 @@
 {
-  "generatedAt": "2026-03-24T22:40:56.127Z",
+  "generatedAt": "2026-03-27T12:00:00.000Z",
   "projectPhase": {
-    "label": "Alpha Maerz 2026",
-    "title": "ResQBrain befindet sich in einer fruehen Entwicklungsphase.",
-    "summary": "Die Architektur steht, das Domain-Modell ist definiert und die erste MVP-Implementierung laeuft bereits.",
-    "asOf": "Maerz 2026"
+    "label": "Early Stage — Offen fuer Feedback",
+    "title": "Lookup-Umfang abgebildet — Pilot und breitere Nutzung folgen",
+    "summary": "Architektur und oeffentliche Darstellung sind auf einen klaren Lookup-Schwerpunkt ausgerichtet: Algorithmen, Medikamente, statische Datenbasis sowie Listen- und Detailansichten. Dieser Umfang ist im aktuellen Entwicklungsstand abgebildet — ohne eine breite Produktfreigabe oder einen laufenden Pilotbetrieb zu behaupten. Wir sammeln Rueckmeldungen und sprechen mit Interessierten aus dem Rettungsdienst.",
+    "asOf": "27.03.2026"
   },
   "currentFocus": [
-    "Domain-Baseline in einem Ort konsolidieren und ausfuehrbar machen.",
-    "Architektur-, Domain- und Workflow-Kontext fuer den MVP stabilisieren.",
-    "Website Routing, Legal Pages und Deployment-Pipeline absichern."
+    "Rueckmeldungen zu Bedienung, Lesbarkeit und Prioritaeten aus der Praxis auswerten.",
+    "Erweiterungen fuer die naechste Ausbaustufe nur auf Basis belastbarer Signale eingrenzen.",
+    "Pilotkontext und Inhaltsquelle mit potenziellen Pilotpartnern abstimmen."
   ],
   "nextSteps": [
-    "Domain-Baseline festziehen.",
-    "Content-Sourcing fuer Seed-Daten entscheiden (Pilot-Wache).",
-    "Offline-Datenhaltung (lokal-erste Architektur) umsetzen.",
-    "Schnelle lokale Suche und erste Mobile Views fertigstellen."
+    "Feedback und Pilotanfragen buendeln und strukturiert auswerten.",
+    "Schwerpunkte fuer die naechste Ausbaustufe skizzieren (orientiert an der Roadmap, ohne Leistungsversprechen).",
+    "Vorgehen fuer eine Pilotphase vorbereiten, sobald der Kreis der Beteiligten klarer ist."
   ],
   "roadmap": [
-    "Phase 0: Lookup App (offline, in Sekunden) fuer Medikamente und Algorithmen.",
-    "Phase 1: Einsatz Features (Dosierungsrechner, Favoriten, Verlauf, Push-Updates).",
-    "Phase 2: Lernen (Lernmodus, Quiz, fallbasiert).",
-    "Phase 3: Organisation (Rollen, Freigaben, Editor, Multi-Tenant)."
+    "Phase 0 — Lookup-Schwerpunkt: beschriebener Umfang im aktuellen Stand abgedeckt.",
+    "Phase 1 — Erweiterungen: als Naechstes, abhaengig von Pilot-Feedback.",
+    "Phase 2 — Lernen: mittelfristig vorgesehen.",
+    "Phase 3 — Organisation: langfristig vorgesehen (Rollen, Freigaben, Multi-Tenant)."
   ]
 }

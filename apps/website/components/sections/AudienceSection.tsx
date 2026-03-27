@@ -2,16 +2,16 @@ import { Container } from "../layout/Container";
 
 const audiences = [
   {
-    title: "Jederzeit verfuegbar",
-    text: "Zuverlaessig abrufbar, auch ohne Mobilfunk oder WLAN.",
+    title: "Fuer den akuten Zugriff",
+    text: "Gedacht fuer Einsatzkraefte, die Medikamente und Algorithmen unter Zeitdruck schnell nachschlagen muessen.",
   },
   {
-    title: "Einheitlicher Stand",
-    text: "Alle im Team arbeiten mit demselben, geprueften Informationsstand.",
+    title: "Pilot-Wache im Fokus",
+    text: "Der aktuelle Stand ist auf einen klar begrenzten Pilotkontext mit definierter Inhaltsquelle ausgerichtet.",
   },
   {
-    title: "Schnell im Einsatz",
-    text: "Klare Struktur, schnelle Orientierung — wenn jede Sekunde zaehlt.",
+    title: "Praxisnah statt administrativ",
+    text: "Im Vordergrund steht die operative Nutzung im Einsatz, nicht Organisationsverwaltung oder Governance-Workflows.",
   },
 ];
 
@@ -22,11 +22,11 @@ export function AudienceSection() {
         <div className="section-heading">
           <span className="eyebrow">Zielgruppen</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Fuer alle, die im Einsatz auf verlassliche Informationen angewiesen sind.
+            Realistisch zugeschnitten auf den aktuellen Einsatzkontext.
           </h2>
           <p className="muted" style={{ marginTop: "1rem" }}>
-            Von der Besatzung auf dem RTW bis zur aerztlichen Leitung — ResQBrain deckt die
-            operative Nutzung und die inhaltliche Verantwortung gemeinsam ab.
+            ResQBrain richtet sich am aktuellen Stand vor allem an operative Einsatzkraefte auf
+            dem Fahrzeug oder im unmittelbaren Einsatzumfeld.
           </p>
         </div>
 

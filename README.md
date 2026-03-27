@@ -84,7 +84,7 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 
 ## Heute erledigt
 
-- Anker-Links in Umfrage- und Feature-Bereichen auf vorhandene Section-IDs abgestimmt (`#surveys`, `#cta`).  
+- Anker-Links in Umfrage- und Feature-Bereichen auf vorhandene Section-IDs abgestimmt (`#feedback`, `#cta`).  
 - Routing-Validierungsskript an die neuen Ziele angepasst.  
 - Projektstatus, Arbeitssession-Log und Roadmap-Dateien aktualisiert bzw. angelegt.  
 - README von Merge-Konfliktmarken bereinigt und auf Deutsch konsolidiert.
@@ -120,7 +120,7 @@ Letzter vollständiger Website-Build in der Abschlusssession: **erfolgreich** (N
 | `/impressum` | OK |
 | `/datenschutz` | OK |
 
-Footer- und CTA-Links zeigen auf die obigen Routen bzw. interne Anker (`#cta`, `#features`, `#top`, `#surveys`). Validierung: `pnpm --filter @resqbrain/website run validate:routing`.
+Footer- und CTA-Links zeigen auf die obigen Routen bzw. interne Anker (`#cta`, `#features`, `#top`, `#feedback`). Validierung: `pnpm --filter @resqbrain/website run validate:routing`.
 
 ## Mitmachen
 

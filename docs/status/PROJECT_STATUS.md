@@ -34,7 +34,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `/impressum` | `apps/website/app/impressum/page.tsx` | Static |
 | `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | Static |
 
-Interne Anker wurden auf existierende Section-IDs abgestimmt (z. B. `#surveys`, `#cta`, `#features`, `#top`). Validierung: `pnpm --filter @resqbrain/website run validate:routing`.
+Interne Anker wurden auf existierende Section-IDs abgestimmt (z. B. `#feedback`, `#cta`, `#features`, `#top`). Validierung: `pnpm --filter @resqbrain/website run validate:routing`.
 
 ## Build
 
@@ -46,7 +46,7 @@ Interne Anker wurden auf existierende Section-IDs abgestimmt (z. B. `#surveys`, 
 ## Risiken
 
 1. **README-Konfliktmarken** waren im Repository vorhanden und mussten bereinigt werden — bei künftigen Merges auf einheitliche deutsche README-Pflege achten.
-2. **Externe Umfrage-URLs** sind Platzhalter (`#surveys` bzw. generische Hinweise); echte Survey-Links und Datenschutz-Folgen müssen vor Go-Live gesetzt werden.
+2. **Externe Umfrage-URLs** sind Platzhalter (z. B. `mailto` bzw. generische Hinweise); echte Survey-Links und Datenschutz-Folgen müssen vor Go-Live gesetzt werden.
 3. **Produktions-Deployment** der Website ist nicht Teil des täglichen Builds; Pipeline und Hosting separat absichern.
 4. **Mandantentrennung** ist im Domain-Modell angelegt, aber noch nicht durch eine produktive API mit Auth durchgängig erzwungen.
 

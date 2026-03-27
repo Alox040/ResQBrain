@@ -8,34 +8,34 @@ type FeatureCandidate = {
 
 const featureCandidates: FeatureCandidate[] = [
   {
-    id: "offline-algorithms",
-    label: "Offline Algorithmen",
-    description: "Entscheidungspfade lokal verfuegbar, auch ohne stabile Verbindung.",
+    id: "search-priority",
+    label: "Schnellere Suche",
+    description: "Welche Suchwege und Trefferlisten im kommunizierten Lookup-Umfang zuerst optimiert werden sollen.",
   },
   {
-    id: "dosage-calculator",
-    label: "Dosierungsrechner",
-    description: "Schnelle Berechnung fuer typische Einsatz- und Notfallkontexte.",
+    id: "medication-detail-depth",
+    label: "Mehr Medikament-Details",
+    description: "Welche Zusatzinformationen in den Detailansichten wirklich nuetzlich sind.",
   },
   {
-    id: "dispatch-integration",
-    label: "Leitstellen Anbindung",
-    description: "Relevante Einsatzdaten strukturiert aus bestehenden Systemen uebernehmen.",
+    id: "algorithm-navigation",
+    label: "Algorithmus-Navigation",
+    description: "Wie Schrittfolgen und Sprungmarken in den Detailansichten verbessert werden koennen.",
   },
   {
-    id: "training-mode",
-    label: "Ausbildungsmodus",
-    description: "Szenarien und Lernpfade fuer Training, Einweisung und Wiederholung.",
+    id: "favorites-hypothesis",
+    label: "Favoriten als Hypothese",
+    description: "Moegliche Phase-1-Erweiterung, falls sie im Pilotkontext tatsaechlich Nutzen bringt.",
   },
   {
-    id: "report-export",
-    label: "Einsatzprotokoll Export",
-    description: "Inhalte und Entscheidungen nachvollziehbar fuer Dokumentation ausgeben.",
+    id: "calculator-hypothesis",
+    label: "Rechenhilfen als Hypothese",
+    description: "Moegliche spaetere Erweiterung fuer klar definierte Faelle, nicht Teil des aktuellen kommunizierten Umfangs.",
   },
   {
-    id: "sop-update-push",
-    label: "Automatische Updates",
-    description: "Aenderungen automatisch auf alle Geraete uebertragen, sobald Verbindung besteht.",
+    id: "learning-hypothesis",
+    label: "Lernansichten spaeter",
+    description: "Lernfunktionen bleiben ausserhalb des Lookup-Schwerpunkts und werden nur bei echtem Bedarf priorisiert.",
   },
 ];
 
@@ -49,11 +49,11 @@ export function FeatureVotingSection() {
               Feature Feedback
             </span>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
-              Was soll als nächstes kommen?
+              Was soll als naechstes kommen?
             </h2>
             <p className="mt-3 text-sm leading-6 text-slate-600 md:text-base">
-              Wir sammeln Feedback welche Funktionen im Rettungsdienst Alltag am
-              wichtigsten sind.
+              Hier sammeln wir Rueckmeldungen zu sinnvollen Verbesserungen des Lookup-Umfangs und zu
+              spaeteren Hypothesen fuer die naechste Ausbaustufe.
             </p>
           </div>
 
@@ -73,10 +73,10 @@ export function FeatureVotingSection() {
 
           <div className="mt-8">
             <a
-              href="#cta"
+              href="mailto:pilot@resqbrain.de?subject=ResQBrain%20Feature-Feedback"
               className="inline-flex items-center rounded-full border border-slate-900 bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-slate-700"
             >
-              Feedback geben
+              Feature-Feedback senden
             </a>
           </div>
         </div>

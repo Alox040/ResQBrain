@@ -13,27 +13,53 @@ export function HeroSection() {
       <Container>
         <div className="hero-grid">
           <div style={{ maxWidth: "42rem" }}>
-            <span className="eyebrow">Fuer Einsatzkraefte</span>
             <h1
               style={{
-                marginTop: "1.2rem",
+                margin: 0,
                 fontSize: "clamp(2.8rem, 6vw, 5rem)",
                 letterSpacing: "-0.04em",
               }}
             >
-              Einsatzwissen. Ohne Netz. Ohne Umwege.
+              ResQBrain
             </h1>
             <p
               className="muted"
               style={{
-                marginTop: "1.4rem",
-                fontSize: "1.1rem",
+                marginTop: "1rem",
+                fontSize: "1.25rem",
                 maxWidth: "36rem",
+                fontWeight: 600,
+                color: "var(--text)",
               }}
             >
-              Medikamentendosierungen und Algorithmen — gepruefte Inhalte direkt auf dein Geraet, auch wenn
-              kein Mobilfunk verfuegbar ist.
+              Die Wissensplattform fuer den Rettungsdienst
             </p>
+            <div
+              style={{
+                marginTop: "1.2rem",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.5rem",
+              }}
+            >
+              {["Algorithmen", "Medikamente", "SOPs"].map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    display: "inline-flex",
+                    padding: "0.35rem 0.75rem",
+                    borderRadius: "999px",
+                    border: "1px solid rgba(215, 224, 235, 0.95)",
+                    background: "rgba(255,255,255,0.9)",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "var(--text)",
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
             <ul
               style={{
                 marginTop: "1.4rem",
@@ -44,38 +70,39 @@ export function HeroSection() {
                 gap: "0.6rem",
               }}
             >
-              <li style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                <span style={{ marginTop: "0.1rem" }}>—</span>
-                <span>
-                  <strong>Offline-faehig</strong> — voller Zugriff ohne WLAN oder Mobilfunk
-                </span>
-              </li>
-              <li style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                <span style={{ marginTop: "0.1rem" }}>—</span>
-                <span>
-                  <strong>Medikamente</strong> — Dosierungen und Kontraindikationen auf einen Blick
-                </span>
-              </li>
-              <li style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
-                <span style={{ marginTop: "0.1rem" }}>—</span>
-                <span>
-                  <strong>Algorithmen</strong> — gepruefte Inhalte eurer Wache, keine Fremddokumente
-                </span>
-              </li>
+              {["Versioniert", "Organisationsspezifisch", "Schnell im Einsatz verfuegbar"].map(
+                (item) => (
+                  <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+                    <span style={{ marginTop: "0.1rem" }} aria-hidden="true">
+                      -
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ),
+              )}
             </ul>
+            <p
+              className="eyebrow"
+              style={{
+                marginTop: "1.5rem",
+                width: "fit-content",
+              }}
+            >
+              Fruehe Entwicklungsphase — Rueckmeldungen und Pilotkontakt willkommen
+            </p>
             <div className="button-row" style={{ marginTop: "2rem" }}>
-              <a className="button-primary" href="#cta">
-                Fruehzugang anfragen
+              <a className="button-secondary" href="/#feedback">
+                Feedback geben
               </a>
-              <a className="button-secondary" href="#features">
-                Features ansehen
+              <a className="button-primary" href="/#cta">
+                Pilotpartner werden
               </a>
             </div>
           </div>
 
           <aside
             className="card"
-            aria-label="Produktvorschau"
+            aria-label="Produktfokus"
             style={{
               background: "linear-gradient(180deg, #0f1b2d 0%, #16243b 100%)",
               color: "#f5f7fb",
@@ -83,7 +110,7 @@ export function HeroSection() {
             }}
           >
             <p style={{ margin: 0, color: "rgba(245,247,251,0.64)", fontWeight: 700 }}>
-              Einsatzansicht
+              Schwerpunkte
             </p>
             <div
               style={{
@@ -99,9 +126,9 @@ export function HeroSection() {
                   background: "rgba(255,255,255,0.06)",
                 }}
               >
-                <strong>Polytrauma Algorithmus</strong>
+                <strong>Algorithmen</strong>
                 <p style={{ margin: "0.6rem 0 0", color: "rgba(245,247,251,0.74)" }}>
-                  Offline verfuegbar, schnell abrufbar.
+                  Versioniert.
                 </p>
               </div>
               <div className="preview-grid">
@@ -114,7 +141,7 @@ export function HeroSection() {
                 >
                   <strong>Medikamente</strong>
                   <p style={{ margin: "0.5rem 0 0", color: "rgba(245,247,251,0.74)" }}>
-                    Dosierungen und Kontraindikationen
+                    Organisationsspezifisch.
                   </p>
                 </div>
                 <div
@@ -124,9 +151,9 @@ export function HeroSection() {
                     background: "rgba(31,157,104,0.14)",
                   }}
                 >
-                  <strong>Algorithmen</strong>
+                  <strong>SOPs</strong>
                   <p style={{ margin: "0.5rem 0 0", color: "rgba(245,247,251,0.74)" }}>
-                    Schritt fuer Schritt abrufbar
+                    Schnell im Einsatz auffindbar — Zielbild.
                   </p>
                 </div>
               </div>

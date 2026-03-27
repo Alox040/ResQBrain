@@ -4,60 +4,58 @@ type WorkItem = {
   id: string;
   title: string;
   description: string;
-  area: "Backend" | "Datenmodell" | "Mobile" | "Auth" | "Frontend";
-  status: "in-progress" | "review";
+  area: "Lookup" | "Datenbasis" | "Vorbereitung";
+  status: "done" | "planned";
 };
 
 const workItems: WorkItem[] = [
   {
-    id: "seed-data",
-    title: "Seed-Daten aufbereiten",
+    id: "algorithm-lookup",
+    title: "Algorithm Lookup",
     description:
-      "Medikamente und Algorithmen fuer eine Pilot-Wache konsolidieren, normalisieren und als Seed-Bundle bereitstellen.",
-    area: "Datenmodell",
-    status: "in-progress",
+      "Algorithmen sind als Lookup-Baustein in Listen- und Detailansichten im kommunizierten Umfang abgebildet.",
+    area: "Lookup",
+    status: "done",
   },
   {
-    id: "offline-store",
-    title: "Offline-Datenhaltung",
+    id: "medication-lookup",
+    title: "Medication Lookup",
     description:
-      "Lokal-erste Datenhaltung umsetzen, damit die App immer aus dem Cache startet und ohne Netz voll nutzbar bleibt.",
-    area: "Frontend",
-    status: "review",
+      "Medikamenteninformationen stehen in einer statischen Datenbasis lokal fuer Listen- und Detailansichten bereit.",
+    area: "Lookup",
+    status: "done",
   },
   {
-    id: "local-search",
-    title: "Schnelle lokale Suche",
+    id: "static-data",
+    title: "Statische Datenbasis",
     description:
-      "Index und Suche so auslegen, dass Ergebnisse in unter 3 Sekunden verfuegbar sind — ohne Server-Calls.",
-    area: "Backend",
-    status: "in-progress",
+      "Gepruefte Inhalte werden fuer einen Pilotkontext aus einer definierten Quelle gebuendelt und lokal bereitgestellt.",
+    area: "Datenbasis",
+    status: "done",
   },
   {
-    id: "mobile-ui",
-    title: "Einsatz-optimierte Mobile UI",
+    id: "phase-1-prep",
+    title: "Naechste Ausbaustufe",
     description:
-      "Grosse Schrift, Handschuhbedienung, hoher Kontrast und schnelle Navigation fuer den Einsatz sicherstellen.",
-    area: "Mobile",
-    status: "in-progress",
+      "Weitere Themen werden aus Pilot-Feedback eingegrenzt und noch nicht als fertige Produktfunktionen bezeichnet.",
+    area: "Vorbereitung",
+    status: "planned",
   },
 ];
 
 const areaClasses: Record<WorkItem["area"], string> = {
-  Backend: "border-sky-200 bg-sky-50 text-sky-700",
-  Datenmodell: "border-emerald-200 bg-emerald-50 text-emerald-700",
-  Mobile: "border-orange-200 bg-orange-50 text-orange-700",
-  Auth: "border-rose-200 bg-rose-50 text-rose-700",
-  Frontend: "border-violet-200 bg-violet-50 text-violet-700",
+  Lookup: "border-sky-200 bg-sky-50 text-sky-700",
+  Datenbasis: "border-emerald-200 bg-emerald-50 text-emerald-700",
+  Vorbereitung: "border-violet-200 bg-violet-50 text-violet-700",
 };
 
 const statusMeta: Record<WorkItem["status"], { label: string; className: string }> = {
-  "in-progress": {
-    label: "In Arbeit",
-    className: "border-amber-200 bg-amber-50 text-amber-700",
+  done: {
+    label: "Abgedeckt",
+    className: "border-emerald-200 bg-emerald-50 text-emerald-700",
   },
-  review: {
-    label: "Im Review",
+  planned: {
+    label: "Geplant",
     className: "border-slate-200 bg-slate-100 text-slate-700",
   },
 };
@@ -72,11 +70,12 @@ export function BuildingNowSection() {
               Produktentwicklung
             </span>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
-              Was wir gerade bauen
+              Was heute bereits steht
             </h2>
             <p className="mt-3 text-sm leading-6 text-slate-600 md:text-base">
-              Vier konkrete Bausteine, die aktuell die Grundlage fuer den ersten
-              einsatzfaehigen ResQBrain-Workflow bilden.
+              Der oeffentlich kommunizierte Umfang entspricht dem Lookup-Schwerpunkt der Roadmap
+              (Phase 0). Hier steht, was in diesem Stand umgesetzt ist und was fuer die naechste
+              Ausbaustufe vorbereitet wird — ohne darueber hinausgehende Funktionen zu behaupten.
             </p>
           </div>
 

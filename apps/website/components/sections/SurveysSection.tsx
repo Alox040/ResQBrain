@@ -20,50 +20,45 @@ export type Survey = {
 const SURVEYS: Survey[] = [
   {
     id: "survey-001",
-    title: "Bedarfserhebung: Digitale Einsatzdokumentation",
+    title: "Bedarfserhebung: Lookup im Einsatz",
     description:
-      "Welche Informationen muessen Rettungskraefte im Einsatz am schnellsten erfassen, finden und weitergeben koennen?",
+      "Welche Medikamente und Algorithmen sollen im Einsatz besonders schnell auffindbar sein?",
     status: "active",
     startDate: "2026-03-01",
     endDate: "2026-04-12",
-    participants: 42,
     highlights: [
-      "Fokus auf Alarmierung, Dokumentation und Uebergabe",
-      "Rueckmeldungen aus Stadt- und Landkreisen",
-      "Auswertung fliesst direkt in den MVP-Backlog ein",
+      "Es geht um Suchwege, Prioritaeten und Lesbarkeit.",
+      "Rueckmeldungen aus dem operativen Kontext.",
+      "Dient der Priorisierung; keine automatisierten Produktfolgen.",
     ],
-    surveyUrl: "#surveys",
+    surveyUrl: "mailto:pilot@resqbrain.de?subject=ResQBrain%20Umfrage%20Lookup%20im%20Einsatz",
   },
   {
     id: "survey-002",
     title: "Priorisierung: Offline-Funktionen im Einsatz",
     description:
-      "Welche Inhalte muessen auch ohne Netzabdeckung jederzeit verfuegbar bleiben, damit die Plattform im Alltag belastbar ist?",
+      "Welche Inhalte sollen in einem fruehen Ausbau auch ohne Netzabdeckung lokal verfuegbar bleiben?",
     status: "analyzing",
     startDate: "2026-01-15",
     endDate: "2026-02-28",
-    participants: 118,
     highlights: [
-      "Offline-Algorithmen wurden am haeufigsten genannt",
-      "Medikamentenlisten haben hoechste Prioritaet",
-      "Synchronisation nach Netzrueckkehr ist zentral",
+      "Die Auswertung ist noch nicht abgeschlossen.",
+      "Ergebnisse werden zusammengefasst, sobald die Runde final bewertet ist.",
     ],
   },
   {
     id: "survey-003",
     title: "Nutzerbefragung: Prototyp-Feedback",
     description:
-      "Erste Rueckmeldungen zur Navigationsstruktur, Lesbarkeit und Bedienung des Prototyps unter Einsatzbedingungen.",
+      "Rueckmeldungen zur Navigationsstruktur, Lesbarkeit und Bedienung eines fruehen Prototyps.",
     status: "completed",
     startDate: "2025-11-01",
     endDate: "2025-12-15",
-    participants: 67,
     highlights: [
-      "Kontrast und Schriftgroesse wurden als kritisch bewertet",
-      "Einhand-Bedienung wurde stark nachgefragt",
-      "Suche und Schnellzugriff waren die wichtigsten Features",
+      "Die Befragung ist abgeschlossen.",
+      "Details koennen auf Anfrage im Pilotkontext besprochen werden.",
     ],
-    resultsUrl: "#",
+    resultsUrl: "mailto:pilot@resqbrain.de?subject=ResQBrain%20Ergebnisse%20Prototyp-Feedback",
   },
 ];
 
@@ -123,12 +118,16 @@ export function SurveyCard({ survey }: { survey: Survey }) {
   const dateLabel = formatDateRange(survey.startDate, survey.endDate);
   const isActive = survey.status === "active";
   const isCompleted = survey.status === "completed";
-  const actionLabel = isActive
-    ? "Zur Umfrage"
-    : isCompleted
-      ? "Ergebnisse"
-      : "Auswertung läuft";
   const actionHref = isActive ? survey.surveyUrl : isCompleted ? survey.resultsUrl : undefined;
+  const actionLabel = isActive
+    ? actionHref?.startsWith("mailto:")
+      ? "Per E-Mail teilnehmen"
+      : "Zur Umfrage"
+    : isCompleted
+      ? actionHref?.startsWith("mailto:")
+        ? "Ergebnisse per E-Mail anfragen"
+        : "Ergebnisse anfragen"
+      : "Auswertung laeuft";
 
   return (
     <article className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 transition-transform duration-200 hover:-translate-y-1">
@@ -152,21 +151,23 @@ export function SurveyCard({ survey }: { survey: Survey }) {
         </ul>
       ) : null}
 
-      <div className="mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600 sm:grid-cols-2">
+      <div
+        className={`mt-6 grid gap-3 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600 ${
+          survey.participants !== undefined ? "sm:grid-cols-2" : ""
+        }`}
+      >
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-            Zeitraum
-          </p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Zeitraum</p>
           <p className="mt-1">{dateLabel ?? "Noch offen"}</p>
         </div>
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-            Teilnahme
-          </p>
-          <p className="mt-1">
-            {survey.participants !== undefined ? `${survey.participants} Personen` : "Noch keine Daten"}
-          </p>
-        </div>
+        {survey.participants !== undefined ? (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              Teilnahme
+            </p>
+            <p className="mt-1">{survey.participants} Personen</p>
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-auto pt-6">
@@ -184,9 +185,9 @@ export function SurveyCard({ survey }: { survey: Survey }) {
             </a>
             {isActive ? (
               <p className="mt-3 text-xs leading-relaxed text-slate-500">
-                Die Umfrage wird über einen externen Anbieter durchgeführt.
+                Die Umfrage wird ueber einen externen Anbieter oder direkten Kontakt organisiert.
                 <br />
-                Es gilt zusätzlich deren Datenschutz.{" "}
+                Es gilt zusaetzlich deren Datenschutz.{" "}
                 <Link
                   href="/datenschutz"
                   className="font-semibold text-red-700 underline decoration-red-700/40 underline-offset-2 hover:text-red-800"
@@ -212,28 +213,24 @@ export function SurveysSection({ surveys = SURVEYS }: { surveys?: Survey[] }) {
 
   return (
     <section
-      id="surveys"
+      id="feedback"
       className="bg-gradient-to-b from-slate-50 via-white to-slate-100 py-16 text-slate-900 md:py-24"
     >
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
-            Community Feedback
+            Feedback
           </span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Umfragen und Ergebnisse
-          </h2>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">Umfragen und Ergebnisse</h2>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            ResQBrain wird gemeinsam mit Rettungskraeften entwickelt. Aktive Umfragen stehen oben,
-            abgeschlossene Runden und laufende Auswertungen darunter.
+            Rueckmeldungen werden per Umfrage oder direktem Kontakt gesammelt. Aktive Runden stehen oben;
+            abgeschlossene Umfragen und laufende Auswertungen darunter.
           </p>
         </div>
 
         <div className="mt-12">
           <div className="flex items-center justify-between gap-4">
-            <h3 className="text-2xl font-semibold tracking-tight text-slate-950">
-              Aktive Umfragen
-            </h3>
+            <h3 className="text-2xl font-semibold tracking-tight text-slate-950">Aktive Umfragen</h3>
             <span className="text-sm text-slate-500">{activeSurveys.length} offen</span>
           </div>
 
@@ -262,29 +259,27 @@ export function SurveysSection({ surveys = SURVEYS }: { surveys?: Survey[] }) {
         <div className="mt-16 rounded-[2rem] border border-slate-200 bg-slate-950 px-6 py-8 text-slate-100 shadow-xl shadow-slate-900/10 md:px-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">
-                Naechste Feedbackrunde
-              </p>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Mitmachen</p>
               <h3 className="mt-3 text-2xl font-semibold tracking-tight">
                 Hilf mit, die naechsten Prioritaeten fuer ResQBrain festzulegen.
               </h3>
               <p className="mt-3 text-sm leading-6 text-slate-300">
-                Wir suchen Rueckmeldungen aus dem Rettungsdienst, aus Leitstellen und aus der
-                Ausbildung. Jede Teilnahme verbessert die Produktentscheidungen.
+                Gesucht sind Rueckmeldungen aus dem operativen Rettungsdienst, damit der naechste Ausbau
+                am realen Bedarf ausgerichtet bleibt.
               </p>
             </div>
 
             <div className="flex w-full flex-col items-stretch md:w-auto md:items-end">
               <a
-                href="#surveys"
+                href="mailto:pilot@resqbrain.de?subject=ResQBrain%20Naechste%20Feedbackrunde"
                 className="inline-flex items-center justify-center rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-red-700"
               >
-                Zur naechsten Umfrage
+                Feedbackrunde anfragen
               </a>
               <p className="mt-3 max-w-md text-left text-xs leading-relaxed text-slate-400 md:text-right">
-                Die Umfrage wird über einen externen Anbieter durchgeführt.
+                Rueckmeldungen koennen ueber externe Umfragen oder direkten Kontakt eingehen.
                 <br />
-                Es gilt zusätzlich deren Datenschutz.{" "}
+                Es gilt zusaetzlich deren Datenschutz.{" "}
                 <Link
                   href="/datenschutz"
                   className="font-semibold text-red-300 underline decoration-red-300/40 underline-offset-2 hover:text-red-200"

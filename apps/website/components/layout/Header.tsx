@@ -25,7 +25,7 @@ export function Header() {
             padding: "0.9rem 0",
           }}
         >
-          <a href="#top" style={{ color: "#f5f7fb", fontSize: "1.1rem", fontWeight: 800 }}>
+          <a href="/" style={{ color: "#f5f7fb", fontSize: "1.1rem", fontWeight: 800 }}>
             ResQBrain
           </a>
           <Navigation />

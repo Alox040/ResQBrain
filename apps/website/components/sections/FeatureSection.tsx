@@ -3,27 +3,27 @@ import { Container } from "../layout/Container";
 const features = [
   {
     title: "Medikamente sofort finden",
-    text: "Dosierungen, Kontraindikationen und Handelsnamen auf einen Blick — ohne Scrollen, ohne Suchen.",
+    text: "Medikamente schnell ueber Listen und lokale Suche aufrufen, statt im Ordner oder PDF zu suchen.",
   },
   {
     title: "Algorithmen griffbereit",
-    text: "Einsatzprotokolle strukturiert und schrittweise abrufbar — auch unter Stress lesbar.",
+    text: "Algorithmen strukturiert in Listen- und Detailansichten abrufen - klar lesbar auch unter Zeitdruck.",
   },
   {
     title: "Offline-Zugriff",
-    text: "Voller Funktionsumfang ohne Mobilfunk oder WLAN — im Keller, auf der Autobahn, im Funkloch.",
+    text: "Die statische Datenbasis liegt lokal vor und bleibt ohne Mobilfunk oder WLAN verfuegbar.",
   },
   {
-    title: "Einsatzmodus",
-    text: "Minimale Klicks, maximale Uebersicht. Die Oberflaeche ist fuer Zeitdruck und Handschuhe optimiert.",
+    title: "Klare Detailansichten",
+    text: "Wesentliche Informationen stehen direkt in der Ansicht: Dosierungen, Hinweise und Algorithmus-Schritte.",
   },
   {
-    title: "Inhalte eurer Wache",
-    text: "Gepruefte Inhalte und Dosierungen eurer Organisation — keine unverifizierten Fremddokumente.",
+    title: "Gepruefte Pilot-Inhalte",
+    text: "Der aktuelle Stand nutzt eine definierte, gepruefte Inhaltsbasis fuer einen klar begrenzten Pilotkontext.",
   },
   {
-    title: "Immer aktuell",
-    text: "Automatische Updates uebertragen Aenderungen auf alle Geraete, sobald Verbindung besteht.",
+    title: "Phase 1 in Vorbereitung",
+    text: "Weitere Funktionen wie Rechenhilfen oder Lernansichten sind fuer spaetere Stufen vorgesehen, nicht Teil des kommunizierten Lookup-Umfangs.",
   },
 ];
 
@@ -34,7 +34,7 @@ export function FeatureSection() {
         <div className="section-heading">
           <span className="eyebrow">Features</span>
           <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Was dein Team im Einsatz braucht.
+            Was der aktuelle Stand abdeckt.
           </h2>
         </div>
 
