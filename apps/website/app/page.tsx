@@ -7,6 +7,7 @@ import { FooterSection } from "../components/sections/FooterSection";
 import { HeroSection } from "../components/sections/HeroSection";
 import { ProblemSection } from "../components/sections/ProblemSection";
 import { SolutionSection } from "../components/sections/SolutionSection";
+import { SurveysSection } from "../components/sections/SurveysSection";
 import { TrustSection } from "../components/sections/TrustSection";
 import { UseCasesSection } from "../components/sections/UseCasesSection";
 
@@ -14,6 +15,7 @@ export default function Page() {
   return (
     <main>
       <HeroSection />
+      <SurveysSection />
       <ProblemSection />
       <SolutionSection />
       <FeatureSection />

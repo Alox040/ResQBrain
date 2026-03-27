@@ -15,31 +15,19 @@ These components are designed for ResQBrain but not yet integrated into the main
 
 ## Available Components
 
-### 1. EmergencyProtocolCard
-Display emergency medical protocols with priority levels.
-- **Path:** `/apps/website/components/_staging/EmergencyProtocolCard/`
-- **Use Case:** Protocol library, quick access cards
-- **Key Features:** Priority badges, step counts, version tracking
-
-### 2. QuickSearchWidget
+### 1. QuickSearchWidget
 Fast search interface for protocols, drugs, and guidelines.
 - **Path:** `/apps/website/components/_staging/QuickSearchWidget/`
 - **Use Case:** Main search, header widget, dashboard
 - **Key Features:** Recent searches, popular searches, one-hand usage
 
-### 3. AlertBanner
+### 2. AlertBanner
 Critical alerts and notifications with high visibility.
 - **Path:** `/apps/website/components/_staging/AlertBanner/`
 - **Use Case:** System alerts, updates, warnings
 - **Key Features:** 4 severity levels, dismissible, action buttons
 
-### 4. DrugReferenceCard
-Medication dosage and safety information.
-- **Path:** `/apps/website/components/_staging/DrugReferenceCard/`
-- **Use Case:** Drug library, quick reference
-- **Key Features:** Dosages, warnings, contraindications
-
-### 5. StatusDashboard
+### 3. StatusDashboard
 System health and sync status monitoring.
 - **Path:** `/apps/website/components/_staging/StatusDashboard/`
 - **Use Case:** Settings page, system overview
@@ -78,9 +66,9 @@ System health and sync status monitoring.
 
 When integrating these components:
 
-1. **Import the component**
+1. **Import a staging component**
    ```tsx
-   import { EmergencyProtocolCard } from "@/components/_staging/EmergencyProtocolCard/EmergencyProtocolCard";
+   import QuickSearchWidget from "@/components/_staging/QuickSearchWidget/QuickSearchWidget";
    ```
 
 2. **Maintain high contrast**

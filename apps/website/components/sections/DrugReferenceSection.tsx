@@ -1,4 +1,4 @@
-import DrugReferenceCard from "../_staging/DrugReferenceCard/DrugReferenceCard";
+import DrugReferenceCard from "../ui/DrugReferenceCard";
 import { Container } from "../layout/Container";
 import { Section } from "../ui/Section";
 import { SectionHeader } from "../ui/SectionHeader";

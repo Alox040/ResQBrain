@@ -1,4 +1,4 @@
-import { Pill, AlertTriangle, Info, Syringe } from "lucide-react";
+import { AlertTriangle, Info, Pill, Syringe } from "lucide-react";
 
 interface Dosage {
   route: string;
@@ -30,16 +30,12 @@ export default function DrugReferenceCard({
       {/* Header */}
       <div className="bg-indigo-600 p-6 border-b-4 border-indigo-700">
         <div className="flex items-start gap-4 mb-3">
-          <div className="w-14 h-14 bg-indigo-700 rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-14 h-14 bg-indigo-700 rounded-xl flex items-center justify-center shrink-0">
             <Pill className="w-8 h-8 text-white" strokeWidth={2.5} />
           </div>
           <div className="flex-1">
-            <div className="text-sm font-bold text-indigo-200 uppercase mb-1">
-              {category}
-            </div>
-            <h3 className="text-3xl md:text-4xl font-black text-white leading-tight">
-              {name}
-            </h3>
+            <div className="text-sm font-bold text-indigo-200 uppercase mb-1">{category}</div>
+            <h3 className="text-3xl md:text-4xl font-black text-white leading-tight">{name}</h3>
             {genericName && (
               <p className="text-lg font-semibold text-indigo-200 mt-1">
                 {genericName}
@@ -94,7 +90,7 @@ export default function DrugReferenceCard({
           <ul className="space-y-2">
             {warnings.map((warning, index) => (
               <li key={index} className="flex items-start gap-3">
-                <span className="text-yellow-700 font-black flex-shrink-0">&bull;</span>
+                <span className="text-yellow-700 font-black shrink-0">&bull;</span>
                 <span className="text-base font-semibold text-gray-900">{warning}</span>
               </li>
             ))}
@@ -106,7 +102,7 @@ export default function DrugReferenceCard({
       {contraindications.length > 0 && (
         <div className="p-6 bg-red-50 border-b-4 border-red-300">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center shrink-0">
               <span className="text-white font-black text-lg">!</span>
             </div>
             <h4 className="text-xl font-black text-gray-900 uppercase">Kontraindikationen</h4>
@@ -114,7 +110,7 @@ export default function DrugReferenceCard({
           <ul className="space-y-2">
             {contraindications.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
-                <span className="text-red-600 font-black flex-shrink-0">&times;</span>
+                <span className="text-red-600 font-black shrink-0">&times;</span>
                 <span className="text-base font-semibold text-gray-900">{item}</span>
               </li>
             ))}
