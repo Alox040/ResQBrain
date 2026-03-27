@@ -22,7 +22,8 @@
     "test:versioning": "tsx --test src/versioning/versioning.entities.test.ts src/versioning/versioning.invariants.test.ts",
     "test:survey": "tsx --test src/survey/survey.entities.test.ts",
     "test:lifecycle": "tsx --test src/lifecycle/lifecycle.engine.test.ts src/lifecycle/lifecycle.transitions.test.ts src/lifecycle/lifecycle.invariants.test.ts",
-    "test:approval": "tsx --test src/governance/approval/approval.engine.test.ts"
+    "test:approval": "tsx --test src/governance/approval/approval.engine.test.ts",
+    "test:governance:permission": "tsx --test src/governance/services/permission-engine.test.ts"
   },
   "devDependencies": {
     "tsx": "^4.21.0",
