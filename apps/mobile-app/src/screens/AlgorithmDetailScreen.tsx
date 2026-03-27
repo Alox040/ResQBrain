@@ -1,13 +1,17 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { algorithmLookup } from '@/data/algorithms';
+import { getAlgorithmById } from '@/data/contentIndex';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
-export function AlgorithmDetailScreen({ route }: Props) {
-  const algorithm = algorithmLookup[route.params.algorithmId];
+export function AlgorithmDetailScreen({ navigation, route }: Props) {
+  const algorithm = getAlgorithmById(route.params.algorithmId);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ title: algorithm?.label ?? 'Algorithmus' });
+  }, [navigation, algorithm?.label]);
 
   if (!algorithm) {
     return (

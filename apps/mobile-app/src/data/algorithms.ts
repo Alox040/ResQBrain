@@ -19,7 +19,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Amiodaron 300 mg i.v./i.o. nach 3. Schock bei VF/VT.' },
       { text: 'Reversible Ursachen suchen (4H/4T).' },
     ],
-    warnings: 'Nicht als Echtzeit-Entscheidungshilfe verwenden. Lokales SOP hat Vorrang.',
+    warnings: 'Lokale SOP hat Vorrang. Keine Echtzeit-Entscheidungshilfe.',
     relatedMedicationIds: ['adrenalin', 'amiodaron'],
   },
   {
@@ -86,6 +86,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Acetylsalicylsäure 150–300 mg p.o. (zerkaut) oder i.v. geben.' },
       { text: 'Transportziel und Voranmeldung nach klinischem Gesamteindruck festlegen.' },
     ],
+    warnings: 'Kontraindikationen prüfen (z.B. Blutung, ASS-Allergie). Lokaler Standard gilt.',
     relatedMedicationIds: ['acetylsalicylsaeure', 'heparin'],
   },
 
@@ -120,7 +121,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Prednisolon 100–250 mg i.v. geben.' },
       { text: 'Transportfähigkeit und Eskalationsbedarf (NIV) frühzeitig einschätzen.' },
     ],
-    notes: 'Ziel-SpO₂ bei COPD: 88–92 %, nicht unkontrolliert hochfluss.',
+    notes: 'Ziel-SpO₂: 88–92 %. Oxygenierung kontrolliert, kein unkritischer Hochfluss.',
     relatedMedicationIds: ['salbutamol', 'ipratropium', 'prednisolon'],
   },
 
@@ -178,7 +179,3 @@ export const algorithms: Algorithm[] = [
     relatedMedicationIds: ['naloxon'],
   },
 ];
-
-export const algorithmLookup: Record<string, Algorithm> = Object.fromEntries(
-  algorithms.map((a) => [a.id, a]),
-);

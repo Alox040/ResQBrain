@@ -57,7 +57,7 @@ export const medications: Medication[] = [
     id: 'heparin',
     kind: 'medication',
     label: 'Heparin',
-    indication: 'ACS oder thromboembolische Verdachtslage nach Standardfreigabe.',
+    indication: 'ACS oder Thromboembolie-Verdacht nach lokalem Standard.',
     tags: ['kreislauf'],
     searchTerms: ['UFH', 'Antikoagulation', 'unfraktioniertes Heparin'],
     dosage: 'Bolus i.v. gemäß lokalem Standard und Konzept.',
@@ -85,6 +85,7 @@ export const medications: Medication[] = [
     tags: ['atemwege'],
     searchTerms: ['Atrovent', 'Anticholinergikum', 'Ipratropol'],
     dosage: '0,5 mg vernebelt in Kombination mit Beta-2-Agonist.',
+    notes: 'Additiv zu Salbutamol. Verlauf nach Inhalation reevaluieren.',
     relatedAlgorithmIds: ['asthma', 'copd-exazerbation'],
   },
   {
@@ -95,7 +96,7 @@ export const medications: Medication[] = [
     tags: ['atemwege', 'kreislauf'],
     searchTerms: ['Kortison', 'Steroid', 'Glukokortikoid', 'Solu-Decortin'],
     dosage: '100–250 mg i.v. gemäß Indikation und lokalem Standard.',
-    notes: 'Wirkeintritt verzögert (>30 min). Dient der Ergänzung des Gesamtmanagements.',
+    notes: 'Wirkeintritt verzögert (>30 min). Ergänzung, nicht Akut-Alleinmaßnahme.',
     relatedAlgorithmIds: ['asthma', 'copd-exazerbation', 'anaphylaxie'],
   },
 
@@ -117,7 +118,7 @@ export const medications: Medication[] = [
     id: 'fentanyl',
     kind: 'medication',
     label: 'Fentanyl',
-    indication: 'Starke akute Schmerzen, Analgosedierung bei Interventionen.',
+    indication: 'Starke akute Schmerzen; Analgosedierung bei Maßnahmen.',
     tags: ['analgesie'],
     searchTerms: ['Opioid', 'Analgetikum', 'Fentadon'],
     dosage: '25–50 µg i.v. langsam titriert; Wiederholung nach Wirkung.',
@@ -164,7 +165,3 @@ export const medications: Medication[] = [
     relatedAlgorithmIds: ['hypoglykaemie'],
   },
 ];
-
-export const medicationLookup: Record<string, Medication> = Object.fromEntries(
-  medications.map((m) => [m.id, m]),
-);

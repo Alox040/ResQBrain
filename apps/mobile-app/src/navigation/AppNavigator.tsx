@@ -42,6 +42,7 @@ const sharedStackScreenOptions = {
   headerStyle,
   headerTintColor: '#f9fafb',
   headerTitleStyle,
+  headerBackTitleVisible: false,
   contentStyle: { backgroundColor: '#f3f4f6' },
 } as const;
 
@@ -58,7 +59,7 @@ function MedicationStackNavigator() {
       <MedicationStack.Screen
         name="MedicationDetail"
         component={MedicationDetailScreen}
-        options={{ title: 'Details' }}
+        options={{ title: 'Medikament' }}
       />
     </MedicationStack.Navigator>
   );
@@ -77,7 +78,7 @@ function AlgorithmStackNavigator() {
       <AlgorithmStack.Screen
         name="AlgorithmDetail"
         component={AlgorithmDetailScreen}
-        options={{ title: 'Details' }}
+        options={{ title: 'Algorithmus' }}
       />
     </AlgorithmStack.Navigator>
   );

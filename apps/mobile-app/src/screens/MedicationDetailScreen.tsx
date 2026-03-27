@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { medicationLookup } from '@/data/medications';
+import { getMedicationById } from '@/data/contentIndex';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<
@@ -9,8 +9,12 @@ type Props = NativeStackScreenProps<
   'MedicationDetail'
 >;
 
-export function MedicationDetailScreen({ route }: Props) {
-  const medication = medicationLookup[route.params.medicationId];
+export function MedicationDetailScreen({ navigation, route }: Props) {
+  const medication = getMedicationById(route.params.medicationId);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ title: medication?.label ?? 'Medikament' });
+  }, [navigation, medication?.label]);
 
   if (!medication) {
     return (
