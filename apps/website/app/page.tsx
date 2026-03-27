@@ -1,6 +1,7 @@
 import { AppPreviewSection } from "../components/sections/AppPreviewSection";
 import { CTASection, MobileStickyCTA } from "../components/sections/CTASection";
 import { TemporaryEncodingTest } from "../components/debug/TemporaryEncodingTest";
+import { DrugReferenceSection } from "../components/sections/DrugReferenceSection";
 import { FeatureSection } from "../components/sections/FeatureSection";
 import { FooterSection } from "../components/sections/FooterSection";
 import { HeroSection } from "../components/sections/HeroSection";
@@ -16,6 +17,7 @@ export default function Page() {
       <ProblemSection />
       <SolutionSection />
       <FeatureSection />
+      <DrugReferenceSection />
       <AppPreviewSection />
       <UseCasesSection />
       <TrustSection />

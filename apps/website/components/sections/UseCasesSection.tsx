@@ -1,4 +1,5 @@
 import { Card } from "../ui/Card";
+import { EmergencyProtocolCard } from "../ui/EmergencyProtocolCard";
 import { Container } from "../layout/Container";
 import { Section } from "../ui/Section";
 import { SectionHeader } from "../ui/SectionHeader";
@@ -31,6 +32,19 @@ export function UseCasesSection() {
               <p className="mb-0 mt-3 text-sm leading-[1.55] text-muted md:text-[0.95rem]">{c.text}</p>
             </Card>
           ))}
+        </div>
+
+        <div className="mt-8 md:mt-10">
+          <div className="mx-auto max-w-3xl">
+            <EmergencyProtocolCard
+              title="Reanimation Erwachsene"
+              category="Notfall"
+              lastUpdated="Heute"
+              priority="critical"
+              steps={8}
+              version="2.1"
+            />
+          </div>
         </div>
       </Container>
     </Section>
