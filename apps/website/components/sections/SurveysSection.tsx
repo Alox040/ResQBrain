@@ -35,55 +35,61 @@ export function SurveysSection() {
           <p className="text-xl font-semibold text-gray-700 md:text-2xl">Helfen Sie uns besser zu werden</p>
         </div>
 
-        <div className="mb-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-10 grid grid-cols-1 gap-6 px-6 md:grid-cols-2 lg:grid-cols-3">
           {surveys.map((survey) => (
             <div
               key={survey.id}
-              className={`rounded-2xl border-4 p-8 shadow-lg transition-all ${
+              className={`flex h-full flex-col overflow-visible rounded-2xl border-4 p-6 shadow-lg transition-all ${
                 survey.status === "active"
                   ? "border-yellow-400 bg-white hover:border-yellow-500 hover:shadow-xl"
                   : "border-gray-300 bg-gray-50"
               }`}
             >
-              <div className="mb-6">
-                {survey.status === "active" ? (
-                  <div className="inline-flex items-center gap-2 rounded-lg border-2 border-green-400 bg-green-100 px-4 py-2">
-                    <Clock className="h-5 w-5 text-green-700" strokeWidth={3} />
-                    <span className="text-sm font-black text-green-800 uppercase">Aktiv</span>
+              <div className="flex flex-col gap-5">
+                <div>
+                  {survey.status === "active" ? (
+                    <div className="inline-flex items-center gap-2 rounded-lg border-2 border-green-400 bg-green-100 px-4 py-2">
+                      <Clock className="h-5 w-5 text-green-700" strokeWidth={3} />
+                      <span className="text-sm font-black text-green-800 uppercase">Aktiv</span>
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-400 bg-gray-200 px-4 py-2">
+                      <CheckCircle2 className="h-5 w-5 text-gray-600" strokeWidth={3} />
+                      <span className="text-sm font-black text-gray-700 uppercase">Fertig</span>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <h3
+                    className={`text-2xl font-black md:text-3xl ${
+                      survey.status === "active" ? "text-gray-900" : "text-gray-600"
+                    }`}
+                  >
+                    {survey.title}
+                  </h3>
+                </div>
+
+                <div>
+                  <p
+                    className={`text-lg font-medium ${
+                      survey.status === "active" ? "text-gray-700" : "text-gray-500"
+                    }`}
+                  >
+                    {survey.description}
+                  </p>
+                </div>
+
+                <div>
+                  <div
+                    className={`inline-block rounded-lg border-2 px-4 py-2 ${
+                      survey.status === "active"
+                        ? "border-yellow-300 bg-yellow-100 text-yellow-900"
+                        : "border-gray-300 bg-gray-200 text-gray-600"
+                    }`}
+                  >
+                    <span className="text-base font-bold">⏱ {survey.duration}</span>
                   </div>
-                ) : (
-                  <div className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-400 bg-gray-200 px-4 py-2">
-                    <CheckCircle2 className="h-5 w-5 text-gray-600" strokeWidth={3} />
-                    <span className="text-sm font-black text-gray-700 uppercase">Fertig</span>
-                  </div>
-                )}
-              </div>
-
-              <h3
-                className={`mb-4 text-2xl font-black md:text-3xl ${
-                  survey.status === "active" ? "text-gray-900" : "text-gray-600"
-                }`}
-              >
-                {survey.title}
-              </h3>
-
-              <p
-                className={`mb-6 text-lg font-medium ${
-                  survey.status === "active" ? "text-gray-700" : "text-gray-500"
-                }`}
-              >
-                {survey.description}
-              </p>
-
-              <div className="mb-6">
-                <div
-                  className={`inline-block rounded-lg border-2 px-4 py-2 ${
-                    survey.status === "active"
-                      ? "border-yellow-300 bg-yellow-100 text-yellow-900"
-                      : "border-gray-300 bg-gray-200 text-gray-600"
-                  }`}
-                >
-                  <span className="text-base font-bold">⏱ {survey.duration}</span>
                 </div>
               </div>
 
@@ -92,7 +98,7 @@ export function SurveysSection() {
                   href={survey.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-16 w-full rounded-xl border-4 border-yellow-600 bg-yellow-500 text-xl font-black text-gray-900 shadow-lg hover:bg-yellow-600"
+                  className="mt-5 h-16 w-full justify-center rounded-xl border-4 border-yellow-600 bg-yellow-500 text-center text-xl font-black text-gray-900 shadow-lg hover:bg-yellow-600"
                 >
                   Teilnehmen
                   <MessageSquare className="ml-2 h-6 w-6" strokeWidth={3} />
@@ -102,7 +108,7 @@ export function SurveysSection() {
                   href={survey.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-16 w-full rounded-xl border-4 border-gray-400 bg-gray-300 text-xl font-black text-gray-500"
+                  className="mt-5 h-16 w-full justify-center rounded-xl border-4 border-gray-400 bg-gray-300 text-center text-xl font-black text-gray-500"
                 >
                   Ergebnisse
                   <CheckCircle2 className="ml-2 h-6 w-6" strokeWidth={3} />
