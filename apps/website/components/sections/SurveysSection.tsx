@@ -7,29 +7,24 @@ export function SurveysSection() {
   const surveys = [
     {
       id: 1,
-      title: "Einsatz-Feedback",
-      description: "Wie nutzen Sie Protokolle im Einsatz?",
+      title: "Funktionspriorisierung",
+      description: "Welche Funktionen sind fuer den MVP am wichtigsten?",
       status: "active",
-      duration: "2 Min",
+      duration: "2-3 Min",
+      href: "https://forms.cloud.microsoft/r/tw508dTuDK",
     },
     {
       id: 2,
-      title: "Feature-Wünsche",
-      description: "Welche Funktionen fehlen Ihnen?",
-      status: "active",
-      duration: "3 Min",
-    },
-    {
-      id: 3,
-      title: "App-Usability",
-      description: "Bedienung unter Stress",
+      title: "Bedarfsanalyse Rettungsdienst App",
+      description: "Ergebnisse der abgeschlossenen Bedarfsanalyse",
       status: "completed",
       duration: "Abgeschlossen",
+      href: "https://forms.cloud.microsoft/r/quaHYEbjAC",
     },
   ] as const;
 
   return (
-    <section className="border-y-8 border-yellow-400 bg-yellow-50 py-12">
+    <section id="survey" className="border-y-8 border-yellow-400 bg-yellow-50 py-12">
       <Container>
         <div className="mb-12 text-center">
           <div className="mb-4 inline-flex items-center gap-3 rounded-xl border-4 border-yellow-500 bg-yellow-400 px-6 py-3 text-gray-900">
@@ -93,16 +88,23 @@ export function SurveysSection() {
               </div>
 
               {survey.status === "active" ? (
-                <Button className="h-16 w-full rounded-xl border-4 border-yellow-600 bg-yellow-500 text-xl font-black text-gray-900 shadow-lg hover:bg-yellow-600">
+                <Button
+                  href={survey.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-16 w-full rounded-xl border-4 border-yellow-600 bg-yellow-500 text-xl font-black text-gray-900 shadow-lg hover:bg-yellow-600"
+                >
                   Teilnehmen
                   <MessageSquare className="ml-2 h-6 w-6" strokeWidth={3} />
                 </Button>
               ) : (
                 <Button
-                  disabled
-                  className="h-16 w-full cursor-not-allowed rounded-xl border-4 border-gray-400 bg-gray-300 text-xl font-black text-gray-500"
+                  href={survey.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-16 w-full rounded-xl border-4 border-gray-400 bg-gray-300 text-xl font-black text-gray-500"
                 >
-                  Abgeschlossen
+                  Ergebnisse
                   <CheckCircle2 className="ml-2 h-6 w-6" strokeWidth={3} />
                 </Button>
               )}

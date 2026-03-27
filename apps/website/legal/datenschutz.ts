@@ -4,21 +4,23 @@ Datenschutzerklaerung
 1. Verantwortlicher
 Verantwortlich fuer die Datenverarbeitung auf dieser Website ist:
 
-[Verantwortlicher]
-[Adresse]
-[Email]
+Alexander Posdziech
+Voßort 14
+21037 Hamburg
+Deutschland
+triggerhub@outlook.com
 
 2. Hosting
 Diese Website wird bei Vercel Inc. gehostet. Beim Aufruf der Website verarbeitet Vercel personenbezogene Daten, insbesondere technische Verbindungsdaten, um die Website bereitzustellen und die Sicherheit und Stabilitaet des Angebots zu gewaehrleisten.
 
 Weitere Informationen koennen in der Datenschutzerklaerung von Vercel eingesehen werden:
-[Link zur Datenschutzerklaerung von Vercel]
+https://vercel.com/legal/privacy-policy
 
 3. Domain Provider
 Die Domain dieser Website wird ueber STRATO AG bereitgestellt. Im Rahmen der technischen Bereitstellung koennen durch den Domain-Provider personenbezogene Daten verarbeitet werden, soweit dies fuer Betrieb, DNS-Aufloesung, Sicherheit und Administration erforderlich ist.
 
 Weitere Informationen koennen in der Datenschutzerklaerung von STRATO eingesehen werden:
-[Link zur Datenschutzerklaerung von STRATO]
+https://www.strato.de/datenschutz/
 
 4. Server-Logfiles
 Beim Besuch dieser Website werden durch den Hosting-Anbieter bzw. die Server automatisch Informationen in sogenannten Server-Logfiles erhoben und gespeichert. Dies betrifft insbesondere:
@@ -49,7 +51,7 @@ Sofern auf dieser Website eine Umfrage angeboten wird, werden die im Rahmen der 
 Soweit die Teilnahme freiwillig erfolgt, ist Rechtsgrundlage Art. 6 Abs. 1 lit. a DSGVO. Eine erteilte Einwilligung kann jederzeit mit Wirkung fuer die Zukunft widerrufen werden.
 
 Art, Umfang und Zweck der konkret erhobenen Daten koennen in der jeweiligen Umfrage zusaetzlich beschrieben werden:
-[Hinweis zur konkreten Umfrage]
+Die aktuell aktive Umfrage wird ueber Microsoft Forms bereitgestellt und dient der Priorisierung von Produktfunktionen.
 
 7. Externe Links
 Diese Website kann Links zu externen Websites enthalten. Fuer die Inhalte und die Datenverarbeitung auf externen Websites ist ausschliesslich der jeweilige Betreiber verantwortlich. Beim Anklicken eines externen Links gelten die Datenschutzbestimmungen der jeweiligen Drittanbieter.
@@ -74,6 +76,6 @@ Sofern eine Verarbeitung auf einer Einwilligung gemaess Art. 6 Abs. 1 lit. a DSG
 11. Kontakt zum Datenschutz
 Anfragen zu Datenschutz, Betroffenenrechten oder zum Widerruf koennen gerichtet werden an:
 
-[Verantwortlicher]
-[Email]
+Alexander Posdziech
+triggerhub@outlook.com
 `;

@@ -1,14 +1,16 @@
 import { CheckCircle2 } from "lucide-react";
 
+import { getPublicProfileViewModel } from "../../lib/site-selectors";
 import { Container } from "../layout/Container";
 
 export function SolutionSection() {
+  const publicProfile = getPublicProfileViewModel();
   const solutions = [
     "Zentrale Verwaltung",
-    "Mehrmandantenfähig",
+    "Mehrmandantenfaehig",
     "Versionierung & Freigabe",
     "Schnelle Suche",
-    "Offline verfügbar",
+    "Offline verfuegbar",
     "Mobile optimiert",
   ];
 
@@ -16,9 +18,9 @@ export function SolutionSection() {
     <section className="bg-gray-900 py-16">
       <Container>
         <div className="mb-12 text-center">
-          <h2 className="mb-6 text-4xl font-black text-white md:text-6xl">Die Lösung</h2>
+          <h2 className="mb-6 text-4xl font-black text-white md:text-6xl">Die Loesung</h2>
           <p className="mx-auto max-w-3xl text-2xl leading-tight font-bold text-gray-300 md:text-3xl">
-            Eine Plattform.
+            {publicProfile.description}
             <br />
             Alles an einem Ort.
           </p>

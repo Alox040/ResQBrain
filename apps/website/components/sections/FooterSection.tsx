@@ -3,6 +3,7 @@ import type { SVGProps } from "react";
 import { FileText, Heart, Mail } from "lucide-react";
 
 import { Container } from "../layout/Container";
+import { getFooterViewModel } from "../../lib/site-selectors";
 
 function GithubIcon(props: SVGProps<SVGSVGElement>) {
   return (
@@ -22,7 +23,7 @@ function GithubIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 export function FooterSection() {
-  const currentYear = new Date().getFullYear();
+  const footer = getFooterViewModel();
 
   return (
     <footer className="border-t-4 border-gray-800 bg-gray-900 text-gray-300">
@@ -32,61 +33,53 @@ export function FooterSection() {
             <div>
               <div className="mb-6 flex items-center gap-3">
                 <Heart className="h-8 w-8 text-red-500" fill="currentColor" />
-                <span className="text-2xl font-black text-white">ResQBrain</span>
+                <span className="text-2xl font-black text-white">{footer.brandName}</span>
               </div>
-              <p className="mb-4 text-lg font-medium text-gray-400">
-                Plattform für medizinische Algorithmen im Rettungsdienst
-              </p>
-              <p className="text-base font-medium text-gray-500">Phase 0 - Lookup-first MVP</p>
+              <p className="mb-4 text-lg font-medium text-gray-400">{footer.tagline}</p>
+              <p className="text-base font-medium text-gray-500">{footer.stageLabel}</p>
             </div>
 
             <div>
               <h3 className="mb-6 text-xl font-black text-white">Rechtliches</h3>
               <ul className="space-y-3">
-                <li>
-                  <a href="/impressum" className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white">
-                    <FileText className="h-5 w-5" strokeWidth={2.5} />
-                    Impressum
-                  </a>
-                </li>
-                <li>
-                  <a href="/datenschutz" className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white">
-                    <FileText className="h-5 w-5" strokeWidth={2.5} />
-                    Datenschutz
-                  </a>
-                </li>
+                {footer.legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white">
+                      <FileText className="h-5 w-5" strokeWidth={2.5} />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
               <h3 className="mb-6 text-xl font-black text-white">Kontakt</h3>
               <ul className="space-y-3">
-                <li>
-                  <a
-                    href="https://github.com/Alox040/ResQBrain"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white"
-                  >
-                    <GithubIcon className="h-5 w-5" />
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="mailto:pilot@resqbrain.de"
-                    className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white"
-                  >
-                    <Mail className="h-5 w-5" strokeWidth={2.5} />
-                    Feedback
-                  </a>
-                </li>
+                {footer.contactActions.map((action) => {
+                  const isExternal = action.href.startsWith("http");
+                  const Icon = action.label === "GitHub" ? GithubIcon : Mail;
+
+                  return (
+                    <li key={action.href}>
+                      <a
+                        href={action.href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-white"
+                      >
+                        <Icon className="h-5 w-5" strokeWidth={2.5} />
+                        {action.label}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
 
           <div className="border-t-2 border-gray-800 pt-8 text-center">
-            <p className="text-base font-medium text-gray-500">© {currentYear} ResQBrain. Alle Rechte vorbehalten.</p>
+            <p className="text-base font-medium text-gray-500">{footer.copyright}</p>
           </div>
         </div>
       </Container>

@@ -1,7 +1,10 @@
 import { Container } from "./Container";
 import { Navigation } from "./Navigation";
+import { getPublicProfileViewModel } from "../../lib/site-selectors";
 
 export function Header() {
+  const publicProfile = getPublicProfileViewModel();
+
   return (
     <header
       style={{
@@ -28,7 +31,7 @@ export function Header() {
             href="/"
             style={{ color: "var(--color-foreground)", fontSize: "1.1rem", fontWeight: 600, letterSpacing: "-0.02em" }}
           >
-            ResQBrain
+            {publicProfile.name}
           </a>
           <Navigation />
         </div>

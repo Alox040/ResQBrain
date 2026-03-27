@@ -1,9 +1,13 @@
 export const siteConfig = {
-  name: "ResQBrain",
-  title: "ResQBrain | Referenz fuer Rettungsdienst-Inhalte",
-  description:
-    "Medikamente, Algorithmen und SOPs: lokal auf dem Geraet, versioniert, je Organisation. Fruehphase \u2014 Pilot und Rueckmeldung per Kontakt.",
-  url: "https://resqbrain.example.com",
+  publicProfile: {
+    name: "ResQBrain",
+    title: "ResQBrain | Einsatzwissen ohne Suchen",
+    description:
+      "Plattform fuer Rettungsdienst Algorithmen, Medikamente und Nachbereitung.",
+    url: "https://resqbrain.de",
+    tagline: "Einsatzwissen ohne Suchen",
+    stageLabel: "Early Development",
+  },
   navigation: [
     { href: "/#problem", label: "Problem" },
     { href: "/#solution", label: "Loesung" },
@@ -13,4 +17,20 @@ export const siteConfig = {
     { href: "/#trust", label: "Verantwortung" },
     { href: "/#cta", label: "Kontakt" },
   ],
-};
+  contact: {
+    email: "triggerhub@outlook.com",
+    repositoryUrl: "https://github.com/Alox040/ResQBrain",
+    feedbackLabel: "Feedback",
+  },
+  legal: {
+    links: [
+      { href: "/impressum", label: "Impressum" },
+      { href: "/datenschutz", label: "Datenschutz" },
+    ],
+  },
+  footer: {
+    copyrightSuffix: "Alle Rechte vorbehalten.",
+  },
+} as const;
+
+export type SiteConfig = typeof siteConfig;

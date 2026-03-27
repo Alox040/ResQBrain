@@ -1,6 +1,8 @@
-import { siteConfig } from "../../lib/site";
+import { getNavigationViewModel } from "../../lib/site-selectors";
 
 export function Navigation() {
+  const navigationItems = getNavigationViewModel();
+
   return (
     <nav aria-label="Hauptnavigation">
       <ul
@@ -13,7 +15,7 @@ export function Navigation() {
           justifyContent: "center",
         }}
       >
-        {siteConfig.navigation.map((item) => (
+        {navigationItems.map((item) => (
           <li key={item.href}>
             <a
               href={item.href}

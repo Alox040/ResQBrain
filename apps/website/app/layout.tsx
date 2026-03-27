@@ -6,7 +6,7 @@ import Link from "next/link";
 import "./globals.css";
 
 import { Header } from "../components/layout/Header";
-import { siteConfig } from "../lib/site";
+import { getLegalViewModel, getPublicProfileViewModel } from "../lib/site-selectors";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -14,15 +14,18 @@ const inter = Inter({
   display: "swap",
 });
 
+const publicProfile = getPublicProfileViewModel();
+const legal = getLegalViewModel();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: siteConfig.title,
-  description: siteConfig.description,
+  metadataBase: new URL(publicProfile.url),
+  title: publicProfile.title,
+  description: publicProfile.description,
   openGraph: {
-    title: siteConfig.title,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
+    title: publicProfile.title,
+    description: publicProfile.description,
+    url: publicProfile.url,
+    siteName: publicProfile.name,
     type: "website",
     locale: "de_DE",
   },
@@ -35,8 +38,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         <div className="site-main">{children}</div>
         <footer className="site-legal-footer">
-          <Link href="/impressum">Impressum</Link>
-          <Link href="/datenschutz">Datenschutz</Link>
+          {legal.links.map((link) => (
+            <Link key={link.href} href={link.href}>
+              {link.label}
+            </Link>
+          ))}
         </footer>
       </body>
     </html>
