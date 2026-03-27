@@ -4,6 +4,7 @@ import type {
 } from '../../shared/types';
 
 import { DomainError } from '../../shared/errors';
+import { assertExplicitVersionId } from '../../shared/versioning';
 import type { CompositionEntityId } from './CompositionEntry';
 import {
   CONTENT_ENTITY_TYPES,
@@ -114,8 +115,9 @@ function normalizeOptionalVersionId(value: VersionId | null | undefined): Versio
   }
 
   const normalized = assertNonEmptyId(value, 'targetVersionId');
+  const versionCheck = assertExplicitVersionId(normalized.toLowerCase());
 
-  if (normalized.toLowerCase() === 'latest') {
+  if (!versionCheck.allowed) {
     throw new DomainError(
       'DATA_INTEGRITY_VIOLATION',
       'targetVersionId must be an explicit version identifier.',

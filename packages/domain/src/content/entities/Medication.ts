@@ -5,6 +5,7 @@ import type {
 } from '../../shared/types';
 
 import { DomainError } from '../../shared/errors';
+import { assertExplicitVersionId as assertExplicitVersionDecision } from '../../shared/versioning';
 
 import {
   isEditableApprovalStatus,
@@ -169,8 +170,9 @@ function normalizeDeprecation(
 
 function assertExplicitVersionId(value: VersionId): VersionId {
   const versionId = assertNonEmptyId(value, 'currentVersionId');
+  const versionCheck = assertExplicitVersionDecision(versionId.toLowerCase());
 
-  if (versionId.toLowerCase() === 'latest') {
+  if (!versionCheck.allowed) {
     throw new DomainError(
       'DATA_INTEGRITY_VIOLATION',
       'currentVersionId must be an explicit version identifier.',

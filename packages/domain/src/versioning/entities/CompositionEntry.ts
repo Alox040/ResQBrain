@@ -7,6 +7,7 @@ import type {
 } from '../../shared/types';
 
 import { DomainError } from '../../shared/errors';
+import { assertExplicitVersionId as assertExplicitVersionDecision } from '../../shared/versioning';
 import { CONTENT_ENTITY_TYPES, type ContentEntityType } from './EntityType';
 
 export type CompositionEntityId =
@@ -55,8 +56,9 @@ function assertEntityType(value: ContentEntityType): ContentEntityType {
 
 function assertExplicitVersionId(value: VersionId): VersionId {
   const normalized = assertNonEmptyId(value, 'versionId');
+  const versionCheck = assertExplicitVersionDecision(normalized.toLowerCase());
 
-  if (normalized.toLowerCase() === 'latest') {
+  if (!versionCheck.allowed) {
     throw new DomainError(
       'DATA_INTEGRITY_VIOLATION',
       'CompositionEntry.versionId must be an explicit version identifier.',

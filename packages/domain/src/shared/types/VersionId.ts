@@ -1,1 +1,1 @@
-export type VersionId = string & { readonly _brand: 'VersionId' };
+export type VersionId = string & { readonly __brand: 'VersionId' };

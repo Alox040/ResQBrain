@@ -21,6 +21,7 @@
     "test:audit": "tsx --test src/audit/audit.foundation.test.ts",
     "test:content": "tsx --test src/content/content.entities.test.ts src/content/entities.invariants.test.ts",
     "test:versioning": "tsx --test src/versioning/versioning.entities.test.ts src/versioning/versioning.invariants.test.ts",
+    "test:shared:versioning": "tsx --test src/shared/versioning/assertExplicitVersionId.test.ts",
     "test:survey": "tsx --test src/survey/survey.entities.test.ts",
     "test:lifecycle": "tsx --test src/lifecycle/lifecycle.engine.test.ts src/lifecycle/lifecycle.transitions.test.ts src/lifecycle/lifecycle.invariants.test.ts",
     "test:approval": "tsx --test src/governance/approval/approval.engine.test.ts",

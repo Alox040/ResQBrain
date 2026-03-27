@@ -27,6 +27,7 @@ import {
   type ReleaseType as ReleaseTypeValue,
   type ReleaseVersion,
 } from '../versioning/entities';
+import { assertExplicitVersionId } from '../shared/versioning';
 
 export interface ReleaseEntryState {
   readonly entityId: string;
@@ -362,7 +363,12 @@ function normalizeExplicitVersionId(
   }
 
   const normalized = versionId.trim();
-  if (normalized.length === 0 || normalized.toLowerCase() === 'latest') {
+  if (normalized.length === 0) {
+    return null;
+  }
+
+  const versionCheck = assertExplicitVersionId(normalized.toLowerCase());
+  if (!versionCheck.allowed) {
     return null;
   }
 
