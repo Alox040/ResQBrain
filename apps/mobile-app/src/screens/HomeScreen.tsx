@@ -1,12 +1,18 @@
 import React from 'react';
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { RootTabParamList } from '@/navigation/AppNavigator';
 
 export function HomeScreen() {
+  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+
   return (
     <ScrollView
       style={styles.screen}
@@ -25,26 +31,50 @@ export function HomeScreen() {
       <View style={styles.quickSection}>
         <Text style={styles.sectionTitle}>Schnellzugriff</Text>
 
-        <View style={styles.largeButton}>
+        <Pressable
+          onPress={() => navigation.navigate('Search')}
+          style={({ pressed }) => [
+            styles.largeButton,
+            pressed ? styles.largeButtonPressed : null,
+          ]}
+        >
           <Text style={styles.buttonTitle}>Suche</Text>
           <Text style={styles.buttonText}>
             Medikamente, Protokolle und Begriffe direkt finden
           </Text>
-        </View>
+        </Pressable>
 
-        <View style={[styles.largeButton, styles.secondaryButton]}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate('MedicationList', { screen: 'MedicationList' })
+          }
+          style={({ pressed }) => [
+            styles.largeButton,
+            styles.secondaryButton,
+            pressed ? styles.largeButtonPressed : null,
+          ]}
+        >
           <Text style={styles.buttonTitle}>Medikamente</Text>
           <Text style={styles.buttonText}>
             Dosierungen, Hinweise und Standardpraeparate uebersichtlich sehen
           </Text>
-        </View>
+        </Pressable>
 
-        <View style={[styles.largeButton, styles.tertiaryButton]}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate('AlgorithmList', { screen: 'AlgorithmList' })
+          }
+          style={({ pressed }) => [
+            styles.largeButton,
+            styles.tertiaryButton,
+            pressed ? styles.largeButtonPressed : null,
+          ]}
+        >
           <Text style={styles.buttonTitle}>Algorithmen</Text>
           <Text style={styles.buttonText}>
             Strukturierte Ablaeufe fuer haeufige Notfallsituationen
           </Text>
-        </View>
+        </Pressable>
       </View>
 
       <View style={styles.infoRow}>
@@ -111,6 +141,9 @@ const styles = StyleSheet.create({
     padding: 18,
     justifyContent: 'space-between',
     backgroundColor: '#2563eb',
+  },
+  largeButtonPressed: {
+    opacity: 0.9,
   },
   secondaryButton: {
     backgroundColor: '#0f766e',

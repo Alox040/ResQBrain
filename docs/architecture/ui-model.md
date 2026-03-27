@@ -62,7 +62,7 @@ Elemente:
 - **Algorithmen** — großer Button, führt zu AlgorithmListScreen
 - **Statuszeile** — Offline-Indikator + aktive Bundle-Version (klein, unten)
 
-Nicht vorhanden: Navigation, Menü, Tabs, Avatar, Benachrichtigungen.
+Nicht vorhanden: Drawer-Navigation, Kontext-Menü, Avatar, Benachrichtigungen.
 
 ---
 
@@ -98,7 +98,7 @@ Elemente:
 - Jeder Eintrag: Name + Untertitel (Wirkstoff + Routen / Kategorie)
 - Tap → Detail des jeweiligen Typs
 
-Kein Filter-Toggle. Kein Sortier-Menü. Keine Tabs.
+Kein Filter-Toggle. Kein Sortier-Menü. Keine zusaetzlichen Inhaltstabs innerhalb des Screens.
 
 ---
 
@@ -249,22 +249,41 @@ Elemente:
 
 ## Navigation
 
-**Modell:** Flat Stack — kein Tab-Bar, kein Drawer.
+**Modell (Phase 0 Ist):** Root Bottom Tabs mit nested Stacks.
 
 ```
-HomeScreen
-  └── MedicationListScreen
-        └── MedicationDetailScreen
-  └── AlgorithmListScreen
-        └── AlgorithmDetailScreen
-              └── MedicationDetailScreen
-  └── SearchResultsScreen
-        └── MedicationDetailScreen
-        └── AlgorithmDetailScreen
+BottomTabs
+  ├── HomeTab
+  │     └── HomeScreen
+  ├── SearchTab
+  │     └── SearchResultsScreen
+  ├── MedicationTab
+  │     └── MedicationStack
+  │           ├── MedicationListScreen
+  │           └── MedicationDetailScreen
+  └── AlgorithmTab
+        └── AlgorithmStack
+              ├── AlgorithmListScreen
+              └── AlgorithmDetailScreen
 ```
 
-Zurück immer über den Zurück-Pfeil oben links.
-Kein globaler Footer. Kein persistent sichtbares Menü.
+Search-Detailnavigation nutzt die nested Stacks:
+
+- `SearchResultsScreen` -> `MedicationStack` -> `MedicationDetailScreen`
+- `SearchResultsScreen` -> `AlgorithmStack` -> `AlgorithmDetailScreen`
+
+Damit bleibt die Back-Navigation innerhalb der fachlichen Domäne stabil.
+
+### Begruendung fuer Phase 0
+
+- klare Root-Orientierung fuer Kernbereiche (Home, Search, Medication, Algorithm)
+- minimale Navigationskomplexitaet fuer einen Lookup-first MVP
+- robuste Detailflows ohne separate globale Detailrouter
+
+### Abgrenzung zum langfristigen Zielbild
+
+Diese Struktur dokumentiert den akzeptierten MVP-Ist-Zustand.  
+Sie ersetzt nicht spaetere Zielnavigationsschichten fuer Tenant-, Governance-, Release- und Admin-Flows.
 
 ---
 

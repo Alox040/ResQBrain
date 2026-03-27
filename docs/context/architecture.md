@@ -40,9 +40,31 @@ Keine produktive Admin-/Authoring-UI fuer Governance oder Versioning vorhanden.
 
 In `apps/mobile-app/src/navigation/AppNavigator.tsx`:
 
-- Bottom Tabs als Root-Navigation
-- nested Stacks fuer Medikamente und Algorithmen
-- typed Param-Listen fuer Detailnavigation
+- Root `BottomTabNavigator` mit `Home`, `Search`, `Medication`, `Algorithm`
+- nested `MedicationStack` fuer List/Detail (`MedicationList` -> `MedicationDetail`)
+- nested `AlgorithmStack` fuer List/Detail (`AlgorithmList` -> `AlgorithmDetail`)
+- Search-zu-Detail-Flows ueber die jeweiligen nested Stacks
+- typed Param-Listen fuer Detailnavigation (`medicationId`, `algorithmId`)
+
+## Phase-0-Begruendung (Ist-Zustand)
+
+Die akzeptierte MVP-Struktur mit Root Tabs und nested Stacks ist fuer Phase 0 geeignet, weil sie:
+
+- schnelle, klare Hauptbereiche fuer Einsatzsituationen bereitstellt
+- mit statischen/mock-basierten Daten ohne zusaetzliche Routing-Komplexitaet funktioniert
+- stabile Back-Navigation in Listen-/Detail-Flows sicherstellt
+- bewusst keine Governance-/Admin-Navigation vorweg nimmt
+
+## Abgrenzung zum langfristigen Zielbild
+
+Die aktuelle Navigation beschreibt nur den Lookup-Use-Case der Phase 0.  
+Nicht Teil des MVP-Ist-Stands sind:
+
+- tenant- und rollengetriebene Navigationspfade
+- Versioning-/Approval-/Release-orientierte Produktflaechen
+- produktive Deep-Link- und Distribution-Flows
+
+Das langfristige Zielbild bleibt in den kanonischen Architekturartefakten unter `docs/architecture` definiert und wird nicht durch die Phase-0-Navigationsentscheidung ersetzt.
 
 ## Datenfluss
 
