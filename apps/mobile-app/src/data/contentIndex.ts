@@ -21,6 +21,18 @@ export const searchItems: ContentListItem[] = contentItems.map((item) => ({
   subtitle: item.indication,
 }));
 
+export type SearchIndexItem = ContentListItem & {
+  searchTerms: string[];
+};
+
+export const searchIndexItems: SearchIndexItem[] = contentItems.map((item) => ({
+  id: item.id,
+  kind: item.kind,
+  label: item.label,
+  subtitle: item.indication,
+  searchTerms: item.searchTerms,
+}));
+
 export function getMedicationById(medicationId: string): Medication | undefined {
   const item = contentLookup[toContentKey('medication', medicationId)];
   return item?.kind === 'medication' ? item : undefined;

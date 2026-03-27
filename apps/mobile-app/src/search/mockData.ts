@@ -1,1 +1,1 @@
-export { searchItems } from '@/data/contentIndex';
+export { searchIndexItems } from '@/data/contentIndex';

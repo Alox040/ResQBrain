@@ -9,20 +9,28 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { searchItems } from '@/search/mockData';
+import { searchIndexItems } from '@/search/mockData';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import type { ContentListItem } from '@/types/content';
 
 export function SearchScreen() {
   const [query, setQuery] = useState('');
+  const [kindFilter, setKindFilter] = useState<'all' | 'medication' | 'algorithm'>('all');
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
   const normalizedQuery = query.trim().toLowerCase();
   const results = normalizedQuery
-    ? searchItems.filter((item) =>
-        item.label.toLowerCase().includes(normalizedQuery) ||
-        item.subtitle.toLowerCase().includes(normalizedQuery),
-      )
+    ? searchIndexItems.filter((item) => {
+        const matchesKind = kindFilter === 'all' || item.kind === kindFilter;
+        const matchesQuery =
+          item.label.toLowerCase().includes(normalizedQuery) ||
+          item.subtitle.toLowerCase().includes(normalizedQuery) ||
+          item.searchTerms.some((term) =>
+            term.toLowerCase().includes(normalizedQuery),
+          );
+
+        return matchesKind && matchesQuery;
+      })
     : [];
 
   const handlePressResult = (item: ContentListItem) => {
@@ -55,6 +63,57 @@ export function SearchScreen() {
           autoCorrect={false}
           clearButtonMode="while-editing"
         />
+
+        <View style={styles.filterRow}>
+          <Pressable
+            onPress={() => setKindFilter('all')}
+            style={[
+              styles.filterChip,
+              kindFilter === 'all' ? styles.filterChipActive : null,
+            ]}
+          >
+            <Text
+              style={[
+                styles.filterChipLabel,
+                kindFilter === 'all' ? styles.filterChipLabelActive : null,
+              ]}
+            >
+              Alle
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setKindFilter('medication')}
+            style={[
+              styles.filterChip,
+              kindFilter === 'medication' ? styles.filterChipActive : null,
+            ]}
+          >
+            <Text
+              style={[
+                styles.filterChipLabel,
+                kindFilter === 'medication' ? styles.filterChipLabelActive : null,
+              ]}
+            >
+              Medikamente
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setKindFilter('algorithm')}
+            style={[
+              styles.filterChip,
+              kindFilter === 'algorithm' ? styles.filterChipActive : null,
+            ]}
+          >
+            <Text
+              style={[
+                styles.filterChipLabel,
+                kindFilter === 'algorithm' ? styles.filterChipLabelActive : null,
+              ]}
+            >
+              Algorithmen
+            </Text>
+          </Pressable>
+        </View>
 
         {!normalizedQuery ? (
           <View style={styles.emptyState}>
@@ -142,6 +201,30 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     textAlign: 'center',
     lineHeight: 22,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  filterChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+    backgroundColor: '#ffffff',
+  },
+  filterChipActive: {
+    borderColor: '#2563eb',
+    backgroundColor: '#eff6ff',
+  },
+  filterChipLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#4b5563',
+  },
+  filterChipLabelActive: {
+    color: '#1d4ed8',
   },
   listContent: {
     gap: 10,

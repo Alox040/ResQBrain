@@ -6,6 +6,19 @@ import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
+const ALGORITHM_SOURCES: Record<string, string[]> = {
+  reanimation: ['ERC ALS Guidelines (Referenz, statischer Seed)'],
+  anaphylaxie: ['S2k-Leitlinie Anaphylaxie (Referenz, statischer Seed)'],
+  bradykardie: ['ERC Bradykardie-Abschnitt (Referenz, statischer Seed)'],
+  tachykardie: ['ERC Tachykardie-Abschnitt (Referenz, statischer Seed)'],
+  acs: ['ESC ACS Guidance (Referenz, statischer Seed)'],
+  asthma: ['Nationale Versorgungsleitlinie Asthma (Referenz, statischer Seed)'],
+  'copd-exazerbation': ['GOLD Guidance COPD (Referenz, statischer Seed)'],
+  krampfanfall: ['DGfE / Notfallstandard Krampfanfall (Referenz, statischer Seed)'],
+  hypoglykaemie: ['DDG Hypoglykämie-Standard (Referenz, statischer Seed)'],
+  opioidintoxikation: ['BfArM / Naloxon-Hinweise (Referenz, statischer Seed)'],
+};
+
 export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const algorithm = getAlgorithmById(route.params.algorithmId);
 
@@ -28,40 +41,44 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.card}>
-        <Text style={styles.label}>Titel</Text>
+        <Text style={styles.sectionTitle}>Title</Text>
         <Text style={styles.value}>{algorithm.label}</Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Indikation</Text>
+        <Text style={styles.sectionTitle}>Indikation</Text>
         <Text style={styles.value}>{algorithm.indication}</Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Schritte</Text>
+        <Text style={styles.sectionTitle}>Schritte</Text>
         <View style={styles.steps}>
           {algorithm.steps.map((step, index) => (
             <View key={index} style={styles.stepCard}>
-              <Text style={styles.stepLabel}>Schritt {index + 1}</Text>
+              <Text style={styles.stepLabel}>{index + 1}. Schritt</Text>
               <Text style={styles.value}>{step.text}</Text>
             </View>
           ))}
         </View>
       </View>
 
-      {algorithm.notes ? (
-        <View style={styles.card}>
-          <Text style={styles.label}>Notizen</Text>
-          <Text style={styles.value}>{algorithm.notes}</Text>
-        </View>
-      ) : null}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Hinweise</Text>
+        {algorithm.warnings ? <Text style={styles.value}>{algorithm.warnings}</Text> : null}
+        {algorithm.notes ? <Text style={styles.value}>{algorithm.notes}</Text> : null}
+        {!algorithm.warnings && !algorithm.notes ? (
+          <Text style={styles.value}>Keine zusätzlichen Hinweise hinterlegt.</Text>
+        ) : null}
+      </View>
 
-      {algorithm.warnings ? (
-        <View style={styles.warningCard}>
-          <Text style={styles.warningLabel}>Warnhinweise</Text>
-          <Text style={styles.value}>{algorithm.warnings}</Text>
-        </View>
-      ) : null}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Quellen</Text>
+        {(ALGORITHM_SOURCES[algorithm.id] ?? ['Keine Quelle hinterlegt.']).map((source) => (
+          <Text key={source} style={styles.sourceItem}>
+            - {source}
+          </Text>
+        ))}
+      </View>
     </ScrollView>
   );
 }
@@ -84,27 +101,12 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
     gap: 8,
   },
-  warningCard: {
-    borderRadius: 16,
-    padding: 16,
-    backgroundColor: '#fff7ed',
-    borderWidth: 1,
-    borderColor: '#fdba74',
-    gap: 8,
-  },
-  label: {
+  sectionTitle: {
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 0.6,
     textTransform: 'uppercase',
     color: '#2563eb',
-  },
-  warningLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    color: '#c2410c',
   },
   value: {
     fontSize: 16,
@@ -127,6 +129,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textTransform: 'uppercase',
     color: '#1d4ed8',
+  },
+  sourceItem: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: '#374151',
   },
   emptyState: {
     flex: 1,
