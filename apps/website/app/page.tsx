@@ -1,16 +1,12 @@
-import { AudienceSection } from "../sections/AudienceSection";
-import { BuildingNowSection } from "../sections/BuildingNowSection";
-import { CTASection } from "../sections/CTASection";
-import { FeatureSection } from "../sections/FeatureSection";
-import { FeatureVotingSection } from "../sections/FeatureVotingSection";
-import { FooterSection } from "../sections/FooterSection";
-import { HeroSection } from "../sections/HeroSection";
-import { ProblemSection } from "../sections/ProblemSection";
-import { RoadmapSection } from "../sections/RoadmapSection";
-import { SolutionSection } from "../sections/SolutionSection";
-import { StatusSection } from "../sections/StatusSection";
-import { SurveysSection } from "../sections/SurveysSection";
-import { WorkflowSection } from "../sections/WorkflowSection";
+import { AppPreviewSection } from "../components/sections/AppPreviewSection";
+import { CTASection, MobileStickyCTA } from "../components/sections/CTASection";
+import { FeatureSection } from "../components/sections/FeatureSection";
+import { FooterSection } from "../components/sections/FooterSection";
+import { HeroSection } from "../components/sections/HeroSection";
+import { ProblemSection } from "../components/sections/ProblemSection";
+import { SolutionSection } from "../components/sections/SolutionSection";
+import { TrustSection } from "../components/sections/TrustSection";
+import { UseCasesSection } from "../components/sections/UseCasesSection";
 
 export default function Page() {
   return (
@@ -19,15 +15,12 @@ export default function Page() {
       <ProblemSection />
       <SolutionSection />
       <FeatureSection />
-      <WorkflowSection />
-      <AudienceSection />
-      <StatusSection />
-      <BuildingNowSection />
-      <RoadmapSection />
-      <SurveysSection />
-      <FeatureVotingSection />
+      <AppPreviewSection />
+      <UseCasesSection />
+      <TrustSection />
       <CTASection />
       <FooterSection />
+      <MobileStickyCTA />
     </main>
   );
 }

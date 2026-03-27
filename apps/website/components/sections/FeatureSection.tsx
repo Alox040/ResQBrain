@@ -1,54 +1,38 @@
+import { Card } from "../ui/Card";
 import { Container } from "../layout/Container";
+import { Section } from "../ui/Section";
+import { SectionHeader } from "../ui/SectionHeader";
 
 const features = [
   {
-    title: "Medikamente sofort finden",
-    text: "Medikamente schnell ueber Listen und lokale Suche aufrufen, statt im Ordner oder PDF zu suchen.",
+    title: "Medikamente",
+    text: "Liste, Suche, Detail. Hinweise und Dosierung in der Ansicht.",
   },
   {
-    title: "Algorithmen griffbereit",
-    text: "Algorithmen strukturiert in Listen- und Detailansichten abrufen - klar lesbar auch unter Zeitdruck.",
+    title: "Algorithmen",
+    text: "Schritte in Liste und Detail. Direkt ablesbar.",
   },
   {
-    title: "Offline-Zugriff",
-    text: "Die statische Datenbasis liegt lokal vor und bleibt ohne Mobilfunk oder WLAN verfuegbar.",
-  },
-  {
-    title: "Klare Detailansichten",
-    text: "Wesentliche Informationen stehen direkt in der Ansicht: Dosierungen, Hinweise und Algorithmus-Schritte.",
-  },
-  {
-    title: "Gepruefte Pilot-Inhalte",
-    text: "Der aktuelle Stand nutzt eine definierte, gepruefte Inhaltsbasis fuer einen klar begrenzten Pilotkontext.",
-  },
-  {
-    title: "Phase 1 in Vorbereitung",
-    text: "Weitere Funktionen wie Rechenhilfen oder Lernansichten sind fuer spaetere Stufen vorgesehen, nicht Teil des kommunizierten Lookup-Umfangs.",
+    title: "Lokal / ohne Netz",
+    text: "Daten liegen lokal. Lesen ohne Mobilfunk, sofern der gebaute Stand das abdeckt.",
   },
 ];
 
 export function FeatureSection() {
   return (
-    <section id="features" className="section">
+    <Section id="features">
       <Container>
-        <div className="section-heading">
-          <span className="eyebrow">Features</span>
-          <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-            Was der aktuelle Stand abdeckt.
-          </h2>
-        </div>
+        <SectionHeader title="Funktionen" description="Stand der Software — ohne Ausblick auf spaetere Releases." />
 
-        <div className="card-grid card-grid-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
           {features.map((feature) => (
-            <article key={feature.title} className="card">
-              <h3 style={{ fontSize: "1.15rem" }}>{feature.title}</h3>
-              <p className="muted" style={{ marginTop: "0.8rem" }}>
-                {feature.text}
-              </p>
-            </article>
+            <Card key={feature.title} padding="comfortable">
+              <h3 className="m-0 text-[1.05rem] font-semibold text-foreground">{feature.title}</h3>
+              <p className="mb-0 mt-3 text-sm leading-[1.55] text-muted md:text-[0.95rem]">{feature.text}</p>
+            </Card>
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

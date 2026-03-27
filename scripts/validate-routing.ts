@@ -78,9 +78,9 @@ const linkChecks: LinkCheck[] = [
       : "fehlt",
   },
   {
-    component: "SurveysSection",
-    target: "id=feedback",
-    status: fileContains("apps/website/components/sections/SurveysSection.tsx", 'id="feedback"')
+    component: "CTASection",
+    target: 'id="cta"',
+    status: fileContains("apps/website/components/sections/CTASection.tsx", 'id="cta"')
       ? "gesetzt"
       : "fehlt",
   },

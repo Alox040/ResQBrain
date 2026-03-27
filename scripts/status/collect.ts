@@ -37,14 +37,9 @@ const LINK_SOURCES: Array<{ component: string; file: string; hrefs: string[] }> 
     hrefs: ["/datenschutz"],
   },
   {
-    component: "SurveysSection",
-    file: "apps/website/components/sections/SurveysSection.tsx",
-    hrefs: ["/datenschutz"],
-  },
-  {
     component: "HeroSection",
     file: "apps/website/components/sections/HeroSection.tsx",
-    hrefs: [],
+    hrefs: ["/#cta"],
   },
 ];
 

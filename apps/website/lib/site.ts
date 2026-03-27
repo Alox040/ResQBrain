@@ -1,15 +1,16 @@
 export const siteConfig = {
   name: "ResQBrain",
-  title: "ResQBrain | Wissensplattform fuer den Rettungsdienst",
+  title: "ResQBrain | Referenz fuer Rettungsdienst-Inhalte",
   description:
-    "ResQBrain: Wissensplattform fuer den Rettungsdienst — Algorithmen, Medikamente und SOPs, versioniert und organisationsspezifisch. Fruehe Entwicklungsphase; Feedback willkommen.",
+    "Medikamente, Algorithmen und SOPs: lokal auf dem Geraet, versioniert, je Organisation. Fruehphase — Pilot und Rueckmeldung per Kontakt.",
   url: "https://resqbrain.example.com",
   navigation: [
     { href: "/#problem", label: "Problem" },
     { href: "/#solution", label: "Loesung" },
-    { href: "/#features", label: "Features" },
-    { href: "/#workflow", label: "Ablauf" },
-    { href: "/#audience", label: "Zielgruppen" },
+    { href: "/#features", label: "Funktionen" },
+    { href: "/#preview", label: "Vorschau" },
+    { href: "/#use-cases", label: "Einsatz" },
+    { href: "/#trust", label: "Verantwortung" },
     { href: "/#cta", label: "Kontakt" },
   ],
 };

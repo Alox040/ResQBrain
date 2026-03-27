@@ -8,9 +8,8 @@ export function Header() {
         position: "sticky",
         top: 0,
         zIndex: 40,
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
-        backdropFilter: "blur(18px)",
-        background: "rgba(8, 17, 31, 0.82)",
+        borderBottom: "1px solid var(--color-border)",
+        background: "var(--color-surface)",
       }}
     >
       <Container>
@@ -25,7 +24,10 @@ export function Header() {
             padding: "0.9rem 0",
           }}
         >
-          <a href="/" style={{ color: "#f5f7fb", fontSize: "1.1rem", fontWeight: 800 }}>
+          <a
+            href="/"
+            style={{ color: "var(--color-foreground)", fontSize: "1.1rem", fontWeight: 600, letterSpacing: "-0.02em" }}
+          >
             ResQBrain
           </a>
           <Navigation />

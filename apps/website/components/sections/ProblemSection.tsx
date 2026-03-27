@@ -1,36 +1,30 @@
+import { Card } from "../ui/Card";
 import { Container } from "../layout/Container";
+import { Section } from "../ui/Section";
+import { SectionHeader } from "../ui/SectionHeader";
 
 const problems = [
-  "Unterschiedliche Algorithmen je nach Region",
-  "Medikamentenlisten nicht zentral gepflegt",
-  "SOPs in PDFs oder Dokumenten verteilt",
-  "Aenderungen schwer nachvollziehbar",
-  "Wissen auf mehrere Quellen verteilt",
-  "Keine zentrale Wissensplattform",
+  "Inhalte verteilt: PDF, Share, Ordner.",
+  "Listen und Algorithmen weichen je Träger oder Region.",
+  "Neuer Stand — Einsatzkraefte sehen ihn oft zu spaet.",
 ];
 
 export function ProblemSection() {
   return (
-    <section id="problem" className="section">
+    <Section id="problem">
       <Container>
-        <div className="section-heading">
-          <span className="eyebrow">Herausforderung</span>
-          <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>Das Problem</h2>
-          <p className="muted" style={{ marginTop: "1rem" }}>
-            Wissen im Rettungsdienst ist fragmentiert
-          </p>
-        </div>
+        <SectionHeader title="Problem" description="Kein gemeinsamer, gueltiger Stand auf dem Geraet." />
 
-        <div className="card-grid card-grid-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
           {problems.map((problem) => (
-            <article key={problem} className="card">
-              <p className="muted" style={{ margin: 0 }}>
+            <Card key={problem} padding="comfortable">
+              <p className="m-0 text-sm leading-relaxed text-muted md:text-[0.98rem] md:leading-[1.6]">
                 {problem}
               </p>
-            </article>
+            </Card>
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

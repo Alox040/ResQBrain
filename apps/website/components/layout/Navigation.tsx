@@ -18,9 +18,9 @@ export function Navigation() {
             <a
               href={item.href}
               style={{
-                color: "rgba(245, 247, 251, 0.88)",
-                fontSize: "0.95rem",
-                fontWeight: 600,
+                color: "var(--color-muted)",
+                fontSize: "0.9375rem",
+                fontWeight: 500,
               }}
             >
               {item.label}

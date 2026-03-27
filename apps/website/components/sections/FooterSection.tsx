@@ -6,11 +6,12 @@ export function FooterSection() {
   return (
     <Footer>
       <div
+        id="footer"
         style={{
-          background: "#08111f",
-          color: "#f5f7fb",
-          padding: "2.5rem 0",
-          borderTop: "1px solid rgba(255,255,255,0.08)",
+          background: "var(--color-surface-strong)",
+          color: "var(--color-on-strong)",
+          padding: "clamp(2rem, 4vw, 2.75rem) 0",
+          borderTop: "1px solid color-mix(in srgb, var(--color-on-strong) 18%, var(--color-surface-strong))",
         }}
       >
         <Container>
@@ -18,15 +19,22 @@ export function FooterSection() {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "space-between",
-              gap: "1rem",
+              gap: "1.5rem",
             }}
           >
-            <div>
-              <strong>{siteConfig.name}</strong>
-              <p style={{ margin: "0.5rem 0 0", color: "rgba(245,247,251,0.68)" }}>
-                Wissensplattform fuer gepruefte Inhalte im Rettungsdienst — offline verfuegbar.
+            <div style={{ maxWidth: "22rem" }}>
+              <strong style={{ fontSize: "1rem", color: "var(--color-on-strong)" }}>{siteConfig.name}</strong>
+              <p
+                style={{
+                  margin: "0.4rem 0 0",
+                  color: "color-mix(in srgb, var(--color-on-strong) 72%, transparent)",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.55,
+                }}
+              >
+                Medikamente, Algorithmen, SOP — lokal, je Organisation.
               </p>
             </div>
 
@@ -36,24 +44,42 @@ export function FooterSection() {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "1rem",
-                  justifyContent: "center",
+                  gap: "0.75rem 1.25rem",
+                  justifyContent: "flex-end",
                 }}
               >
                 {siteConfig.navigation.map((item) => (
                   <li key={item.href}>
-                    <a href={item.href} style={{ color: "rgba(245,247,251,0.8)" }}>
+                    <a
+                      href={item.href}
+                      style={{
+                        color: "color-mix(in srgb, var(--color-on-strong) 88%, transparent)",
+                        fontSize: "0.9rem",
+                      }}
+                    >
                       {item.label}
                     </a>
                   </li>
                 ))}
-                <li key="/impressum">
-                  <a href="/impressum" style={{ color: "rgba(245,247,251,0.8)" }}>
+                <li>
+                  <a
+                    href="/impressum"
+                    style={{
+                      color: "color-mix(in srgb, var(--color-on-strong) 88%, transparent)",
+                      fontSize: "0.9rem",
+                    }}
+                  >
                     Impressum
                   </a>
                 </li>
-                <li key="/datenschutz">
-                  <a href="/datenschutz" style={{ color: "rgba(245,247,251,0.8)" }}>
+                <li>
+                  <a
+                    href="/datenschutz"
+                    style={{
+                      color: "color-mix(in srgb, var(--color-on-strong) 88%, transparent)",
+                      fontSize: "0.9rem",
+                    }}
+                  >
                     Datenschutz
                   </a>
                 </li>

@@ -1,8 +1,9 @@
-export { HeroSection } from "./HeroSection";
-export { ProblemSection } from "./ProblemSection";
-export { SolutionSection } from "./SolutionSection";
-export { FeatureSection } from "./FeatureSection";
-export { WorkflowSection } from "./WorkflowSection";
-export { AudienceSection } from "./AudienceSection";
-export { CTASection } from "./CTASection";
-export { FooterSection } from "./FooterSection";
+export { AppPreviewSection } from "../components/sections/AppPreviewSection";
+export { CTASection } from "../components/sections/CTASection";
+export { FeatureSection } from "../components/sections/FeatureSection";
+export { FooterSection } from "../components/sections/FooterSection";
+export { HeroSection } from "../components/sections/HeroSection";
+export { ProblemSection } from "../components/sections/ProblemSection";
+export { SolutionSection } from "../components/sections/SolutionSection";
+export { TrustSection } from "../components/sections/TrustSection";
+export { UseCasesSection } from "../components/sections/UseCasesSection";

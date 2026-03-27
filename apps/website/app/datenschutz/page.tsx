@@ -1,3 +1,5 @@
+import { Container } from "@/components/ui/Container";
+import { Section } from "@/components/ui/Section";
 import { datenschutz } from "@/legal/datenschutz";
 
 export const metadata = {
@@ -9,33 +11,17 @@ const body = datenschutz.replace(/^Datenschutzerklaerung\s*\n+/, "").trim();
 
 export default function DatenschutzPage() {
   return (
-    <main className="section">
-      <div className="container">
-        <article
-          style={{
-            maxWidth: "min(100%, 42rem)",
-            marginInline: "auto",
-          }}
-        >
-          <h1
-            style={{
-              margin: "0 0 clamp(1rem, 3vw, 1.5rem)",
-              fontSize: "clamp(1.75rem, 5vw, 2.25rem)",
-              lineHeight: 1.15,
-            }}
-          >
-            Datenschutz
-          </h1>
-          <div
-            style={{
-              whiteSpace: "pre-line",
-              lineHeight: 1.65,
-            }}
-          >
-            {body}
-          </div>
-        </article>
-      </div>
+    <main>
+      <Section>
+        <Container>
+          <article className="mx-auto max-w-2xl">
+            <h1 className="mb-4 text-[clamp(1.75rem,5vw,2.25rem)] font-semibold leading-tight tracking-tight text-foreground md:mb-6">
+              Datenschutz
+            </h1>
+            <div className="whitespace-pre-line leading-relaxed text-foreground">{body}</div>
+          </article>
+        </Container>
+      </Section>
     </main>
   );
 }

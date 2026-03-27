@@ -1,43 +1,41 @@
+import { Card } from "../ui/Card";
 import { Container } from "../layout/Container";
+import { Section } from "../ui/Section";
+import { SectionHeader } from "../ui/SectionHeader";
+
+const pillars = [
+  {
+    title: "Ein Bestand",
+    text: "Algorithmen, Medikamente, SOP in einer App. Zuordnung zur Organisation.",
+  },
+  {
+    title: "Version",
+    text: "Freigabestand ist kennzeichbar. Kein unklares Datei-Mixen.",
+  },
+  {
+    title: "Zugriff",
+    text: "Listen und Detail direkt. Schnell erfassbar. Ohne Netz, wenn der lokale Stand es erlaubt.",
+  },
+];
 
 export function SolutionSection() {
   return (
-    <section id="solution" className="section">
+    <Section id="solution">
       <Container>
-        <div className="split-layout">
-          <article
-            className="card"
-            style={{
-              background: "linear-gradient(180deg, #ffffff 0%, #f6f8fc 100%)",
-            }}
-          >
-            <span className="eyebrow">Loesung</span>
-            <h2 style={{ marginTop: "1rem", fontSize: "clamp(2rem, 4vw, 3rem)" }}>
-              Kein Suchen. Kein Scrollen. Die richtige Information, wenn es zaehlt.
-            </h2>
-            <p className="muted" style={{ marginTop: "1rem" }}>
-              ResQBrain gibt Einsatzkraeften direkten Zugriff auf Medikamente, Algorithmen und
-              gepruefte Inhalte — offline verfuegbar, fuer eine Pilot-Wache konfiguriert, in Sekunden abrufbar.
-            </p>
-          </article>
+        <SectionHeader
+          title="Loesung"
+          description="Gebundelte Inhalte auf dem Endgeraet. Technisch klar umrissen."
+        />
 
-          <article
-            className="card"
-            style={{
-              background: "linear-gradient(180deg, #101b2e 0%, #08111f 100%)",
-              color: "#f5f7fb",
-              borderColor: "rgba(255,255,255,0.08)",
-            }}
-          >
-            <h3 style={{ fontSize: "1.2rem" }}>Im Einsatz verfuegbar</h3>
-            <ul className="list-reset" style={{ marginTop: "1rem", display: "grid", gap: "0.9rem" }}>
-              <li>Medikamente mit Dosierung, Kontraindikationen und Handelsnamen</li>
-              <li>Algorithmen als strukturierte Schritt-fuer-Schritt-Ansicht</li>
-              <li>Alles offline — auch ohne Netz vollstaendig nutzbar</li>
-            </ul>
-          </article>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+          {pillars.map((p) => (
+            <Card key={p.title} padding="comfortable">
+              <h3 className="m-0 text-[1.05rem] font-semibold text-foreground">{p.title}</h3>
+              <p className="mb-0 mt-3 text-sm leading-[1.55] text-muted md:text-[0.95rem]">{p.text}</p>
+            </Card>
+          ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
