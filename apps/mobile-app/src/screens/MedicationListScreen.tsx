@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { medications } from '@/features/medication/mockData';
+import { medications } from '@/features/lookup';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 
 type MedicationListNavigationProp = NativeStackNavigationProp<
@@ -29,7 +29,7 @@ export function MedicationListScreen() {
             ]}
           >
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.subtitle}>{item.subtitle}</Text>
+            <Text style={styles.subtitle}>{item.indication}</Text>
           </Pressable>
         )}
         contentContainerStyle={styles.content}

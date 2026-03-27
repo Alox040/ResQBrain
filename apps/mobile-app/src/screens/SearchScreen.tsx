@@ -8,14 +8,14 @@ import {
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { mockSearchResults } from '@/search/mockData';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import type { SearchResultItem } from '@/search/types';
 
 export function SearchScreen() {
   const [query, setQuery] = useState('');
-  const navigation = useNavigation<NativeStackNavigationProp<RootTabParamList>>();
+  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
   const normalizedQuery = query.trim().toLowerCase();
   const results = normalizedQuery

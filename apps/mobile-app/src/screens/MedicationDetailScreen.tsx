@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { medications } from '@/features/medication/mockData';
+import { medicationLookup } from '@/features/lookup';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 
 type Props = NativeStackScreenProps<
@@ -10,9 +10,7 @@ type Props = NativeStackScreenProps<
 >;
 
 export function MedicationDetailScreen({ route }: Props) {
-  const medication = medications.find(
-    (item) => item.id === route.params.medicationId,
-  );
+  const medication = medicationLookup[route.params.medicationId];
 
   if (!medication) {
     return (
@@ -39,8 +37,8 @@ export function MedicationDetailScreen({ route }: Props) {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>DosageText</Text>
-        <Text style={styles.value}>{medication.dosageText}</Text>
+        <Text style={styles.label}>Dosage</Text>
+        <Text style={styles.value}>{medication.dosage}</Text>
       </View>
 
       <View style={styles.card}>

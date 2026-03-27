@@ -18,6 +18,26 @@ Aktuelle Statusdateien:
 - [`docs/status/WORK_SESSION.md`](docs/status/WORK_SESSION.md)  
 - [`docs/roadmap/PROJECT_ROADMAP.md`](docs/roadmap/PROJECT_ROADMAP.md)  
 
+## Current Development State
+
+Kurzstatus (automatisch aus den aktuellen Kontextdateien ableitbar):
+
+- **Aktuelle Phase:** Phase 0 (Lookup-first MVP)
+- **Produktiv sichtbar:** Mobile Lookup-Navigation + statische Website
+- **MVP-Fokus:** Algorithm-/Medication-Lookup, Listen/Details, statische Daten
+- **Noch offen:** Offline-Strategie, Datenvollstaendigkeit, fehlende MVP-Screens
+- **Nicht im aktuellen MVP-UI:** KI, Lernlogik, Organisations-/Versionierungsoberflaeche
+
+Kontextquellen:
+
+- [`docs/context/project-overview.md`](docs/context/project-overview.md)
+- [`docs/context/architecture.md`](docs/context/architecture.md)
+- [`docs/context/navigation.md`](docs/context/navigation.md)
+- [`docs/context/mvp-scope.md`](docs/context/mvp-scope.md)
+- [`docs/context/roadmap-status.md`](docs/context/roadmap-status.md)
+- [`docs/context/current-phase.md`](docs/context/current-phase.md)
+- [`docs/context/next-steps.md`](docs/context/next-steps.md)
+
 Repository: [https://github.com/Alox040/ResQBrain](https://github.com/Alox040/ResQBrain)
 
 ## Zielgruppe

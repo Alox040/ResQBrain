@@ -1,7 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, Pressable, View } from 'react-native';
+import { algorithms } from '@/features/lookup';
+import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
+
+type AlgorithmListNavigationProp = NativeStackNavigationProp<
+  AlgorithmStackParamList,
+  'AlgorithmList'
+>;
 
 export function AlgorithmListScreen() {
+  const navigation = useNavigation<AlgorithmListNavigationProp>();
+
   return (
     <ScrollView
       style={styles.screen}
@@ -15,29 +26,19 @@ export function AlgorithmListScreen() {
         </Text>
       </View>
 
-      <View style={styles.algorithmCard}>
-        <Text style={styles.algorithmTitle}>Reanimation</Text>
-        <Text style={styles.algorithmStage}>Prioritaet hoch</Text>
-        <Text style={styles.algorithmText}>
-          Rhythmuscheck, Defibrillation, Medikamentenfenster, Teamaufgaben.
-        </Text>
-      </View>
-
-      <View style={[styles.algorithmCard, styles.greenCard]}>
-        <Text style={styles.algorithmTitle}>Anaphylaxie</Text>
-        <Text style={styles.algorithmStage}>Sofortmassnahmen</Text>
-        <Text style={styles.algorithmText}>
-          Atemweg, Sauerstoff, Adrenalin, Volumen, Verlaufskontrolle.
-        </Text>
-      </View>
-
-      <View style={[styles.algorithmCard, styles.orangeCard]}>
-        <Text style={styles.algorithmTitle}>Krampfanfall</Text>
-        <Text style={styles.algorithmStage}>Neurologischer Notfall</Text>
-        <Text style={styles.algorithmText}>
-          Schutz, Monitoring, Benzodiazepin, Atemwegssicherung.
-        </Text>
-      </View>
+      {algorithms.map((algorithm) => (
+        <Pressable
+          key={algorithm.id}
+          onPress={() =>
+            navigation.navigate('AlgorithmDetail', { algorithmId: algorithm.id })
+          }
+          style={styles.algorithmCard}
+        >
+          <Text style={styles.algorithmTitle}>{algorithm.title}</Text>
+          <Text style={styles.algorithmStage}>Lookup</Text>
+          <Text style={styles.algorithmText}>{algorithm.indication}</Text>
+        </Pressable>
+      ))}
     </ScrollView>
   );
 }
@@ -77,12 +78,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#7c2d12',
     justifyContent: 'space-between',
     gap: 10,
-  },
-  greenCard: {
-    backgroundColor: '#0f766e',
-  },
-  orangeCard: {
-    backgroundColor: '#b45309',
   },
   algorithmTitle: {
     color: '#ffffff',

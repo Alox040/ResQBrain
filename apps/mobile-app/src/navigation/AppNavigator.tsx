@@ -27,9 +27,6 @@ export type RootTabParamList = {
   Home: undefined;
   Search: undefined;
   MedicationList: NavigatorScreenParams<MedicationStackParamList>;
-  MedicationDetail: {
-    medicationId: string;
-  };
   AlgorithmList: NavigatorScreenParams<AlgorithmStackParamList>;
 };
 
