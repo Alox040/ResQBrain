@@ -24,7 +24,7 @@ export function AlgorithmDetailScreen({ route }: Props) {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.card}>
-        <Text style={styles.label}>Title</Text>
+        <Text style={styles.label}>Titel</Text>
         <Text style={styles.value}>{algorithm.title}</Text>
       </View>
 
@@ -34,11 +34,11 @@ export function AlgorithmDetailScreen({ route }: Props) {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Steps</Text>
+        <Text style={styles.label}>Schritte</Text>
         <View style={styles.steps}>
           {algorithm.steps.map((step, index) => (
             <View key={step.id} style={styles.stepCard}>
-              <Text style={styles.stepLabel}>Step {index + 1}</Text>
+              <Text style={styles.stepLabel}>Schritt {index + 1}</Text>
               <Text style={styles.value}>{step.text}</Text>
             </View>
           ))}
@@ -47,14 +47,14 @@ export function AlgorithmDetailScreen({ route }: Props) {
 
       {algorithm.notes ? (
         <View style={styles.card}>
-          <Text style={styles.label}>Notes</Text>
+          <Text style={styles.label}>Notizen</Text>
           <Text style={styles.value}>{algorithm.notes}</Text>
         </View>
       ) : null}
 
       {algorithm.warnings ? (
         <View style={styles.warningCard}>
-          <Text style={styles.warningLabel}>Warnings</Text>
+          <Text style={styles.warningLabel}>Warnhinweise</Text>
           <Text style={styles.value}>{algorithm.warnings}</Text>
         </View>
       ) : null}

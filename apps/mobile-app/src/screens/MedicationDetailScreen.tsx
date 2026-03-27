@@ -37,12 +37,12 @@ export function MedicationDetailScreen({ route }: Props) {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Dosage</Text>
+        <Text style={styles.label}>Dosierung</Text>
         <Text style={styles.value}>{medication.dosage}</Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Notes</Text>
+        <Text style={styles.label}>Notizen</Text>
         <Text style={styles.value}>{medication.notes}</Text>
       </View>
     </ScrollView>

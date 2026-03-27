@@ -25,3 +25,7 @@ build/
 # misc
 .DS_Store
 *.log
+apps/mobile-app/.expo/
+apps/mobile-app/.expo-shared/
+apps/mobile-app/dist-validation/
+apps/mobile-app/dist-validation-ios/
