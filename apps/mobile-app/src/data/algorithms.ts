@@ -12,14 +12,14 @@ export const algorithms: Algorithm[] = [
     steps: [
       { text: 'Sicherheit prüfen, Bewusstsein und Atmung beurteilen.' },
       { text: 'Team alarmieren, Defibrillator anfordern.' },
-      { text: 'Thoraxkompressionen 30:2 starten, Atemweg freimachen.' },
-      { text: 'Rhythmus analysieren – defibrillierbar (VF/VT) oder nicht (Asystolie/PEA).' },
-      { text: 'Bei VF/VT: sofort defibrillieren, CPR direkt fortsetzen.' },
-      { text: 'Adrenalin 1 mg i.v./i.o. – bei nicht defibrillierbarem Rhythmus sofort, bei VF/VT nach 3. Schock.' },
+      { text: 'Thoraxkompressionen 30:2 starten, Atemweg sichern.' },
+      { text: 'Rhythmus analysieren: defibrillierbar (VF/VT) oder nicht (Asystolie/PEA).' },
+      { text: 'VF/VT: sofort defibrillieren, CPR direkt fortsetzen.' },
+      { text: 'Adrenalin 1 mg i.v./i.o.: bei nicht defibrillierbarem Rhythmus sofort, bei VF/VT nach 3. Schock.' },
       { text: 'Amiodaron 300 mg i.v./i.o. nach 3. Schock bei VF/VT.' },
-      { text: 'Reversible Ursachen suchen (4H/4T).' },
+      { text: 'Reversible Ursachen suchen und behandeln (4H/4T).' },
     ],
-    warnings: 'Nicht als Echtzeit-Entscheidungshilfe verwenden. Lokales SOP hat Vorrang.',
+    redFlags: 'Kein ROSC nach 2 Zyklen: reversible Ursachen (4H/4T) aktiv suchen.\nTemperatur < 30 °C: Defibrillation bis 3× versuchen, dann erst bei Erwärmung.',
     relatedMedicationIds: ['adrenalin', 'amiodaron'],
   },
   {
@@ -32,12 +32,12 @@ export const algorithms: Algorithm[] = [
     steps: [
       { text: 'Auslöser entfernen, Atemweg sichern, Oxygenierung starten.' },
       { text: 'Adrenalin 0,5 mg i.m. (Oberschenkel lateral) – sofort.' },
-      { text: 'Flachlagerung bei Hypotonie, Oberkörperhochlagerung bei Dyspnoe.' },
-      { text: 'Volumen i.v. bei Hypotonie (NaCl 0,9 %).' },
+      { text: 'Flachlagerung bei Hypotonie; Oberkörperhochlagerung bei Dyspnoe.' },
+      { text: 'Volumen i.v. bei Hypotonie (NaCl 0,9 % 500–1000 ml).' },
       { text: 'Prednisolon 100–250 mg i.v. und Antihistaminikum ergänzen.' },
-      { text: 'Verlauf engmaschig überwachen, Eskalationsbedarf frühzeitig einschätzen.' },
+      { text: 'Verlauf engmaschig überwachen, Transport sicherstellen.' },
     ],
-    warnings: 'Adrenalin-Gabe nicht verzögern. Bei Verschlechterung sofort eskalieren.',
+    redFlags: 'Adrenalin-Gabe nicht verzögern.\nAnhaltende Hypotonie oder inspiratorischer Stridor: sofort eskalieren.',
     relatedMedicationIds: ['adrenalin', 'prednisolon'],
   },
   {
@@ -53,7 +53,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Atropin 0,5 mg i.v. – Wiederholung alle 3–5 min bis 3 mg gesamt.' },
       { text: 'Bei fehlendem Ansprechen: Adrenalin 0,05–0,1 mg i.v. titriert oder externer Schrittmacher.' },
     ],
-    warnings: 'Instabiler Patient erfordert sofortige klinische Eskalation.',
+    redFlags: 'Persistierende Instabilität trotz Atropin: sofort auf Schrittmacher oder Adrenalin eskalieren.',
     relatedMedicationIds: ['atropin', 'adrenalin'],
   },
   {
@@ -66,11 +66,11 @@ export const algorithms: Algorithm[] = [
     steps: [
       { text: '12-Kanal-EKG ableiten, Vitalparameter sichern.' },
       { text: 'Instabilitätszeichen prüfen: Hypotonie, Bewusstseinsminderung, Angina.' },
-      { text: 'Bei instabilem Patient: synchronisierte Kardioversion vorbereiten.' },
-      { text: 'Bei stabiler Breitkomplex-VT: Amiodaron 300 mg i.v. über 20–60 min.' },
+      { text: 'Instabiler Patient: synchronisierte Kardioversion vorbereiten.' },
+      { text: 'Stabile Breitkomplex-VT: Amiodaron 300 mg i.v. über 20–60 min.' },
       { text: 'Nach jeder Intervention: Rhythmus und Klinik reevaluieren.' },
     ],
-    warnings: 'Keine Feindifferenzierung im Seed. Klinische Entscheidung bleibt beim Anwender.',
+    redFlags: 'Bewusstseinsverlust oder Schockzeichen: sofort synchronisierte Kardioversion.',
     relatedMedicationIds: ['amiodaron'],
   },
   {
@@ -86,6 +86,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Acetylsalicylsäure 150–300 mg p.o. (zerkaut) oder i.v. geben.' },
       { text: 'Transportziel und Voranmeldung nach klinischem Gesamteindruck festlegen.' },
     ],
+    redFlags: 'ST-Elevation im EKG: sofortige Voranmeldung als STEMI, Zeit-zu-Ballon zählt.',
     relatedMedicationIds: ['acetylsalicylsaeure', 'heparin'],
   },
 
@@ -104,7 +105,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Prednisolon 100–250 mg i.v. geben.' },
       { text: 'Atemarbeit, Sprechfähigkeit und SpO₂ engmaschig reevaluieren.' },
     ],
-    warnings: 'Erschöpfung des Patienten erfordert sofortige Eskalation (NIV/Intubation).',
+    redFlags: 'Erschöpfung, Stille im Thorax oder SpO₂ < 90 % trotz O₂: sofort NIV oder Intubation.',
     relatedMedicationIds: ['salbutamol', 'ipratropium', 'prednisolon'],
   },
   {
@@ -115,12 +116,13 @@ export const algorithms: Algorithm[] = [
     tags: ['atemwege'],
     searchTerms: ['COPD', 'Exazerbation', 'Emphysem', 'Obstruktion', 'chronisch'],
     steps: [
-      { text: 'Aufrechte Lagerung, Monitoring, kontrollierte Oxygenierung (SpO₂ 88–92 %).' },
+      { text: 'Aufrechte Lagerung, Monitoring, kontrollierte Oxygenierung (Ziel SpO₂ 88–92 %).' },
       { text: 'Salbutamol 2,5–5 mg und Ipratropiumbromid 0,5 mg vernebelt.' },
       { text: 'Prednisolon 100–250 mg i.v. geben.' },
-      { text: 'Transportfähigkeit und Eskalationsbedarf (NIV) frühzeitig einschätzen.' },
+      { text: 'Transportfähigkeit und NIV-Bedarf frühzeitig einschätzen.' },
     ],
-    notes: 'Ziel-SpO₂ bei COPD: 88–92 %, nicht unkontrolliert hochfluss.',
+    notes: 'Ziel-SpO₂ bei COPD: 88–92 %. Unkontrollierter Hochfluss-Sauerstoff vermeiden.',
+    redFlags: 'Zunehmende Erschöpfung oder SpO₂-Abfall trotz Therapie: NIV oder Beatmung erwägen.',
     relatedMedicationIds: ['salbutamol', 'ipratropium', 'prednisolon'],
   },
 
@@ -138,7 +140,7 @@ export const algorithms: Algorithm[] = [
       { text: 'Dauer und Ansprechen dokumentieren.' },
       { text: 'Nach Anfall: Reevaluieren, Ursachenfokus, sicherer Transport.' },
     ],
-    warnings: 'Atemdepression möglich. Atmung und Vigilanz kontinuierlich überwachen.',
+    redFlags: 'Anfall > 5 min oder 2. Anfall ohne Wiedererlangung des Bewusstseins: Status epilepticus – sofort eskalieren.',
     relatedMedicationIds: ['midazolam'],
   },
 
@@ -152,11 +154,11 @@ export const algorithms: Algorithm[] = [
     searchTerms: ['Unterzucker', 'BZ', 'Blutzucker', 'Diabetes', 'Hypoglykämie'],
     steps: [
       { text: 'Blutzucker messen, Monitoring beginnen.' },
-      { text: 'Bei BZ < 60 mg/dl (3,3 mmol/l) oder klinischem Verdacht: Glukose i.v. geben.' },
+      { text: 'Bei BZ < 60 mg/dl oder klinischem Verdacht: Glukose i.v. vorbereiten.' },
       { text: 'Glukose 40 %: 10–20 g (25–50 ml) i.v. langsam.' },
       { text: 'Vigilanz und BZ nach Gabe kontrollieren, Transport planen.' },
     ],
-    warnings: 'Persistierende Bewusstseinsstörung trotz Korrektur erfordert weitere Abklärung.',
+    redFlags: 'Persistierende Bewusstseinsstörung nach Glukosegabe: andere Ursachen aktiv abklären.',
     relatedMedicationIds: ['glukose'],
   },
 
@@ -169,12 +171,12 @@ export const algorithms: Algorithm[] = [
     tags: ['intoxikation', 'atemwege'],
     searchTerms: ['Opiat', 'Morphin', 'Heroin', 'Überdosis', 'Atemdepression', 'Naloxon'],
     steps: [
-      { text: 'Atemweg sichern, Atemunterstützung/Beatmung bereitstellen.' },
+      { text: 'Atemweg sichern, Atemunterstützung oder Beatmung bereitstellen.' },
       { text: 'Naloxon 0,1–0,4 mg i.v. titriert oder 0,4–2 mg intranasal.' },
       { text: 'Spontanatmung und Vigilanz nach jeder Gabe beurteilen.' },
       { text: 'Wiederkehrende Atemdepression und Co-Intoxikation mitdenken.' },
     ],
-    warnings: 'Naloxon wirkt kürzer als die meisten Opioide – Rückkehr der Atemdepression möglich.',
+    redFlags: 'Naloxon wirkt 30–90 min, Opioide oft länger: Rückkehr der Atemdepression aktiv überwachen.',
     relatedMedicationIds: ['naloxon'],
   },
 ];

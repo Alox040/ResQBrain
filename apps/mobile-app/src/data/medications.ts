@@ -13,6 +13,7 @@ export const medications: Medication[] = [
       'Kreislaufstillstand: 1 mg i.v./i.o. alle 3–5 min.\n' +
       'Anaphylaxie: 0,5 mg i.m. (Oberschenkel lateral).\n' +
       'Bradykardie: 0,05–0,1 mg i.v. titriert.',
+    administration: 'i.v., i.o., i.m., intranasal',
     notes: 'Wirkung engmaschig überwachen. Bei Anaphylaxie Gabe nicht verzögern.',
     relatedAlgorithmIds: ['reanimation', 'anaphylaxie', 'bradykardie'],
   },
@@ -26,6 +27,8 @@ export const medications: Medication[] = [
     dosage:
       'Nach 3. Defibrillation: 300 mg i.v./i.o. als Bolus.\n' +
       'Bei Bedarf 2. Dosis: 150 mg i.v./i.o.',
+    administration: 'i.v., i.o.',
+    contraindications: 'AV-Block II–III ohne Schrittmacherschutz, Sinusknotensyndrom.',
     notes: 'Auf Blutdruck und Wechselwirkungen mit anderen Antiarrhythmika achten.',
     relatedAlgorithmIds: ['reanimation', 'tachykardie'],
   },
@@ -39,7 +42,9 @@ export const medications: Medication[] = [
     dosage:
       '0,5 mg i.v.; Wiederholung alle 3–5 min.\n' +
       'Maximaldosis: 3 mg gesamt.',
-    notes: 'Paradoxe Bradykardie bei Unterdosierung möglich.',
+    administration: 'i.v., i.o.',
+    contraindications: 'Tachyarrhythmie, Engwinkelglaukom (relativ).',
+    notes: 'Paradoxe Bradykardie bei Unterdosierung (< 0,5 mg) möglich.',
     relatedAlgorithmIds: ['bradykardie'],
   },
   {
@@ -50,7 +55,9 @@ export const medications: Medication[] = [
     tags: ['kreislauf'],
     searchTerms: ['ASS', 'Aspirin', 'ASA'],
     dosage: '150–300 mg p.o. (zerkaut) oder i.v. gemäß lokalem Standard.',
-    notes: 'Blutungsrisiko, bekannte Allergien und Eigenmedikation aktiv erfragen.',
+    administration: 'p.o. (zerkaut bevorzugt), i.v.',
+    contraindications: 'Bekannte ASS-Allergie, aktive gastrointestinale Blutung, Kinder < 16 Jahre.',
+    notes: 'Eigenmedikation und bestehende Antikoagulation aktiv erfragen.',
     relatedAlgorithmIds: ['acs'],
   },
   {
@@ -61,6 +68,8 @@ export const medications: Medication[] = [
     tags: ['kreislauf'],
     searchTerms: ['UFH', 'Antikoagulation', 'unfraktioniertes Heparin'],
     dosage: 'Bolus i.v. gemäß lokalem Standard und Konzept.',
+    administration: 'i.v.',
+    contraindications: 'Aktive Blutung, bekannte HIT (heparininduzierte Thrombozytopenie).',
     notes: 'Vor Gabe Blutungszeichen und bestehende Antikoagulation prüfen.',
     relatedAlgorithmIds: ['acs'],
   },
@@ -74,6 +83,7 @@ export const medications: Medication[] = [
     tags: ['atemwege'],
     searchTerms: ['Ventolin', 'Beta-2-Agonist', 'Bronchodilatator', 'Sultanol'],
     dosage: '2,5–5 mg vernebelt; Wiederholung nach klinischem Verlauf.',
+    administration: 'inhalativ (Vernebler), MDI',
     notes: 'Herzfrequenz und Tremor beobachten.',
     relatedAlgorithmIds: ['asthma', 'copd-exazerbation'],
   },
@@ -85,6 +95,8 @@ export const medications: Medication[] = [
     tags: ['atemwege'],
     searchTerms: ['Atrovent', 'Anticholinergikum', 'Ipratropol'],
     dosage: '0,5 mg vernebelt in Kombination mit Beta-2-Agonist.',
+    administration: 'inhalativ (Vernebler)',
+    contraindications: 'Engwinkelglaukom (bei Vernebelung mit Gesichtsmaske).',
     relatedAlgorithmIds: ['asthma', 'copd-exazerbation'],
   },
   {
@@ -95,7 +107,8 @@ export const medications: Medication[] = [
     tags: ['atemwege', 'kreislauf'],
     searchTerms: ['Kortison', 'Steroid', 'Glukokortikoid', 'Solu-Decortin'],
     dosage: '100–250 mg i.v. gemäß Indikation und lokalem Standard.',
-    notes: 'Wirkeintritt verzögert (>30 min). Dient der Ergänzung des Gesamtmanagements.',
+    administration: 'i.v.',
+    notes: 'Wirkeintritt verzögert (> 30 min). Ergänzt das Gesamtmanagement.',
     relatedAlgorithmIds: ['asthma', 'copd-exazerbation', 'anaphylaxie'],
   },
 
@@ -110,6 +123,8 @@ export const medications: Medication[] = [
     dosage:
       'Krampfanfall: 5–10 mg buccal/nasal oder 2,5–5 mg i.v. langsam titriert.\n' +
       'Sedierung: 1–2,5 mg i.v. titriert.',
+    administration: 'buccal, nasal, i.v., i.o., i.m.',
+    contraindications: 'Bekannte Überempfindlichkeit auf Benzodiazepine; Atemdepression ohne Beatmungsbereitschaft.',
     notes: 'Atemdepression möglich. Atmung und Vigilanz kontinuierlich monitoren.',
     relatedAlgorithmIds: ['krampfanfall'],
   },
@@ -121,6 +136,8 @@ export const medications: Medication[] = [
     tags: ['analgesie'],
     searchTerms: ['Opioid', 'Analgetikum', 'Fentadon'],
     dosage: '25–50 µg i.v. langsam titriert; Wiederholung nach Wirkung.',
+    administration: 'i.v., i.o., intranasal',
+    contraindications: 'Schwere Atemdepression ohne Beatmungsbereitschaft.',
     notes: 'Atemfrequenz und Vigilanz überwachen. Kombination mit Sedativa beachten.',
     relatedAlgorithmIds: [],
   },
@@ -134,6 +151,7 @@ export const medications: Medication[] = [
     dosage:
       'Analgesie: 0,1–0,5 mg/kg i.v. titriert.\n' +
       'Sedierung: 1–2 mg/kg i.v.',
+    administration: 'i.v., i.o., i.m.',
     notes: 'Kreislaufreaktion und psychotrope Effekte berücksichtigen.',
     relatedAlgorithmIds: [],
   },
@@ -149,6 +167,7 @@ export const medications: Medication[] = [
     dosage:
       '0,1–0,4 mg i.v. titriert.\n' +
       'Alternativ: 0,4–2 mg intranasal.',
+    administration: 'i.v., i.o., i.m., intranasal',
     notes: 'Ziel ist ausreichende Spontanatmung, nicht vollständige Vigilanznormalisierung.',
     relatedAlgorithmIds: ['opioidintoxikation'],
   },
@@ -160,6 +179,7 @@ export const medications: Medication[] = [
     tags: ['stoffwechsel'],
     searchTerms: ['Dextrose', 'G40', 'Zucker', 'BZ', 'Glucose'],
     dosage: '10–20 g (25–50 ml G40) i.v. langsam unter klinischer Kontrolle.',
+    administration: 'i.v.',
     notes: 'Venenzugang sichern, Paravasat vermeiden. Vigilanzverlauf nach Gabe dokumentieren.',
     relatedAlgorithmIds: ['hypoglykaemie'],
   },

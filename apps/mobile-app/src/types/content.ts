@@ -51,13 +51,16 @@ type ContentBase = {
 // ─── Medication ──────────────────────────────────────────────────────────────
 
 /**
- * dosage              — administration text; required, shown in detail view only
- * relatedAlgorithmIds — IDs of algorithms that reference this medication;
- *                       used to render cross-links in detail view
+ * dosage              — dose amounts and intervals; required; shown in detail only
+ * administration      — routes of administration, e.g. 'i.v., i.o., i.m.'; optional
+ * contraindications   — absolute or critical relative CIs relevant for EMS; optional
+ * relatedAlgorithmIds — IDs of algorithms that reference this medication
  */
 export type Medication = ContentBase & {
   kind: 'medication';
   dosage: string;
+  administration?: string;
+  contraindications?: string;
   relatedAlgorithmIds: string[];
 };
 
@@ -75,14 +78,14 @@ export type AlgorithmStep = {
 
 /**
  * steps               — ordered procedure steps; rendered in sequence, no branching
- * warnings            — safety-critical caution; visually distinct from notes (amber)
- * relatedMedicationIds — IDs of medications used in this algorithm;
- *                        used to render cross-links in detail view
+ * redFlags            — specific clinical danger signs requiring immediate action;
+ *                       visually distinct from notes (amber card)
+ * relatedMedicationIds — IDs of medications used in this algorithm
  */
 export type Algorithm = ContentBase & {
   kind: 'algorithm';
   steps: AlgorithmStep[];
-  warnings?: string;
+  redFlags?: string;
   relatedMedicationIds: string[];
 };
 
