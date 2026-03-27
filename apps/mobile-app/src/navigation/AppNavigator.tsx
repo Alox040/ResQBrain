@@ -33,15 +33,22 @@ export type RootTabParamList = {
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const MedicationStack = createNativeStackNavigator<MedicationStackParamList>();
 const AlgorithmStack = createNativeStackNavigator<AlgorithmStackParamList>();
+const headerStyle = { backgroundColor: '#111827' } as const;
+const headerTitleStyle = {
+  fontSize: 18,
+  fontWeight: '700',
+} as const;
+const sharedStackScreenOptions = {
+  headerStyle,
+  headerTintColor: '#f9fafb',
+  headerTitleStyle,
+  contentStyle: { backgroundColor: '#f3f4f6' },
+} as const;
 
 function MedicationStackNavigator() {
   return (
     <MedicationStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#1a1a2e' },
-        headerTintColor: '#ffffff',
-        contentStyle: { backgroundColor: '#f3f4f6' },
-      }}
+      screenOptions={sharedStackScreenOptions}
     >
       <MedicationStack.Screen
         name="MedicationList"
@@ -60,11 +67,7 @@ function MedicationStackNavigator() {
 function AlgorithmStackNavigator() {
   return (
     <AlgorithmStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: '#1a1a2e' },
-        headerTintColor: '#ffffff',
-        contentStyle: { backgroundColor: '#f3f4f6' },
-      }}
+      screenOptions={sharedStackScreenOptions}
     >
       <AlgorithmStack.Screen
         name="AlgorithmList"
@@ -84,11 +87,12 @@ export function AppNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: '#1a1a2e' },
-        headerTintColor: '#ffffff',
-        tabBarStyle: { backgroundColor: '#1a1a2e' },
-        tabBarActiveTintColor: '#e94560',
-        tabBarInactiveTintColor: '#888888',
+        headerStyle,
+        headerTintColor: '#f9fafb',
+        headerTitleStyle,
+        tabBarStyle: { backgroundColor: '#111827' },
+        tabBarActiveTintColor: '#60a5fa',
+        tabBarInactiveTintColor: '#9ca3af',
       }}
     >
       <Tab.Screen

@@ -57,26 +57,26 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     paddingBottom: 24,
-    gap: 10,
+    gap: 12,
   },
   card: {
     borderRadius: 16,
-    padding: 18,
+    padding: 16,
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e5e7eb',
     gap: 6,
   },
   label: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
     letterSpacing: 0.6,
     textTransform: 'uppercase',
     color: '#2563eb',
   },
   value: {
-    fontSize: 17,
-    lineHeight: 25,
+    fontSize: 16,
+    lineHeight: 24,
     color: '#111827',
   },
   emptyState: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f4f6',
   },
   emptyTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '700',
     color: '#111827',
   },
