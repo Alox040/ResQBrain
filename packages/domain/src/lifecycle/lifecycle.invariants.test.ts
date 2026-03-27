@@ -80,6 +80,7 @@ test('P-11/INV-H-04: lifecycle foundation has no survey import path', () => {
     'entities/ApprovalStatus.ts',
     'entities/ContentLifecycle.ts',
     'policies/TransitionPolicy.ts',
+    'services/ContentLifecycleEngine.ts',
   ];
 
   for (const fileName of lifecycleFiles) {
@@ -100,6 +101,7 @@ test('implementation constraint: lifecycle foundation uses no common/* imports',
     'entities/ApprovalStatus.ts',
     'entities/ContentLifecycle.ts',
     'policies/TransitionPolicy.ts',
+    'services/ContentLifecycleEngine.ts',
   ];
 
   for (const fileName of lifecycleFiles) {
