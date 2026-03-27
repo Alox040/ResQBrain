@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/shared/**/*.ts",
+    "src/tenant/**/*.ts",
+    "src/versioning/**/*.ts",
+    "src/content/**/*.ts",
+    "src/governance/**/*.ts",
+    "src/audit/**/*.ts",
+    "src/release/**/*.ts"
+  ],
+  "exclude": ["src/**/*.test.ts"]
+}

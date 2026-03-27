@@ -16,6 +16,7 @@
     "compile:survey": "tsc -p tsconfig.survey.json",
     "compile:audit": "tsc -p tsconfig.audit.json",
     "compile:lifecycle": "tsc -p tsconfig.lifecycle.json",
+    "compile:release": "tsc -p tsconfig.release.json",
     "compile:approval": "tsc -p tsconfig.json",
     "test:audit": "tsx --test src/audit/audit.foundation.test.ts",
     "test:content": "tsx --test src/content/content.entities.test.ts src/content/entities.invariants.test.ts",
@@ -23,7 +24,8 @@
     "test:survey": "tsx --test src/survey/survey.entities.test.ts",
     "test:lifecycle": "tsx --test src/lifecycle/lifecycle.engine.test.ts src/lifecycle/lifecycle.transitions.test.ts src/lifecycle/lifecycle.invariants.test.ts",
     "test:approval": "tsx --test src/governance/approval/approval.engine.test.ts",
-    "test:governance:permission": "tsx --test src/governance/services/permission-engine.test.ts"
+    "test:governance:permission": "tsx --test src/governance/services/permission-engine.test.ts",
+    "test:release": "tsx --test src/release/release.engine.test.ts"
   },
   "devDependencies": {
     "tsx": "^4.21.0",
