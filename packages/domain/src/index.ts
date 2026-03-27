@@ -80,6 +80,7 @@ export type {
 } from './governance';
 export type { ReleaseContext as GovernanceReleaseContext } from './governance';
 export * as Versioning from './versioning';
+export * as Audit from './audit';
 export * from './release';
 export * from './survey';
 export * as Lookup from './lookup';

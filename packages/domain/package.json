@@ -14,6 +14,8 @@
     "compile:governance": "tsc -p tsconfig.governance.json",
     "compile:versioning": "tsc -p tsconfig.versioning.json",
     "compile:survey": "tsc -p tsconfig.survey.json",
+    "compile:audit": "tsc -p tsconfig.audit.json",
+    "test:audit": "tsx --test src/audit/audit.foundation.test.ts",
     "test:content": "tsx --test src/content/content.entities.test.ts src/content/entities.invariants.test.ts",
     "test:versioning": "tsx --test src/versioning/versioning.entities.test.ts src/versioning/versioning.invariants.test.ts",
     "test:survey": "tsx --test src/survey/survey.entities.test.ts"
