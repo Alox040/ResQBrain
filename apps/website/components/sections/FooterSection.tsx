@@ -34,7 +34,7 @@ export function FooterSection() {
                   lineHeight: 1.55,
                 }}
               >
-                Medikamente, Algorithmen, SOP — lokal, je Organisation.
+                Medikamente, Algorithmen, SOP \u2014 lokal, je Organisation.
               </p>
             </div>
 

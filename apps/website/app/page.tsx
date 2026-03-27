@@ -1,5 +1,6 @@
 import { AppPreviewSection } from "../components/sections/AppPreviewSection";
 import { CTASection, MobileStickyCTA } from "../components/sections/CTASection";
+import { TemporaryEncodingTest } from "../components/debug/TemporaryEncodingTest";
 import { FeatureSection } from "../components/sections/FeatureSection";
 import { FooterSection } from "../components/sections/FooterSection";
 import { HeroSection } from "../components/sections/HeroSection";
@@ -19,6 +20,7 @@ export default function Page() {
       <UseCasesSection />
       <TrustSection />
       <CTASection />
+      <TemporaryEncodingTest />
       <FooterSection />
       <MobileStickyCTA />
     </main>

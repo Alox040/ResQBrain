@@ -1,7 +1,7 @@
 export const impressum = `
 Impressum
 
-Angaben gemaess § 5 TMG
+Angaben gemaess \u00A7 5 TMG
 
 Name:
 [Name]
@@ -12,7 +12,7 @@ Adresse:
 E-Mail:
 [Email]
 
-Verantwortlich fuer den Inhalt nach § 18 Abs. 2 MStV:
+Verantwortlich fuer den Inhalt nach \u00A7 18 Abs. 2 MStV:
 [Verantwortlicher]
 [Adresse]
 

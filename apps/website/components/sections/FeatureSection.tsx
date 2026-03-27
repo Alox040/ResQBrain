@@ -22,7 +22,7 @@ export function FeatureSection() {
   return (
     <Section id="features">
       <Container>
-        <SectionHeader title="Funktionen" description="Stand der Software — ohne Ausblick auf spaetere Releases." />
+        <SectionHeader title="Funktionen" description="Stand der Software \u2014 ohne Ausblick auf spaetere Releases." />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
           {features.map((feature) => (

@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "ResQBrain",
   title: "ResQBrain | Referenz fuer Rettungsdienst-Inhalte",
   description:
-    "Medikamente, Algorithmen und SOPs: lokal auf dem Geraet, versioniert, je Organisation. Fruehphase — Pilot und Rueckmeldung per Kontakt.",
+    "Medikamente, Algorithmen und SOPs: lokal auf dem Geraet, versioniert, je Organisation. Fruehphase \u2014 Pilot und Rueckmeldung per Kontakt.",
   url: "https://resqbrain.example.com",
   navigation: [
     { href: "/#problem", label: "Problem" },
