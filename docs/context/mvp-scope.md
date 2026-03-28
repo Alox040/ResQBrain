@@ -8,7 +8,9 @@ Phase 0 ist als Lookup-first MVP fuer Einsatznutzung definiert:
 
 - Algorithm Lookup
 - Medication Lookup
-- statische Datenbasis (Seed/Mock)
+- statische Datenbasis
+  - **Kanonische Phase-0 Quelle:** JSON-Bundle unter `data/lookup-seed/`
+  - **TypeScript-Mock-Dateien:** nur Übergang, bis der Loader implementiert ist
 - Listenansicht
 - Detailansicht
 

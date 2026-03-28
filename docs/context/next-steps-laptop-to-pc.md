@@ -29,7 +29,7 @@
 | Lookup-Module / Verbote | `docs/architecture/lookup-first-architecture.md` |
 | App-Typen | `apps/mobile-app/src/types/content.ts` |
 
-**Hinweis:** `docs/status/WORK_SESSION.md` und `docs/status/PROJECT_STATUS.md` sind zuletzt auf **25./26. März** datiert; sie beschreiben Website/Domain-Stand, **nicht** die obige Mobile-Datenpipeline. `docs/roadmap/PROJECT_ROADMAP.md` listet Phase-0-Punkte (Seed, Offline, Suche, Mobile-UI) noch größtenteils als offen — die Kontextdateien vom 28. März **präzisieren**, *wie* diese Punkte umgesetzt werden sollen.
+**Hinweis:** Aktueller Status siehe `docs/status/`. `docs/roadmap/PROJECT_ROADMAP.md` listet Phase-0-Punkte (Seed, Offline, Suche, Mobile-UI) noch größtenteils als offen — die Kontextdateien vom 28. März **präzisieren**, *wie* diese Punkte umgesetzt werden sollen.
 
 ---
 

@@ -8,7 +8,7 @@
 - **Phase 0** ist in `docs/context/mvp-scope.md`, `docs/context/roadmap-status.md` und `docs/context/project-overview.md` beschrieben; offene Punkte u. a. Finalisierung der Seed-Daten und Festlegung der lokalen Datenhaltung.
 - **Datenform:** `docs/context/lookup-data-shape.md` (Pflicht/optional/exkludiert).
 - **App-Typen:** `apps/mobile-app/src/types/content.ts` — Ziel ist, Seeds in diese Struktur zu überführen oder daraus abzuleiten.
-- **Aktueller Ist-Stand:** Mock-/Beispieldaten unter `apps/mobile-app/src/data/` (z. B. `mockMedications.ts`, `mockAlgorithms.ts`); es gibt **kein** zentrales `data/schemas/`-Verzeichnis im Repo — der Plan schlägt einen klaren, neuen Ablageort vor.
+- **Aktueller Ist-Stand:** Mock-/Beispieldaten unter `apps/mobile-app/src/data/` (z. B. `medications.ts`, `algorithms.ts`); es gibt **kein** zentrales `data/schemas/`-Verzeichnis im Repo — der Plan schlägt einen klaren, neuen Ablageort vor.
 
 ---
 
