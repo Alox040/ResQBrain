@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "provider": "Pilot-Wache Medizincontrolling",
+      "datasetName": "Medikamentenstamm Export",
+      "version": "2026.1.0",
+      "licenseStatus": "internalUseOnly",
+      "receivedAt": "2026-03-28T09:15:00.000Z",
+      "notes": "CSV-Export aus internem Dokumentationssystem; Nutzung nur innerhalb der Organisation bis zur Freigabe durch Recht/Compliance.",
+      "fileNames": [
+        "raw/medications/pilot-wache_medikamente_2026-03-28.csv"
+      ]
+    },
+    {
+      "provider": "DBRD-Partner (Beispiel)",
+      "datasetName": "Notfallalgorithmen Paket",
+      "version": "draft-2026-03-20",
+      "licenseStatus": "licenseReviewPending",
+      "receivedAt": "2026-03-20T16:42:00.000Z",
+      "notes": "Lieferung zur strukturellen Einordnung; Lizenztext separat archiviert. Keine Verarbeitung nach normalized ohne dokumentierte Freigabe.",
+      "fileNames": [
+        "raw/algorithms/partner_alg_export_2026-03-20.json",
+        "raw/algorithms/partner_alg_export_2026-03-20_README.txt"
+      ]
+    }
+  ]
+}

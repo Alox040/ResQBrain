@@ -1,0 +1,96 @@
+{
+  "bundleSchemaId": "dbrd-normalized.examples/v1",
+  "medications": [
+    {
+      "entityType": "NormalizedMedication",
+      "id": "med-adrenalin-i-m",
+      "label": "Adrenalin (Epinephrin) Injektionslösung",
+      "genericName": "Epinephrin",
+      "tradeNames": ["Suprarenin"],
+      "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
+      "tags": ["kreislauf", "atemwege"],
+      "searchTerms": ["Epinephrin", "Suprarenin", "1 mg/ml Ampulle", "Adrenalin"],
+      "dosage": {
+        "summary": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.",
+        "detail": "Kinder: nach pädiatrischem Schema der Pilot-Wache; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App."
+      },
+      "contraindicationsNote": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.",
+      "clinicalNotes": "Die App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen.",
+      "relatedAlgorithmIds": ["alg-reanimation-erwachsene", "alg-anaphylaxie-basics"],
+      "provenance": {
+        "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
+        "sourceReference": "Export 2026-03-28 / Medikamentenkapitel Adrenalin / Freigabeversion 1.0",
+        "approvalStatus": "Released",
+        "lastReviewedAt": "2026-03-28T12:00:00.000Z"
+      }
+    },
+    {
+      "entityType": "NormalizedMedication",
+      "id": "med-ass-iv",
+      "label": "Acetylsalicylsäure i.v.",
+      "genericName": "Acetylsalicylsäure",
+      "tradeNames": ["Aspirin i.v."],
+      "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
+      "tags": ["kreislauf"],
+      "searchTerms": ["ASS", "Aspirin", "Acetylsalicylsäure"],
+      "dosage": {
+        "summary": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation."
+      },
+      "clinicalNotes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend.",
+      "relatedAlgorithmIds": [],
+      "provenance": {
+        "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
+        "sourceReference": "Export 2026-03-28 / Medikamentenkapitel ASS i.v.",
+        "approvalStatus": "Approved",
+        "lastReviewedAt": "2026-03-15T09:30:00.000Z"
+      }
+    }
+  ],
+  "algorithms": [
+    {
+      "entityType": "NormalizedAlgorithm",
+      "id": "alg-reanimation-erwachsene",
+      "label": "Reanimation Erwachsene (Überblick)",
+      "indication": "Kreislaufstillstand bei Erwachsenen — strukturierte Einsatzreihenfolge",
+      "tags": ["kreislauf"],
+      "searchTerms": ["CPR", "KRE", "Basic Life Support"],
+      "steps": [
+        { "order": 1, "title": "Sicherung", "text": "Eigensicherung und Szeneabsicherung." },
+        { "order": 2, "title": "Erste Hilfe", "text": "Bewusstsein und Atmung prüfen; Hilfe anfordern." },
+        { "order": 3, "title": "CPR", "text": "Thoraxkompressionen beginnen, Frequenz und Tiefe nach Leitfaden." },
+        { "order": 4, "title": "Beatmung", "text": "Beatmung bzw. Beatmungsunterstützung integrieren." },
+        { "order": 5, "title": "AED", "text": "AED einsetzen sobald verfügbar; Schockempfehlung befolgen." },
+        { "order": 6, "title": "Medikation", "text": "Medikamente nur nach lokalem Algorithmus und Indikation — siehe verknüpfte Medikamente." }
+      ],
+      "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.",
+      "clinicalNotes": "Vereinfachtes Schulungsbeispiel; produktive Inhalte durch freigegebenen Stand der Pilot-Wache ersetzen.",
+      "relatedMedicationIds": ["med-adrenalin-i-m"],
+      "provenance": {
+        "source": "Pilot-Wache-Algorithmensammlung",
+        "sourceReference": "Dokument BLS-ERW-001 / Revision 2026-03-01",
+        "approvalStatus": "Released",
+        "lastReviewedAt": "2026-03-01T08:00:00.000Z"
+      }
+    },
+    {
+      "entityType": "NormalizedAlgorithm",
+      "id": "alg-anaphylaxie-basics",
+      "label": "Anaphylaxie — Erstmaßnahmen (linear)",
+      "indication": "Verdacht auf schwere allergische/anaphylaktische Reaktion",
+      "tags": ["atemwege", "kreislauf"],
+      "searchTerms": ["Anaphylaxie", "Allergie", "Notfall"],
+      "steps": [
+        { "order": 1, "text": "Eigensicherung; ggf. Auslöser entfernen oder Patienten aus Exposition bringen." },
+        { "order": 2, "text": "Vitalzeichen und Atemweg beurteilen; bei Bedarf Basismaßnahmen nach Leitfaden." },
+        { "order": 3, "text": "Adrenalin und weitere Maßnahmen ausschließlich nach lokalem Protokoll und Medikamententext." }
+      ],
+      "relatedMedicationIds": ["med-adrenalin-i-m"],
+      "provenance": {
+        "source": "Pilot-Wache-Algorithmensammlung",
+        "sourceReference": "Dokument ANA-BAS-002 / Entwurf zur Review",
+        "approvalStatus": "InReview",
+        "lastReviewedAt": "2026-03-20T14:15:00.000Z"
+      }
+    }
+  ]
+}

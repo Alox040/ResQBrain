@@ -1,0 +1,38 @@
+{
+  "schemaId": "dbrd-field-map/algorithms/v1",
+  "description": "Zuordnung NormalizedAlgorithm → lookup-seed/algorithms.json (Phase-0-Whitelist der Mobile-App).",
+  "whitelistRef": "apps/mobile-app/src/lookup/lookupSchema.ts — ALGORITHM_ITEM_KEYS, ALGORITHM_STEP_KEYS",
+  "tagVocabularyRef": "apps/mobile-app/src/lookup/lookupSchema.ts — CONTENT_TAG_VALUES",
+  "directOneToOne": [
+    { "lookupField": "id", "normalizedPath": "id" },
+    { "lookupField": "label", "normalizedPath": "label" },
+    { "lookupField": "indication", "normalizedPath": "indication" },
+    { "lookupField": "tags", "normalizedPath": "tags" },
+    { "lookupField": "searchTerms", "normalizedPath": "searchTerms" },
+    { "lookupField": "relatedMedicationIds", "normalizedPath": "relatedMedicationIds" }
+  ],
+  "literal": {
+    "kind": "algorithm"
+  },
+  "composed": {
+    "steps": {
+      "from": "steps[]",
+      "rule": "Schritte nach order sortiert; pro Schritt nur { text } im Seed. Wenn title gesetzt: text = \"{title}: {text}\", sonst nur text (kein title/order im Seed — ALGORITHM_STEP_KEYS erlaubt ausschließlich text)."
+    },
+    "notes": {
+      "from": ["clinicalNotes"],
+      "rule": "notes nur setzen, wenn clinicalNotes nicht leer; sonst weglassen."
+    },
+    "warnings": {
+      "from": ["warnings"],
+      "rule": "Feld nur ausgeben, wenn warnings im Normalisierten nicht leer; sonst weglassen."
+    }
+  },
+  "notEmittedToLookup": [
+    "entityType",
+    "provenance",
+    "steps[].order",
+    "steps[].title"
+  ],
+  "notes": "Keine zusätzlichen Top-Level-Keys im Seed; Schritt-Objekte dürfen nur text enthalten."
+}

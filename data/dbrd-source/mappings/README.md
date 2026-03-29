@@ -4,6 +4,8 @@
 
 Hier liegen Artefakte, die die **bereinigte interne Struktur** (`../normalized/`) in die **Struktur der Mobile-App-Seeds** überführen:
 
+- **`normalized-to-lookup.md`** — Beschreibung des Wegs ins Mobile-Seed
+- **`field-map.medications.json`** / **`field-map.algorithms.json`** — Feldzuordnung (Dokumentation)
 - Mapping-Tabellen (z. B. CSV/JSON: Quellfeld → Zielfeld)
 - Konfiguration für Transform-Skripte unter `scripts/dbrd/`
 - optional: Referenzlisten, Konstanten, die nur der Generierung dienen

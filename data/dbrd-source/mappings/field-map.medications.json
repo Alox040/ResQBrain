@@ -1,0 +1,36 @@
+{
+  "schemaId": "dbrd-field-map/medications/v1",
+  "description": "Zuordnung NormalizedMedication → lookup-seed/medications.json (Phase-0-Whitelist der Mobile-App).",
+  "whitelistRef": "apps/mobile-app/src/lookup/lookupSchema.ts — MEDICATION_ITEM_KEYS",
+  "tagVocabularyRef": "apps/mobile-app/src/lookup/lookupSchema.ts — CONTENT_TAG_VALUES",
+  "directOneToOne": [
+    { "lookupField": "id", "normalizedPath": "id" },
+    { "lookupField": "label", "normalizedPath": "label" },
+    { "lookupField": "indication", "normalizedPath": "indication" },
+    { "lookupField": "tags", "normalizedPath": "tags" },
+    { "lookupField": "searchTerms", "normalizedPath": "searchTerms" },
+    { "lookupField": "relatedAlgorithmIds", "normalizedPath": "relatedAlgorithmIds" }
+  ],
+  "literal": {
+    "kind": "medication"
+  },
+  "composed": {
+    "dosage": {
+      "from": ["dosage.summary", "dosage.detail"],
+      "rule": "Nur summary, wenn detail fehlt oder leer; sonst summary + zwei Zeilenumbrüche + detail (implementiert in scripts/dbrd/build-lookup-seed.ts)."
+    },
+    "notes": {
+      "from": ["contraindicationsNote", "clinicalNotes"],
+      "rule": "Nicht-leere Teile in dieser Reihenfolge mit zwei Zeilenumbrüchen verketten; Feld notes im Seed weglassen, wenn kein Teil vorhanden."
+    }
+  },
+  "notEmittedToLookup": [
+    "entityType",
+    "provenance",
+    "genericName",
+    "tradeNames",
+    "dosage.summary",
+    "dosage.detail"
+  ],
+  "notes": "Keine zusätzlichen Top-Level-Keys im Seed; die App lehnt unbekannte Schlüssel ab (validateMedications)."
+}

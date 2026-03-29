@@ -4,20 +4,38 @@
     "kind": "medication",
     "label": "Adrenalin (Epinephrin) Injektionslösung",
     "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
-    "tags": ["kreislauf", "atemwege"],
-    "searchTerms": ["Epinephrin", "Suprarenin", "1 mg/ml Ampulle"],
-    "notes": "Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll; keine automatische Dosisberechnung in der App.",
-    "dosage": "Erwachsene (Orientierung, Freitext): i.v./i.o. z. B. 1 mg bei KRE; weitere Gaben im Rhythmus des Algorithmus. Kinder: nach pädiatrischem Schema der Pilot-Wache (hier als Freitext hinterlegt, nicht rechnerisch).",
-    "relatedAlgorithmIds": ["alg-reanimation-erwachsene", "alg-anaphylaxie-basics"]
+    "tags": [
+      "kreislauf",
+      "atemwege"
+    ],
+    "searchTerms": [
+      "Epinephrin",
+      "Suprarenin",
+      "1 mg/ml Ampulle",
+      "Adrenalin"
+    ],
+    "dosage": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.\n\nKinder: nach pädiatrischem Schema der Pilot-Wache; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App.",
+    "relatedAlgorithmIds": [
+      "alg-reanimation-erwachsene",
+      "alg-anaphylaxie-basics"
+    ],
+    "notes": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.\n\nDie App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen."
   },
   {
     "id": "med-ass-iv",
     "kind": "medication",
     "label": "Acetylsalicylsäure i.v.",
     "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
-    "tags": ["kreislauf"],
-    "searchTerms": ["ASS", "Aspirin", "Acetylsalicylsäure"],
-    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation; hier nur Lesetext ohne Rechner.",
-    "relatedAlgorithmIds": []
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "ASS",
+      "Aspirin",
+      "Acetylsalicylsäure"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [],
+    "notes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend."
   }
 ]

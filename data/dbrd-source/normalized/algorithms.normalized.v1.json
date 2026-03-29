@@ -1,0 +1,100 @@
+{
+  "bundleSchemaId": "dbrd-normalized.pipeline/algorithms/v1",
+  "algorithms": [
+    {
+      "entityType": "NormalizedAlgorithm",
+      "id": "alg-reanimation-erwachsene",
+      "label": "Reanimation Erwachsene (Überblick)",
+      "indication": "Kreislaufstillstand bei Erwachsenen — strukturierte Einsatzreihenfolge",
+      "tags": [
+        "kreislauf"
+      ],
+      "searchTerms": [
+        "CPR",
+        "KRE",
+        "Basic Life Support"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "text": "Eigensicherung und Szeneabsicherung.",
+          "title": "Sicherung"
+        },
+        {
+          "order": 2,
+          "text": "Bewusstsein und Atmung prüfen; Hilfe anfordern.",
+          "title": "Erste Hilfe"
+        },
+        {
+          "order": 3,
+          "text": "Thoraxkompressionen beginnen, Frequenz und Tiefe nach Leitfaden.",
+          "title": "CPR"
+        },
+        {
+          "order": 4,
+          "text": "Beatmung bzw. Beatmungsunterstützung integrieren.",
+          "title": "Beatmung"
+        },
+        {
+          "order": 5,
+          "text": "AED einsetzen sobald verfügbar; Schockempfehlung befolgen.",
+          "title": "AED"
+        },
+        {
+          "order": 6,
+          "text": "Medikamente nur nach lokalem Algorithmus und Indikation — siehe verknüpfte Medikamente.",
+          "title": "Medikation"
+        }
+      ],
+      "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.",
+      "clinicalNotes": "Vereinfachtes Schulungsbeispiel; produktive Inhalte durch freigegebenen Stand der Pilot-Wache ersetzen.",
+      "relatedMedicationIds": [
+        "med-adrenalin-i-m"
+      ],
+      "provenance": {
+        "source": "Pilot-Wache-Algorithmensammlung",
+        "sourceReference": "Dokument BLS-ERW-001 / Revision 2026-03-01",
+        "approvalStatus": "Released",
+        "lastReviewedAt": "2026-03-01T08:00:00.000Z"
+      }
+    },
+    {
+      "entityType": "NormalizedAlgorithm",
+      "id": "alg-anaphylaxie-basics",
+      "label": "Anaphylaxie — Erstmaßnahmen (linear)",
+      "indication": "Verdacht auf schwere allergische/anaphylaktische Reaktion",
+      "tags": [
+        "atemwege",
+        "kreislauf"
+      ],
+      "searchTerms": [
+        "Anaphylaxie",
+        "Allergie",
+        "Notfall"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "text": "Eigensicherung; ggf. Auslöser entfernen oder Patienten aus Exposition bringen."
+        },
+        {
+          "order": 2,
+          "text": "Vitalzeichen und Atemweg beurteilen; bei Bedarf Basismaßnahmen nach Leitfaden."
+        },
+        {
+          "order": 3,
+          "text": "Adrenalin und weitere Maßnahmen ausschließlich nach lokalem Protokoll und Medikamententext."
+        }
+      ],
+      "relatedMedicationIds": [
+        "med-adrenalin-i-m"
+      ],
+      "provenance": {
+        "source": "Pilot-Wache-Algorithmensammlung",
+        "sourceReference": "Dokument ANA-BAS-002 / Entwurf zur Review",
+        "approvalStatus": "InReview",
+        "lastReviewedAt": "2026-03-20T14:15:00.000Z"
+      }
+    }
+  ]
+}

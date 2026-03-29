@@ -1,0 +1,47 @@
+{
+  "schemaId": "dbrd-raw-medications/v1",
+  "items": [
+    {
+      "id": "med-adrenalin-i-m",
+      "label": "Adrenalin (Epinephrin) Injektionslösung",
+      "genericName": "Epinephrin",
+      "tradeNames": ["Suprarenin"],
+      "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
+      "tags": ["kreislauf", "atemwege"],
+      "searchTerms": ["Epinephrin", "Suprarenin", "1 mg/ml Ampulle", "Adrenalin"],
+      "dosage": {
+        "summary": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.",
+        "detail": "Kinder: nach pädiatrischem Schema der Pilot-Wache; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App."
+      },
+      "contraindicationsNote": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.",
+      "clinicalNotes": "Die App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen.",
+      "relatedAlgorithmIds": ["alg-reanimation-erwachsene", "alg-anaphylaxie-basics"],
+      "provenance": {
+        "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
+        "sourceReference": "Export 2026-03-28 / Medikamentenkapitel Adrenalin / Freigabeversion 1.0",
+        "approvalStatus": "Released",
+        "lastReviewedAt": "2026-03-28T12:00:00.000Z"
+      }
+    },
+    {
+      "id": "med-ass-iv",
+      "label": "Acetylsalicylsäure i.v.",
+      "genericName": "Acetylsalicylsäure",
+      "tradeNames": ["Aspirin i.v."],
+      "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
+      "tags": ["kreislauf"],
+      "searchTerms": ["ASS", "Aspirin", "Acetylsalicylsäure"],
+      "dosage": {
+        "summary": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation."
+      },
+      "clinicalNotes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend.",
+      "relatedAlgorithmIds": [],
+      "provenance": {
+        "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
+        "sourceReference": "Export 2026-03-28 / Medikamentenkapitel ASS i.v.",
+        "approvalStatus": "Approved",
+        "lastReviewedAt": "2026-03-15T09:30:00.000Z"
+      }
+    }
+  ]
+}

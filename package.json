@@ -11,7 +11,17 @@
   ],
   "scripts": {
     "render:website-status": "tsx scripts/status/render-website-status.ts",
+    "dbrd:normalize": "tsx scripts/dbrd/index.ts",
+    "dbrd:normalize:medications": "tsx scripts/dbrd/index.ts medications",
+    "dbrd:normalize:algorithms": "tsx scripts/dbrd/index.ts algorithms",
+    "dbrd:validate-normalized": "tsx scripts/dbrd/validate-normalized.ts",
+    "dbrd:build-lookup-seed": "tsx scripts/dbrd/build-lookup-seed.ts",
+    "dbrd:build": "pnpm dbrd:validate-normalized && pnpm dbrd:build-lookup-seed",
     "build": "pnpm --filter @resqbrain/website build",
     "build:website": "pnpm --filter @resqbrain/website build"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.3"
   }
 }

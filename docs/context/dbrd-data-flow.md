@@ -21,15 +21,15 @@ flowchart LR
 
 | Stufe | Ort im Repo | Bedeutung |
 |-------|-------------|-----------|
-| Rohdaten | `data/dbrd-source/raw/` | Unveränderte Quelle (Exporte, Lieferungen). Dokumentation der Herkunft, keine fachliche Bereinigung an dieser Stelle. |
-| Normalisiert | `data/dbrd-source/normalized/` | Interne, validierbare Repräsentation nach Parsing, Einheitlichkeit von Feldern, Duplikaten etc. |
-| Mappings | `data/dbrd-source/mappings/` | Transformation von der normalisierten Struktur in das **Schema der Lookup-Seeds** (Felder, IDs, Manifest-Einträge). |
+| Rohdaten | `data/dbrd-source/raw/` | Unveränderte Quelle (`raw/medications/`, `raw/algorithms/`, Metadaten `raw/meta/sources.json`). Details: `docs/context/dbrd-import-rules.md`. |
+| Normalisiert | `data/dbrd-source/normalized/` | Interne, validierbare Repräsentation. Harte Prüfung: `pnpm dbrd:validate-normalized` (`scripts/dbrd/validate-normalized.ts`). |
+| Mappings | `data/dbrd-source/mappings/` | Transformation von der normalisierten Struktur in das **Schema der Lookup-Seeds** — empfohlen: `pnpm dbrd:build` (= Vorprüfung + `build-lookup-seed`), Doku `mappings/normalized-to-lookup.md`. |
 | Lookup-Seed | `data/lookup-seed/` | **Ziel für die App** — nur hier liegen die JSONs, die gebündelt oder zur Laufzeit geladen werden. |
 
 ## Skripte und Schemata
 
-- **Skripte:** `scripts/dbrd/` — Orchestrierung der Schritte (Einlesen, Normalisieren, Mappen, Schreiben des Seeds).
-- **Schemata:** `data/schemas/` — JSON-Schema oder vergleichbare Definitionen für Seeds und Zwischenformate, sobald festgelegt.
+- **Skripte:** `scripts/dbrd/` — u. a. `pnpm dbrd:normalize` (Roh → `normalized/`), `pnpm dbrd:validate-normalized` (hartes Prüfen der normalisierten Dateien), `pnpm dbrd:build` (Validierung + Seed-Build inkl. `validateLookupBundle` wie die App). Details: `scripts/dbrd/README.md`.
+- **Schemata:** `data/schemas/` — u. a. `dbrd-normalized.schema.ts` und Beispiele (`dbrd-normalized.examples.json`); siehe `docs/context/dbrd-normalized-model.md`.
 
 ## Governance-Regel
 
@@ -42,6 +42,8 @@ flowchart LR
 
 ## Siehe auch
 
+- `docs/context/dbrd-import-rules.md` — Rohimport, Trennung Quelle / Transformation / App-Ziel
+- `docs/context/dbrd-normalized-model.md` — Felder und Mapping-Hinweise zum internen Normalisierungsmodell
 - `data/dbrd-source/README.md`
 - `data/dbrd-source/mappings/README.md`
 - `scripts/dbrd/README.md`

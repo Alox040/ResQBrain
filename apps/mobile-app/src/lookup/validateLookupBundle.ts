@@ -28,11 +28,13 @@ function asNonEmptyString(value: unknown, path: string): string | string[] {
   return value;
 }
 
-function pushAll(target: string[], next: string | string[]): void {
-  if (typeof next === 'string') {
-    target.push(next);
-  } else {
-    target.push(...next);
+/**
+ * `asNonEmptyString` liefert bei Fehler `string[]`, bei Erfolg den gültigen `string`.
+ * Nur Fehler-Arrays werden gesammelt — Erfolgs-Strings nicht als Fehler eintragen.
+ */
+function pushValidationResult(target: string[], result: string | string[]): void {
+  if (Array.isArray(result)) {
+    target.push(...result);
   }
 }
 
@@ -53,8 +55,8 @@ export function validateManifest(raw: unknown): LookupValidationResult<LookupMan
 
   const sv = asNonEmptyString(raw.schemaVersion, 'manifest.schemaVersion');
   const bid = asNonEmptyString(raw.bundleId, 'manifest.bundleId');
-  pushAll(errors, sv);
-  pushAll(errors, bid);
+  pushValidationResult(errors, sv);
+  pushValidationResult(errors, bid);
 
   if (raw.displayName !== undefined && typeof raw.displayName !== 'string') {
     errors.push('manifest.displayName: expected string');
@@ -104,14 +106,14 @@ function validateMedicationItem(
   }
 
   const id = asNonEmptyString(raw.id, `${prefix}.id`);
-  pushAll(errors, id);
+  pushValidationResult(errors, id);
 
   if (raw.kind !== 'medication') {
     errors.push(`${prefix}.kind: expected "medication"`);
   }
 
-  pushAll(errors, asNonEmptyString(raw.label, `${prefix}.label`));
-  pushAll(errors, asNonEmptyString(raw.indication, `${prefix}.indication`));
+  pushValidationResult(errors, asNonEmptyString(raw.label, `${prefix}.label`));
+  pushValidationResult(errors, asNonEmptyString(raw.indication, `${prefix}.indication`));
 
   if (!Array.isArray(raw.tags)) {
     errors.push(`${prefix}.tags: expected array`);
@@ -137,7 +139,7 @@ function validateMedicationItem(
     errors.push(`${prefix}.notes: expected string`);
   }
 
-  pushAll(errors, asNonEmptyString(raw.dosage, `${prefix}.dosage`));
+  pushValidationResult(errors, asNonEmptyString(raw.dosage, `${prefix}.dosage`));
 
   if (!Array.isArray(raw.relatedAlgorithmIds)) {
     errors.push(`${prefix}.relatedAlgorithmIds: expected array`);
@@ -207,14 +209,14 @@ function validateAlgorithmItem(
     errors.push(`${prefix}: unknown keys: ${extra.sort().join(', ')}`);
   }
 
-  pushAll(errors, asNonEmptyString(raw.id, `${prefix}.id`));
+  pushValidationResult(errors, asNonEmptyString(raw.id, `${prefix}.id`));
 
   if (raw.kind !== 'algorithm') {
     errors.push(`${prefix}.kind: expected "algorithm"`);
   }
 
-  pushAll(errors, asNonEmptyString(raw.label, `${prefix}.label`));
-  pushAll(errors, asNonEmptyString(raw.indication, `${prefix}.indication`));
+  pushValidationResult(errors, asNonEmptyString(raw.label, `${prefix}.label`));
+  pushValidationResult(errors, asNonEmptyString(raw.indication, `${prefix}.indication`));
 
   if (!Array.isArray(raw.tags)) {
     errors.push(`${prefix}.tags: expected array`);
