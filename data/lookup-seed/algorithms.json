@@ -1,0 +1,35 @@
+[
+  {
+    "id": "alg-reanimation-erwachsene",
+    "kind": "algorithm",
+    "label": "Reanimation Erwachsene (Überblick)",
+    "indication": "Kreislaufstillstand bei Erwachsenen — strukturierte Einsatzreihenfolge",
+    "tags": ["kreislauf"],
+    "searchTerms": ["CPR", "KRE", "Basic Life Support"],
+    "notes": "Vereinfachtes Schulungsbeispiel; produktive Inhalte durch freigegebenen Stand der Pilot-Wache ersetzen.",
+    "steps": [
+      { "text": "Eigensicherung und Szeneabsicherung." },
+      { "text": "Bewusstsein und Atmung prüfen; Hilfe anfordern." },
+      { "text": "Thoraxkompressionen beginnen, Frequenz und Tiefe nach Leitfaden." },
+      { "text": "Beatmung bzw. Beatmungsunterstützung integrieren." },
+      { "text": "AED einsetzen sobald verfügbar; Schockempfehlung befolgen." },
+      { "text": "Medikamente nur nach lokalem Algorithmus und Indikation — siehe verknüpfte Medikamente." }
+    ],
+    "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.",
+    "relatedMedicationIds": ["med-adrenalin-i-m"]
+  },
+  {
+    "id": "alg-anaphylaxie-basics",
+    "kind": "algorithm",
+    "label": "Anaphylaxie — Erstmaßnahmen (linear)",
+    "indication": "Verdacht auf schwere allergische/anaphylaktische Reaktion",
+    "tags": ["atemwege", "kreislauf"],
+    "searchTerms": ["Anaphylaxie", "Allergie", "Notfall"],
+    "steps": [
+      { "text": "Eigensicherung; ggf. Auslöser entfernen oder Patienten aus Exposition bringen." },
+      { "text": "Vitalzeichen und Atemweg beurteilen; bei Bedarf Basismaßnahmen nach Leitfaden." },
+      { "text": "Adrenalin und weitere Maßnahmen ausschließlich nach lokalem Protokoll und Medikamententext." }
+    ],
+    "relatedMedicationIds": ["med-adrenalin-i-m"]
+  }
+]

@@ -9,6 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
+import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/ui/theme';
 
 export function HomeScreen() {
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
@@ -94,44 +95,34 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.bg,
   },
   content: {
-    padding: 16,
-    paddingBottom: 24,
-    gap: 12,
+    padding: SPACING.screenPadding,
+    paddingBottom: SPACING.screenPaddingBottom,
+    gap: SPACING.gapMd,
   },
   heroCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
+    ...CARD.base,
     padding: 18,
     gap: 8,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
   },
   eyebrow: {
-    color: '#2563eb',
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
+    ...TYPOGRAPHY.sectionTitle,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#111827',
+    ...TYPOGRAPHY.title,
     lineHeight: 30,
   },
   subtitle: {
+    ...TYPOGRAPHY.bodyMuted,
     color: '#4b5563',
-    fontSize: 15,
-    lineHeight: 22,
   },
   quickSection: {
     gap: 10,
   },
   sectionTitle: {
-    color: '#111827',
+    color: COLORS.text,
     fontSize: 22,
     fontWeight: '700',
   },
@@ -167,20 +158,16 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     flex: 1,
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
+    ...CARD.base,
     gap: 6,
   },
   infoValue: {
-    color: '#111827',
+    color: COLORS.text,
     fontSize: 20,
     fontWeight: '700',
   },
   infoLabel: {
-    color: '#6b7280',
+    color: COLORS.textMuted,
     fontSize: 13,
   },
 });

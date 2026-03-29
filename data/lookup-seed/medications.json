@@ -1,0 +1,23 @@
+[
+  {
+    "id": "med-adrenalin-i-m",
+    "kind": "medication",
+    "label": "Adrenalin (Epinephrin) Injektionslösung",
+    "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
+    "tags": ["kreislauf", "atemwege"],
+    "searchTerms": ["Epinephrin", "Suprarenin", "1 mg/ml Ampulle"],
+    "notes": "Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll; keine automatische Dosisberechnung in der App.",
+    "dosage": "Erwachsene (Orientierung, Freitext): i.v./i.o. z. B. 1 mg bei KRE; weitere Gaben im Rhythmus des Algorithmus. Kinder: nach pädiatrischem Schema der Pilot-Wache (hier als Freitext hinterlegt, nicht rechnerisch).",
+    "relatedAlgorithmIds": ["alg-reanimation-erwachsene", "alg-anaphylaxie-basics"]
+  },
+  {
+    "id": "med-ass-iv",
+    "kind": "medication",
+    "label": "Acetylsalicylsäure i.v.",
+    "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
+    "tags": ["kreislauf"],
+    "searchTerms": ["ASS", "Aspirin", "Acetylsalicylsäure"],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation; hier nur Lesetext ohne Rechner.",
+    "relatedAlgorithmIds": []
+  }
+]

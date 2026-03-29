@@ -2,9 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { medications } from '@/data/medications';
+import { medications } from '@/data/contentIndex';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
+import { CARD, COLORS, SPACING } from '@/ui/theme';
 
 type Nav = NativeStackNavigationProp<MedicationStackParamList, 'MedicationList'>;
 
@@ -17,17 +18,24 @@ export function MedicationListScreen() {
       data={medications}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => {
-        const tag = TAG_CONFIG[item.tags[0]];
+        const primaryTag = item.tags[0];
+        const tag = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
         return (
           <Pressable
             onPress={() => navigation.navigate('MedicationDetail', { medicationId: item.id })}
             style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
+            accessibilityRole="button"
+            accessibilityLabel={`${item.label}. ${item.indication}`}
           >
-            <View style={[styles.tagBadge, { backgroundColor: tag.backgroundColor }]}>
-              <Text style={[styles.tagText, { color: tag.textColor }]}>{tag.label}</Text>
-            </View>
+            {tag ? (
+              <View style={[styles.tagBadge, { backgroundColor: tag.backgroundColor }]}>
+                <Text style={[styles.tagText, { color: tag.textColor }]}>{tag.label}</Text>
+              </View>
+            ) : null}
             <Text style={styles.label}>{item.label}</Text>
-            <Text style={styles.indication} numberOfLines={2}>{item.indication}</Text>
+            <Text style={styles.indication} numberOfLines={3}>
+              {item.indication}
+            </Text>
           </Pressable>
         );
       }}
@@ -46,22 +54,18 @@ export function MedicationListScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.bg,
   },
   content: {
-    padding: 16,
-    paddingBottom: 24,
+    padding: SPACING.screenPadding,
+    paddingBottom: SPACING.screenPaddingBottom,
   },
   separator: {
     height: 10,
   },
   row: {
-    borderRadius: 16,
-    paddingHorizontal: 16,
+    ...CARD.base,
     paddingVertical: 14,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
     gap: 6,
   },
   rowPressed: {
@@ -83,12 +87,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#111827',
+    color: COLORS.text,
   },
   indication: {
     fontSize: 14,
     lineHeight: 20,
-    color: '#6b7280',
+    color: COLORS.textMuted,
   },
   empty: {
     paddingVertical: 48,

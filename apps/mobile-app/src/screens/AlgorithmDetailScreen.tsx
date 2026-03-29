@@ -1,26 +1,16 @@
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { getAlgorithmById } from '@/data/contentIndex';
-import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
+import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
+import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/ui/theme';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
-const ALGORITHM_SOURCES: Record<string, string[]> = {
-  reanimation: ['ERC ALS Guidelines (Referenz, statischer Seed)'],
-  anaphylaxie: ['S2k-Leitlinie Anaphylaxie (Referenz, statischer Seed)'],
-  bradykardie: ['ERC Bradykardie-Abschnitt (Referenz, statischer Seed)'],
-  tachykardie: ['ERC Tachykardie-Abschnitt (Referenz, statischer Seed)'],
-  acs: ['ESC ACS Guidance (Referenz, statischer Seed)'],
-  asthma: ['Nationale Versorgungsleitlinie Asthma (Referenz, statischer Seed)'],
-  'copd-exazerbation': ['GOLD Guidance COPD (Referenz, statischer Seed)'],
-  krampfanfall: ['DGfE / Notfallstandard Krampfanfall (Referenz, statischer Seed)'],
-  hypoglykaemie: ['DDG Hypoglykämie-Standard (Referenz, statischer Seed)'],
-  opioidintoxikation: ['BfArM / Naloxon-Hinweise (Referenz, statischer Seed)'],
-};
-
 export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const algorithm = getAlgorithmById(route.params.algorithmId);
+  const tabNavigation = navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({ title: algorithm?.label ?? 'Algorithmus' });
@@ -34,16 +24,25 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     );
   }
 
+  const openMedication = (medicationId: string) => {
+    tabNavigation?.navigate('MedicationList', {
+      screen: 'MedicationDetail',
+      params: { medicationId },
+    });
+  };
+
   return (
     <ScrollView
       style={styles.screen}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Title</Text>
-        <Text style={styles.value}>{algorithm.label}</Text>
-      </View>
+      {algorithm.warnings ? (
+        <View style={styles.warningCard} accessibilityRole="alert">
+          <Text style={styles.warningTitle}>Warnhinweis</Text>
+          <Text style={styles.warningBody}>{algorithm.warnings}</Text>
+        </View>
+      ) : null}
 
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Indikation</Text>
@@ -55,30 +54,49 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
         <View style={styles.steps}>
           {algorithm.steps.map((step, index) => (
             <View key={index} style={styles.stepCard}>
-              <Text style={styles.stepLabel}>{index + 1}. Schritt</Text>
+              <Text style={styles.stepLabel}>
+                Schritt {index + 1} von {algorithm.steps.length}
+              </Text>
               <Text style={styles.value}>{step.text}</Text>
             </View>
           ))}
         </View>
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Hinweise</Text>
-        {algorithm.warnings ? <Text style={styles.value}>{algorithm.warnings}</Text> : null}
-        {algorithm.notes ? <Text style={styles.value}>{algorithm.notes}</Text> : null}
-        {!algorithm.warnings && !algorithm.notes ? (
-          <Text style={styles.value}>Keine zusätzlichen Hinweise hinterlegt.</Text>
-        ) : null}
-      </View>
+      {algorithm.notes ? (
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Notizen</Text>
+          <Text style={styles.value}>{algorithm.notes}</Text>
+        </View>
+      ) : null}
 
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Quellen</Text>
-        {(ALGORITHM_SOURCES[algorithm.id] ?? ['Keine Quelle hinterlegt.']).map((source) => (
-          <Text key={source} style={styles.sourceItem}>
-            - {source}
-          </Text>
-        ))}
-      </View>
+      {algorithm.relatedMedicationIds.length > 0 ? (
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Verwandte Medikamente</Text>
+          {algorithm.relatedMedicationIds.map((medicationId) => {
+            const med = getMedicationById(medicationId);
+            if (med) {
+              return (
+                <Pressable
+                  key={medicationId}
+                  onPress={() => openMedication(medicationId)}
+                  style={({ pressed }) => [styles.medLink, pressed && styles.medLinkPressed]}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Medikament ${med.label} öffnen`}
+                >
+                  <Text style={styles.medLinkText}>{med.label}</Text>
+                  <Text style={styles.medLinkChevron}>›</Text>
+                </Pressable>
+              );
+            }
+            return (
+              <Text key={medicationId} style={styles.missingRef}>
+                Unbekannte ID: {medicationId}
+              </Text>
+            );
+          })}
+        </View>
+      ) : null}
     </ScrollView>
   );
 }
@@ -86,40 +104,49 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.bg,
   },
   content: {
-    padding: 16,
-    paddingBottom: 24,
-    gap: 12,
+    padding: SPACING.screenPadding,
+    paddingBottom: SPACING.screenPaddingBottom,
+    gap: SPACING.gapMd,
   },
-  card: {
-    borderRadius: 16,
-    padding: 16,
-    backgroundColor: '#ffffff',
+  warningCard: {
+    borderRadius: SPACING.radius,
+    padding: SPACING.screenPadding,
+    backgroundColor: '#fffbeb',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#f59e0b',
     gap: 8,
   },
-  sectionTitle: {
+  warningTitle: {
     fontSize: 12,
     fontWeight: '700',
     letterSpacing: 0.6,
     textTransform: 'uppercase',
-    color: '#2563eb',
+    color: '#b45309',
+  },
+  warningBody: {
+    ...TYPOGRAPHY.body,
+    color: '#78350f',
+  },
+  card: {
+    ...CARD.base,
+    gap: 8,
+  },
+  sectionTitle: {
+    ...TYPOGRAPHY.sectionTitle,
   },
   value: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#111827',
+    ...TYPOGRAPHY.body,
   },
   steps: {
     gap: 8,
   },
   stepCard: {
-    borderRadius: 12,
+    borderRadius: SPACING.radiusSm,
     padding: 12,
-    backgroundColor: '#eff6ff',
+    backgroundColor: COLORS.primaryMutedBg,
     borderWidth: 1,
     borderColor: '#bfdbfe',
     gap: 6,
@@ -130,21 +157,43 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     color: '#1d4ed8',
   },
-  sourceItem: {
-    fontSize: 15,
-    lineHeight: 22,
-    color: '#374151',
+  medLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  medLinkPressed: {
+    backgroundColor: COLORS.primaryMutedBg,
+  },
+  medLinkText: {
+    ...TYPOGRAPHY.body,
+    flex: 1,
+    color: COLORS.primary,
+    fontWeight: '600',
+  },
+  medLinkChevron: {
+    fontSize: 20,
+    color: COLORS.textMuted,
+    marginLeft: 8,
+  },
+  missingRef: {
+    ...TYPOGRAPHY.bodyMuted,
+    paddingVertical: 8,
   },
   emptyState: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: COLORS.bg,
   },
   emptyTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#111827',
+    color: COLORS.text,
   },
 });

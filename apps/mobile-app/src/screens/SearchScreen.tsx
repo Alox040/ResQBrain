@@ -9,9 +9,35 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { searchIndexItems } from '@/search/mockData';
+import { contentItems } from '@/data/contentIndex';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
-import type { ContentListItem } from '@/types/content';
+import type { ContentItem, ContentListItem } from '@/types/content';
+import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/ui/theme';
+
+/**
+ * Phase-0 lookup: case-insensitive substring on statischen Bundle-Texten.
+ * Kein Fuzzy-Matching, keine KI — nur includes() auf Freitextfeldern.
+ */
+function matchesLookupBundleItem(item: ContentItem, q: string): boolean {
+  const haystacks: string[] = [
+    item.label,
+    item.indication,
+    ...item.searchTerms,
+  ];
+
+  if (item.kind === 'medication') {
+    haystacks.push(item.dosage);
+    if (item.notes) haystacks.push(item.notes);
+  } else {
+    if (item.notes) haystacks.push(item.notes);
+    if (item.warnings) haystacks.push(item.warnings);
+    for (const step of item.steps) {
+      haystacks.push(step.text);
+    }
+  }
+
+  return haystacks.some((text) => text.toLowerCase().includes(q));
+}
 
 export function SearchScreen() {
   const [query, setQuery] = useState('');
@@ -19,18 +45,19 @@ export function SearchScreen() {
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
   const normalizedQuery = query.trim().toLowerCase();
-  const results = normalizedQuery
-    ? searchIndexItems.filter((item) => {
-        const matchesKind = kindFilter === 'all' || item.kind === kindFilter;
-        const matchesQuery =
-          item.label.toLowerCase().includes(normalizedQuery) ||
-          item.subtitle.toLowerCase().includes(normalizedQuery) ||
-          item.searchTerms.some((term) =>
-            term.toLowerCase().includes(normalizedQuery),
-          );
-
-        return matchesKind && matchesQuery;
-      })
+  const results: ContentListItem[] = normalizedQuery
+    ? contentItems
+        .filter(
+          (item) =>
+            (kindFilter === 'all' || item.kind === kindFilter) &&
+            matchesLookupBundleItem(item, normalizedQuery),
+        )
+        .map((item) => ({
+          id: item.id,
+          kind: item.kind,
+          label: item.label,
+          subtitle: item.indication,
+        }))
     : [];
 
   const handlePressResult = (item: ContentListItem) => {
@@ -157,50 +184,46 @@ export function SearchScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.bg,
   },
   container: {
     flex: 1,
-    padding: 16,
-    paddingBottom: 24,
-    gap: 12,
+    padding: SPACING.screenPadding,
+    paddingBottom: SPACING.screenPaddingBottom,
+    gap: SPACING.gapMd,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#111827',
+    ...TYPOGRAPHY.title,
   },
   input: {
     minHeight: 52,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderRadius: 16,
-    paddingHorizontal: 16,
+    borderColor: COLORS.border,
+    borderRadius: SPACING.radius,
+    paddingHorizontal: SPACING.screenPadding,
     fontSize: 15,
-    color: '#111827',
-    backgroundColor: '#ffffff',
+    color: COLORS.text,
+    backgroundColor: COLORS.surface,
   },
   emptyState: {
     paddingVertical: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.surface,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderRadius: 16,
-    paddingHorizontal: 16,
+    borderColor: COLORS.border,
+    borderRadius: SPACING.radius,
+    paddingHorizontal: SPACING.screenPadding,
   },
   emptyTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#111827',
+    color: COLORS.text,
     marginBottom: 6,
   },
   emptyText: {
-    fontSize: 15,
-    color: '#6b7280',
+    ...TYPOGRAPHY.bodyMuted,
     textAlign: 'center',
-    lineHeight: 22,
   },
   filterRow: {
     flexDirection: 'row',
@@ -212,11 +235,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#d1d5db',
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.surface,
   },
   filterChipActive: {
-    borderColor: '#2563eb',
-    backgroundColor: '#eff6ff',
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.primaryMutedBg,
   },
   filterChipLabel: {
     fontSize: 13,
@@ -231,29 +254,24 @@ const styles = StyleSheet.create({
   },
   resultRow: {
     minHeight: 84,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    borderRadius: 16,
-    padding: 16,
+    ...CARD.base,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
   },
   resultKind: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#2563eb',
+    color: COLORS.primary,
     textTransform: 'uppercase',
     marginBottom: 6,
   },
   resultTitle: {
     fontSize: 19,
     fontWeight: '600',
-    color: '#111827',
+    color: COLORS.text,
   },
   resultSubtitle: {
-    fontSize: 15,
+    ...TYPOGRAPHY.bodyMuted,
     color: '#4b5563',
     marginTop: 6,
-    lineHeight: 21,
   },
 });
