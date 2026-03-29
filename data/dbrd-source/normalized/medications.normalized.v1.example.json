@@ -1,0 +1,34 @@
+{
+  "intermediateSchemaId": "dbrd-source/normalized/review-intermediate/v1",
+  "description": "Nur Beispielstruktur (2 Demo-Einträge). Kein Build-Eingabepfad — Orientierung für Redaktion und spätere Rohdaten-Normalisierung.",
+  "medications": [
+    {
+      "source": "Demo — Medikamentenhandbuch",
+      "sourceSection": "Kapitel ASS i.v.",
+      "draftId": "med-ass-iv",
+      "label": "Acetylsalicylsäure i.v.",
+      "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
+      "dosageSummary": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+      "dosageDetail": "",
+      "notes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend.",
+      "tags": ["kreislauf"],
+      "searchTerms": ["ass", "aspirin", "acetylsalicylsäure"],
+      "reviewStatus": "approved",
+      "openQuestions": []
+    },
+    {
+      "source": "Demo — Medikamentenhandbuch",
+      "sourceSection": "Kapitel Adrenalin Injektionslösung",
+      "draftId": "med-adrenalin-i-m",
+      "label": "Adrenalin (Epinephrin) Injektionslösung",
+      "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
+      "dosageSummary": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.",
+      "dosageDetail": "Kinder: nach pädiatrischem Schema der Organisation; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App.",
+      "notes": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.\n\nDie App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen.",
+      "tags": ["kreislauf", "atemwege"],
+      "searchTerms": ["epinephrin", "suprarenin", "1 mg/ml ampulle", "adrenalin"],
+      "reviewStatus": "released",
+      "openQuestions": []
+    }
+  ]
+}

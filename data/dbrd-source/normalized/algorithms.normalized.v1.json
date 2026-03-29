@@ -1,6 +1,6 @@
 {
   "intermediateSchemaId": "dbrd-source/normalized/review-intermediate/v1",
-  "description": "Zwischenformat für Redaktion/Review — Schritte mit order zur Prüfung; Ziel-Lookup nutzt nur lineare { text }-Schritte. relatedMedicationDraftIds verweist auf draftIds der Medikamenten-Datei.",
+  "description": "Automatisch aus Rohdaten erzeugt (normalize-dbrd.ts) — Review-Zwischenformat für build-lookup-seed.",
   "algorithms": [
     {
       "source": "Pilot-Wache-Algorithmensammlung",
@@ -34,7 +34,6 @@
           "text": "Medikation: Medikamente nur nach lokalem Algorithmus und Indikation — siehe verknüpfte Medikamente."
         }
       ],
-      "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.",
       "relatedMedicationDraftIds": [
         "med-adrenalin-i-m"
       ],
@@ -47,7 +46,8 @@
         "basic life support"
       ],
       "reviewStatus": "released",
-      "openQuestions": []
+      "openQuestions": [],
+      "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.\n\nVereinfachtes Schulungsbeispiel; produktive Inhalte durch freigegebenen Stand der Pilot-Wache ersetzen."
     },
     {
       "source": "Pilot-Wache-Algorithmensammlung",
@@ -69,7 +69,6 @@
           "text": "Adrenalin und weitere Maßnahmen ausschließlich nach lokalem Protokoll und Medikamententext."
         }
       ],
-      "warnings": "",
       "relatedMedicationDraftIds": [
         "med-adrenalin-i-m"
       ],
@@ -83,38 +82,7 @@
         "notfall"
       ],
       "reviewStatus": "in_review",
-      "openQuestions": [
-        "Prüfen, ob ein gesonderter Warnhinweis (warnings) aus dem PDF-Kasten „Medikation“ übernommen werden soll.",
-        "Linearisierung: Verzweigungen im Originaldokument dokumentieren oder in openQuestions festhalten."
-      ]
-    },
-    {
-      "source": "TEMPLATE — Algorithmus-Quelle hier eintragen",
-      "sourceSection": "TEMPLATE — Dokument-ID / Kapitel",
-      "draftId": "alg-template-neuer-ablauf",
-      "label": "TEMPLATE: Kurztitel des Ablaufs",
-      "indication": "TEMPLATE: Einsatzkontext in einem Satz",
-      "steps": [
-        {
-          "order": 1,
-          "text": "TEMPLATE: Erster Handlungssatz, imperativ."
-        },
-        {
-          "order": 2,
-          "text": "TEMPLATE: Zweiter Schritt — Reihenfolge über order abbilden."
-        }
-      ],
-      "warnings": "",
-      "relatedMedicationDraftIds": [],
-      "tags": [],
-      "searchTerms": [],
-      "reviewStatus": "draft",
-      "openQuestions": [
-        "Mindestens einen CONTENT_TAG setzen, sobald Themenzuordnung klar ist.",
-        "searchTerms lowercase; Abkürzungen und englische Bezeichner wie im PDF.",
-        "warnings nur bei klar sicherheitsrelevantem Kasten aus dem PDF (sonst leer lassen).",
-        "relatedMedicationDraftIds auf draftIds aus medications.normalized.v1.json abstimmen."
-      ]
+      "openQuestions": []
     }
   ]
 }

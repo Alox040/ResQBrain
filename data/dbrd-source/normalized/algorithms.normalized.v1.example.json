@@ -1,0 +1,72 @@
+{
+  "intermediateSchemaId": "dbrd-source/normalized/review-intermediate/v1",
+  "description": "Nur Beispielstruktur (2 Demo-Einträge). Kein Build-Eingabepfad — Orientierung für Redaktion und spätere Rohdaten-Normalisierung.",
+  "algorithms": [
+    {
+      "source": "Demo — interne Algorithmensammlung",
+      "sourceSection": "ANA-BAS-002 / Auszug",
+      "draftId": "alg-anaphylaxie-basics",
+      "label": "Anaphylaxie — Erstmaßnahmen (linear)",
+      "indication": "Verdacht auf schwere allergische/anaphylaktische Reaktion",
+      "steps": [
+        {
+          "order": 1,
+          "text": "Eigensicherung; ggf. Auslöser entfernen oder Patienten aus Exposition bringen."
+        },
+        {
+          "order": 2,
+          "text": "Vitalzeichen und Atemweg beurteilen; bei Bedarf Basismaßnahmen nach Leitfaden."
+        },
+        {
+          "order": 3,
+          "text": "Adrenalin und weitere Maßnahmen ausschließlich nach lokalem Protokoll und Medikamententext."
+        }
+      ],
+      "warnings": "",
+      "relatedMedicationDraftIds": ["med-adrenalin-i-m"],
+      "tags": ["atemwege", "kreislauf"],
+      "searchTerms": ["anaphylaxie", "allergie", "notfall"],
+      "reviewStatus": "in_review",
+      "openQuestions": []
+    },
+    {
+      "source": "Demo — interne Algorithmensammlung",
+      "sourceSection": "BLS-ERW-001 / Auszug",
+      "draftId": "alg-reanimation-erwachsene",
+      "label": "Reanimation Erwachsene (Überblick)",
+      "indication": "Kreislaufstillstand bei Erwachsenen — strukturierte Einsatzreihenfolge",
+      "steps": [
+        {
+          "order": 1,
+          "text": "Sicherung: Eigensicherung und Szeneabsicherung."
+        },
+        {
+          "order": 2,
+          "text": "Erste Hilfe: Bewusstsein und Atmung prüfen; Hilfe anfordern."
+        },
+        {
+          "order": 3,
+          "text": "CPR: Thoraxkompressionen beginnen, Frequenz und Tiefe nach Leitfaden."
+        },
+        {
+          "order": 4,
+          "text": "Beatmung: Beatmung bzw. Beatmungsunterstützung integrieren."
+        },
+        {
+          "order": 5,
+          "text": "AED: AED einsetzen sobald verfügbar; Schockempfehlung befolgen."
+        },
+        {
+          "order": 6,
+          "text": "Medikation: Medikamente nur nach lokalem Algorithmus und Indikation — siehe verknüpfte Medikamente."
+        }
+      ],
+      "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.",
+      "relatedMedicationDraftIds": ["med-adrenalin-i-m"],
+      "tags": ["kreislauf"],
+      "searchTerms": ["cpr", "kre", "basic life support"],
+      "reviewStatus": "released",
+      "openQuestions": []
+    }
+  ]
+}

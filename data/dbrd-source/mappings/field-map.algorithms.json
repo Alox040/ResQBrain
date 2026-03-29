@@ -1,6 +1,7 @@
 {
   "schemaId": "dbrd-field-map/algorithms/pdf-to-phase0/v1",
-  "description": "Zuordnung typischer PDF-Inhalte (Algorithmus-, Protokoll- oder Ablaufkapitel) auf die ausschließlich in algorithms.json erlaubten Felder — Phase-0-App-Schema. Schritte nur linear { text }; kein Branching-Modell.",
+  "description": "Zuordnung typischer PDF-/Rohdaten-Inhalte auf das Review-Zwischenformat und anschließend auf Phase-0-Lookup. Schritte nur linear { text } im Seed; kein Branching-Modell.",
+  "fieldChain": "Jede Zeile in mappings[] dokumentiert: sourceField (raw-extraction, siehe data/schemas/raw-*.template.json) → normalizedField (algorithms.normalized.v1.json pro Eintrag) → lookupField (data/lookup-seed/algorithms.json).",
   "targetSchemaRef": "data/dbrd-source/mappings/current-app-target-schema.md — Abschnitt Algorithm-Schema",
   "whitelistRef": "apps/mobile-app/src/lookup/lookupSchema.ts — ALGORITHM_ITEM_KEYS, ALGORITHM_STEP_KEYS",
   "literal": {
@@ -8,14 +9,18 @@
   },
   "mappings": [
     {
+      "sourceField": "id_suggestion.__value (string, nach Freigabe verbindlich)",
+      "normalizedField": "draftId",
       "lookupField": "id",
       "pdfTypicalSources": [
         "Interne Kennung aus Redaktion/Bundle-Konvention (PDF selten als slug vorhanden)",
         "Kurzform aus Titel (z. B. alg-reanimation-erwachsene) — siehe normalization-rules.md (kebab-case)"
       ],
-      "rule": "Bundle-weit eindeutig; keine Kollision mit Medikations-IDs."
+      "rule": "Bundle-weit eindeutig; gleicher String wie draftId im Seed; keine Kollision mit Medikations-IDs."
     },
     {
+      "sourceField": "label",
+      "normalizedField": "label",
       "lookupField": "label",
       "pdfTypicalSources": [
         "Titel des Algorithmus oder der Handlungsanweisung",
@@ -24,6 +29,8 @@
       "rule": "Eine klare Primärüberschrift ohne Layoutreste."
     },
     {
+      "sourceField": "indication",
+      "normalizedField": "indication",
       "lookupField": "indication",
       "pdfTypicalSources": [
         "Einsatzkontext / wann dieser Ablauf gilt (Einleitung, Indikationsteil)",
@@ -32,6 +39,8 @@
       "rule": "Kurz und aus dem PDF übernommen; keine inhaltliche Erweiterung durch die Normalisierung."
     },
     {
+      "sourceField": "tags_suggestion",
+      "normalizedField": "tags",
       "lookupField": "tags",
       "pdfTypicalSources": [
         "Thematische Einordnung des Kapitels im PDF",
@@ -40,6 +49,8 @@
       "rule": "Nur kontrollierte Tags; bei Unsicherheit zurückhaltend."
     },
     {
+      "sourceField": "searchTerms_suggestion, synonyms",
+      "normalizedField": "searchTerms",
       "lookupField": "searchTerms",
       "pdfTypicalSources": [
         "Abkürzungen und englische Fachbegriffe im Text (z. B. CPR, BLS)",
@@ -48,35 +59,50 @@
       "rule": "Lowercase nach normalization-rules.md; für Suche, nicht für die Listendarstellung."
     },
     {
-      "lookupField": "steps",
+      "sourceField": "steps[].order, steps[].text (optional steps[].title in den Fließtext einarbeiten)",
+      "normalizedField": "steps[].order, steps[].text",
+      "lookupField": "steps[].text",
       "pdfTypicalSources": [
         "Nummerierte oder stark gegliederte Handlungsschritte im PDF",
         "Aufzählungen „Zuerst …, dann …“, sofern sie in eine lineare Reihenfolge ohne Verzweigung überführt werden können"
       ],
-      "rule": "Jeder Schritt genau ein Objekt { \"text\": \"...\" }; ein imperative Kurzsatz pro Schritt wo möglich. Verzweigungen („wenn ja/nein“) in Phase 0 nicht als Struktur abbilden — entweder vereinfachen zu einer linearen Empfehlung mit klarer Vorbedingung im Satz oder aus dem Bundle ausnehmen, wenn Linearisierung sachlich falsch wäre. Mindestens ein Schritt (App-Validierung)."
+      "rule": "Im Seed jeweils genau ein Objekt { \"text\": \"...\" }; order fällt weg. Verzweigungen in Phase 0 nicht als Struktur abbilden — vereinfachen oder aus dem Bundle ausnehmen, wenn Linearisierung sachlich falsch wäre. Mindestens ein Schritt (App-Validierung)."
     },
     {
+      "sourceField": "warnings",
+      "normalizedField": "warnings",
       "lookupField": "warnings",
       "pdfTypicalSources": [
         "Hervorgehobene Sicherheitshinweise, explizite Warnkästen, „Achtung“-Passagen zu Risiken im Ablauf"
       ],
-      "rule": "Optional; nur setzen, wenn der Hinweis klar sicherheitsrelevant und nicht nur allgemeine Redaktion. Sonst Feld weglassen. Kein Doppeltext zu notes ohne Grund."
+      "rule": "Optional im Seed; nur setzen, wenn der Hinweis klar sicherheitsrelevant. Sonst Feld weglassen oder leer lassen im Zwischenformat."
     },
     {
+      "sourceField": "clinicalNotes (Freitext oder __value nach Auflösung)",
+      "normalizedField": "optional notes (nur wenn Redaktion im Zwischenformat ergänzt; sonst auslassen)",
       "lookupField": "notes",
       "pdfTypicalSources": [
-        "Erläuternde Absätze, Schulungs-/Kontexthinweise, Verweise auf weiterführende Literatur — nur bei Mehrwert gegenüber steps",
+        "Erläuternde Absätze, Schulungs-/Kontexthinweise — nur bei Mehrwert gegenüber steps",
         "Hinweis, dass der Auszug vereinfacht ist, wenn im PDF/Bundle so kommuniziert"
       ],
-      "rule": "Optional; weglassen bei bloßer Wiederholung von steps oder label. Nicht für jeden PDF-Fließtextblock füllen."
+      "rule": "Optional im Seed; weglassen bei bloßer Wiederholung von steps oder label. Standard-Zwischenformat siehe algorithms.normalized.v1.example.json (ohne notes)."
     },
     {
+      "sourceField": "relatedMedications_raw (Namen → Auflösung zu Draft-IDs)",
+      "normalizedField": "relatedMedicationDraftIds",
       "lookupField": "relatedMedicationIds",
       "pdfTypicalSources": [
         "Im PDF genannte Medikamente im Kontext dieses Ablaufs",
         "Explizite „Medikation:“-Verweise oder Tabellenzeilen mit Präparatbezug — gemappt auf Bundle-Medikations-IDs"
       ],
       "rule": "Nur existierende medication-IDs im gleichen Bundle. Leeres Array nur wenn sachlich keine Medikamenten-Verknüpfung — siehe normalization-rules.md."
+    },
+    {
+      "sourceField": "(kein Rohfeld — Build-Konstante)",
+      "normalizedField": "(nicht im Zwischenformat)",
+      "lookupField": "kind",
+      "pdfTypicalSources": [],
+      "rule": "Immer der Literalwert \"algorithm\"."
     }
   ],
   "pdfContentNotEmitted": [

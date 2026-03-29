@@ -1,10 +1,10 @@
 {
   "intermediateSchemaId": "dbrd-source/normalized/review-intermediate/v1",
-  "description": "Zwischenformat für Redaktion/Review — nah am App-Lookup, mit Prüffeldern. Kein lookup-seed; finale ids/Kreuzreferenzen entstehen beim Seed-Build.",
+  "description": "Automatisch aus Rohdaten erzeugt (normalize-dbrd.ts) — Review-Zwischenformat für build-lookup-seed.",
   "medications": [
     {
       "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
-      "sourceSection": "Medikamentenkapitel Adrenalin / Export 2026-03-28 / Freigabeversion 1.0",
+      "sourceSection": "Export 2026-03-28 / Medikamentenkapitel Adrenalin / Freigabeversion 1.0",
       "draftId": "med-adrenalin-i-m",
       "label": "Adrenalin (Epinephrin) Injektionslösung",
       "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
@@ -26,7 +26,7 @@
     },
     {
       "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
-      "sourceSection": "Medikamentenkapitel ASS i.v. / Export 2026-03-28",
+      "sourceSection": "Export 2026-03-28 / Medikamentenkapitel ASS i.v.",
       "draftId": "med-ass-iv",
       "label": "Acetylsalicylsäure i.v.",
       "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
@@ -42,27 +42,7 @@
         "acetylsalicylsäure"
       ],
       "reviewStatus": "approved",
-      "openQuestions": [
-        "Darreichungsform in dosageDetail ergänzen, sobald freigegebene Fassung eine konkrete Produktlinie benennt."
-      ]
-    },
-    {
-      "source": "TEMPLATE — PDF-Quelle hier eintragen (z. B. interner Dateiname oder Archiv-ID)",
-      "sourceSection": "TEMPLATE — Kapitel/Abschnitt/PDF-Seitenbereich",
-      "draftId": "med-template-neues-medikament",
-      "label": "TEMPLATE: Handelsname + Darreichungsform",
-      "indication": "TEMPLATE: Kurzindikation nach Leitfaden, ein Satz",
-      "dosageSummary": "TEMPLATE: Erwachsenen-Orientierung oder Verweis „nur nach Handbuch“",
-      "dosageDetail": "",
-      "notes": "",
-      "tags": [],
-      "searchTerms": [],
-      "reviewStatus": "draft",
-      "openQuestions": [
-        "CONTENT_TAG zuweisen (kreislauf, atemwege, neurologie, analgesie, intoxikation, stoffwechsel)",
-        "searchTerms lowercase ergänzen (INN, Abkürzungen, Stärke)",
-        "Querverweise zu Algorithmen erst nach draftId-Abgleich im Bundle pflegen"
-      ]
+      "openQuestions": []
     }
   ]
 }
