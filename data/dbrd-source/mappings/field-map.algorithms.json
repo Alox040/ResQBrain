@@ -1,38 +1,88 @@
 {
-  "schemaId": "dbrd-field-map/algorithms/v1",
-  "description": "Zuordnung NormalizedAlgorithm → lookup-seed/algorithms.json (Phase-0-Whitelist der Mobile-App).",
+  "schemaId": "dbrd-field-map/algorithms/pdf-to-phase0/v1",
+  "description": "Zuordnung typischer PDF-Inhalte (Algorithmus-, Protokoll- oder Ablaufkapitel) auf die ausschließlich in algorithms.json erlaubten Felder — Phase-0-App-Schema. Schritte nur linear { text }; kein Branching-Modell.",
+  "targetSchemaRef": "data/dbrd-source/mappings/current-app-target-schema.md — Abschnitt Algorithm-Schema",
   "whitelistRef": "apps/mobile-app/src/lookup/lookupSchema.ts — ALGORITHM_ITEM_KEYS, ALGORITHM_STEP_KEYS",
-  "tagVocabularyRef": "apps/mobile-app/src/lookup/lookupSchema.ts — CONTENT_TAG_VALUES",
-  "directOneToOne": [
-    { "lookupField": "id", "normalizedPath": "id" },
-    { "lookupField": "label", "normalizedPath": "label" },
-    { "lookupField": "indication", "normalizedPath": "indication" },
-    { "lookupField": "tags", "normalizedPath": "tags" },
-    { "lookupField": "searchTerms", "normalizedPath": "searchTerms" },
-    { "lookupField": "relatedMedicationIds", "normalizedPath": "relatedMedicationIds" }
-  ],
   "literal": {
     "kind": "algorithm"
   },
-  "composed": {
-    "steps": {
-      "from": "steps[]",
-      "rule": "Schritte nach order sortiert; pro Schritt nur { text } im Seed. Wenn title gesetzt: text = \"{title}: {text}\", sonst nur text (kein title/order im Seed — ALGORITHM_STEP_KEYS erlaubt ausschließlich text)."
+  "mappings": [
+    {
+      "lookupField": "id",
+      "pdfTypicalSources": [
+        "Interne Kennung aus Redaktion/Bundle-Konvention (PDF selten als slug vorhanden)",
+        "Kurzform aus Titel (z. B. alg-reanimation-erwachsene) — siehe normalization-rules.md (kebab-case)"
+      ],
+      "rule": "Bundle-weit eindeutig; keine Kollision mit Medikations-IDs."
     },
-    "notes": {
-      "from": ["clinicalNotes"],
-      "rule": "notes nur setzen, wenn clinicalNotes nicht leer; sonst weglassen."
+    {
+      "lookupField": "label",
+      "pdfTypicalSources": [
+        "Titel des Algorithmus oder der Handlungsanweisung",
+        "Kapitelüberschrift des Ablaufs"
+      ],
+      "rule": "Eine klare Primärüberschrift ohne Layoutreste."
     },
-    "warnings": {
-      "from": ["warnings"],
-      "rule": "Feld nur ausgeben, wenn warnings im Normalisierten nicht leer; sonst weglassen."
+    {
+      "lookupField": "indication",
+      "pdfTypicalSources": [
+        "Einsatzkontext / wann dieser Ablauf gilt (Einleitung, Indikationsteil)",
+        "„Bei …“-Passagen am Anfang des Kapitels"
+      ],
+      "rule": "Kurz und aus dem PDF übernommen; keine inhaltliche Erweiterung durch die Normalisierung."
+    },
+    {
+      "lookupField": "tags",
+      "pdfTypicalSources": [
+        "Thematische Einordnung des Kapitels im PDF",
+        "Schlagworte, die sich auf CONTENT_TAG_VALUES abbilden lassen"
+      ],
+      "rule": "Nur kontrollierte Tags; bei Unsicherheit zurückhaltend."
+    },
+    {
+      "lookupField": "searchTerms",
+      "pdfTypicalSources": [
+        "Abkürzungen und englische Fachbegriffe im Text (z. B. CPR, BLS)",
+        "Alternative Bezeichnungen des gleichen Ablaufs"
+      ],
+      "rule": "Lowercase nach normalization-rules.md; für Suche, nicht für die Listendarstellung."
+    },
+    {
+      "lookupField": "steps",
+      "pdfTypicalSources": [
+        "Nummerierte oder stark gegliederte Handlungsschritte im PDF",
+        "Aufzählungen „Zuerst …, dann …“, sofern sie in eine lineare Reihenfolge ohne Verzweigung überführt werden können"
+      ],
+      "rule": "Jeder Schritt genau ein Objekt { \"text\": \"...\" }; ein imperative Kurzsatz pro Schritt wo möglich. Verzweigungen („wenn ja/nein“) in Phase 0 nicht als Struktur abbilden — entweder vereinfachen zu einer linearen Empfehlung mit klarer Vorbedingung im Satz oder aus dem Bundle ausnehmen, wenn Linearisierung sachlich falsch wäre. Mindestens ein Schritt (App-Validierung)."
+    },
+    {
+      "lookupField": "warnings",
+      "pdfTypicalSources": [
+        "Hervorgehobene Sicherheitshinweise, explizite Warnkästen, „Achtung“-Passagen zu Risiken im Ablauf"
+      ],
+      "rule": "Optional; nur setzen, wenn der Hinweis klar sicherheitsrelevant und nicht nur allgemeine Redaktion. Sonst Feld weglassen. Kein Doppeltext zu notes ohne Grund."
+    },
+    {
+      "lookupField": "notes",
+      "pdfTypicalSources": [
+        "Erläuternde Absätze, Schulungs-/Kontexthinweise, Verweise auf weiterführende Literatur — nur bei Mehrwert gegenüber steps",
+        "Hinweis, dass der Auszug vereinfacht ist, wenn im PDF/Bundle so kommuniziert"
+      ],
+      "rule": "Optional; weglassen bei bloßer Wiederholung von steps oder label. Nicht für jeden PDF-Fließtextblock füllen."
+    },
+    {
+      "lookupField": "relatedMedicationIds",
+      "pdfTypicalSources": [
+        "Im PDF genannte Medikamente im Kontext dieses Ablaufs",
+        "Explizite „Medikation:“-Verweise oder Tabellenzeilen mit Präparatbezug — gemappt auf Bundle-Medikations-IDs"
+      ],
+      "rule": "Nur existierende medication-IDs im gleichen Bundle. Leeres Array nur wenn sachlich keine Medikamenten-Verknüpfung — siehe normalization-rules.md."
     }
-  },
-  "notEmittedToLookup": [
-    "entityType",
-    "provenance",
-    "steps[].order",
-    "steps[].title"
   ],
-  "notes": "Keine zusätzlichen Top-Level-Keys im Seed; Schritt-Objekte dürfen nur text enthalten."
+  "pdfContentNotEmitted": [
+    "Entscheidungsbäume und Flussdiagramme als Graph-Struktur",
+    "Seitenlayout, Box-Zeichen, Sonderzeichen aus Extraktion",
+    "Mehrspaltige Nummerierung, die keine klare lineare Ordnung ergibt",
+    "Metadaten ohne Zielfeld im Phase-0-Algorithmus-Record"
+  ]
 }

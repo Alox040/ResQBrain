@@ -1,36 +1,84 @@
 {
-  "schemaId": "dbrd-field-map/medications/v1",
-  "description": "Zuordnung NormalizedMedication → lookup-seed/medications.json (Phase-0-Whitelist der Mobile-App).",
+  "schemaId": "dbrd-field-map/medications/pdf-to-phase0/v1",
+  "description": "Zuordnung typischer PDF-Inhalte (Medikamentenblatt, Protokollauszug, formulierter Leitfadentext) auf die ausschließlich in medications.json erlaubten Felder — Phase-0-App-Schema. Keine Zusatzfelder.",
+  "targetSchemaRef": "data/dbrd-source/mappings/current-app-target-schema.md — Abschnitt Medication-Schema",
   "whitelistRef": "apps/mobile-app/src/lookup/lookupSchema.ts — MEDICATION_ITEM_KEYS",
-  "tagVocabularyRef": "apps/mobile-app/src/lookup/lookupSchema.ts — CONTENT_TAG_VALUES",
-  "directOneToOne": [
-    { "lookupField": "id", "normalizedPath": "id" },
-    { "lookupField": "label", "normalizedPath": "label" },
-    { "lookupField": "indication", "normalizedPath": "indication" },
-    { "lookupField": "tags", "normalizedPath": "tags" },
-    { "lookupField": "searchTerms", "normalizedPath": "searchTerms" },
-    { "lookupField": "relatedAlgorithmIds", "normalizedPath": "relatedAlgorithmIds" }
-  ],
   "literal": {
     "kind": "medication"
   },
-  "composed": {
-    "dosage": {
-      "from": ["dosage.summary", "dosage.detail"],
-      "rule": "Nur summary, wenn detail fehlt oder leer; sonst summary + zwei Zeilenumbrüche + detail (implementiert in scripts/dbrd/build-lookup-seed.ts)."
+  "mappings": [
+    {
+      "lookupField": "id",
+      "pdfTypicalSources": [
+        "Stabile interne Kennung aus Redaktions-/Versionsprozess (PDF enthält sie meist nicht direkt)",
+        "Alternativ: aus eindeutigem Kurztitel/Wirkstoff+Darreichung ableiten — siehe normalization-rules.md (kebab-case)"
+      ],
+      "rule": "Muss bundle-weit eindeutig sein und darf nicht mit einer Algorithmus-ID kollidieren."
     },
-    "notes": {
-      "from": ["contraindicationsNote", "clinicalNotes"],
-      "rule": "Nicht-leere Teile in dieser Reihenfolge mit zwei Zeilenumbrüchen verketten; Feld notes im Seed weglassen, wenn kein Teil vorhanden."
+    {
+      "lookupField": "label",
+      "pdfTypicalSources": [
+        "Medikamentenname in der Überschrift",
+        "Handelsname plus Darreichungsform (z. B. Injektionslösung, Tablette)",
+        "Kombination aus Wirkstoff und Galenik, wie im freigegebenen Dokument als Hauptbezeichnung geführt"
+      ],
+      "rule": "Eine Zeile Primärbezeichnung; keine Fußnotenmarken, keine Seitenverzweise im String."
+    },
+    {
+      "lookupField": "indication",
+      "pdfTypicalSources": [
+        "Abschnitt Indikation / Einsatzgebiet / Klinisches Bild",
+        "Kurzpassage „wann einsetzen“ aus dem Einsatzkontext des PDF"
+      ],
+      "rule": "Kompakter Satz oder zwei Sätze; Inhalt aus dem Dokument, nicht erweitern. Verweis „nach lokalem Leitfaden“ beibehalten, wenn im PDF so vorgegeben."
+    },
+    {
+      "lookupField": "tags",
+      "pdfTypicalSources": [
+        "Kapitel-/Rubrikzugehörigkeit im PDF (z. B. Kreislauf, Atemweg)",
+        "Schlagworte aus Einleitung oder Meta-Zuweisung des Dokuments — nur wenn sie sich auf CONTENT_TAG_VALUES abbilden lassen"
+      ],
+      "rule": "Ausschließlich Werte aus der kontrollierten Liste (lookupSchema CONTENT_TAG_VALUES). Nicht erraten: bei Unklarheit konservativ weniger Tags."
+    },
+    {
+      "lookupField": "searchTerms",
+      "pdfTypicalSources": [
+        "INN/Wirkstoffname",
+        "Handelsnamen, Abkürzungen (z. B. ASS)",
+        "Stärke/Konzentration als Suchhilfe (z. B. 1 mg/ml), wenn im PDF genannt"
+      ],
+      "rule": "Synonyme und Suchbegriffe; Normalisierung: lowercase nach normalization-rules.md; Duplikate zum label entfernen, wenn redundant."
+    },
+    {
+      "lookupField": "dosage",
+      "pdfTypicalSources": [
+        "Dosierung / Applikation / Standardschema",
+        "Kurzpassagen zu Weg und typischer Erwachsenendosis, wenn explizit im PDF — ohne Tabellen-Layout zu übernehmen"
+      ],
+      "rule": "Fließtext, einsatztauglich und knapp; keine Rechenlogik der App; Verweise auf organisationspezifisches Handbuch statt vollständiger Tabellenabgleich. Keine PDF-Tabellenzeilen 1:1 als Rohformat."
+    },
+    {
+      "lookupField": "notes",
+      "pdfTypicalSources": [
+        "Kontraindikationen / relative KI / wichtige klinische Hinweise — nur wenn sie echten Mehrwert gegenüber label/indication/dosage liefern",
+        "Rechtlicher oder organisatorischer Kurzhinweis, wenn im PDF vorgesehen (z. B. nur mit freigegebenem Medikamentenhandbuch)"
+      ],
+      "rule": "Optional: Feld weglassen, wenn Inhalt nur Wiederholung oder reine Absicherung ohne Zusatzinformation. Kein Ersatz für vollständiges Beipackzettel-Niveau."
+    },
+    {
+      "lookupField": "relatedAlgorithmIds",
+      "pdfTypicalSources": [
+        "Explizite Verweise im PDF auf einen Algorithmus oder Ablauf („siehe Algorithmus …“, „im Reanimationsalgorithmus“)",
+        "Editorielle Zuordnung beim Bundle-Bau, wenn der Textbezug eindeutig"
+      ],
+      "rule": "Nur IDs, die in algorithms.json des gleichen Bundles existieren; sonst Validierung fehlgeschlagen. Leeres Array nur wenn keine Verknüpfung — siehe normalization-rules.md."
     }
-  },
-  "notEmittedToLookup": [
-    "entityType",
-    "provenance",
-    "genericName",
-    "tradeNames",
-    "dosage.summary",
-    "dosage.detail"
   ],
-  "notes": "Keine zusätzlichen Top-Level-Keys im Seed; die App lehnt unbekannte Schlüssel ab (validateMedications)."
+  "pdfContentNotEmitted": [
+    "Kopf-/Fußzeilen, Seitenzahlen, Logos",
+    "Layout-Artefakte (Spaltenumbrüche, überzählige Leerzeichen, Einrückungen aus der PDF-Extraktion)",
+    "Vollständige Tabellen und Abbildungen als strukturierte Daten",
+    "Versionierungs-/Freigabemetadaten der Plattform (Phase-0-Bundle hat dafür keine Lookup-Felder)",
+    "Medikamenteneigenschaften ohne Zielfeld (z. B. Lagerung, Hersteller) — nicht in medications.json abbilden"
+  ]
 }

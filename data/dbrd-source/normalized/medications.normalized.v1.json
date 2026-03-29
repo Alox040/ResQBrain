@@ -1,70 +1,68 @@
 {
-  "bundleSchemaId": "dbrd-normalized.pipeline/medications/v1",
+  "intermediateSchemaId": "dbrd-source/normalized/review-intermediate/v1",
+  "description": "Zwischenformat für Redaktion/Review — nah am App-Lookup, mit Prüffeldern. Kein lookup-seed; finale ids/Kreuzreferenzen entstehen beim Seed-Build.",
   "medications": [
     {
-      "entityType": "NormalizedMedication",
-      "id": "med-adrenalin-i-m",
+      "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
+      "sourceSection": "Medikamentenkapitel Adrenalin / Export 2026-03-28 / Freigabeversion 1.0",
+      "draftId": "med-adrenalin-i-m",
       "label": "Adrenalin (Epinephrin) Injektionslösung",
       "indication": "Kreislaufstillstand, schwere anaphylaktische Reaktion, schwere Asthmaexazerbation — nach lokalem Leitfaden",
+      "dosageSummary": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.",
+      "dosageDetail": "Kinder: nach pädiatrischem Schema der Pilot-Wache; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App.",
+      "notes": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.\n\nDie App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen.",
       "tags": [
         "kreislauf",
         "atemwege"
       ],
       "searchTerms": [
-        "Epinephrin",
-        "Suprarenin",
-        "1 mg/ml Ampulle",
-        "Adrenalin"
+        "epinephrin",
+        "suprarenin",
+        "1 mg/ml ampulle",
+        "adrenalin"
       ],
-      "dosage": {
-        "summary": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.",
-        "detail": "Kinder: nach pädiatrischem Schema der Pilot-Wache; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App."
-      },
-      "genericName": "Epinephrin",
-      "tradeNames": [
-        "Suprarenin"
-      ],
-      "contraindicationsNote": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.",
-      "clinicalNotes": "Die App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen.",
-      "relatedAlgorithmIds": [
-        "alg-reanimation-erwachsene",
-        "alg-anaphylaxie-basics"
-      ],
-      "provenance": {
-        "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
-        "sourceReference": "Export 2026-03-28 / Medikamentenkapitel Adrenalin / Freigabeversion 1.0",
-        "approvalStatus": "Released",
-        "lastReviewedAt": "2026-03-28T12:00:00.000Z"
-      }
+      "reviewStatus": "released",
+      "openQuestions": []
     },
     {
-      "entityType": "NormalizedMedication",
-      "id": "med-ass-iv",
+      "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
+      "sourceSection": "Medikamentenkapitel ASS i.v. / Export 2026-03-28",
+      "draftId": "med-ass-iv",
       "label": "Acetylsalicylsäure i.v.",
       "indication": "Verdacht auf akutes Koronarsyndrom — nach lokalem Leitfaden und Ausschluss von Kontraindikationen",
+      "dosageSummary": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+      "dosageDetail": "",
+      "notes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend.",
       "tags": [
         "kreislauf"
       ],
       "searchTerms": [
-        "ASS",
-        "Aspirin",
-        "Acetylsalicylsäure"
+        "ass",
+        "aspirin",
+        "acetylsalicylsäure"
       ],
-      "dosage": {
-        "summary": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation."
-      },
-      "genericName": "Acetylsalicylsäure",
-      "tradeNames": [
-        "Aspirin i.v."
-      ],
-      "clinicalNotes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend.",
-      "relatedAlgorithmIds": [],
-      "provenance": {
-        "source": "Pilot-Wache-Handbuch (DBRD-Nachführung)",
-        "sourceReference": "Export 2026-03-28 / Medikamentenkapitel ASS i.v.",
-        "approvalStatus": "Approved",
-        "lastReviewedAt": "2026-03-15T09:30:00.000Z"
-      }
+      "reviewStatus": "approved",
+      "openQuestions": [
+        "Darreichungsform in dosageDetail ergänzen, sobald freigegebene Fassung eine konkrete Produktlinie benennt."
+      ]
+    },
+    {
+      "source": "TEMPLATE — PDF-Quelle hier eintragen (z. B. interner Dateiname oder Archiv-ID)",
+      "sourceSection": "TEMPLATE — Kapitel/Abschnitt/PDF-Seitenbereich",
+      "draftId": "med-template-neues-medikament",
+      "label": "TEMPLATE: Handelsname + Darreichungsform",
+      "indication": "TEMPLATE: Kurzindikation nach Leitfaden, ein Satz",
+      "dosageSummary": "TEMPLATE: Erwachsenen-Orientierung oder Verweis „nur nach Handbuch“",
+      "dosageDetail": "",
+      "notes": "",
+      "tags": [],
+      "searchTerms": [],
+      "reviewStatus": "draft",
+      "openQuestions": [
+        "CONTENT_TAG zuweisen (kreislauf, atemwege, neurologie, analgesie, intoxikation, stoffwechsel)",
+        "searchTerms lowercase ergänzen (INN, Abkürzungen, Stärke)",
+        "Querverweise zu Algorithmen erst nach draftId-Abgleich im Bundle pflegen"
+      ]
     }
   ]
 }
