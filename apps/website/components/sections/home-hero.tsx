@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { SurveyCtaLink } from "@/components/links/survey-cta-link";
 import { Container } from "@/components/ui/container";
+import { FeedbackButton } from "@/components/ui/feedback-button";
 import {
   buttonPrimaryClass,
   buttonSecondaryClass,
@@ -45,6 +46,7 @@ export function HomeHero() {
           <Link href={`${routes.home}#mitmachen`} className={buttonSecondaryClass}>
             Mitwirkung &amp; Kontext
           </Link>
+          <FeedbackButton />
         </div>
       </Container>
     </section>

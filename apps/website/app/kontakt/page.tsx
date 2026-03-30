@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ContentCard } from "@/components/ui/content-card";
+import { FeedbackButton } from "@/components/ui/feedback-button";
 import { buttonSecondaryClass } from "@/components/ui/patterns";
 import { SurveyCtaLink } from "@/components/links/survey-cta-link";
 import { SimpleDocument } from "@/components/pages/simple-document";
@@ -65,6 +66,12 @@ export default function KontaktPage() {
             {contactEmail}
           </a>
         </p>
+
+        <h2 className="text-lg font-semibold text-[var(--color-foreground)]">Direktes Feedback</h2>
+        <p>Feedback oder Ideen können direkt per E-Mail gesendet werden.</p>
+        <div className="not-prose mt-4">
+          <FeedbackButton />
+        </div>
 
         <h2 className="text-lg font-semibold text-[var(--color-foreground)]">Weitere Kontaktwege</h2>
         <div className="not-prose grid gap-4 sm:grid-cols-2 sm:gap-5">

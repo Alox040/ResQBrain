@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { FeedbackButton } from "@/components/ui/feedback-button";
 import { footerNav, siteTitle } from "@/lib/routes";
 import { discordUrl, repositoryUrl, tiktokUrl } from "@/lib/site-content";
 
@@ -46,6 +47,9 @@ export function SiteFooter() {
               TikTok
             </a>
           </p>
+          <div className="mt-4">
+            <FeedbackButton />
+          </div>
         </div>
         <nav
           className="flex flex-col gap-1 sm:min-w-[12rem] sm:items-end sm:gap-2"
