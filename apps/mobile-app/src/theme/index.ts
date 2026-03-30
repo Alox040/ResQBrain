@@ -11,8 +11,12 @@ export const COLORS = {
 export const SPACING = {
   screenPadding: 16,
   screenPaddingBottom: 24,
+  /** Kleinstes vertikales/horizontales Raster — z. B. Titel↔Untertitel */
+  gapXs: 4,
   gapSm: 8,
   gapMd: 12,
+  /** Vertikaler Abstand zwischen kritischen Detail-Screen-Blöcken */
+  detailBlockGap: 22,
   radius: 16,
   radiusSm: 12,
 } as const;

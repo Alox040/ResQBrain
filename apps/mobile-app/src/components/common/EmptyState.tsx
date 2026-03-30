@@ -13,6 +13,8 @@ export type EmptyStateProps = {
   /** When true, the block is rendered */
   when: boolean;
   message: string;
+  /** Zweizeiler / nächster Hinweis (ohne neue Datenlogik). */
+  hint?: string;
   imageSource?: ImageSourcePropType;
   /** Primary or secondary action row */
   action?: React.ReactNode;
@@ -22,6 +24,7 @@ export type EmptyStateProps = {
 export function EmptyState({
   when,
   message,
+  hint,
   imageSource,
   action,
   style,
@@ -30,11 +33,13 @@ export function EmptyState({
     return null;
   }
 
+  const a11y = hint ? `${message} ${hint}` : message;
+
   return (
     <View
       style={[styles.wrap, style]}
       accessibilityRole="text"
-      accessibilityLabel={message}
+      accessibilityLabel={a11y}
     >
       {imageSource ? (
         <Image
@@ -45,6 +50,7 @@ export function EmptyState({
         />
       ) : null}
       <Text style={styles.message}>{message}</Text>
+      {hint ? <Text style={styles.hint}>{hint}</Text> : null}
       {action}
     </View>
   );
@@ -67,5 +73,14 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.body,
     textAlign: 'center',
     color: COLORS.textMuted,
+    maxWidth: 320,
+  },
+  hint: {
+    ...TYPOGRAPHY.bodyMuted,
+    textAlign: 'center',
+    fontSize: 14,
+    lineHeight: 20,
+    maxWidth: 320,
+    marginTop: SPACING.gapXs,
   },
 });

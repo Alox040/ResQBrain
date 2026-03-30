@@ -1,13 +1,20 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { EmptyState } from '@/components/common';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  DetailBodyText,
+  DetailCrossRefList,
+  DetailLinkRow,
+  DetailSectionCard,
+  DetailUnavailableRow,
+  EmptyState,
+  WarningCard,
+} from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
 import type { MedicationStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { SPACING } from '@/theme';
 
 type Props = NativeStackScreenProps<
   MedicationStackParamList,
@@ -31,8 +38,6 @@ function warnBrokenRelatedAlgorithmOnce(
     algorithmId,
   );
 }
-
-const LINK_ROW_MIN = 52;
 
 export function MedicationDetailScreen({ navigation, route }: Props) {
   const medication = getMedicationById(route.params.medicationId);
@@ -67,7 +72,11 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     return (
       <ScreenContainer>
         <View style={styles.notFound}>
-          <EmptyState when message="Medikament nicht gefunden oder nicht im Bundle." />
+          <EmptyState
+            when={true}
+            message="Medikament nicht gefunden oder nicht im Bundle."
+            hint="Über die Tab-Leiste zur Suche oder Medikamentenliste wechseln — der Eintrag ist mit dieser ID nicht im lokalen Bundle."
+          />
         </View>
       </ScreenContainer>
     );
@@ -80,36 +89,36 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.card}>
-          <Text style={styles.sectionLabel}>Indikation</Text>
-          <Text style={styles.bodyText}>{medication.indication}</Text>
-        </View>
+        <DetailSectionCard title="Indikation">
+          <DetailBodyText variant="relaxed">{medication.indication}</DetailBodyText>
+        </DetailSectionCard>
 
-        <View style={styles.card}>
-          <Text style={styles.sectionLabel}>Dosierung</Text>
-          <View style={styles.dosageWarningBox} accessibilityRole="text">
-            <View style={styles.dosageTitleRow}>
-              <Ionicons name="warning-outline" size={18} color="#b45309" />
-              <Text style={styles.dosageLabel}>Anwendung & Dosis</Text>
-            </View>
-            <Text style={styles.dosageText}>{medication.dosage}</Text>
-          </View>
-        </View>
+        <DetailSectionCard title="Dosierung" style={styles.dosageSection}>
+          <WarningCard
+            title="Anwendung & Dosis"
+            body={medication.dosage}
+            icon="warning-outline"
+            tone="dosage"
+            accessibilityRole="text"
+          />
+        </DetailSectionCard>
 
         {medication.notes ? (
-          <View style={styles.card}>
-            <Text style={styles.sectionLabel}>Notizen</Text>
-            <Text style={styles.bodyText}>{medication.notes}</Text>
-          </View>
+          <DetailSectionCard
+            title="Notizen"
+            hint="Ergänzende Hinweise — nach Dosierung und Indikation einordnen."
+            tone="soft"
+          >
+            <DetailBodyText variant="relaxed">{medication.notes}</DetailBodyText>
+          </DetailSectionCard>
         ) : null}
 
         {medication.relatedAlgorithmIds.length > 0 ? (
-          <View style={styles.card}>
-            <Text style={styles.sectionLabel}>Verwandte Algorithmen</Text>
-            <Text style={styles.sectionHint}>
-              Direkt zur passenden Schrittfolge springen.
-            </Text>
-            <View style={styles.crossRefList}>
+          <DetailSectionCard
+            title="Verwandte Algorithmen"
+            hint="Öffnet die Schrittfolge im gleichen Bundle."
+          >
+            <DetailCrossRefList>
               {medication.relatedAlgorithmIds.map((algorithmId, index) => {
                 const idOk = isValidContentId(algorithmId);
                 const alg = idOk ? getAlgorithmById(algorithmId) : undefined;
@@ -119,52 +128,35 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
                     'invalid_id',
                   );
                   return (
-                    <View
+                    <DetailUnavailableRow
                       key={`related-alg-unavailable-${index}`}
-                      style={styles.crossRefUnavailableRow}
-                    >
-                      <Text style={styles.crossRefUnavailableText}>
-                        nicht verfügbar
-                      </Text>
-                    </View>
+                      message="Eintrag nicht verfügbar"
+                      detailLine="Ungültige Referenz"
+                    />
                   );
                 }
                 if (!alg) {
                   warnBrokenRelatedAlgorithmOnce(algorithmId, 'missing_item');
                   return (
-                    <View
+                    <DetailUnavailableRow
                       key={`related-alg-missing-${index}-${algorithmId}`}
-                      style={styles.crossRefUnavailableRow}
-                    >
-                      <Text style={styles.crossRefMissingId}>{algorithmId}</Text>
-                      <Text style={styles.crossRefUnavailableText}>
-                        nicht verfügbar
-                      </Text>
-                    </View>
+                      message="Eintrag nicht verfügbar"
+                      detailLine={algorithmId}
+                    />
                   );
                 }
                 return (
-                  <Pressable
+                  <DetailLinkRow
                     key={algorithmId}
+                    contextLabel="Algorithmus"
+                    label={alg.label}
                     onPress={() => openAlgorithm(algorithmId)}
-                    style={({ pressed }) => [
-                      styles.crossRefRow,
-                      pressed && styles.crossRefRowPressed,
-                    ]}
-                    accessibilityRole="button"
                     accessibilityLabel={`Algorithmus ${alg.label} öffnen`}
-                  >
-                    <Text style={styles.crossRefLabel}>{alg.label}</Text>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={22}
-                      color={COLORS.textMuted}
-                    />
-                  </Pressable>
+                  />
                 );
               })}
-            </View>
-          </View>
+            </DetailCrossRefList>
+          </DetailSectionCard>
         ) : null}
       </ScrollView>
     </ScreenContainer>
@@ -176,99 +168,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingBottom: SPACING.screenPaddingBottom,
-    gap: SPACING.screenPadding,
+    paddingBottom: SPACING.screenPaddingBottom + SPACING.gapSm,
+    gap: SPACING.detailBlockGap,
   },
   notFound: {
     flex: 1,
     justifyContent: 'center',
-    minHeight: 280,
-  },
-  card: {
-    ...CARD.base,
-    gap: SPACING.gapMd,
-  },
-  sectionLabel: {
-    ...TYPOGRAPHY.sectionTitle,
-  },
-  sectionHint: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 14,
-    marginTop: -6,
-  },
-  bodyText: {
-    ...TYPOGRAPHY.body,
-    flexShrink: 1,
-    fontSize: 17,
-    lineHeight: 26,
-  },
-  dosageWarningBox: {
-    borderRadius: SPACING.radiusSm,
-    paddingVertical: SPACING.screenPadding,
+    minHeight: 300,
     paddingHorizontal: SPACING.screenPadding,
-    backgroundColor: '#fffbeb',
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-    gap: SPACING.gapSm,
   },
-  dosageTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  dosageLabel: {
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    color: '#b45309',
-  },
-  dosageText: {
-    fontSize: 18,
-    lineHeight: 28,
-    fontWeight: '600',
-    color: '#78350f',
-    flexShrink: 1,
-  },
-  crossRefList: {
-    marginHorizontal: -4,
-    marginTop: 4,
-  },
-  crossRefRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: LINK_ROW_MIN,
-    paddingVertical: 14,
-    paddingHorizontal: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    gap: 8,
-  },
-  crossRefRowPressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-  },
-  crossRefLabel: {
-    ...TYPOGRAPHY.body,
-    flex: 1,
-    flexShrink: 1,
-    color: COLORS.primary,
-    fontWeight: '600',
-    fontSize: 17,
-  },
-  crossRefUnavailableRow: {
-    paddingVertical: 12,
-    paddingHorizontal: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    gap: 4,
-  },
-  crossRefMissingId: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 13,
-  },
-  crossRefUnavailableText: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontStyle: 'italic',
+  dosageSection: {
+    borderWidth: 2,
+    borderColor: '#93c5fd',
+    backgroundColor: '#f8fafc',
   },
 });

@@ -1,20 +1,21 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { Badge, EmptyState, InputText, Tag } from '@/components/common';
+import {
+  Badge,
+  ContentListCard,
+  EmptyState,
+  InputText,
+  SectionHeader,
+  Tag,
+} from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
 import { contentItems } from '@/data/contentIndex';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import type { ContentItem, ContentListItem } from '@/types/content';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { COLORS, SPACING } from '@/theme';
 
 function matchesLookupBundleItem(item: ContentItem, q: string): boolean {
   const haystacks: string[] = [
@@ -36,8 +37,6 @@ function matchesLookupBundleItem(item: ContentItem, q: string): boolean {
 
   return haystacks.some((text) => text.toLowerCase().includes(q));
 }
-
-const RESULT_MIN_HEIGHT = 92;
 
 export function SearchScreen() {
   const [query, setQuery] = useState('');
@@ -83,31 +82,30 @@ export function SearchScreen() {
   return (
     <ScreenContainer>
       <View style={styles.inner}>
-        <Text style={styles.title}>Suche</Text>
-        <Text style={styles.lead}>
-          Volltext im lokalen Bundle — ideal für schnelle Kontexte unter Druck.
-        </Text>
+        <SectionHeader
+          variant="screen"
+          title="Suche"
+          description="Volltext im lokalen Bundle — ideal für schnelle Kontexte unter Druck."
+        />
 
         <View style={styles.searchRow}>
-          <View style={styles.inputWrap}>
-            <InputText
-              value={query}
-              onChangeText={setQuery}
-              placeholder="Name, Indikation oder Stichwort"
-              autoCapitalize="none"
-              autoCorrect={false}
-              returnKeyType="search"
-              containerStyle={styles.inputContainer}
-              style={styles.inputInner}
-              prefixIcon={
-                <Ionicons name="search" size={20} color={COLORS.textMuted} />
-              }
-            />
-          </View>
+          <InputText
+            value={query}
+            onChangeText={setQuery}
+            placeholder="Name, Indikation oder Stichwort"
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="search"
+            containerStyle={styles.inputContainer}
+            style={styles.inputInner}
+            prefixIcon={
+              <Ionicons name="search" size={20} color={COLORS.textMuted} />
+            }
+          />
         </View>
 
         <View style={styles.filterBlock}>
-          <Text style={styles.filterLabel}>Inhalt</Text>
+          <SectionHeader title="Inhalt" size="compact" />
           <View style={styles.filterRow}>
             <Tag
               label="Alle"
@@ -132,47 +130,35 @@ export function SearchScreen() {
 
         {!normalizedQuery ? (
           <EmptyState
-            when
+            when={true}
             message="Tippe mindestens einen Buchstaben, um Treffer aus Medikamenten und Algorithmen zu sehen."
           />
         ) : showNoHits ? (
           <EmptyState
-            when
+            when={true}
             message={`Keine Treffer für „${query.trim()}“. Filter oder Schreibweise prüfen.`}
           />
         ) : showResultsList ? (
           <FlatList
             style={styles.resultsList}
             data={results}
+            keyboardShouldPersistTaps="handled"
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               const isMed = item.kind === 'medication';
               return (
-                <Pressable
+                <ContentListCard
+                  title={item.label}
+                  subtitle={item.subtitle}
                   onPress={() => handlePressResult(item)}
-                  style={({ pressed }) => [
-                    styles.resultRow,
-                    pressed && styles.resultRowPressed,
-                  ]}
-                  accessibilityRole="button"
                   accessibilityLabel={`${isMed ? 'Medikament' : 'Algorithmus'}. ${item.label}`}
-                >
-                  <View style={styles.resultHeader}>
+                  metaStart={
                     <Badge
                       label={isMed ? 'Medikament' : 'Algorithmus'}
                       variant={isMed ? 'primary' : 'muted'}
                     />
-                    <Ionicons
-                      name="chevron-forward"
-                      size={20}
-                      color={COLORS.textMuted}
-                    />
-                  </View>
-                  <Text style={styles.resultTitle}>{item.label}</Text>
-                  <Text style={styles.resultSubtitle} numberOfLines={3}>
-                    {item.subtitle}
-                  </Text>
-                </Pressable>
+                  }
+                />
               );
             }}
             contentContainerStyle={styles.listContent}
@@ -190,17 +176,9 @@ const styles = StyleSheet.create({
     gap: SPACING.gapMd,
     paddingBottom: SPACING.screenPaddingBottom,
   },
-  title: {
-    ...TYPOGRAPHY.title,
-  },
-  lead: {
-    ...TYPOGRAPHY.bodyMuted,
-    marginTop: -4,
-  },
   searchRow: {
-    marginTop: 4,
+    marginTop: SPACING.gapXs,
   },
-  inputWrap: {},
   inputContainer: {
     marginBottom: 0,
   },
@@ -212,16 +190,14 @@ const styles = StyleSheet.create({
   filterBlock: {
     gap: SPACING.gapSm,
   },
-  filterLabel: {
-    ...TYPOGRAPHY.sectionTitle,
-    fontSize: 11,
-  },
   filterRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: SPACING.gapSm,
   },
   filterTag: {
+    minHeight: 44,
+    justifyContent: 'center',
     paddingHorizontal: 14,
     paddingVertical: 10,
   },
@@ -231,30 +207,5 @@ const styles = StyleSheet.create({
   listContent: {
     gap: SPACING.gapMd,
     paddingBottom: SPACING.screenPadding,
-  },
-  resultRow: {
-    minHeight: RESULT_MIN_HEIGHT,
-    ...CARD.base,
-    gap: SPACING.gapSm,
-    paddingVertical: SPACING.screenPadding,
-  },
-  resultRowPressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-    borderColor: '#bfdbfe',
-  },
-  resultHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  resultTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: COLORS.text,
-  },
-  resultSubtitle: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 15,
-    lineHeight: 22,
   },
 });

@@ -1,13 +1,21 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { EmptyState } from '@/components/common';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  DetailBodyText,
+  DetailCrossRefList,
+  DetailLinkRow,
+  DetailSectionCard,
+  DetailStepList,
+  DetailUnavailableRow,
+  EmptyState,
+  WarningCard,
+} from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
 import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { SPACING } from '@/theme';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
@@ -29,9 +37,6 @@ function warnBrokenRelatedMedicationOnce(
   );
 }
 
-const LINK_ROW_MIN = 52;
-const STEP_BADGE = 36;
-
 export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const algorithm = getAlgorithmById(route.params.algorithmId);
   const tabNavigation =
@@ -45,7 +50,11 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     return (
       <ScreenContainer>
         <View style={styles.notFound}>
-          <EmptyState when message="Algorithmus nicht gefunden oder nicht im Bundle." />
+          <EmptyState
+            when={true}
+            message="Algorithmus nicht gefunden oder nicht im Bundle."
+            hint="Über die Tab-Leiste zur Suche oder Algorithmenliste wechseln — der Eintrag ist mit dieser ID nicht im lokalen Bundle."
+          />
         </View>
       </ScreenContainer>
     );
@@ -79,54 +88,40 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
         showsVerticalScrollIndicator={false}
       >
         {algorithm.warnings ? (
-          <View style={styles.warningCard} accessibilityRole="alert">
-            <View style={styles.warningTitleRow}>
-              <Ionicons name="alert-circle" size={22} color="#b45309" />
-              <Text style={styles.warningTitle}>Warnhinweis</Text>
-            </View>
-            <Text style={styles.warningBody}>{algorithm.warnings}</Text>
-          </View>
+          <WarningCard
+            title="Warnhinweis"
+            body={algorithm.warnings}
+            prominent
+          />
         ) : null}
 
-        <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Indikation</Text>
-          <Text style={styles.bodyText}>{algorithm.indication}</Text>
-        </View>
+        <DetailSectionCard title="Indikation">
+          <DetailBodyText variant="relaxed">{algorithm.indication}</DetailBodyText>
+        </DetailSectionCard>
 
-        <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Schritte</Text>
-          <Text style={styles.sectionHint}>
-            Nummerierte Reihenfolge — von oben nach unten abarbeiten.
-          </Text>
-          <View style={styles.steps}>
-            {algorithm.steps.map((step, index) => (
-              <View key={index} style={styles.stepRow}>
-                <View
-                  style={styles.stepNumberBadge}
-                  accessibilityLabel={`Schritt ${index + 1}`}
-                >
-                  <Text style={styles.stepNumberText}>{index + 1}</Text>
-                </View>
-                <Text style={styles.stepBody}>{step.text}</Text>
-              </View>
-            ))}
-          </View>
-        </View>
+        <DetailSectionCard
+          title="Schritte"
+          hint="Reihenfolge einhalten — jeder Block ist ein Arbeitsschritt."
+        >
+          <DetailStepList steps={algorithm.steps} />
+        </DetailSectionCard>
 
         {algorithm.notes ? (
-          <View style={styles.card}>
-            <Text style={styles.sectionTitle}>Notizen</Text>
-            <Text style={styles.bodyText}>{algorithm.notes}</Text>
-          </View>
+          <DetailSectionCard
+            title="Notizen"
+            hint="Zusatz zum Ablauf — unterhalb der Schritte einordnen."
+            tone="soft"
+          >
+            <DetailBodyText variant="relaxed">{algorithm.notes}</DetailBodyText>
+          </DetailSectionCard>
         ) : null}
 
         {algorithm.relatedMedicationIds.length > 0 ? (
-          <View style={styles.card}>
-            <Text style={styles.sectionTitle}>Verwandte Medikamente</Text>
-            <Text style={styles.sectionHint}>
-              Öffnet das Medikament im gleichen Bundle.
-            </Text>
-            <View style={styles.crossRefList}>
+          <DetailSectionCard
+            title="Verwandte Medikamente"
+            hint="Öffnet Dosierung und Hinweise im gleichen Bundle."
+          >
+            <DetailCrossRefList>
               {algorithm.relatedMedicationIds.map((medicationId, index) => {
                 const idOk = isValidContentId(medicationId);
                 const med = idOk ? getMedicationById(medicationId) : undefined;
@@ -136,52 +131,35 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
                     'invalid_id',
                   );
                   return (
-                    <View
+                    <DetailUnavailableRow
                       key={`related-med-unavailable-${index}`}
-                      style={styles.crossRefUnavailableRow}
-                    >
-                      <Text style={styles.crossRefUnavailableText}>
-                        nicht verfügbar
-                      </Text>
-                    </View>
+                      message="Eintrag nicht verfügbar"
+                      detailLine="Ungültige Referenz"
+                    />
                   );
                 }
                 if (!med) {
                   warnBrokenRelatedMedicationOnce(medicationId, 'missing_item');
                   return (
-                    <View
+                    <DetailUnavailableRow
                       key={`related-med-missing-${index}-${medicationId}`}
-                      style={styles.crossRefUnavailableRow}
-                    >
-                      <Text style={styles.crossRefMissingId}>{medicationId}</Text>
-                      <Text style={styles.crossRefUnavailableText}>
-                        nicht verfügbar
-                      </Text>
-                    </View>
+                      message="Eintrag nicht verfügbar"
+                      detailLine={medicationId}
+                    />
                   );
                 }
                 return (
-                  <Pressable
+                  <DetailLinkRow
                     key={medicationId}
+                    contextLabel="Medikament"
+                    label={med.label}
                     onPress={() => openMedication(medicationId)}
-                    style={({ pressed }) => [
-                      styles.medLink,
-                      pressed && styles.medLinkPressed,
-                    ]}
-                    accessibilityRole="button"
                     accessibilityLabel={`Medikament ${med.label} öffnen`}
-                  >
-                    <Text style={styles.medLinkText}>{med.label}</Text>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={22}
-                      color={COLORS.textMuted}
-                    />
-                  </Pressable>
+                  />
                 );
               })}
-            </View>
-          </View>
+            </DetailCrossRefList>
+          </DetailSectionCard>
         ) : null}
       </ScrollView>
     </ScreenContainer>
@@ -193,131 +171,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingBottom: SPACING.screenPaddingBottom,
-    gap: SPACING.screenPadding,
+    paddingBottom: SPACING.screenPaddingBottom + SPACING.gapSm,
+    gap: SPACING.detailBlockGap,
   },
   notFound: {
     flex: 1,
     justifyContent: 'center',
-    minHeight: 280,
-  },
-  warningCard: {
-    borderRadius: SPACING.radius,
-    padding: SPACING.screenPadding,
-    backgroundColor: '#fffbeb',
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-    gap: SPACING.gapSm,
-  },
-  warningTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  warningTitle: {
-    fontSize: 13,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    color: '#b45309',
-  },
-  warningBody: {
-    ...TYPOGRAPHY.body,
-    color: '#78350f',
-    flexShrink: 1,
-    fontSize: 17,
-    lineHeight: 26,
-  },
-  card: {
-    ...CARD.base,
-    gap: SPACING.gapMd,
-  },
-  sectionTitle: {
-    ...TYPOGRAPHY.sectionTitle,
-  },
-  sectionHint: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 14,
-    marginTop: -6,
-  },
-  bodyText: {
-    ...TYPOGRAPHY.body,
-    flexShrink: 1,
-    fontSize: 17,
-    lineHeight: 26,
-  },
-  steps: {
-    gap: SPACING.screenPadding,
-    marginTop: 4,
-  },
-  stepRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: SPACING.gapMd,
-  },
-  stepNumberBadge: {
-    minWidth: STEP_BADGE,
-    height: STEP_BADGE,
-    borderRadius: STEP_BADGE / 2,
-    backgroundColor: COLORS.primaryMutedBg,
-    borderWidth: 1,
-    borderColor: '#bfdbfe',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 2,
-    flexShrink: 0,
-  },
-  stepNumberText: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: COLORS.primary,
-  },
-  stepBody: {
-    ...TYPOGRAPHY.body,
-    flex: 1,
-    flexShrink: 1,
-    fontSize: 17,
-    lineHeight: 26,
-  },
-  crossRefList: {
-    marginHorizontal: -4,
-    marginTop: 4,
-  },
-  medLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: LINK_ROW_MIN,
-    paddingVertical: 14,
-    paddingHorizontal: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    gap: 8,
-  },
-  medLinkPressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-  },
-  medLinkText: {
-    ...TYPOGRAPHY.body,
-    flex: 1,
-    flexShrink: 1,
-    color: COLORS.primary,
-    fontWeight: '600',
-    fontSize: 17,
-  },
-  crossRefUnavailableRow: {
-    paddingVertical: 12,
-    paddingHorizontal: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    gap: 4,
-  },
-  crossRefMissingId: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 13,
-  },
-  crossRefUnavailableText: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontStyle: 'italic',
+    minHeight: 300,
+    paddingHorizontal: SPACING.screenPadding,
   },
 });
