@@ -10,7 +10,7 @@ export const scrollMarginUnderHeader = "scroll-mt-24 md:scroll-mt-[5.5rem]";
 
 /** Eyebrow / Kicker */
 export const eyebrowClass =
-  "text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[var(--color-muted)]";
+  "text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--ems-accent)]";
 
 /** Primäre Sektionsüberschrift (H2) */
 export const sectionTitleClass =
@@ -37,7 +37,7 @@ export const cardBodyClass = "mt-2.5 flex-1 text-sm leading-relaxed text-[var(--
 
 /** Primär-Button (CTA) */
 export const buttonPrimaryClass =
-  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-primary)] px-5 py-2.5 text-sm font-medium text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)] sm:w-auto";
+  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--ems-accent)] px-5 py-2.5 text-sm font-medium text-[var(--color-on-primary)] transition-colors hover:bg-[color:color-mix(in_srgb,var(--ems-accent)_85%,black)] sm:w-auto";
 
 /** Sekundär-Button */
 export const buttonSecondaryClass =

@@ -11,6 +11,12 @@
   --color-on-primary: #f6f8f9;
   --color-surface: #ffffff;
   --color-surface-muted: #e4e9ed;
+  --ems-red: #c63d3d;
+  --ems-blue: #2f5aa8;
+  --ems-accent: #5a4fb2;
+  --ems-red-soft: #f5e9e9;
+  --ems-blue-soft: #e9eef8;
+  --ems-accent-soft: #f0effa;
   /* Ruhiger Band-Kontrast zur Seitenfläche */
   --color-band: color-mix(in srgb, var(--color-surface) 88%, var(--color-surface-muted) 12%);
   --panel-bg: color-mix(in srgb, var(--color-surface-muted) 38%, var(--color-surface) 62%);

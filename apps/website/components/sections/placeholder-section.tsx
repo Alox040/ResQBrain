@@ -17,7 +17,7 @@ export function PlaceholderSection({ id, title, eyebrow, children }: Placeholder
     >
       <Container>
         {eyebrow ? (
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">{eyebrow}</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[color:var(--ems-accent)]">{eyebrow}</p>
         ) : null}
         <h2 className="mt-2 text-xl font-semibold tracking-tight text-[var(--color-foreground)] sm:text-2xl">
           {title}
