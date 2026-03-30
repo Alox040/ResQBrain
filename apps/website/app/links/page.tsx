@@ -44,26 +44,33 @@ export default function LinksPage() {
         }}
       >
         <Container className="pt-[60px]">
-          <div className="mx-auto w-full max-w-md">
-            <header className="text-center">
-              <h1 className="text-[1.625rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:text-[1.875rem]">
+          <div className="mx-auto w-full max-w-[420px] px-4 sm:px-0">
+            <header className="mt-10 mb-6 text-center">
+              <div
+                className="inline-flex flex-col items-center mx-auto max-w-full rounded-lg px-2.5 py-1 mb-2 bg-[var(--color-surface-muted)] text-[0.625rem] sm:text-[0.6875rem] leading-tight gap-0.5"
+                role="group"
+                aria-label="Projektstatus"
+              >
+                <span className="font-medium">Projekt im Aufbau</span>
+                <span className="font-normal">Community-getrieben</span>
+              </div>
+              <h1 className="text-2xl font-semibold leading-tight tracking-tight text-[var(--color-foreground)] sm:text-[1.75rem]">
                 {siteTitle}
               </h1>
-              <p className="mx-auto mt-3 max-w-[22rem] text-[0.9375rem] leading-relaxed text-[var(--color-muted)] sm:text-base">
-                Alles wichtige auf einen Blick
-              </p>
-              <div
-                className="mx-auto mt-5 h-0.5 w-14 rounded-full opacity-90 sm:mt-6"
-                style={{
-                  background:
-                    "linear-gradient(90deg, var(--ems-red), var(--ems-blue))",
-                }}
-                aria-hidden
-              />
+              <div className="mt-1 space-y-1 text-xs leading-snug text-[var(--color-muted)]">
+                <p>
+                  Ich bin Notfallsanitäter und entwickle ResQBrain aus dem
+                  Einsatzalltag.
+                </p>
+                <p>
+                  Ziel: Algorithmen, Medikamente und Einsatzwissen schnell und
+                  offline verfügbar machen.
+                </p>
+              </div>
             </header>
 
             <nav
-              className="mt-12 flex w-full flex-col gap-5 sm:mt-14 sm:gap-6"
+              className="flex w-full flex-col gap-5 sm:gap-6"
               aria-label="ResQBrain Schnelllinks"
             >
               {links.map((item) => {
@@ -89,10 +96,7 @@ export default function LinksPage() {
               })}
             </nav>
 
-            <footer className="mt-14 space-y-2 text-center sm:mt-16">
-              <p className="text-sm font-medium text-[var(--color-foreground)]">
-                Projekt im Aufbau
-              </p>
+            <footer className="mt-14 text-center sm:mt-16">
               <p className="text-sm leading-relaxed text-[var(--color-muted)]">
                 Feedback willkommen
               </p>
