@@ -73,6 +73,17 @@ img {
   width: 100%;
 }
 
+.content-card-lift {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.content-card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border-color: color-mix(in srgb, var(--ems-accent) 40%, transparent);
+}
+
 .section-title-accent::after {
   content: '';
   display: block;
