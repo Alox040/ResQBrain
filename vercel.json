@@ -1,0 +1,7 @@
+{
+  "framework": "nextjs",
+  "rootDirectory": "apps/website",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter @resqbrain/website build",
+  "outputDirectory": "apps/website/.next"
+}
