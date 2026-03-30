@@ -1,0 +1,50 @@
+/**
+ * Gemeinsame Tailwind-Pattern für website-ui8 — ein Stilstandard ohne zusätzliche Logik.
+ */
+
+/** Vertikales Padding für Hero und SectionFrame (Startseite + SimpleDocument angeglichen). */
+export const sectionPaddingY = "py-12 sm:py-[4.25rem] lg:py-[4.75rem]";
+
+/** Abstand Unterkante fixed Header zu Ankerzielen (~h-14 + Puffer). */
+export const scrollMarginUnderHeader = "scroll-mt-24 md:scroll-mt-[5.5rem]";
+
+/** Eyebrow / Kicker */
+export const eyebrowClass =
+  "text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[var(--color-muted)]";
+
+/** Primäre Sektionsüberschrift (H2) */
+export const sectionTitleClass =
+  "mt-3 max-w-[40rem] text-[1.375rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:mt-3.5 sm:text-[1.625rem] sm:leading-tight";
+
+/** Leade / Beschreibung unter Titel */
+export const sectionLeadClass =
+  "prose-rhythm mt-4 max-w-[42rem] text-[0.9375rem] leading-relaxed text-[var(--color-muted)] sm:mt-5 sm:text-base";
+
+export const sectionChildrenClass = "mt-8 sm:mt-10";
+
+/** Flächen-Karte (Features, Zielgruppen, Pilot) */
+export const cardClass =
+  "flex h-full flex-col rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-card)] sm:p-6";
+
+/** Sanftes Panel (z. B. Listenblock Problem/Nutzen); `--panel-bg` in globals.css */
+export const panelClass =
+  "rounded-[var(--radius-card)] border border-[var(--color-border)]/90 bg-[var(--panel-bg)] p-5 sm:p-7";
+
+export const cardTitleClass =
+  "text-[0.9375rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:text-base";
+
+export const cardBodyClass = "mt-2.5 flex-1 text-sm leading-relaxed text-[var(--color-muted)]";
+
+/** Primär-Button (CTA) */
+export const buttonPrimaryClass =
+  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-primary)] px-5 py-2.5 text-sm font-medium text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)] sm:w-auto";
+
+/** Sekundär-Button */
+export const buttonSecondaryClass =
+  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-medium text-[var(--color-foreground)] transition-colors hover:bg-[var(--color-surface-muted)] sm:w-auto";
+
+/** Text-Link (kartensintern) */
+export const linkTextClass =
+  "mt-auto pt-4 text-sm font-medium text-[var(--color-primary)] underline-offset-[3px] transition-colors hover:text-[var(--color-primary-hover)] hover:underline";
+
+export const faqDisclosurePadding = "px-4 py-4 sm:px-6 sm:py-5";

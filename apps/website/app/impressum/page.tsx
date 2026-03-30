@@ -1,33 +1,23 @@
-import { Container } from "@/components/ui/Container";
-import { Section } from "@/components/ui/Section";
-import { impressum } from "@/legal/impressum";
-import { getLegalViewModel, getPublicProfileViewModel } from "@/lib/site-selectors";
+import type { Metadata } from "next";
 
-const publicProfile = getPublicProfileViewModel();
-const legal = getLegalViewModel();
-const impressumLabel =
-  legal.links.find((link) => link.href === "/impressum")?.label ?? "Impressum";
+import { AutoLinkText } from "@/components/legal/auto-link-text";
+import { SimpleDocument } from "@/components/pages/simple-document";
+import { impressumText } from "@/legal/impressum-content";
 
-export const metadata = {
-  title: `${impressumLabel} | ${publicProfile.name}`,
-  robots: "index, follow",
+export const metadata: Metadata = {
+  title: "Impressum",
+  description: "Impressum — ResQBrain.",
 };
-
-const body = impressum.replace(/^Impressum\s*\n+/, "").trim();
 
 export default function ImpressumPage() {
   return (
     <main>
-      <Section>
-        <Container>
-          <article className="mx-auto max-w-2xl">
-            <h1 className="mb-4 text-[clamp(1.75rem,5vw,2.25rem)] font-semibold leading-tight tracking-tight text-foreground md:mb-6">
-              {impressumLabel}
-            </h1>
-            <div className="whitespace-pre-line leading-relaxed text-foreground">{body}</div>
-          </article>
-        </Container>
-      </Section>
+      <SimpleDocument
+        title="Impressum"
+        description="Angaben gemäß den übernommenen Inhalten aus dem bestehenden Projektstand."
+      >
+        <AutoLinkText text={impressumText} />
+      </SimpleDocument>
     </main>
   );
 }

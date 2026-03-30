@@ -1,5 +1,5 @@
 {
-  "name": "@resqbrain/website",
+  "name": "@resqbrain/website-old",
   "private": true,
   "version": "0.1.0",
   "packageManager": "pnpm@10.8.1",
@@ -10,10 +10,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "lint": "next lint",
+    "check:umlauts": "node scripts/check-german-umlauts.js",
+    "validate:routing": "tsx ../../scripts/validate-routing.ts",
+    "validate:isolation": "tsx ../../scripts/validate-content-isolation.ts",
+    "phase11:website": "pnpm run validate:routing && pnpm run validate:isolation && pnpm run build"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
+    "lucide-react": "^1.7.0",
     "next": "^16.2.1",
     "postcss": "^8.5.8",
     "react": "^19.2.4",
@@ -24,6 +29,7 @@
     "@types/node": "25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }

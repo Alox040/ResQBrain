@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
-/*
- * Farbsystem: ruhig, klinisch-neutral.
- * Komponenten: apps/website/components/ui (Button, Card, Section, Container, Badge).
- */
-
+/* UI8: statisches Gerüst — Design-Tokens angelehnt an apps/website, ohne geteilte Assets. */
 :root {
   --color-background: #edf0f3;
   --color-foreground: #171c21;
@@ -13,63 +9,17 @@
   --color-primary: #2a4f5e;
   --color-primary-hover: #214251;
   --color-on-primary: #f6f8f9;
-
   --color-surface: #ffffff;
   --color-surface-muted: #e4e9ed;
-  --color-surface-strong: #252b31;
-  --color-on-strong: #e7eaed;
-
-  --text: var(--color-foreground);
-  --text-muted: var(--color-muted);
-  --line: var(--color-border);
-  --surface: var(--color-surface);
-  --surface-muted: var(--color-surface-muted);
-  --surface-strong: var(--color-surface-strong);
-  --brand: var(--color-primary);
-  --brand-dark: var(--color-primary-hover);
-  --text-on-dark: var(--color-on-strong);
-  --text-caption-color: var(--color-muted);
-
-  --shadow: 0 1px 2px rgba(23, 28, 33, 0.05);
-  --container: 1160px;
-
-  --font-sans: var(--font-inter), "Geist Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-
-  --rhythm-unit: 0.25rem;
-  --rhythm-xxs: 0.5rem;
-  --rhythm-xs: 1rem;
-  --rhythm-sm: 1.5rem;
-  --rhythm-md: 2rem;
-  --rhythm-lg: 3rem;
-  --rhythm-xl: 4rem;
-
-  --text-h1-size: clamp(2.25rem, 4vw + 1rem, 3.375rem);
-  --text-h1-line: 1.08;
-  --text-h1-weight: 600;
-  --text-h1-track: -0.03em;
-
-  --text-h2-size: clamp(1.5rem, 2vw + 0.75rem, 1.875rem);
-  --text-h2-line: 1.2;
-  --text-h2-weight: 600;
-  --text-h2-track: -0.02em;
-
-  --text-h3-size: clamp(1.0625rem, 0.6vw + 0.9rem, 1.1875rem);
-  --text-h3-line: 1.35;
-  --text-h3-weight: 600;
-  --text-h3-track: -0.012em;
-
-  --text-body-size: 1rem;
-  --text-body-line: 1.5;
-  --text-body-weight: 400;
-
-  --text-small-size: 0.9375rem;
-  --text-small-line: 1.5;
-  --text-small-weight: 400;
-
-  --text-caption-size: 0.8125rem;
-  --text-caption-line: 1.45;
-  --text-caption-weight: 400;
+  /* Ruhiger Band-Kontrast zur Seitenfläche */
+  --color-band: color-mix(in srgb, var(--color-surface) 88%, var(--color-surface-muted) 12%);
+  --panel-bg: color-mix(in srgb, var(--color-surface-muted) 38%, var(--color-surface) 62%);
+  --container: 1120px;
+  --radius-card: 0.625rem;
+  --radius-control: 0.5rem;
+  --shadow-card: 0 1px 0 rgba(23, 28, 33, 0.05), 0 2px 8px rgba(23, 28, 33, 0.04);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
 }
 
 @theme inline {
@@ -82,8 +32,6 @@
   --color-on-primary: var(--color-on-primary);
   --color-surface: var(--color-surface);
   --color-surface-muted: var(--color-surface-muted);
-  --color-surface-strong: var(--color-surface-strong);
-  --color-on-strong: var(--color-on-strong);
 }
 
 * {
@@ -97,16 +45,12 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-line);
-  font-weight: var(--text-body-weight);
   color: var(--color-foreground);
   background-color: var(--color-background);
 }
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
 img {
@@ -114,123 +58,28 @@ img {
   display: block;
 }
 
-button,
-a {
-  transition: 180ms ease;
-}
-
 .site-shell {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .site-main {
-  flex: 1 1 auto;
   min-width: 0;
   width: 100%;
 }
 
-header nav a:hover {
-  color: var(--color-foreground);
-}
-
-.site-legal-footer {
-  flex-shrink: 0;
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  max-width: 100%;
-  padding: 0.75rem max(1rem, env(safe-area-inset-right, 0px))
-    calc(0.75rem + env(safe-area-inset-bottom, 0px))
-    max(1rem, env(safe-area-inset-left, 0px));
-  box-sizing: border-box;
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
-  overflow-wrap: anywhere;
-}
-
-@media (min-width: 480px) {
-  .site-legal-footer {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-  }
-}
-
-.site-legal-footer a {
-  color: var(--color-muted);
-  font-size: var(--text-caption-size);
-  line-height: var(--text-caption-line);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.site-legal-footer a:hover {
-  color: var(--color-foreground);
-}
-
-/* Typografie-Hilfsklassen (ohne Section-Wrapper) */
-.type-h1 {
-  font-family: var(--font-sans);
-  font-size: var(--text-h1-size);
-  line-height: var(--text-h1-line);
-  font-weight: var(--text-h1-weight);
-  letter-spacing: var(--text-h1-track);
-}
-
-.type-h2 {
-  font-family: var(--font-sans);
-  font-size: var(--text-h2-size);
-  line-height: var(--text-h2-line);
-  font-weight: var(--text-h2-weight);
-  letter-spacing: var(--text-h2-track);
-}
-
-.type-h3 {
-  font-family: var(--font-sans);
-  font-size: var(--text-h3-size);
-  line-height: var(--text-h3-line);
-  font-weight: var(--text-h3-weight);
-  letter-spacing: var(--text-h3-track);
-}
-
-.type-body {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-size);
-  line-height: var(--text-body-line);
-  font-weight: var(--text-body-weight);
-}
-
-.type-small {
-  font-family: var(--font-sans);
-  font-size: var(--text-small-size);
-  line-height: var(--text-small-line);
-  font-weight: var(--text-small-weight);
-}
-
-.type-caption {
-  font-family: var(--font-sans);
-  font-size: var(--text-caption-size);
-  line-height: var(--text-caption-line);
-  font-weight: var(--text-caption-weight);
-  color: var(--text-caption-color);
-}
-
 .prose-rhythm > * + * {
-  margin-top: var(--rhythm-sm);
+  margin-top: 1rem;
 }
 
-.muted {
-  color: var(--color-muted);
+.prose-rhythm ul {
+  margin: 0.875rem 0 0;
+  padding-left: 1.2rem;
 }
 
-.list-reset {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.prose-rhythm li + li {
+  margin-top: 0.5rem;
+}
+
+.prose-rhythm li {
+  line-height: 1.55;
 }
