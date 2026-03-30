@@ -5,6 +5,7 @@ import { getSurveyPublishedUrl } from "@/lib/public-config";
 export const routes = {
   home: "/",
   kontakt: "/kontakt",
+  links: "/links",
   mitwirkung: "/mitwirkung",
   impressum: "/impressum",
   datenschutz: "/datenschutz",
@@ -28,6 +29,7 @@ export const mainNav = [
   { href: `${routes.home}#zielgruppen`, label: "Zielgruppen" },
   { href: `${routes.home}#faq`, label: "FAQ" },
   { href: routes.kontakt, label: "Kontakt" },
+  { href: routes.links, label: "Links" },
 ] as const;
 
 export const footerNav = [

@@ -1,10 +1,13 @@
+import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { EmptyState } from '@/components/common';
+import { ScreenContainer } from '@/components/layout';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
 import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/ui/theme';
+import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
@@ -14,15 +17,25 @@ function isValidContentId(id: unknown): id is string {
   return typeof id === 'string' && id.trim().length > 0;
 }
 
-function warnBrokenRelatedMedicationOnce(medicationId: string, reason: 'invalid_id' | 'missing_item'): void {
+function warnBrokenRelatedMedicationOnce(
+  medicationId: string,
+  reason: 'invalid_id' | 'missing_item',
+): void {
   if (warnedBrokenRelatedMedicationIds.has(medicationId)) return;
   warnedBrokenRelatedMedicationIds.add(medicationId);
-  console.warn(`[AlgorithmDetail] Related medication not navigable (${reason}):`, medicationId);
+  console.warn(
+    `[AlgorithmDetail] Related medication not navigable (${reason}):`,
+    medicationId,
+  );
 }
+
+const LINK_ROW_MIN = 52;
+const STEP_BADGE = 36;
 
 export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const algorithm = getAlgorithmById(route.params.algorithmId);
-  const tabNavigation = navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
+  const tabNavigation =
+    navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({ title: algorithm?.label ?? 'Algorithmus' });
@@ -30,9 +43,11 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
 
   if (!algorithm) {
     return (
-      <View style={styles.emptyState}>
-        <Text style={styles.emptyTitle}>Algorithmus nicht gefunden</Text>
-      </View>
+      <ScreenContainer>
+        <View style={styles.notFound}>
+          <EmptyState when message="Algorithmus nicht gefunden oder nicht im Bundle." />
+        </View>
+      </ScreenContainer>
     );
   }
 
@@ -57,97 +72,134 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   };
 
   return (
-    <ScrollView
-      style={styles.screen}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-      {algorithm.warnings ? (
-        <View style={styles.warningCard} accessibilityRole="alert">
-          <Text style={styles.warningTitle}>Warnhinweis</Text>
-          <Text style={styles.warningBody}>{algorithm.warnings}</Text>
-        </View>
-      ) : null}
-
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Indikation</Text>
-        <Text style={styles.bodyText}>{algorithm.indication}</Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Schritte</Text>
-        <View style={styles.steps}>
-          {algorithm.steps.map((step, index) => (
-            <View key={index} style={styles.stepRow}>
-              <View style={styles.stepNumberBadge} accessibilityLabel={`Schritt ${index + 1}`}>
-                <Text style={styles.stepNumberText}>{index + 1}</Text>
-              </View>
-              <Text style={styles.stepBody}>{step.text}</Text>
+    <ScreenContainer>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        {algorithm.warnings ? (
+          <View style={styles.warningCard} accessibilityRole="alert">
+            <View style={styles.warningTitleRow}>
+              <Ionicons name="alert-circle" size={22} color="#b45309" />
+              <Text style={styles.warningTitle}>Warnhinweis</Text>
             </View>
-          ))}
-        </View>
-      </View>
+            <Text style={styles.warningBody}>{algorithm.warnings}</Text>
+          </View>
+        ) : null}
 
-      {algorithm.notes ? (
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Notizen</Text>
-          <Text style={styles.bodyText}>{algorithm.notes}</Text>
+          <Text style={styles.sectionTitle}>Indikation</Text>
+          <Text style={styles.bodyText}>{algorithm.indication}</Text>
         </View>
-      ) : null}
 
-      {algorithm.relatedMedicationIds.length > 0 ? (
         <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Verwandte Medikamente</Text>
-          <View style={styles.crossRefList}>
-            {algorithm.relatedMedicationIds.map((medicationId, index) => {
-              const idOk = isValidContentId(medicationId);
-              const med = idOk ? getMedicationById(medicationId) : undefined;
-              if (!idOk) {
-                warnBrokenRelatedMedicationOnce(`#${index}:${String(medicationId)}`, 'invalid_id');
-                return (
-                  <View key={`related-med-unavailable-${index}`} style={styles.crossRefUnavailableRow}>
-                    <Text style={styles.crossRefUnavailableText}>nicht verfügbar</Text>
-                  </View>
-                );
-              }
-              if (!med) {
-                warnBrokenRelatedMedicationOnce(medicationId, 'missing_item');
-                return (
-                  <View key={`related-med-missing-${index}-${medicationId}`} style={styles.crossRefUnavailableRow}>
-                    <Text style={styles.crossRefMissingId}>{medicationId}</Text>
-                    <Text style={styles.crossRefUnavailableText}>nicht verfügbar</Text>
-                  </View>
-                );
-              }
-              return (
-                <Pressable
-                  key={medicationId}
-                  onPress={() => openMedication(medicationId)}
-                  style={({ pressed }) => [styles.medLink, pressed && styles.medLinkPressed]}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Medikament ${med.label} öffnen`}
+          <Text style={styles.sectionTitle}>Schritte</Text>
+          <Text style={styles.sectionHint}>
+            Nummerierte Reihenfolge — von oben nach unten abarbeiten.
+          </Text>
+          <View style={styles.steps}>
+            {algorithm.steps.map((step, index) => (
+              <View key={index} style={styles.stepRow}>
+                <View
+                  style={styles.stepNumberBadge}
+                  accessibilityLabel={`Schritt ${index + 1}`}
                 >
-                  <Text style={styles.medLinkText}>{med.label}</Text>
-                  <Text style={styles.medLinkChevron}>›</Text>
-                </Pressable>
-              );
-            })}
+                  <Text style={styles.stepNumberText}>{index + 1}</Text>
+                </View>
+                <Text style={styles.stepBody}>{step.text}</Text>
+              </View>
+            ))}
           </View>
         </View>
-      ) : null}
-    </ScrollView>
+
+        {algorithm.notes ? (
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>Notizen</Text>
+            <Text style={styles.bodyText}>{algorithm.notes}</Text>
+          </View>
+        ) : null}
+
+        {algorithm.relatedMedicationIds.length > 0 ? (
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>Verwandte Medikamente</Text>
+            <Text style={styles.sectionHint}>
+              Öffnet das Medikament im gleichen Bundle.
+            </Text>
+            <View style={styles.crossRefList}>
+              {algorithm.relatedMedicationIds.map((medicationId, index) => {
+                const idOk = isValidContentId(medicationId);
+                const med = idOk ? getMedicationById(medicationId) : undefined;
+                if (!idOk) {
+                  warnBrokenRelatedMedicationOnce(
+                    `#${index}:${String(medicationId)}`,
+                    'invalid_id',
+                  );
+                  return (
+                    <View
+                      key={`related-med-unavailable-${index}`}
+                      style={styles.crossRefUnavailableRow}
+                    >
+                      <Text style={styles.crossRefUnavailableText}>
+                        nicht verfügbar
+                      </Text>
+                    </View>
+                  );
+                }
+                if (!med) {
+                  warnBrokenRelatedMedicationOnce(medicationId, 'missing_item');
+                  return (
+                    <View
+                      key={`related-med-missing-${index}-${medicationId}`}
+                      style={styles.crossRefUnavailableRow}
+                    >
+                      <Text style={styles.crossRefMissingId}>{medicationId}</Text>
+                      <Text style={styles.crossRefUnavailableText}>
+                        nicht verfügbar
+                      </Text>
+                    </View>
+                  );
+                }
+                return (
+                  <Pressable
+                    key={medicationId}
+                    onPress={() => openMedication(medicationId)}
+                    style={({ pressed }) => [
+                      styles.medLink,
+                      pressed && styles.medLinkPressed,
+                    ]}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Medikament ${med.label} öffnen`}
+                  >
+                    <Text style={styles.medLinkText}>{med.label}</Text>
+                    <Ionicons
+                      name="chevron-forward"
+                      size={22}
+                      color={COLORS.textMuted}
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        ) : null}
+      </ScrollView>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  scroll: {
     flex: 1,
-    backgroundColor: COLORS.bg,
   },
   content: {
-    padding: SPACING.screenPadding,
     paddingBottom: SPACING.screenPaddingBottom,
-    gap: SPACING.gapMd,
+    gap: SPACING.screenPadding,
+  },
+  notFound: {
+    flex: 1,
+    justifyContent: 'center',
+    minHeight: 280,
   },
   warningCard: {
     borderRadius: SPACING.radius,
@@ -155,10 +207,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffbeb',
     borderWidth: 1,
     borderColor: '#f59e0b',
+    gap: SPACING.gapSm,
+  },
+  warningTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
   },
   warningTitle: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '700',
     letterSpacing: 0.6,
     textTransform: 'uppercase',
@@ -168,30 +225,40 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.body,
     color: '#78350f',
     flexShrink: 1,
+    fontSize: 17,
+    lineHeight: 26,
   },
   card: {
     ...CARD.base,
-    gap: 8,
+    gap: SPACING.gapMd,
   },
   sectionTitle: {
     ...TYPOGRAPHY.sectionTitle,
   },
+  sectionHint: {
+    ...TYPOGRAPHY.bodyMuted,
+    fontSize: 14,
+    marginTop: -6,
+  },
   bodyText: {
     ...TYPOGRAPHY.body,
     flexShrink: 1,
+    fontSize: 17,
+    lineHeight: 26,
   },
   steps: {
-    gap: 12,
+    gap: SPACING.screenPadding,
+    marginTop: 4,
   },
   stepRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 12,
+    gap: SPACING.gapMd,
   },
   stepNumberBadge: {
-    minWidth: 32,
-    height: 32,
-    borderRadius: 16,
+    minWidth: STEP_BADGE,
+    height: STEP_BADGE,
+    borderRadius: STEP_BADGE / 2,
     backgroundColor: COLORS.primaryMutedBg,
     borderWidth: 1,
     borderColor: '#bfdbfe',
@@ -201,7 +268,7 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   stepNumberText: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: '700',
     color: COLORS.primary,
   },
@@ -209,16 +276,20 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.body,
     flex: 1,
     flexShrink: 1,
+    fontSize: 17,
+    lineHeight: 26,
   },
   crossRefList: {
     marginHorizontal: -4,
+    marginTop: 4,
   },
   medLink: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 4,
+    minHeight: LINK_ROW_MIN,
+    paddingVertical: 14,
+    paddingHorizontal: 6,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
     gap: 8,
@@ -232,15 +303,11 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     color: COLORS.primary,
     fontWeight: '600',
-  },
-  medLinkChevron: {
-    fontSize: 20,
-    color: COLORS.textMuted,
-    flexShrink: 0,
+    fontSize: 17,
   },
   crossRefUnavailableRow: {
     paddingVertical: 12,
-    paddingHorizontal: 4,
+    paddingHorizontal: 6,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
     gap: 4,
@@ -252,17 +319,5 @@ const styles = StyleSheet.create({
   crossRefUnavailableText: {
     ...TYPOGRAPHY.bodyMuted,
     fontStyle: 'italic',
-  },
-  emptyState: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-    backgroundColor: COLORS.bg,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: COLORS.text,
   },
 });

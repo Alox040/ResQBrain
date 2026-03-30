@@ -7,5 +7,12 @@
       "@/*": ["src/*"]
     }
   },
-  "exclude": ["node_modules", "dist-validation", "dist-validation-ios", ".expo", "design"]
+  "exclude": [
+    "node_modules",
+    "dist-validation",
+    "dist-validation-ios",
+    ".expo",
+    "design",
+    "ui8"
+  ]
 }

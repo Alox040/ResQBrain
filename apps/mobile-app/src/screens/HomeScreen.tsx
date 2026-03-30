@@ -1,111 +1,145 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { Label } from '@/components/common';
+import { ScreenContainer } from '@/components/layout';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/ui/theme';
+import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+
+type QuickItem = {
+  key: string;
+  title: string;
+  subtitle: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  iconColor: string;
+  backgroundColor: string;
+  navigate: () => void;
+};
 
 export function HomeScreen() {
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
+  const quickItems: QuickItem[] = [
+    {
+      key: 'search',
+      title: 'Suche',
+      subtitle: 'Medikamente, Protokolle und Begriffe schnell finden',
+      icon: 'search',
+      iconColor: COLORS.primary,
+      backgroundColor: COLORS.primaryMutedBg,
+      navigate: () => navigation.navigate('Search'),
+    },
+    {
+      key: 'meds',
+      title: 'Medikamente',
+      subtitle: 'Dosierungen, Hinweise und Standardpräparate',
+      icon: 'medical',
+      iconColor: '#0f766e',
+      backgroundColor: '#ccfbf1',
+      navigate: () =>
+        navigation.navigate('MedicationList', { screen: 'MedicationList' }),
+    },
+    {
+      key: 'algo',
+      title: 'Algorithmen',
+      subtitle: 'Strukturierte Abläufe für häufige Notfallsituationen',
+      icon: 'git-network-outline',
+      iconColor: '#9a3412',
+      backgroundColor: '#ffedd5',
+      navigate: () =>
+        navigation.navigate('AlgorithmList', { screen: 'AlgorithmList' }),
+    },
+  ];
+
   return (
-    <ScrollView
-      style={styles.screen}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.heroCard}>
-        <Text style={styles.eyebrow}>ResQBrain</Text>
-        <Text style={styles.title}>Schneller Zugriff auf Notfallwissen</Text>
-        <Text style={styles.subtitle}>
-          Medikamente, Algorithmen und Suche in einer klaren mobilen
-          Oberflaeche.
-        </Text>
-      </View>
-
-      <View style={styles.quickSection}>
-        <Text style={styles.sectionTitle}>Schnellzugriff</Text>
-
-        <Pressable
-          onPress={() => navigation.navigate('Search')}
-          style={({ pressed }) => [
-            styles.largeButton,
-            pressed ? styles.largeButtonPressed : null,
-          ]}
-        >
-          <Text style={styles.buttonTitle}>Suche</Text>
-          <Text style={styles.buttonText}>
-            Medikamente, Protokolle und Begriffe direkt finden
+    <ScreenContainer>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.heroCard}>
+          <Text style={styles.eyebrow}>ResQBrain</Text>
+          <Text style={styles.title}>Schneller Zugriff auf Notfallwissen</Text>
+          <Text style={styles.subtitle}>
+            Medikamente, Algorithmen und Suche in einer klaren mobilen Oberfläche.
           </Text>
-        </Pressable>
-
-        <Pressable
-          onPress={() =>
-            navigation.navigate('MedicationList', { screen: 'MedicationList' })
-          }
-          style={({ pressed }) => [
-            styles.largeButton,
-            styles.secondaryButton,
-            pressed ? styles.largeButtonPressed : null,
-          ]}
-        >
-          <Text style={styles.buttonTitle}>Medikamente</Text>
-          <Text style={styles.buttonText}>
-            Dosierungen, Hinweise und Standardpraeparate uebersichtlich sehen
-          </Text>
-        </Pressable>
-
-        <Pressable
-          onPress={() =>
-            navigation.navigate('AlgorithmList', { screen: 'AlgorithmList' })
-          }
-          style={({ pressed }) => [
-            styles.largeButton,
-            styles.tertiaryButton,
-            pressed ? styles.largeButtonPressed : null,
-          ]}
-        >
-          <Text style={styles.buttonTitle}>Algorithmen</Text>
-          <Text style={styles.buttonText}>
-            Strukturierte Ablaeufe fuer haeufige Notfallsituationen
-          </Text>
-        </Pressable>
-      </View>
-
-      <View style={styles.infoRow}>
-        <View style={styles.infoCard}>
-          <Text style={styles.infoValue}>24/7</Text>
-          <Text style={styles.infoLabel}>schnell lesbar</Text>
         </View>
-        <View style={styles.infoCard}>
-          <Text style={styles.infoValue}>Mobile</Text>
-          <Text style={styles.infoLabel}>optimiertes Layout</Text>
+
+        <View style={styles.sectionBlock}>
+          <Label text="Schnellzugriff" style={styles.sectionHeading} />
+
+          <View style={styles.quickList}>
+            {quickItems.map((item) => (
+              <Pressable
+                key={item.key}
+                accessibilityRole="button"
+                accessibilityLabel={`${item.title}. ${item.subtitle}`}
+                onPress={item.navigate}
+                style={({ pressed }) => [
+                  styles.quickTile,
+                  pressed && styles.quickTilePressed,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.quickIconWrap,
+                    { backgroundColor: item.backgroundColor },
+                  ]}
+                >
+                  <Ionicons
+                    name={item.icon}
+                    size={26}
+                    color={item.iconColor}
+                  />
+                </View>
+                <View style={styles.quickTextCol}>
+                  <Text style={styles.quickTitle}>{item.title}</Text>
+                  <Text style={styles.quickSubtitle}>{item.subtitle}</Text>
+                </View>
+                <Ionicons
+                  name="chevron-forward"
+                  size={22}
+                  color={COLORS.textMuted}
+                />
+              </Pressable>
+            ))}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+
+        <View style={styles.infoRow}>
+          <View style={styles.infoCard}>
+            <Ionicons name="flash-outline" size={24} color={COLORS.primary} />
+            <Text style={styles.infoValue}>Sofort nutzbar</Text>
+            <Text style={styles.infoLabel}>Lesbare Karten, klare Typografie</Text>
+          </View>
+          <View style={styles.infoCard}>
+            <Ionicons name="phone-portrait-outline" size={24} color={COLORS.primary} />
+            <Text style={styles.infoValue}>Touch</Text>
+            <Text style={styles.infoLabel}>Große Ziele, wenig Fehlbedienung</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </ScreenContainer>
   );
 }
 
+const QUICK_TILE_MIN = 88;
+
 const styles = StyleSheet.create({
-  screen: {
+  scroll: {
     flex: 1,
-    backgroundColor: COLORS.bg,
   },
   content: {
-    padding: SPACING.screenPadding,
     paddingBottom: SPACING.screenPaddingBottom,
-    gap: SPACING.gapMd,
+    gap: SPACING.screenPadding,
   },
   heroCard: {
     ...CARD.base,
-    padding: 18,
-    gap: 8,
+    paddingVertical: SPACING.screenPadding,
+    gap: SPACING.gapSm,
   },
   eyebrow: {
     ...TYPOGRAPHY.sectionTitle,
@@ -118,56 +152,68 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.bodyMuted,
     color: '#4b5563',
   },
-  quickSection: {
-    gap: 10,
+  sectionBlock: {
+    gap: SPACING.gapMd,
   },
-  sectionTitle: {
+  sectionHeading: {
+    ...TYPOGRAPHY.sectionTitle,
+    fontSize: 13,
+    marginBottom: 2,
+  },
+  quickList: {
+    gap: SPACING.gapMd,
+  },
+  quickTile: {
+    minHeight: QUICK_TILE_MIN,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.gapMd,
+    ...CARD.base,
+    paddingVertical: 14,
+  },
+  quickTilePressed: {
+    backgroundColor: COLORS.primaryMutedBg,
+    borderColor: '#bfdbfe',
+  },
+  quickIconWrap: {
+    width: 52,
+    height: 52,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  quickTextCol: {
+    flex: 1,
+    gap: 4,
+  },
+  quickTitle: {
+    fontSize: 18,
+    fontWeight: '700',
     color: COLORS.text,
-    fontSize: 22,
-    fontWeight: '700',
   },
-  largeButton: {
-    minHeight: 108,
-    borderRadius: 16,
-    padding: 18,
-    justifyContent: 'space-between',
-    backgroundColor: '#2563eb',
-  },
-  largeButtonPressed: {
-    opacity: 0.9,
-  },
-  secondaryButton: {
-    backgroundColor: '#0f766e',
-  },
-  tertiaryButton: {
-    backgroundColor: '#9a3412',
-  },
-  buttonTitle: {
-    color: '#ffffff',
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  buttonText: {
-    color: '#eff6ff',
-    fontSize: 15,
-    lineHeight: 21,
+  quickSubtitle: {
+    ...TYPOGRAPHY.bodyMuted,
+    fontSize: 14,
+    lineHeight: 20,
   },
   infoRow: {
     flexDirection: 'row',
-    gap: 10,
+    gap: SPACING.gapMd,
   },
   infoCard: {
     flex: 1,
+    gap: SPACING.gapSm,
+    paddingVertical: SPACING.screenPadding,
     ...CARD.base,
-    gap: 6,
   },
   infoValue: {
-    color: COLORS.text,
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: '700',
+    color: COLORS.text,
   },
   infoLabel: {
-    color: COLORS.textMuted,
     fontSize: 13,
+    lineHeight: 18,
+    color: COLORS.textMuted,
   },
 });

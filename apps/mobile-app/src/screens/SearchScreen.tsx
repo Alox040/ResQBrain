@@ -1,23 +1,21 @@
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
   FlatList,
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { Badge, EmptyState, InputText, Tag } from '@/components/common';
+import { ScreenContainer } from '@/components/layout';
 import { contentItems } from '@/data/contentIndex';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import type { ContentItem, ContentListItem } from '@/types/content';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/ui/theme';
+import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
 
-/**
- * Phase-0 lookup: case-insensitive substring on statischen Bundle-Texten.
- * Kein Fuzzy-Matching, keine KI — nur includes() auf Freitextfeldern.
- */
 function matchesLookupBundleItem(item: ContentItem, q: string): boolean {
   const haystacks: string[] = [
     item.label,
@@ -39,9 +37,13 @@ function matchesLookupBundleItem(item: ContentItem, q: string): boolean {
   return haystacks.some((text) => text.toLowerCase().includes(q));
 }
 
+const RESULT_MIN_HEIGHT = 92;
+
 export function SearchScreen() {
   const [query, setQuery] = useState('');
-  const [kindFilter, setKindFilter] = useState<'all' | 'medication' | 'algorithm'>('all');
+  const [kindFilter, setKindFilter] = useState<
+    'all' | 'medication' | 'algorithm'
+  >('all');
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -75,203 +77,184 @@ export function SearchScreen() {
     });
   };
 
+  const showResultsList = normalizedQuery.length > 0 && results.length > 0;
+  const showNoHits = normalizedQuery.length > 0 && results.length === 0;
+
   return (
-    <View style={styles.screen}>
-      <View style={styles.container}>
+    <ScreenContainer>
+      <View style={styles.inner}>
         <Text style={styles.title}>Suche</Text>
+        <Text style={styles.lead}>
+          Volltext im lokalen Bundle — ideal für schnelle Kontexte unter Druck.
+        </Text>
 
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder="Medikament oder Algorithmus suchen"
-          placeholderTextColor="#6b7280"
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-          clearButtonMode="while-editing"
-        />
+        <View style={styles.searchRow}>
+          <View style={styles.inputWrap}>
+            <InputText
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Name, Indikation oder Stichwort"
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="search"
+              containerStyle={styles.inputContainer}
+              style={styles.inputInner}
+              prefixIcon={
+                <Ionicons name="search" size={20} color={COLORS.textMuted} />
+              }
+            />
+          </View>
+        </View>
 
-        <View style={styles.filterRow}>
-          <Pressable
-            onPress={() => setKindFilter('all')}
-            style={[
-              styles.filterChip,
-              kindFilter === 'all' ? styles.filterChipActive : null,
-            ]}
-          >
-            <Text
-              style={[
-                styles.filterChipLabel,
-                kindFilter === 'all' ? styles.filterChipLabelActive : null,
-              ]}
-            >
-              Alle
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => setKindFilter('medication')}
-            style={[
-              styles.filterChip,
-              kindFilter === 'medication' ? styles.filterChipActive : null,
-            ]}
-          >
-            <Text
-              style={[
-                styles.filterChipLabel,
-                kindFilter === 'medication' ? styles.filterChipLabelActive : null,
-              ]}
-            >
-              Medikamente
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => setKindFilter('algorithm')}
-            style={[
-              styles.filterChip,
-              kindFilter === 'algorithm' ? styles.filterChipActive : null,
-            ]}
-          >
-            <Text
-              style={[
-                styles.filterChipLabel,
-                kindFilter === 'algorithm' ? styles.filterChipLabelActive : null,
-              ]}
-            >
-              Algorithmen
-            </Text>
-          </Pressable>
+        <View style={styles.filterBlock}>
+          <Text style={styles.filterLabel}>Inhalt</Text>
+          <View style={styles.filterRow}>
+            <Tag
+              label="Alle"
+              selected={kindFilter === 'all'}
+              onPress={() => setKindFilter('all')}
+              style={styles.filterTag}
+            />
+            <Tag
+              label="Medikamente"
+              selected={kindFilter === 'medication'}
+              onPress={() => setKindFilter('medication')}
+              style={styles.filterTag}
+            />
+            <Tag
+              label="Algorithmen"
+              selected={kindFilter === 'algorithm'}
+              onPress={() => setKindFilter('algorithm')}
+              style={styles.filterTag}
+            />
+          </View>
         </View>
 
         {!normalizedQuery ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyTitle}>Suche starten</Text>
-            <Text style={styles.emptyText}>
-              Gib einen Medikamenten- oder Algorithmusnamen ein.
-            </Text>
-          </View>
-        ) : results.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyTitle}>Keine Treffer</Text>
-          </View>
-        ) : (
+          <EmptyState
+            when
+            message="Tippe mindestens einen Buchstaben, um Treffer aus Medikamenten und Algorithmen zu sehen."
+          />
+        ) : showNoHits ? (
+          <EmptyState
+            when
+            message={`Keine Treffer für „${query.trim()}“. Filter oder Schreibweise prüfen.`}
+          />
+        ) : showResultsList ? (
           <FlatList
+            style={styles.resultsList}
             data={results}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              const kindLabel =
-                item.kind === 'medication' ? 'Medikament' : 'Algorithmus';
-
+              const isMed = item.kind === 'medication';
               return (
                 <Pressable
                   onPress={() => handlePressResult(item)}
-                  style={styles.resultRow}
+                  style={({ pressed }) => [
+                    styles.resultRow,
+                    pressed && styles.resultRowPressed,
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${isMed ? 'Medikament' : 'Algorithmus'}. ${item.label}`}
                 >
-                  <Text style={styles.resultKind}>{kindLabel}</Text>
+                  <View style={styles.resultHeader}>
+                    <Badge
+                      label={isMed ? 'Medikament' : 'Algorithmus'}
+                      variant={isMed ? 'primary' : 'muted'}
+                    />
+                    <Ionicons
+                      name="chevron-forward"
+                      size={20}
+                      color={COLORS.textMuted}
+                    />
+                  </View>
                   <Text style={styles.resultTitle}>{item.label}</Text>
-                  <Text style={styles.resultSubtitle}>{item.subtitle}</Text>
+                  <Text style={styles.resultSubtitle} numberOfLines={3}>
+                    {item.subtitle}
+                  </Text>
                 </Pressable>
               );
             }}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
           />
-        )}
+        ) : null}
       </View>
-    </View>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  inner: {
     flex: 1,
-    backgroundColor: COLORS.bg,
-  },
-  container: {
-    flex: 1,
-    padding: SPACING.screenPadding,
-    paddingBottom: SPACING.screenPaddingBottom,
     gap: SPACING.gapMd,
+    paddingBottom: SPACING.screenPaddingBottom,
   },
   title: {
     ...TYPOGRAPHY.title,
   },
-  input: {
-    minHeight: 52,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: SPACING.radius,
-    paddingHorizontal: SPACING.screenPadding,
-    fontSize: 15,
-    color: COLORS.text,
-    backgroundColor: COLORS.surface,
-  },
-  emptyState: {
-    paddingVertical: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: SPACING.radius,
-    paddingHorizontal: SPACING.screenPadding,
-  },
-  emptyTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: COLORS.text,
-    marginBottom: 6,
-  },
-  emptyText: {
+  lead: {
     ...TYPOGRAPHY.bodyMuted,
-    textAlign: 'center',
+    marginTop: -4,
+  },
+  searchRow: {
+    marginTop: 4,
+  },
+  inputWrap: {},
+  inputContainer: {
+    marginBottom: 0,
+  },
+  inputInner: {
+    borderRadius: SPACING.radius,
+    paddingVertical: 14,
+    fontSize: 16,
+  },
+  filterBlock: {
+    gap: SPACING.gapSm,
+  },
+  filterLabel: {
+    ...TYPOGRAPHY.sectionTitle,
+    fontSize: 11,
   },
   filterRow: {
     flexDirection: 'row',
-    gap: 8,
+    flexWrap: 'wrap',
+    gap: SPACING.gapSm,
   },
-  filterChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    backgroundColor: COLORS.surface,
+  filterTag: {
+    paddingHorizontal: 14,
+    paddingVertical: 10,
   },
-  filterChipActive: {
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.primaryMutedBg,
-  },
-  filterChipLabel: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#4b5563',
-  },
-  filterChipLabelActive: {
-    color: '#1d4ed8',
+  resultsList: {
+    flex: 1,
   },
   listContent: {
-    gap: 10,
+    gap: SPACING.gapMd,
+    paddingBottom: SPACING.screenPadding,
   },
   resultRow: {
-    minHeight: 84,
+    minHeight: RESULT_MIN_HEIGHT,
     ...CARD.base,
-    justifyContent: 'center',
+    gap: SPACING.gapSm,
+    paddingVertical: SPACING.screenPadding,
   },
-  resultKind: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: COLORS.primary,
-    textTransform: 'uppercase',
-    marginBottom: 6,
+  resultRowPressed: {
+    backgroundColor: COLORS.primaryMutedBg,
+    borderColor: '#bfdbfe',
+  },
+  resultHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   resultTitle: {
-    fontSize: 19,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '700',
     color: COLORS.text,
   },
   resultSubtitle: {
     ...TYPOGRAPHY.bodyMuted,
-    color: '#4b5563',
-    marginTop: 6,
+    fontSize: 15,
+    lineHeight: 22,
   },
 });
