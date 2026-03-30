@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
 import { footerNav, siteTitle } from "@/lib/routes";
-import { repositoryUrl } from "@/lib/site-content";
+import { discordUrl, repositoryUrl, tiktokUrl } from "@/lib/site-content";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -24,6 +24,26 @@ export function SiteFooter() {
               className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
             >
               Projekt auf GitHub
+            </a>
+          </p>
+          <p className="mt-2 text-sm">
+            <a
+              href={discordUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
+            >
+              Discord
+            </a>
+          </p>
+          <p className="mt-2 text-sm">
+            <a
+              href={tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
+            >
+              TikTok
             </a>
           </p>
         </div>

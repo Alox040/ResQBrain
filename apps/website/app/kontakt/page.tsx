@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { ContentCard } from "@/components/ui/content-card";
+import { buttonSecondaryClass } from "@/components/ui/patterns";
 import { SurveyCtaLink } from "@/components/links/survey-cta-link";
 import { SimpleDocument } from "@/components/pages/simple-document";
 import { hasPublishedSurveyUrl } from "@/lib/public-config";
 import { routes } from "@/lib/routes";
-import { contactEmail, repositoryUrl } from "@/lib/site-content";
+import { contactEmail, discordUrl, repositoryUrl, tiktokUrl } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -63,6 +65,40 @@ export default function KontaktPage() {
             {contactEmail}
           </a>
         </p>
+
+        <h2 className="text-lg font-semibold text-[var(--color-foreground)]">Weitere Kontaktwege</h2>
+        <div className="not-prose grid gap-4 sm:grid-cols-2 sm:gap-5">
+          <ContentCard
+            title="Discord Community"
+            footer={
+              <a
+                href={discordUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonSecondaryClass}
+              >
+                Discord beitreten
+              </a>
+            }
+          >
+            Austausch, Feedback und Diskussion direkt in der ResQBrain Community.
+          </ContentCard>
+          <ContentCard
+            title="TikTok"
+            footer={
+              <a
+                href={tiktokUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonSecondaryClass}
+              >
+                @WiWaWunderbar folgen
+              </a>
+            }
+          >
+            Updates, Fortschritt und Einblicke zum Projekt.
+          </ContentCard>
+        </div>
 
         <h2 className="text-lg font-semibold text-[var(--color-foreground)]">Postanschrift</h2>
         <p>
