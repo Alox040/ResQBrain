@@ -18,10 +18,18 @@ export function HomeHero() {
     <section
       id="top"
       className={`${scrollMarginUnderHeader} border-b border-[var(--color-border)]/80 bg-[var(--color-surface)] ${sectionPaddingY}`}
+      style={{
+        background: `linear-gradient(180deg, color-mix(in srgb, var(--ems-blue-soft) 60%, transparent), transparent 60%)`,
+      }}
     >
       <Container>
         <p className={eyebrowClass}>ResQBrain · in Arbeit</p>
-        <h1 className="mt-3 max-w-[40rem] text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:mt-3.5 sm:text-[2.125rem] sm:leading-tight">
+        <h1
+          className="mt-3 max-w-[40rem] text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:mt-3.5 sm:text-[2.125rem] sm:leading-tight"
+          style={{
+            backgroundImage: `radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--ems-accent-soft) 50%, transparent), transparent 60%)`,
+          }}
+        >
           Orientierungshilfe für Rettungsdienst und Notfallmedizin — organisationssicher denkbar
         </h1>
         <p className="mt-5 max-w-[42rem] text-[0.9375rem] leading-relaxed text-[var(--color-muted)] sm:text-base sm:leading-relaxed">

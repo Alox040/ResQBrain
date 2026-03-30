@@ -73,6 +73,26 @@ img {
   width: 100%;
 }
 
+.section-title-accent::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--ems-accent);
+  opacity: 0.4;
+  margin-top: 0.5rem;
+}
+
+.btn-primary-lift {
+  box-shadow: 0 6px 14px color-mix(in srgb, var(--ems-accent) 30%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--ems-accent) 40%, transparent);
+}
+
 .prose-rhythm > * + * {
   margin-top: 1rem;
 }

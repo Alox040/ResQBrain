@@ -26,13 +26,29 @@ function MenuIcon({ open }: { open: boolean }) {
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-border)]/80 bg-[var(--color-surface)]/92 backdrop-blur-md supports-[backdrop-filter]:bg-[var(--color-surface)]/88">
+    <header
+      className="sticky top-0 z-50 backdrop-blur"
+      style={{
+        background: "color-mix(in srgb, white 85%, transparent)",
+        borderBottom: "1px solid color-mix(in srgb, black 8%, transparent)",
+        boxShadow: scrolled ? "0 4px 12px rgba(0,0,0,0.05)" : "none",
+        transition: "box-shadow 0.2s ease",
+      }}
+    >
       <Container className="flex min-h-14 items-center justify-between gap-3 py-2 sm:min-h-16 sm:gap-4 sm:py-0">
         <Link
           href={routes.home}

@@ -29,6 +29,7 @@ export function FeaturesOverviewSection() {
     <SectionFrame
       id="funktionen"
       variant="band"
+      even
       eyebrow="Funktionen"
       title="Was ResQBrain langfristig leisten soll"
       description={

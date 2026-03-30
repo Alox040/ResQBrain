@@ -14,7 +14,7 @@ export const eyebrowClass =
 
 /** Primäre Sektionsüberschrift (H2) */
 export const sectionTitleClass =
-  "mt-3 max-w-[40rem] text-[1.375rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:mt-3.5 sm:text-[1.625rem] sm:leading-tight";
+  "section-title-accent mt-1 mb-2 max-w-[40rem] text-[1.375rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:text-[1.625rem] sm:leading-tight";
 
 /** Leade / Beschreibung unter Titel */
 export const sectionLeadClass =
@@ -37,7 +37,7 @@ export const cardBodyClass = "mt-2.5 flex-1 text-sm leading-relaxed text-[var(--
 
 /** Primär-Button (CTA) */
 export const buttonPrimaryClass =
-  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--ems-accent)] px-5 py-2.5 text-sm font-medium text-[var(--color-on-primary)] transition-colors hover:bg-[color:color-mix(in_srgb,var(--ems-accent)_85%,black)] sm:w-auto";
+  "btn-primary-lift inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--ems-accent)] px-5 py-2.5 text-sm font-medium text-[var(--color-on-primary)] hover:bg-[color:color-mix(in_srgb,var(--ems-accent)_85%,black)] sm:w-auto";
 
 /** Sekundär-Button */
 export const buttonSecondaryClass =

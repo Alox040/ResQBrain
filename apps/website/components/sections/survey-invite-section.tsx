@@ -12,6 +12,7 @@ export function SurveyInviteSection() {
     <SectionFrame
       id="mitmachen"
       variant="band"
+      even
       eyebrow="Mitmachen"
       title="Ihre Erfahrung zählt — Kurzumfrage und Rückmeldungen"
       description={

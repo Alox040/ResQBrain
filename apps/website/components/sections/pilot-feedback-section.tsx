@@ -13,6 +13,7 @@ export function PilotFeedbackSection() {
     <SectionFrame
       id="pilot-feedback"
       variant="band"
+      even
       eyebrow="Kooperation"
       title="Pilotpartnerschaft, Feedback und Kontakt"
       description={
