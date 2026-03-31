@@ -61,7 +61,7 @@ ResQBrain/
 
 | Ordner | Zweck (nachweisbar) |
 |--------|----------------------|
-| **apps/mobile-app** | Expo-App: Navigation, Screens, Lookup in `src/lookup`, `src/data` |
+| **apps/mobile-app** | Expo-App: Navigation, Screens, Lookup in `src/lookup`, `src/data`, einsatznahe Features (Favoriten, Verlauf, Dosisrechner, Vitalwerte) |
 | **apps/website** | Next.js-Website: `app/`, `components/`, `lib/`; Ziel von Root-`pnpm build` |
 | **apps/website-old** | Frühere Website-Variante u. a. mit `phase11:website`, `vercel.json` + `ignoreCommand` |
 | **packages/domain** | Domänenlogik: Content, Governance, Versioning, Release, Lifecycle, Audit, Survey, Lookup-Entities |

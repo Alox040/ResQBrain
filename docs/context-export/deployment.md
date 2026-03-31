@@ -23,6 +23,8 @@
 | Repo-Root | `pnpm build` | `pnpm --filter @resqbrain/website build` → `next build` |
 | Repo-Root | `pnpm build:website` | identisch zu `build` |
 | Repo-Root | `pnpm render:website-status` | `tsx scripts/status/render-website-status.ts` |
+| Repo-Root | `pnpm mobile:verify` | `pnpm --filter resqbrain-mobile run verify:local` — Mobile: Typecheck, Nav-Checks, Android-Export laut Paket-Skripten |
+| Repo-Root | `pnpm mobile:verify:doctor` | `pnpm --filter resqbrain-mobile run verify:expo-doctor` — `expo-doctor` für das Mobile-Paket |
 | Repo-Root | `pnpm dbrd:normalize` / `dbrd:normalize:medications` / `dbrd:normalize:algorithms` | `tsx scripts/dbrd/index.ts` (Teilmengen) |
 | Repo-Root | `pnpm dbrd:validate-normalized` | DBRD-Normalisierung validieren |
 | Repo-Root | `pnpm dbrd:build-lookup-seed` | Lookup-Seed aus Pipeline erzeugen |

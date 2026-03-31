@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { SectionFrame } from "@/components/sections/section-frame";
+import { PatternBackground } from "@/components/ui/pattern-background";
 import { faqDisclosurePadding } from "@/components/ui/patterns";
 import { routes } from "@/lib/routes";
 
@@ -57,24 +58,33 @@ export function FaqSection() {
         </p>
       }
     >
-      <div className="max-w-[42rem] overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)]/90 bg-[var(--color-surface)] shadow-[var(--shadow-card)]">
-        {faqItems.map((item) => (
-          <details
-            key={item.q}
-            className={`group border-b border-[var(--color-border)]/70 last:border-b-0 ${faqDisclosurePadding}`}
-          >
-            <summary className="flex cursor-pointer list-none items-start gap-3 text-[0.9375rem] font-medium leading-snug text-[var(--color-foreground)] marker:content-none min-[360px]:min-h-11 [&::-webkit-details-marker]:hidden">
-              <span className="min-w-0 flex-1 pr-1 pt-0.5">{item.q}</span>
-              <span
-                className="mt-0.5 inline-flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-md border border-[var(--color-border)]/80 bg-[var(--color-surface-muted)]/40 text-[var(--color-muted)] tabular-nums group-open:rotate-45"
-                aria-hidden
-              >
-                +
-              </span>
-            </summary>
-            <div className="mt-3 text-sm leading-relaxed text-[var(--color-muted)] sm:mt-4">{item.a}</div>
-          </details>
-        ))}
+      <div className="relative max-w-[42rem]">
+        <PatternBackground
+          pattern="pattern-07.svg"
+          opacity={0.08}
+          position="top-right"
+          size="sm"
+          className="translate-x-1/3 -translate-y-1/3"
+        />
+        <div className="relative z-10 overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)]/90 bg-[var(--color-surface)] shadow-[var(--shadow-card)]">
+          {faqItems.map((item) => (
+            <details
+              key={item.q}
+              className={`group border-b border-[var(--color-border)]/70 last:border-b-0 ${faqDisclosurePadding}`}
+            >
+              <summary className="flex cursor-pointer list-none items-start gap-3 text-[0.9375rem] font-medium leading-snug text-[var(--color-foreground)] marker:content-none min-[360px]:min-h-11 [&::-webkit-details-marker]:hidden">
+                <span className="min-w-0 flex-1 pr-1 pt-0.5">{item.q}</span>
+                <span
+                  className="mt-0.5 inline-flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-md border border-[var(--color-border)]/80 bg-[var(--color-surface-muted)]/40 text-[var(--color-muted)] tabular-nums group-open:rotate-45"
+                  aria-hidden
+                >
+                  +
+                </span>
+              </summary>
+              <div className="mt-3 text-sm leading-relaxed text-[var(--color-muted)] sm:mt-4">{item.a}</div>
+            </details>
+          ))}
+        </div>
       </div>
     </SectionFrame>
   );

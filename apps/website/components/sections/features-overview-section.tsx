@@ -1,5 +1,6 @@
 import { SectionFrame } from "@/components/sections/section-frame";
 import { ContentCard } from "@/components/ui/content-card";
+import { PatternBackground } from "@/components/ui/pattern-background";
 
 const items = [
   {
@@ -39,13 +40,22 @@ export function FeaturesOverviewSection() {
         </p>
       }
     >
-      <ul className="grid list-none gap-4 p-0 sm:grid-cols-2 sm:gap-5">
-        {items.map((item) => (
-          <li key={item.title} className="min-w-0">
-            <ContentCard title={item.title}>{item.body}</ContentCard>
-          </li>
-        ))}
-      </ul>
+      <div className="relative">
+        <PatternBackground
+          pattern="pattern-07.svg"
+          opacity={0.08}
+          position="top-right"
+          size="sm"
+          className="translate-x-1/3 -translate-y-1/3"
+        />
+        <ul className="relative z-10 grid list-none gap-4 p-0 sm:grid-cols-2 sm:gap-5">
+          {items.map((item) => (
+            <li key={item.title} className="min-w-0">
+              <ContentCard title={item.title}>{item.body}</ContentCard>
+            </li>
+          ))}
+        </ul>
+      </div>
     </SectionFrame>
   );
 }

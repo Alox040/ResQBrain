@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Container } from "@/components/ui/container";
+import { PatternBackground } from "@/components/ui/pattern-background";
 import { badgeAccentClass, scrollMarginUnderHeader } from "@/components/ui/patterns";
 import { links } from "@/data/links";
 import { siteTitle } from "@/lib/routes";
@@ -32,7 +33,7 @@ export default function LinksPage() {
   return (
     <main className="min-w-0 flex-1">
       <section
-        className={`${scrollMarginUnderHeader} flex flex-col border-b border-[var(--color-border)]/80 pb-16 sm:pb-20 lg:pb-24`}
+        className={`${scrollMarginUnderHeader} relative flex flex-col overflow-hidden border-b border-[var(--color-border)]/80 pb-16 sm:pb-20 lg:pb-24`}
         style={{
           background: [
             "linear-gradient(150deg,",
@@ -43,7 +44,14 @@ export default function LinksPage() {
           ].join(" "),
         }}
       >
-        <Container className="pt-[60px]">
+        <PatternBackground
+          pattern="pattern-08.svg"
+          opacity={0.1}
+          position="top-right"
+          size="lg"
+          className="translate-x-1/4 -translate-y-1/4"
+        />
+        <Container className="relative z-10 pt-[60px]">
           <div className="mx-auto w-full max-w-[420px] px-4 sm:px-0">
             <header className="mt-10 mb-6 text-center">
               <div

@@ -22,9 +22,10 @@
 
 **Datei:** `apps/mobile-app/src/navigation/AppNavigator.tsx`
 
-- **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `MedicationList`, `AlgorithmList`.
-- **Medikament-Stack:** `MedicationList` → `MedicationDetail` (Param: `medicationId`).
-- **Algorithmus-Stack:** `AlgorithmList` → `AlgorithmDetail` (Param: `algorithmId`).
+- **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `MedicationTab`, `AlgorithmTab`.
+- **Home-Stack (`HomeStackParamList`):** `HomeMain` (Start/Home) und `VitalReference` (Screen für Vitalwerte-Referenzen).
+- **Medikament-Stack (`MedicationStackParamList`):** `MedicationListScreen` → `MedicationDetail` (Param: `medicationId`) → `DoseCalculator`.
+- **Algorithmus-Stack (`AlgorithmStackParamList`):** `AlgorithmListScreen` → `AlgorithmDetail` (Param: `algorithmId`).
 
 **Einstieg:** `App.tsx` — `NavigationContainer` + `AppNavigator`.
 

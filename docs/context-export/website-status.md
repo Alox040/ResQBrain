@@ -46,7 +46,7 @@ Reihenfolge laut `components/home/home-page-sections.tsx`:
 
 ## CTA / Buttons
 
-- **Umfrage-Bereich:** Text und Buttons in `SurveyInviteSection` (siehe oben); Kontakt über `Link` zu `/kontakt`.
+- **Umfrage-Bereich:** Text und Buttons in `SurveyInviteSection` (siehe oben); primärer CTA führt über `SurveyCtaLink` zur von `resolveSurveyLink()` bestimmten Ziel-URL; sekundärer CTA verlinkt nach `/kontakt`.
 - **Weitere CTAs:** abhängig von den jeweiligen Section-Komponenten (nicht jede Section hier einzeln zitiert).
 
 ## Deployment (Vercel)

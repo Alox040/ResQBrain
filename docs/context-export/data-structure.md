@@ -27,14 +27,15 @@ Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase
 
 ### Umfang der Seed-Dateien (gezählt, Export)
 
-- `medications.json`: **2** Objekte mit `"id"`.
-- `algorithms.json`: **2** Objekte mit `"id"`.
+- `medications.json`: **9** Objekte mit `"id"`.
+- `algorithms.json`: **9** Objekte mit `"id"`.
 
 ### Pipeline (Repo)
 
 - **`data/schemas/dbrd-normalized.schema.ts`** — internes Normalisierungsmodell (Provenance, `NormalizedAlgorithmStep` mit `order`/`text`, Freigabestatus-Werte parallel zur Domain, ohne Org-/Audit-Objekte).
 - **`data/schemas/dbrd-normalized.examples.json`** — Beispielinstanzen.
 - **`scripts/dbrd/`** — Extraktion/Normalisierung/Validierung und `build-lookup-seed` (Mapping → `data/lookup-seed/`); Root-Scripts `pnpm dbrd:*`.
+- **Dosisrechner-Hinweis:** Einige Medikationseinträge enthalten mg/µg-pro-kg-Hinweise im Freitext (`dosage`), die von `DoseCalculatorScreen` via `parseDosageCalculatorSpec` interpretiert werden; das Lookup-Schema selbst erzwingt jedoch weiterhin nur Freitextfelder, keine strukturierte Dosierungslogik.
 
 ---
 

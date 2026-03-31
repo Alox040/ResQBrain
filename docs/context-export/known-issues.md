@@ -4,10 +4,8 @@ Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Syst
 
 ## Dokumentation vs. Code
 
-- **`docs/status/PROJECT_STATUS.md` (28. März 2026):** Block 1 (Seed, Loader, `contentIndex`) als Code noch offen — **im Repo vorhanden:** `loadLookupBundle.ts`, `contentIndex.ts`, Screens.
-- **`docs/roadmap/PROJECT_ROADMAP.md`:** Phase-0-Punkte Suche/Details/Seed teils `[ ]`, obwoil die zugehörigen Implementierungen in `apps/mobile-app/` existieren.
-- **`README.md`:** Website-Routen-Tabelle und „fehlende MVP-Screens“ passen nicht zum Build-Output (8 statische Routen inkl. `/kontakt`, `/links`, `/mitwirkung`) und zur Mobile-App.
-- **`README.md` (Risiken):** Erwähnung Platzhalter-Umfrage — **`apps/website/lib/public-config.ts`** enthält konkrete Microsoft-Forms-URLs.
+- **Roadmap/Status/README:** Stand 31. März 2026 sind `PROJECT_ROADMAP.md`, `PROJECT_STATUS.md` und README weitgehend an den Mobile-/Website-Code angepasst (Lookup-Funktionen, Einsatzfeatures, Routen). Restabweichungen können bei künftigen Änderungen entstehen und erfordern erneuten Export/Abgleich.
+-- **Umfrage-Doku vs. Code:** README/Risiken erwähnen weiterhin, dass Umfrage-URLs Platzhalter sein können; im Code (`apps/website/lib/public-config.ts`) sind konkrete Microsoft-Forms-Links sowie eine Environment-Override-Strategie hinterlegt.
 
 ## Repository-Struktur / Website
 
