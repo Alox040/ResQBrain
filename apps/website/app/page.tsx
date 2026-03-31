@@ -1,9 +1,23 @@
-import { HomePageSections } from "@/components/home/home-page-sections";
+import { ContactCtaSection } from "@/components/sections/contact-cta-section";
+import { AudiencesSection } from "@/components/sections/audiences-section";
+import { BenefitsSection } from "@/components/sections/benefits-section";
+import { FaqSection } from "@/components/sections/faq-section";
+import { HeroSection } from "@/components/sections/hero-section";
+import { ParticipationSection } from "@/components/sections/participation-section";
+import { ProblemSection } from "@/components/sections/problem-section";
+import { ProjectStatusSection } from "@/components/sections/project-status-section";
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <main>
-      <HomePageSections />
-    </main>
+    <>
+      <HeroSection />
+      <ProblemSection />
+      <BenefitsSection />
+      <AudiencesSection />
+      <ProjectStatusSection />
+      <ParticipationSection />
+      <FaqSection />
+      <ContactCtaSection />
+    </>
   );
 }

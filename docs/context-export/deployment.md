@@ -4,6 +4,7 @@
 
 - **Repository-Root:** `vercel.json` — `framework: "nextjs"`, `rootDirectory: "apps/website"`, `installCommand: "pnpm install"`, `buildCommand: "pnpm --filter @resqbrain/website build"`, `outputDirectory: "apps/website/.next"`.
 - **App-Ordner:** `apps/website/vercel.json` — `framework`, `installCommand`, `buildCommand` (kein `rootDirectory`, kein `ignoreCommand` in dieser Datei).
+- **Zusatz-App:** `apps/website-v2/vercel.json` mit `buildCommand: "pnpm --filter @resqbrain/website-v2 build"`.
 
 ## Vercel (Legacy-Kopie)
 
@@ -30,6 +31,7 @@
 | Repo-Root | `pnpm dbrd:build-lookup-seed` | Lookup-Seed aus Pipeline erzeugen |
 | Repo-Root | `pnpm dbrd:build` | `validate-normalized` + `build-lookup-seed` |
 | `apps/website` | `pnpm dev` / `build` / `start` / `typecheck` | Next.js / tsc (Skripte laut `apps/website/package.json`) |
+| `apps/website-v2` | `pnpm dev` / `build` / `start` / `typecheck` | Next.js / tsc (separates Paket) |
 | `apps/website-old` | `pnpm run phase11:website` | `validate:routing` + `validate:isolation` + `build` (laut dieser Package-Datei) |
 | `apps/mobile-app` | `pnpm start` | `expo start` |
 | `apps/mobile-app` | `pnpm run export:android` / `export:ios` | `expo export` → `dist-validation` / `dist-validation-ios` |
@@ -50,6 +52,7 @@
 ## Ignore Steps (Zusammenfassung)
 
 - **Vercel:** Branch-Whitelist nur wenn `ignoreCommand` gesetzt ist — für **`apps/website`** in-repo **nicht** gesetzt; für **`apps/website-old`** gesetzt.
+- **Website-v2:** ebenfalls kein `ignoreCommand` in der App-Konfiguration.
 
 ## Verifizierte lokale Läufe (31. März 2026)
 
@@ -61,4 +64,4 @@
 ## Bekannte Deploy-/Struktur-Themen (faktenbasiert)
 
 - **Root `pnpm build` baut nicht die Mobile-App** — nur `@resqbrain/website`.
-- Mehrere Website-Bäume: kanonisch für Root-Build ist **`apps/website`**; **`apps/website-old`** und Root-`app/`/`components/` sind zusätzlich vorhanden.
+- Mehrere Website-Bäume: kanonisch fuer Root-Build ist **`apps/website`**; **`apps/website-v2`**, **`apps/website-old`** und Root-`app/`/`components/` sind zusaetzlich vorhanden.

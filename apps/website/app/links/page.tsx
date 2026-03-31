@@ -1,117 +1,77 @@
-import type { Metadata } from "next";
-
+import { ButtonLink } from "@/components/ui/button-link";
+import { CardTitle } from "@/components/ui/card-title";
 import { Container } from "@/components/ui/container";
-import { PatternBackground } from "@/components/ui/pattern-background";
-import { badgeAccentClass, scrollMarginUnderHeader } from "@/components/ui/patterns";
-import { links } from "@/data/links";
-import { siteTitle } from "@/lib/routes";
-
-const linksPageDescription =
-  "Alle wichtigen Links zum ResQBrain Projekt – Discord, Umfragen, Updates und Kontakt";
-
-export const metadata: Metadata = {
-  title: {
-    absolute: "ResQBrain Links",
-  },
-  description: linksPageDescription,
-  openGraph: {
-    title: "ResQBrain Links",
-    description: linksPageDescription,
-    images: [{ url: "/og-resqbrain.png" }],
-  },
-};
-
-/** Glass-Karten: Blur, Schatten, Hover-Scale */
-const linkCardClass =
-  "group flex w-full min-h-[5.25rem] flex-col items-center justify-center gap-2 rounded-xl border border-[color-mix(in_srgb,var(--color-surface)_55%,var(--ems-blue-soft)_45%)] bg-[color-mix(in_srgb,var(--color-surface)_72%,transparent)] px-5 py-5 text-center shadow-[0_4px_24px_rgba(23,28,33,0.08),0_1px_3px_rgba(23,28,33,0.04),inset_0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-md transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out hover:scale-[1.02] hover:border-[color-mix(in_srgb,var(--ems-red)_32%,var(--ems-blue)_68%)] hover:bg-[color-mix(in_srgb,var(--color-surface)_82%,var(--ems-blue-soft)_18%)] hover:shadow-[0_14px_44px_rgba(47,90,168,0.14),0_6px_16px_rgba(198,61,61,0.09),inset_0_1px_0_rgba(255,255,255,0.8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--ems-blue)_55%,var(--ems-red)_45%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color-mix(in_srgb,var(--color-background)_90%,transparent)] active:scale-[0.99] sm:min-h-24 sm:py-6";
-
-function opensInNewTab(href: string): boolean {
-  return /^https?:\/\//i.test(href);
-}
+import { ContentCard } from "@/components/ui/content-card";
+import { SectionFrame } from "@/components/ui/section-frame";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Stack } from "@/components/ui/stack";
+import { linksPageContent } from "@/lib/site";
 
 export default function LinksPage() {
   return (
-    <main className="min-w-0 flex-1">
-      <section
-        className={`${scrollMarginUnderHeader} relative flex flex-col overflow-hidden border-b border-[var(--color-border)]/80 pb-16 sm:pb-20 lg:pb-24`}
-        style={{
-          background: [
-            "linear-gradient(150deg,",
-            "color-mix(in srgb, var(--ems-red-soft) 65%, var(--color-background)) 0%,",
-            "var(--color-background) 32%,",
-            "color-mix(in srgb, var(--color-background) 55%, var(--ems-blue-soft) 45%) 58%,",
-            "color-mix(in srgb, var(--ems-blue-soft) 35%, var(--color-background)) 100%)",
-          ].join(" "),
-        }}
-      >
-        <PatternBackground
-          pattern="pattern-15.svg"
-          opacity={0.08}
-          position="center-right"
-          size="xl"
-          className="translate-x-1/3"
-        />
-        <Container className="relative z-10 pt-[60px]">
-          <div className="mx-auto w-full max-w-[420px] px-4 sm:px-0">
-            <header className="mt-10 mb-6 text-center">
-              <div
-                className={`${badgeAccentClass} inline-flex flex-col items-center mx-auto max-w-full rounded-lg px-2.5 py-1 mb-2 text-[0.625rem] sm:text-[0.6875rem] leading-tight gap-0.5`}
-                role="group"
-                aria-label="Projektstatus"
-              >
-                <span className="font-medium">Projekt im Aufbau</span>
-                <span className="font-normal">Community-getrieben</span>
-              </div>
-              <h1 className="text-2xl font-semibold leading-tight tracking-tight text-[var(--color-foreground)] sm:text-[1.75rem]">
-                {siteTitle}
-              </h1>
-              <div className="mt-1 space-y-1 text-xs leading-snug text-[var(--color-muted)]">
-                <p>
-                  Ich bin Notfallsanitäter und entwickle ResQBrain aus dem
-                  Einsatzalltag.
-                </p>
-                <p>
-                  Ziel: Algorithmen, Medikamente und Einsatzwissen schnell und
-                  offline verfügbar machen.
-                </p>
-              </div>
-            </header>
-
-            <nav
-              className="flex w-full flex-col gap-5 sm:gap-6"
-              aria-label="ResQBrain Schnelllinks"
-            >
-              {links.map((item) => {
-                const newTab = opensInNewTab(item.url);
-
-                return (
-                  <a
-                    key={item.url}
-                    href={item.url}
-                    className={linkCardClass}
-                    {...(newTab
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    <span className="text-base font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:text-lg">
-                      {item.title}
-                    </span>
-                    <span className="max-w-[22rem] text-sm font-normal leading-relaxed text-[var(--color-muted)]">
-                      {item.description}
-                    </span>
-                  </a>
-                );
-              })}
-            </nav>
-
-            <footer className="mt-14 text-center sm:mt-16">
-              <p className="text-sm leading-relaxed text-[var(--color-muted)]">
-                Feedback willkommen
-              </p>
-            </footer>
-          </div>
+    <>
+      <SectionFrame>
+        <Container>
+          <Stack gap="md">
+            <p className="eyebrow">{linksPageContent.hero.subtitle}</p>
+            <h1 className="hero-title">{linksPageContent.hero.title}</h1>
+          </Stack>
         </Container>
-      </section>
-    </main>
+      </SectionFrame>
+
+      <SectionFrame compact>
+        <Container>
+          <ContentCard>
+            <p className="body-text muted-text">{linksPageContent.description}</p>
+          </ContentCard>
+        </Container>
+      </SectionFrame>
+
+      <SectionFrame compact>
+        <Container>
+          <Stack gap="md">
+            <SectionHeading title={linksPageContent.projectLinks.title} />
+            <Stack gap="md">
+              {linksPageContent.projectLinks.items.map((item) => (
+                <ContentCard key={item.label}>
+                  <Stack gap="sm">
+                    <CardTitle>{item.label}</CardTitle>
+                    <p className="body-text muted-text">{item.description}</p>
+                    <div>
+                      <ButtonLink href={item.href} variant="secondary" external={item.external}>
+                        {item.label}
+                      </ButtonLink>
+                    </div>
+                  </Stack>
+                </ContentCard>
+              ))}
+            </Stack>
+          </Stack>
+        </Container>
+      </SectionFrame>
+
+      <SectionFrame compact>
+        <Container>
+          <Stack gap="md">
+            <SectionHeading title={linksPageContent.communityLinks.title} />
+            <Stack gap="md">
+              {linksPageContent.communityLinks.items.map((item) => (
+                <ContentCard key={item.label}>
+                  <Stack gap="sm">
+                    <CardTitle>{item.label}</CardTitle>
+                    <p className="body-text muted-text">{item.description}</p>
+                    <div>
+                      <ButtonLink href={item.href} variant="secondary" external={item.external}>
+                        {item.label}
+                      </ButtonLink>
+                    </div>
+                  </Stack>
+                </ContentCard>
+              ))}
+            </Stack>
+          </Stack>
+        </Container>
+      </SectionFrame>
+    </>
   );
 }

@@ -6,7 +6,8 @@
     "node": ">=18"
   },
   "workspaces": [
-    "apps/*",
+    "apps/mobile-app",
+    "apps/website",
     "packages/*"
   ],
   "scripts": {

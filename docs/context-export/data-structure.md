@@ -25,7 +25,7 @@ Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase
 - **Schritt:** nur `text` (`ALGORITHM_STEP_KEYS`)
 - **TypeScript:** `Algorithm` mit `steps: AlgorithmStep[]`, `warnings?`, `relatedMedicationIds`
 
-### Umfang der Seed-Dateien (gezählt, Export)
+### Umfang der Seed-Dateien (gezaehlt, Export)
 
 - `medications.json`: **9** Objekte mit `"id"`.
 - `algorithms.json`: **9** Objekte mit `"id"`.
@@ -36,6 +36,11 @@ Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase
 - **`data/schemas/dbrd-normalized.examples.json`** — Beispielinstanzen.
 - **`scripts/dbrd/`** — Extraktion/Normalisierung/Validierung und `build-lookup-seed` (Mapping → `data/lookup-seed/`); Root-Scripts `pnpm dbrd:*`.
 - **Dosisrechner-Hinweis:** Einige Medikationseinträge enthalten mg/µg-pro-kg-Hinweise im Freitext (`dosage`), die von `DoseCalculatorScreen` via `parseDosageCalculatorSpec` interpretiert werden; das Lookup-Schema selbst erzwingt jedoch weiterhin nur Freitextfelder, keine strukturierte Dosierungslogik.
+
+### Versioning-relevante Statuswerte
+
+- **Normalized Schema:** `approvalStatus` erlaubt `Draft`, `InReview`, `Approved`, `Rejected`, `Released`, `Deprecated`.
+- **Domain:** eigenes Approval-/Versioning-Modell in `packages/domain/src/content/entities` und `packages/domain/src/versioning/entities`.
 
 ---
 

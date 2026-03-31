@@ -1,18 +1,14 @@
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
-import { Navbar } from "./navbar";
-import { SiteFooter } from "./site-footer";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
 
-type SiteShellProps = {
-  children: ReactNode;
-};
-
-export function SiteShell({ children }: SiteShellProps) {
+export function SiteShell({ children }: PropsWithChildren) {
   return (
-    <div className="site-shell flex min-h-screen flex-col">
-      <Navbar />
-      <div className="site-main flex flex-1 flex-col">{children}</div>
+    <>
+      <SiteHeader />
+      <main>{children}</main>
       <SiteFooter />
-    </div>
+    </>
   );
 }

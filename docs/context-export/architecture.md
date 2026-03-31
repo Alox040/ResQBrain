@@ -4,6 +4,7 @@
 
 - **`apps/mobile-app/`** — Expo-App: `App.tsx`, `src/navigation`, `src/screens`, `src/data`, `src/lookup`, `src/types`, `src/ui`.
 - **`apps/website/`** — Next.js: `app/` (Routes), `components/` (u. a. `home/`, `sections/`, `layout/`, `links/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `public-config.ts`, `site-content.ts`), `data/links.ts`.
+- **`apps/website-v2/`** — Next.js: `app/`, `components/sections`, `components/pages`, `lib/routes.ts`, `lib/site/*`; eigene Home-Komposition und eigenes Vercel-Setup.
 - **`apps/website-old/`** — ältere Next.js-Website im gleichen Monorepo (eigenes `app/`, `components/`, `lib/site.ts` u. a.); Referenz, nicht das Build-Ziel von Root-`pnpm build`.
 - **`packages/domain/src/`** — Domain-Logik, u. a.:
   - `content/entities/` — ApprovalStatus, ScopeTarget, Algorithm, Medication, Protocol, Guideline, ContentPackage, ContentPackageFoundation
@@ -22,7 +23,7 @@
 
 **Datei:** `apps/mobile-app/src/navigation/AppNavigator.tsx`
 
-- **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `MedicationTab`, `AlgorithmTab`.
+- **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `Settings`, `MedicationTab`, `AlgorithmTab`.
 - **Home-Stack (`HomeStackParamList`):** `HomeMain` (Start/Home) und `VitalReference` (Screen für Vitalwerte-Referenzen).
 - **Medikament-Stack (`MedicationStackParamList`):** `MedicationListScreen` → `MedicationDetail` (Param: `medicationId`) → `DoseCalculator`.
 - **Algorithmus-Stack (`AlgorithmStackParamList`):** `AlgorithmListScreen` → `AlgorithmDetail` (Param: `algorithmId`).
@@ -38,6 +39,14 @@
 - Umfrage-Ziel: `resolveSurveyLink()` nutzt `getSurveyPublishedUrl()` aus `lib/public-config.ts` (HTTPS) oder Fallback intern `/mitwirkung#umfrage`.
 
 **Layout:** `app/layout.tsx` — `SiteShell` um `children`, Metadaten inkl. `sitePublicUrl` aus `lib/site-content.ts`.
+
+## Navigation / Routing (Website-v2)
+
+**Datei:** `apps/website-v2/lib/routes.ts`
+
+- Routen: `/`, `/kontakt`, `/links`, `/mitwirkung` (inkl. Alias `kontakt`/`mitwirkung`).
+- Main-Navigation: `Start`, `Mitwirkung`, `Kontakt`.
+- Footer-Navigation: `Links`.
 
 ## Domain Layer (`@resqbrain/domain`)
 
@@ -75,6 +84,12 @@ Validierung der Keys: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM
 ## Content-Struktur (App-Laufzeit)
 
 - Nur **Medikamente** und **Algorithmen** aus JSON-Bundle; keine Protokolle/Leitlinien in `data/lookup-seed/`.
+
+## Website-v2 Sections
+
+**Datei:** `apps/website-v2/components/pages/home-page-sections.tsx`
+
+- Reihenfolge: `HeroSection` → `TrustSection` → `ServicesSection` → `ProcessSection` → `RegionSection` → `ContactCtaSection` → `Footer`.
 
 ## Services (Domain-Paket, explizite `*Engine*` / Services)
 

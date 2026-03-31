@@ -1,14 +1,9 @@
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
-type ContainerProps = {
-  children: ReactNode;
-  className?: string;
-};
+type ContainerProps = PropsWithChildren<{
+  maxWidth?: "narrow" | "content" | "wide";
+}>;
 
-export function Container({ children, className = "" }: ContainerProps) {
-  return (
-    <div className={`mx-auto w-full max-w-[var(--container)] px-4 sm:px-6 lg:px-8 ${className}`}>
-      {children}
-    </div>
-  );
+export function Container({ children, maxWidth = "content" }: ContainerProps) {
+  return <div className={`container container--${maxWidth}`}>{children}</div>;
 }

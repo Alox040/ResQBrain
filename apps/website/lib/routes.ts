@@ -1,42 +1,25 @@
-/** Statische Routen und Navigationsdaten — keine Backend-Anbindung. */
-
-import { getSurveyPublishedUrl } from "@/lib/public-config";
+const home = "/";
+const contact = "/kontakt";
+const links = "/links";
+const survey = "/mitwirkung";
 
 export const routes = {
-  home: "/",
-  kontakt: "/kontakt",
-  links: "/links",
-  mitwirkung: "/mitwirkung",
-  impressum: "/impressum",
-  datenschutz: "/datenschutz",
+  home,
+  contact,
+  links,
+  survey,
+  kontakt: contact,
+  mitwirkung: survey,
 } as const;
 
-/**
- * Ziel für alle „Umfrage“-CTAs: öffentliche HTTPS-URL, sonst statische Hinweiseite mit Anker.
- */
-export function resolveSurveyLink(): { href: string; external: boolean } {
-  const url = getSurveyPublishedUrl().trim();
-  if (url.length > 0 && /^https?:\/\//i.test(url)) {
-    return { href: url, external: true };
-  }
-  return { href: `${routes.mitwirkung}#umfrage`, external: false };
-}
-
 export const mainNav = [
-  { href: routes.home, label: "Start" },
-  { href: `${routes.home}#mitmachen`, label: "Mitmachen" },
-  { href: `${routes.home}#funktionen`, label: "Funktionen" },
-  { href: `${routes.home}#zielgruppen`, label: "Zielgruppen" },
-  { href: `${routes.home}#faq`, label: "FAQ" },
-  { href: routes.kontakt, label: "Kontakt" },
-  { href: routes.links, label: "Links" },
+  { label: "Start", href: routes.home },
+  { label: "Mitwirkung", href: routes.mitwirkung },
+  { label: "Kontakt", href: routes.kontakt },
 ] as const;
 
 export const footerNav = [
-  { href: routes.kontakt, label: "Kontakt" },
-  { href: routes.mitwirkung, label: "Mitwirkung" },
-  { href: routes.impressum, label: "Impressum" },
-  { href: routes.datenschutz, label: "Datenschutz" },
+  { label: "Links", href: routes.links },
 ] as const;
 
-export const siteTitle = "ResQBrain";
+export type AppRoute = (typeof routes)[keyof typeof routes];

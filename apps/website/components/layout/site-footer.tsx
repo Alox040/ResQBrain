@@ -1,85 +1,29 @@
 import Link from "next/link";
 
+import { FooterNav } from "@/components/layout/footer-nav";
 import { Container } from "@/components/ui/container";
-import { FeedbackButton } from "@/components/ui/feedback-button";
-import { footerNav, siteTitle } from "@/lib/routes";
-import {
-  detailedProjectDescriptionUrl,
-  discordUrl,
-  repositoryUrl,
-  tiktokUrl,
-} from "@/lib/site-content";
+import { contactInfo } from "@/lib/site/contact";
+import { siteContent } from "@/lib/site/site-content";
+import { routes } from "@/lib/routes";
 
 export function SiteFooter() {
-  const year = new Date().getFullYear();
   return (
-    <footer className="site-footer mt-auto border-t border-[var(--color-border)]/85 bg-[var(--color-surface)]">
-      <Container className="flex flex-col gap-8 py-10 sm:flex-row sm:items-start sm:justify-between sm:gap-10 sm:py-12">
-        <div className="min-w-0 shrink">
-          <p className="text-sm font-medium text-[var(--color-foreground)]">
-            © {year} {siteTitle}
-          </p>
-          <p className="mt-2 max-w-sm text-sm leading-relaxed text-[var(--color-muted)]">
-            Frühphase des Projekts — statische Website ohne Live-Produktdaten.
-          </p>
-          <p className="mt-3 text-sm">
-            <a
-              href={repositoryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
-            >
-              Projekt auf GitHub
-            </a>
-          </p>
-          <p className="mt-2 text-sm">
-            <a
-              href={detailedProjectDescriptionUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
-            >
-              Projektbeschreibung
-            </a>
-          </p>
-          <p className="mt-2 text-sm">
-            <a
-              href={discordUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
-            >
-              Discord
-            </a>
-          </p>
-          <p className="mt-2 text-sm">
-            <a
-              href={tiktokUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
-            >
-              TikTok
-            </a>
-          </p>
-          <div className="mt-4">
-            <FeedbackButton />
-          </div>
-        </div>
-        <nav
-          className="flex flex-col gap-1 sm:min-w-[12rem] sm:items-end sm:gap-2"
-          aria-label="Fußnavigation"
-        >
-          {footerNav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="inline-flex min-h-10 items-center text-sm text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline sm:justify-end sm:py-0.5"
-            >
-              {item.label}
+    <footer className="site-footer">
+      <Container maxWidth="wide">
+        <div className="site-footer-inner">
+          <div className="site-footer-brand">
+            <Link className="site-brand" href={routes.home}>
+              {siteContent.name}
             </Link>
-          ))}
-        </nav>
+            <p className="small-text muted-text">
+              Digitale Lern- und Nachbereitungsstruktur fuer den Rettungsdienst.
+            </p>
+          </div>
+          <FooterNav />
+          <a className="footer-nav-link" href={contactInfo.email.href}>
+            {contactInfo.email.label}
+          </a>
+        </div>
       </Container>
     </footer>
   );
