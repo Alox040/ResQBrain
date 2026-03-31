@@ -6,10 +6,19 @@ import { routes } from "@/lib/routes";
 
 export function ContactCtaSection() {
   return (
-    <SectionFrame id="contact">
+    <SectionFrame id="contact" compact>
       <Container>
-        <h2>Kontakt</h2>
-        <Link href={routes.contact}>Kontakt aufnehmen</Link>
+        <div className="home-surface">
+          <h2 className="home-heading">Kontaktieren Sie uns in Ruhe</h2>
+          <p className="home-subtitle">
+            Wir melden uns zeitnah und besprechen gemeinsam, wie ResQBrain zu Ihrem Einsatzalltag
+            passt.
+          </p>
+          <Link className="home-cta" href={routes.contact}>
+            Jetzt Kontakt aufnehmen
+          </Link>
+          <p className="home-note">Antwort in klarer Sprache und ohne komplizierte Fachbegriffe.</p>
+        </div>
       </Container>
     </SectionFrame>
   );

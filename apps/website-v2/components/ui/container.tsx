@@ -4,6 +4,6 @@ type ContainerProps = PropsWithChildren<{
   maxWidth?: "narrow" | "content" | "wide";
 }>;
 
-export function Container({ children }: ContainerProps) {
-  return <div>{children}</div>;
+export function Container({ children, maxWidth = "content" }: ContainerProps) {
+  return <div className={`container container--${maxWidth}`}>{children}</div>;
 }

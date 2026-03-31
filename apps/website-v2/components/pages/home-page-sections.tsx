@@ -1,23 +1,21 @@
-import { AudiencesSection } from "@/components/sections/audiences-section";
-import { BenefitsSection } from "@/components/sections/benefits-section";
 import { ContactCtaSection } from "@/components/sections/contact-cta-section";
-import { FaqSection } from "@/components/sections/faq-section";
+import { Footer } from "@/components/sections/footer";
 import { HeroSection } from "@/components/sections/hero-section";
-import { ParticipationSection } from "@/components/sections/participation-section";
-import { ProblemSection } from "@/components/sections/problem-section";
-import { ProjectStatusSection } from "@/components/sections/project-status-section";
+import { ProcessSection } from "@/components/sections/process-section";
+import { RegionSection } from "@/components/sections/region-section";
+import { ServicesSection } from "@/components/sections/services-section";
+import { TrustSection } from "@/components/sections/trust-section";
 
 export function HomePageSections() {
   return (
     <>
       <HeroSection />
-      <ProblemSection />
-      <BenefitsSection />
-      <AudiencesSection />
-      <ProjectStatusSection />
-      <ParticipationSection />
-      <FaqSection />
+      <TrustSection />
+      <ServicesSection />
+      <ProcessSection />
+      <RegionSection />
       <ContactCtaSection />
+      <Footer />
     </>
   );
 }

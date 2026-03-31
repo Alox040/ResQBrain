@@ -5,6 +5,12 @@ type SectionFrameProps = PropsWithChildren<{
   compact?: boolean;
 }>;
 
-export function SectionFrame({ children, id }: SectionFrameProps) {
-  return <section id={id}>{children}</section>;
+export function SectionFrame({ children, id, compact = false }: SectionFrameProps) {
+  const sectionClassName = compact ? "section-frame section-frame--compact" : "section-frame";
+
+  return (
+    <section id={id} className={sectionClassName}>
+      {children}
+    </section>
+  );
 }
