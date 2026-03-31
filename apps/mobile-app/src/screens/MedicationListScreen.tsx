@@ -22,7 +22,8 @@ import type { MedicationViewModel } from '@/data/adapters/viewModels';
 import { medications } from '@/data/contentIndex';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
-import { COLORS, SPACING } from '@/theme';
+import { SPACING } from '@/theme';
+import { useTheme } from '@/theme/ThemeContext';
 
 type Nav = NativeStackNavigationProp<MedicationStackParamList, 'MedicationList'>;
 
@@ -63,6 +64,7 @@ function MedicationListHeader() {
 }
 
 export function MedicationListScreen() {
+  const { colors } = useTheme();
   const navigation = useNavigation<Nav>();
 
   const medicationRows = useMemo(
@@ -75,16 +77,26 @@ export function MedicationListScreen() {
       headerRight: () => (
         <Pressable
           onPress={() => navigation.navigate('DoseCalculator')}
-          hitSlop={12}
+          hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Dosisrechner öffnen"
-          style={{ marginRight: 4 }}
+          style={{
+            marginRight: 4,
+            minWidth: 56,
+            minHeight: 56,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
-          <Ionicons name="calculator-outline" size={26} color="#f9fafb" />
+          <Ionicons
+            name="calculator-outline"
+            size={26}
+            color={colors.navHeaderText}
+          />
         </Pressable>
       ),
     });
-  }, [navigation]);
+  }, [navigation, colors.navHeaderText]);
 
   const handlePress = useCallback(
     (medicationId: string) => {

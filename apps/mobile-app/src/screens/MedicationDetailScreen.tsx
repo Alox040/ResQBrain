@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
   DetailBodyText,
@@ -16,10 +16,12 @@ import { ScreenContainer } from '@/components/layout';
 import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
 import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
-import { useFavoriteToggle } from '@/features/favorites/favoritesStore';
-import { recordHistoryOpen } from '@/features/history/historyStore';
+import { useFavoriteToggle } from '@/state/favoritesStore';
+import { addRecent, recentContentKey } from '@/state/recentStore';
 import type { MedicationStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 type Props = NativeStackScreenProps<
   MedicationStackParamList,
@@ -44,7 +46,11 @@ function warnBrokenRelatedAlgorithmOnce(
   );
 }
 
+const HEADER_HIT = 56;
+
 export function MedicationDetailScreen({ navigation, route }: Props) {
+  const { colors } = useTheme();
+  const themed = useMemo(() => createThemedDetailStyles(colors), [colors]);
   const medication = getMedicationById(route.params.medicationId);
   const tabNavigation =
     navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
@@ -83,18 +89,24 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
           ? () => (
               <Pressable
                 onPress={() => void toggleFavoriteItem()}
-                hitSlop={14}
+                hitSlop={10}
                 accessibilityRole="button"
                 accessibilityLabel={
                   isFavorite
                     ? 'Aus Favoriten entfernen'
                     : 'Zu Favoriten hinzufügen'
                 }
-                style={{ marginRight: 4 }}
+                style={{
+                  marginRight: 4,
+                  minWidth: HEADER_HIT,
+                  minHeight: HEADER_HIT,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
                 <Ionicons
                   name={isFavorite ? 'star' : 'star-outline'}
-                  size={24}
+                  size={26}
                   color="#fbbf24"
                 />
               </Pressable>
@@ -105,7 +117,7 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
 
   React.useEffect(() => {
     if (medication) {
-      void recordHistoryOpen(medication.id, 'medication');
+      void addRecent(recentContentKey('medication', medication.id));
     }
   }, [medication?.id]);
 
@@ -138,7 +150,7 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
           </DetailBodyText>
         </DetailSectionCard>
 
-        <DetailSectionCard title="Dosierung" style={styles.dosageSection}>
+        <DetailSectionCard title="Dosierung" style={themed.dosageSection}>
           <WarningCard
             title="Anwendung & Dosis"
             body={medicationVm.dosage}
@@ -223,9 +235,14 @@ const styles = StyleSheet.create({
     minHeight: 300,
     paddingHorizontal: SPACING.screenPadding,
   },
-  dosageSection: {
-    borderWidth: 2,
-    borderColor: '#93c5fd',
-    backgroundColor: '#f8fafc',
-  },
 });
+
+function createThemedDetailStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    dosageSection: {
+      borderWidth: 3,
+      borderColor: colors.dosagePanelBorder,
+      backgroundColor: colors.dosagePanelBg,
+    },
+  });
+}

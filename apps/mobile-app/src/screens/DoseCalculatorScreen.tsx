@@ -28,7 +28,9 @@ import {
 } from '@/features/doseCalculator/parseDosageForCalculator';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import type { Medication } from '@/types/content';
-import { CARD, COLORS, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 type Props = NativeStackScreenProps<
   MedicationStackParamList,
@@ -43,6 +45,11 @@ function firstMedicationWithSpec(): Medication | undefined {
 }
 
 export function DoseCalculatorScreen(_props: Props) {
+  const { colors, isDark } = useTheme();
+  const styles = useMemo(
+    () => createDoseStyles(colors, isDark),
+    [colors, isDark],
+  );
   const initial = useMemo(() => firstMedicationWithSpec(), []);
   const [selected, setSelected] = useState<Medication | undefined>(initial);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -122,7 +129,7 @@ export function DoseCalculatorScreen(_props: Props) {
                   </Text>
                 ) : null}
               </View>
-              <Ionicons name="chevron-down" size={26} color={COLORS.primary} />
+              <Ionicons name="chevron-down" size={26} color={colors.primary} />
             </Pressable>
           </View>
 
@@ -132,9 +139,9 @@ export function DoseCalculatorScreen(_props: Props) {
               value={weightText}
               onChangeText={setWeightText}
               placeholder="z. B. 70"
-              placeholderTextColor={COLORS.textMuted}
+              placeholderTextColor={colors.textMuted}
               keyboardType="decimal-pad"
-              selectionColor={COLORS.primary}
+              selectionColor={colors.primary}
               style={[
                 styles.weightInput,
                 weightInvalid && styles.weightInputError,
@@ -257,156 +264,152 @@ export function DoseCalculatorScreen(_props: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  layoutRoot: {
-    flex: 1,
-  },
-  stickyInputs: {
-    gap: SPACING.gapMd,
-    paddingBottom: SPACING.gapMd,
-    marginBottom: SPACING.gapSm,
-    borderBottomWidth: StyleSheet.hairlineWidth * 2,
-    borderBottomColor: COLORS.border,
-    backgroundColor: COLORS.bg,
-  },
-  scrollBody: {
-    flex: 1,
-  },
-  contentBody: {
-    paddingBottom: SPACING.screenPaddingBottom,
-    gap: SPACING.detailBlockGap,
-  },
-  block: {
-    gap: SPACING.gapSm,
-  },
-  fieldLabel: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: COLORS.text,
-    letterSpacing: 0.2,
-  },
-  medSelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    minHeight: LAYOUT.minTap + 28,
-    paddingVertical: 16,
-    paddingHorizontal: SPACING.screenPadding,
-    ...CARD.base,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    gap: SPACING.gapMd,
-  },
-  medSelectorPressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-    borderColor: '#93c5fd',
-  },
-  medSelectorTextCol: {
-    flex: 1,
-    gap: 6,
-    minWidth: 0,
-  },
-  medSelectorTitle: {
-    fontSize: 19,
-    fontWeight: '800',
-    color: COLORS.text,
-  },
-  medSelectorHint: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  weightInput: {
-    ...CARD.base,
-    borderWidth: 2,
-    borderColor: COLORS.border,
-    fontSize: 28,
-    fontWeight: '700',
-    paddingVertical: 18,
-    paddingHorizontal: SPACING.screenPadding,
-    color: COLORS.text,
-  },
-  weightInputError: {
-    borderColor: '#f87171',
-    backgroundColor: '#fef2f2',
-  },
-  errorLine: {
-    fontSize: 15,
-    color: '#dc2626',
-    fontWeight: '600',
-  },
-  resultWrap: {
-    ...CARD.base,
-    minHeight: 148,
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    backgroundColor: '#f8fafc',
-  },
-  resultLabel: {
-    ...TYPOGRAPHY.sectionTitle,
-    marginBottom: SPACING.gapSm,
-  },
-  resultValue: {
-    fontSize: 36,
-    fontWeight: '800',
-    color: COLORS.text,
-    letterSpacing: -0.5,
-  },
-  clampHint: {
-    marginTop: SPACING.gapMd,
-    fontSize: 15,
-    lineHeight: 22,
-    color: '#92400e',
-    fontWeight: '600',
-  },
-  resultPlaceholder: {
-    fontSize: 17,
-    lineHeight: 24,
-    color: COLORS.textMuted,
-    fontWeight: '600',
-  },
-  noSpecCard: {
-    gap: SPACING.gapSm,
-  },
-  noSpecTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: COLORS.text,
-  },
-  noSpecBody: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: COLORS.textMuted,
-  },
-  dosageExcerpt: {
-    gap: SPACING.gapSm,
-  },
-  dosageExcerptText: {
-    ...TYPOGRAPHY.body,
-    fontSize: 15,
-    lineHeight: 22,
-    color: '#374151',
-  },
-  modalBody: {
-    flex: 1,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: SPACING.gapMd,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: '800',
-    color: COLORS.text,
-  },
-  modalClose: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: COLORS.primary,
-  },
-  modalList: {
-    flex: 1,
-  },
-});
+function createDoseStyles(colors: AppPalette, isDark: boolean) {
+  return StyleSheet.create({
+    layoutRoot: {
+      flex: 1,
+    },
+    stickyInputs: {
+      gap: SPACING.gapMd,
+      paddingBottom: SPACING.gapMd,
+      marginBottom: SPACING.gapSm,
+      borderBottomWidth: StyleSheet.hairlineWidth * 2,
+      borderBottomColor: colors.border,
+      backgroundColor: colors.bg,
+    },
+    scrollBody: {
+      flex: 1,
+    },
+    contentBody: {
+      paddingBottom: SPACING.screenPaddingBottom,
+      gap: SPACING.detailBlockGap,
+    },
+    block: {
+      gap: SPACING.gapSm,
+    },
+    fieldLabel: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+      letterSpacing: 0.2,
+    },
+    medSelector: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      minHeight: LAYOUT.minTap + 20,
+      paddingVertical: 16,
+      paddingHorizontal: SPACING.screenPadding,
+      ...CARD.shell,
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      gap: SPACING.gapMd,
+    },
+    medSelectorPressed: {
+      backgroundColor: colors.pressedRowBg,
+      borderColor: colors.pressedRowBorder,
+    },
+    medSelectorTextCol: {
+      flex: 1,
+      gap: 6,
+      minWidth: 0,
+    },
+    medSelectorTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+    },
+    medSelectorHint: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+    },
+    weightInput: {
+      ...CARD.shell,
+      backgroundColor: colors.surface,
+      borderWidth: 2,
+      borderColor: colors.border,
+      fontSize: 28,
+      fontWeight: '700',
+      paddingVertical: 18,
+      paddingHorizontal: SPACING.screenPadding,
+      color: colors.text,
+      minHeight: LAYOUT.minTap + 12,
+    },
+    weightInputError: {
+      borderColor: '#f87171',
+      backgroundColor: isDark ? '#450a0a' : '#fef2f2',
+    },
+    errorLine: {
+      ...TYPOGRAPHY.body,
+      color: '#f87171',
+      fontWeight: '700',
+    },
+    resultWrap: {
+      ...CARD.shell,
+      backgroundColor: colors.dosagePanelBg,
+      minHeight: 148,
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: colors.dosagePanelBorder,
+    },
+    resultLabel: {
+      ...TYPOGRAPHY.sectionTitle,
+      color: colors.primary,
+      marginBottom: SPACING.gapSm,
+    },
+    resultValue: {
+      fontSize: 36,
+      fontWeight: '800',
+      color: colors.text,
+      letterSpacing: -0.5,
+    },
+    clampHint: {
+      marginTop: SPACING.gapMd,
+      ...TYPOGRAPHY.body,
+      color: colors.warningTitle,
+      fontWeight: '700',
+    },
+    resultPlaceholder: {
+      ...TYPOGRAPHY.body,
+      color: colors.textMuted,
+      fontWeight: '600',
+    },
+    noSpecCard: {
+      gap: SPACING.gapSm,
+    },
+    noSpecTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+    },
+    noSpecBody: {
+      ...TYPOGRAPHY.body,
+      color: colors.textMuted,
+    },
+    dosageExcerpt: {
+      gap: SPACING.gapSm,
+    },
+    dosageExcerptText: {
+      ...TYPOGRAPHY.body,
+      color: colors.text,
+    },
+    modalBody: {
+      flex: 1,
+    },
+    modalHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: SPACING.gapMd,
+    },
+    modalTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+    },
+    modalClose: {
+      ...TYPOGRAPHY.body,
+      fontWeight: '800',
+      color: colors.primary,
+    },
+    modalList: {
+      flex: 1,
+    },
+  });
+}

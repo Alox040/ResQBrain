@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
-import { COLORS, SPACING } from '@/theme';
+import { LAYOUT, SPACING } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 export type DetailCrossRefListProps = {
   children: React.ReactNode;
   style?: ViewStyle;
 };
 
-/**
- * Querverweise mit linker Akzentlinie — konsistent in Medikament- und Algorithmus-Detail.
- */
 export function DetailCrossRefList({ children, style }: DetailCrossRefListProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={[styles.row, style]}>
       <View style={styles.accent} accessibilityElementsHidden />
@@ -19,21 +21,23 @@ export function DetailCrossRefList({ children, style }: DetailCrossRefListProps)
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    marginTop: SPACING.gapSm,
-  },
-  accent: {
-    width: 4,
-    borderRadius: 2,
-    backgroundColor: COLORS.primary,
-    marginRight: SPACING.gapMd,
-    alignSelf: 'stretch',
-    minHeight: 48,
-  },
-  content: {
-    flex: 1,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'stretch',
+      marginTop: SPACING.gapSm,
+    },
+    accent: {
+      width: 4,
+      borderRadius: 2,
+      backgroundColor: colors.primary,
+      marginRight: SPACING.gapMd,
+      alignSelf: 'stretch',
+      minHeight: LAYOUT.minTap,
+    },
+    content: {
+      flex: 1,
+    },
+  });
+}

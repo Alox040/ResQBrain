@@ -29,11 +29,13 @@ export type AppLocalSettings = {
 const KEYS = {
   favorites: '@resqbrain/local/favorites',
   history: '@resqbrain/local/history',
+  recent: '@resqbrain/local/recent',
   settings: '@resqbrain/local/settings',
 } as const;
 
 const DEFAULT_FAVORITE_RECORDS: FavoriteRecord[] = [];
 const DEFAULT_HISTORY: HistoryEntry[] = [];
+const DEFAULT_RECENT: HistoryEntry[] = [];
 const DEFAULT_SETTINGS: AppLocalSettings = {
   schemaVersion: SETTINGS_SCHEMA_VERSION,
 };
@@ -158,6 +160,17 @@ export async function getHistory(): Promise<HistoryEntry[]> {
 
 export async function setHistory(history: HistoryEntry[]): Promise<void> {
   await writeJson(KEYS.history, history);
+}
+
+/** Same shape as history — `key` is `medication:id` / `algorithm:id`. */
+export async function getRecentEntries(): Promise<HistoryEntry[]> {
+  return readJson(KEYS.recent, DEFAULT_RECENT, parseHistory);
+}
+
+export async function setRecentEntries(
+  entries: HistoryEntry[],
+): Promise<void> {
+  await writeJson(KEYS.recent, entries);
 }
 
 export async function getSettings(): Promise<AppLocalSettings> {

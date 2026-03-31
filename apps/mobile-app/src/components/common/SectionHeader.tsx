@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
-export type SectionHeaderSize = 'default' | 'compact' | 'comfortable';
+export type SectionHeaderSize = 'default' | 'compact' | 'comfortable' | 'detail';
 
 export type SectionHeaderVariant = 'section' | 'screen';
 
 export type SectionHeaderProps = {
   title: string;
   description?: string;
-  /** List/filter eyebrows */
   size?: SectionHeaderSize;
-  /** Screen-level title + lead (e.g. Search) */
   variant?: SectionHeaderVariant;
   style?: ViewStyle;
 };
@@ -26,6 +26,9 @@ export function SectionHeader({
   variant = 'section',
   style,
 }: SectionHeaderProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   if (variant === 'screen') {
     return (
       <View style={[styles.wrapScreen, style]} accessibilityRole="header">
@@ -42,7 +45,9 @@ export function SectionHeader({
       ? styles.titleCompact
       : size === 'comfortable'
         ? styles.titleComfortable
-        : styles.titleDefault;
+        : size === 'detail'
+          ? styles.titleDetail
+          : styles.titleDefault;
 
   return (
     <View style={[styles.wrap, style]} accessibilityRole="header">
@@ -54,39 +59,50 @@ export function SectionHeader({
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: {
-    gap: 6,
-  },
-  wrapScreen: {
-    gap: SPACING.gapSm,
-    marginBottom: SPACING.gapXs,
-  },
-  titleDefault: {
-    ...TYPOGRAPHY.sectionTitle,
-  },
-  titleCompact: {
-    ...TYPOGRAPHY.sectionTitle,
-    fontSize: 11,
-  },
-  titleComfortable: {
-    ...TYPOGRAPHY.sectionTitle,
-    fontSize: 13,
-    marginBottom: 2,
-  },
-  description: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  screenTitle: {
-    ...TYPOGRAPHY.title,
-  },
-  screenLead: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: COLORS.textMuted,
-    fontWeight: '500',
-    maxWidth: 560,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    wrap: {
+      gap: 6,
+    },
+    wrapScreen: {
+      gap: SPACING.gapSm,
+      marginBottom: SPACING.gapXs,
+    },
+    titleDefault: {
+      ...TYPOGRAPHY.sectionTitle,
+      color: colors.primary,
+    },
+    titleCompact: {
+      ...TYPOGRAPHY.sectionTitle,
+      fontSize: 11,
+      color: colors.primary,
+    },
+    titleComfortable: {
+      ...TYPOGRAPHY.sectionTitle,
+      fontSize: 13,
+      marginBottom: 2,
+      color: colors.primary,
+    },
+    titleDetail: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+      letterSpacing: -0.3,
+    },
+    description: {
+      ...TYPOGRAPHY.bodyMuted,
+      lineHeight: 22,
+      color: colors.textMuted,
+    },
+    screenTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+    },
+    screenLead: {
+      fontSize: 16,
+      lineHeight: 24,
+      color: colors.textMuted,
+      fontWeight: '500',
+      maxWidth: 560,
+    },
+  });
+}

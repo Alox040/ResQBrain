@@ -41,7 +41,7 @@ export type LookupRamStore = {
   getAlgorithmById: (algorithmId: string) => Algorithm | undefined;
 };
 
-function buildRamStore(bundle: {
+export function buildLookupRamStore(bundle: {
   manifest: LookupManifest;
   medications: Medication[];
   algorithms: Algorithm[];
@@ -109,5 +109,5 @@ export function loadLookupBundle(): LookupRamStore {
     );
   }
 
-  return buildRamStore(result.data);
+  return buildLookupRamStore(result.data);
 }

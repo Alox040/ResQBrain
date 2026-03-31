@@ -1,54 +1,61 @@
-export const COLORS = {
-  bg: '#f3f4f6',
-  surface: '#ffffff',
-  border: '#e5e7eb',
-  text: '#111827',
-  textMuted: '#6b7280',
-  primary: '#2563eb',
-  primaryMutedBg: '#eff6ff',
-} as const;
+import type { AppPalette } from '@/theme/palette';
+import { lightPalette } from '@/theme/palette';
+
+export * from '@/theme/palette';
+export * from '@/theme/ThemeContext';
+
+/** @deprecated Prefer `useTheme().colors` for Dark Mode. */
+export const COLORS: AppPalette = lightPalette;
 
 export const SPACING = {
   screenPadding: 16,
   screenPaddingBottom: 24,
-  /** Kleinstes vertikales/horizontales Raster — z. B. Titel↔Untertitel */
   gapXs: 4,
   gapSm: 8,
   gapMd: 12,
-  /** Vertikaler Abstand zwischen kritischen Detail-Screen-Blöcken */
   detailBlockGap: 22,
-  /** Abstand zwischen größeren Screen-Sektionen (Listen, Kurzwege) */
   sectionStackGap: 20,
   radius: 16,
   radiusSm: 12,
 } as const;
 
-/** Notfall-orientierte Mindestmaße — WCAG-nahe Antippflächen, lesbare Zeilen */
+/** Einsatz: große Antippflächen (min. Höhe 56) */
 export const LAYOUT = {
-  minTap: 48,
-  listRowMinHeight: 104,
-  searchHitMinHeight: 100,
+  minTap: 56,
+  listRowMinHeight: 56,
+  searchHitMinHeight: 56,
 } as const;
 
+/** Titel 20 / Inhalt 16 — Farben über `useTheme().colors` */
 export const TYPOGRAPHY = {
-  title: { fontSize: 24, fontWeight: '700', color: COLORS.text } as const,
+  title: {
+    fontSize: 20,
+    fontWeight: '700' as const,
+    lineHeight: 28,
+  },
   sectionTitle: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '700' as const,
     letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    color: COLORS.primary,
-  } as const,
-  body: { fontSize: 16, lineHeight: 24, color: COLORS.text } as const,
-  bodyMuted: { fontSize: 15, lineHeight: 22, color: COLORS.textMuted } as const,
+    textTransform: 'uppercase' as const,
+  },
+  body: { fontSize: 16, lineHeight: 24 },
+  bodyMuted: { fontSize: 16, lineHeight: 22 },
 } as const;
 
+/** Rahmen ohne Farben — mit `colors.surface` / `colors.border` kombinieren */
 export const CARD = {
+  shell: {
+    borderRadius: SPACING.radius,
+    padding: SPACING.screenPadding,
+    borderWidth: 1,
+  },
+  /** @deprecated Nutze shell + theme colors */
   base: {
     borderRadius: SPACING.radius,
     padding: SPACING.screenPadding,
-    backgroundColor: COLORS.surface,
+    backgroundColor: lightPalette.surface,
     borderWidth: 1,
-    borderColor: COLORS.border,
-  } as const,
+    borderColor: lightPalette.border,
+  },
 } as const;

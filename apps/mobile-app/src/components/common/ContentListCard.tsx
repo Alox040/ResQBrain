@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -7,7 +7,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { CARD, COLORS, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 const DEFAULT_MIN_HEIGHT = LAYOUT.searchHitMinHeight;
 
@@ -16,15 +18,11 @@ export type ContentListCardProps = {
   subtitle: string;
   onPress: () => void;
   accessibilityLabel: string;
-  /** e.g. Badge for content kind */
   metaStart: React.ReactNode;
   minHeight?: number;
   style?: ViewStyle;
 };
 
-/**
- * Pressable summary card (e.g. search hit): meta row + title + subtitle + chevron.
- */
 export function ContentListCard({
   title,
   subtitle,
@@ -34,6 +32,9 @@ export function ContentListCard({
   minHeight = DEFAULT_MIN_HEIGHT,
   style,
 }: ContentListCardProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <Pressable
       onPress={onPress}
@@ -49,9 +50,9 @@ export function ContentListCard({
     >
       <View style={styles.metaRow}>
         {metaStart}
-        <Ionicons name="chevron-forward" size={22} color={COLORS.textMuted} />
+        <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
       </View>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.cardTitle}>{title}</Text>
       <Text style={styles.subtitle} numberOfLines={3}>
         {subtitle}
       </Text>
@@ -59,30 +60,32 @@ export function ContentListCard({
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    ...CARD.base,
-    gap: SPACING.gapSm,
-    paddingVertical: SPACING.screenPadding,
-  },
-  pressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-    borderColor: '#bfdbfe',
-  },
-  metaRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontSize: 19,
-    fontWeight: '700',
-    color: COLORS.text,
-    letterSpacing: -0.2,
-  },
-  subtitle: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 15,
-    lineHeight: 23,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    card: {
+      ...CARD.shell,
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      gap: SPACING.gapSm,
+      paddingVertical: SPACING.screenPadding,
+    },
+    pressed: {
+      backgroundColor: colors.pressedRowBg,
+      borderColor: colors.pressedRowBorder,
+    },
+    metaRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    cardTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+      letterSpacing: -0.2,
+    },
+    subtitle: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+    },
+  });
+}

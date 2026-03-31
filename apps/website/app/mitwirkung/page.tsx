@@ -39,7 +39,8 @@ export default function MitwirkungPage() {
           {surveyLive ? (
             <>
               Die aktuelle Umfrage wird über Microsoft Forms bereitgestellt. Beim Öffnen verlassen
-              Sie diese Website; es gelten die Hinweise des Betreibers.
+              Sie diese Website; es gelten die Hinweise des Betreibers. Die vorherige Umfrage ist
+              abgeschlossen. Neue Umfrage jetzt aktiv.
             </>
           ) : (
             <>

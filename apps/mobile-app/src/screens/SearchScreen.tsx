@@ -1,5 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useMemo, useState } from 'react';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 import {
   FlatList,
   Pressable,
@@ -26,9 +28,109 @@ import {
   rankContentItemsForSearch,
   type ScoredContentListItem,
 } from '@/utils/searchRanking';
-import { COLORS, LAYOUT, SPACING } from '@/theme';
+import { LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+
+function createSearchStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    root: {
+      flex: 1,
+    },
+    stickyControls: {
+      backgroundColor: colors.bg,
+      paddingBottom: SPACING.gapMd,
+      marginBottom: SPACING.gapSm,
+      borderBottomWidth: StyleSheet.hairlineWidth * 2,
+      borderBottomColor: colors.border,
+      gap: SPACING.gapMd,
+    },
+    searchRow: {
+      marginTop: 0,
+    },
+    inputContainer: {
+      marginBottom: 0,
+    },
+    inputInner: {
+      borderRadius: 16,
+      minHeight: LAYOUT.minTap,
+      paddingVertical: 14,
+      ...TYPOGRAPHY.body,
+      color: colors.text,
+    },
+    filterBlock: {
+      gap: SPACING.gapSm,
+    },
+    filterRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: SPACING.gapSm,
+    },
+    filterTag: {
+      minHeight: LAYOUT.minTap,
+    },
+    filterStatus: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: SPACING.gapSm,
+      paddingVertical: 12,
+      paddingHorizontal: SPACING.screenPadding,
+      backgroundColor: colors.surface,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    filterStatusIcon: {
+      marginRight: -4,
+    },
+    filterStatusText: {
+      flex: 1,
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+      minWidth: 120,
+    },
+    filterStatusEmphasis: {
+      fontWeight: '800',
+      color: colors.text,
+    },
+    filterClearBtn: {
+      minHeight: LAYOUT.minTap,
+      paddingVertical: 10,
+      paddingHorizontal: 14,
+      borderRadius: 12,
+      backgroundColor: colors.primaryMutedBg,
+      borderWidth: 1,
+      borderColor: colors.pressedRowBorder,
+      justifyContent: 'center',
+    },
+    filterClearBtnPressed: {
+      opacity: 0.88,
+    },
+    filterClearLabel: {
+      ...TYPOGRAPHY.body,
+      fontWeight: '800',
+      color: colors.primary,
+    },
+    resultsPane: {
+      flex: 1,
+    },
+    resultsList: {
+      flex: 1,
+    },
+    listContent: {
+      gap: SPACING.gapMd,
+      paddingBottom: SPACING.screenPadding,
+    },
+    emptyWrap: {
+      flex: 1,
+      justifyContent: 'center',
+      minHeight: 220,
+    },
+  });
+}
 
 export function SearchScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createSearchStyles(colors), [colors]);
   const [query, setQuery] = useState('');
   const [kindFilter, setKindFilter] = useState<
     'all' | 'medication' | 'algorithm'
@@ -159,7 +261,7 @@ export function SearchScreen() {
               containerStyle={styles.inputContainer}
               style={styles.inputInner}
               prefixIcon={
-                <Ionicons name="search" size={22} color={COLORS.textMuted} />
+                <Ionicons name="search" size={22} color={colors.textMuted} />
               }
             />
           </View>
@@ -190,7 +292,7 @@ export function SearchScreen() {
               <Ionicons
                 name="funnel-outline"
                 size={20}
-                color={COLORS.primary}
+                color={colors.primary}
                 style={styles.filterStatusIcon}
               />
               <Text style={styles.filterStatusText}>
@@ -220,99 +322,3 @@ export function SearchScreen() {
     </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  stickyControls: {
-    backgroundColor: COLORS.bg,
-    paddingBottom: SPACING.gapMd,
-    marginBottom: SPACING.gapSm,
-    borderBottomWidth: StyleSheet.hairlineWidth * 2,
-    borderBottomColor: COLORS.border,
-    gap: SPACING.gapMd,
-  },
-  searchRow: {
-    marginTop: 0,
-  },
-  inputContainer: {
-    marginBottom: 0,
-  },
-  inputInner: {
-    borderRadius: SPACING.radius,
-    minHeight: LAYOUT.minTap + 8,
-    paddingVertical: 16,
-    fontSize: 17,
-  },
-  filterBlock: {
-    gap: SPACING.gapSm,
-  },
-  filterRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: SPACING.gapSm,
-  },
-  filterTag: {
-    minHeight: LAYOUT.minTap,
-  },
-  filterStatus: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: SPACING.gapSm,
-    paddingVertical: 12,
-    paddingHorizontal: SPACING.screenPadding,
-    backgroundColor: COLORS.surface,
-    borderRadius: SPACING.radiusSm,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-  },
-  filterStatusIcon: {
-    marginRight: -4,
-  },
-  filterStatusText: {
-    flex: 1,
-    fontSize: 15,
-    lineHeight: 22,
-    color: COLORS.textMuted,
-    minWidth: 120,
-  },
-  filterStatusEmphasis: {
-    fontWeight: '800',
-    color: COLORS.text,
-  },
-  filterClearBtn: {
-    minHeight: LAYOUT.minTap,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: SPACING.radiusSm,
-    backgroundColor: COLORS.primaryMutedBg,
-    borderWidth: 1,
-    borderColor: '#bfdbfe',
-    justifyContent: 'center',
-  },
-  filterClearBtnPressed: {
-    opacity: 0.88,
-  },
-  filterClearLabel: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: COLORS.primary,
-  },
-  resultsPane: {
-    flex: 1,
-  },
-  resultsList: {
-    flex: 1,
-  },
-  listContent: {
-    gap: SPACING.gapMd,
-    paddingBottom: SPACING.screenPadding,
-  },
-  emptyWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    minHeight: 220,
-  },
-});

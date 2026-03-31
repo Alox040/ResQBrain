@@ -13,11 +13,120 @@ import { ScreenContainer } from '@/components/layout';
 import { VITAL_REFERENCE_SECTIONS } from './vitalReferenceData';
 import type { AgeGroupId } from './vitalReferenceTypes';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
-import { CARD, COLORS, LAYOUT, SPACING } from '@/theme';
+import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VitalReference'>;
 
+function createVitalStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    root: {
+      flex: 1,
+    },
+    gridScroll: {
+      flex: 1,
+    },
+    gridScrollContent: {
+      paddingBottom: SPACING.screenPaddingBottom,
+    },
+    stickyBar: {
+      gap: SPACING.gapMd,
+      paddingBottom: SPACING.gapMd,
+      marginBottom: SPACING.gapSm,
+      borderBottomWidth: StyleSheet.hairlineWidth * 2,
+      borderBottomColor: colors.border,
+      backgroundColor: colors.bg,
+    },
+    ageRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: SPACING.gapSm,
+    },
+    ageChip: {
+      flexGrow: 1,
+      flexBasis: '30%',
+      minHeight: LAYOUT.minTap,
+      minWidth: 100,
+      paddingHorizontal: 14,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: SPACING.radius,
+      borderWidth: 1,
+    },
+    ageChipOff: {
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+    },
+    ageChipOn: {
+      backgroundColor: colors.primary,
+      borderColor: colors.navHeaderBg,
+      borderWidth: 2,
+    },
+    ageChipPressed: {
+      opacity: 0.92,
+    },
+    ageChipLabel: {
+      ...TYPOGRAPHY.body,
+      fontWeight: '800',
+      color: colors.text,
+      textAlign: 'center',
+    },
+    ageChipLabelOn: {
+      color: '#ffffff',
+    },
+    scopeLine: {
+      ...TYPOGRAPHY.body,
+      fontWeight: '600',
+      color: colors.textMuted,
+      lineHeight: 24,
+    },
+    grid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: SPACING.gapMd,
+      marginTop: SPACING.gapSm,
+    },
+    vitalCard: {
+      ...CARD.shell,
+      borderWidth: 1,
+      borderColor: colors.border,
+      backgroundColor: colors.surface,
+      paddingVertical: 18,
+      minHeight: 152,
+      gap: 8,
+    },
+    vitalTitle: {
+      ...TYPOGRAPHY.body,
+      fontWeight: '800',
+      color: colors.text,
+      lineHeight: 22,
+    },
+    vitalRange: {
+      fontSize: 26,
+      fontWeight: '800',
+      color: colors.text,
+      letterSpacing: -0.3,
+      marginTop: 4,
+    },
+    vitalUnit: {
+      ...TYPOGRAPHY.body,
+      fontWeight: '800',
+      color: colors.primary,
+    },
+    vitalHint: {
+      ...TYPOGRAPHY.bodyMuted,
+      fontWeight: '600',
+      color: colors.textMuted,
+      lineHeight: 22,
+      marginTop: 4,
+    },
+  });
+}
+
 export function VitalReferenceScreen({ navigation }: Props) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createVitalStyles(colors), [colors]);
   const [ageId, setAgeId] = useState<AgeGroupId>('adult');
   const { width } = useWindowDimensions();
 
@@ -113,106 +222,3 @@ export function VitalReferenceScreen({ navigation }: Props) {
     </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  gridScroll: {
-    flex: 1,
-  },
-  gridScrollContent: {
-    paddingBottom: SPACING.screenPaddingBottom,
-  },
-  stickyBar: {
-    gap: SPACING.gapMd,
-    paddingBottom: SPACING.gapMd,
-    marginBottom: SPACING.gapSm,
-    borderBottomWidth: StyleSheet.hairlineWidth * 2,
-    borderBottomColor: COLORS.border,
-    backgroundColor: COLORS.bg,
-  },
-  ageRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: SPACING.gapSm,
-  },
-  ageChip: {
-    flexGrow: 1,
-    flexBasis: '30%',
-    minHeight: LAYOUT.minTap + 8,
-    minWidth: 100,
-    paddingHorizontal: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: SPACING.radius,
-    borderWidth: 1,
-  },
-  ageChipOff: {
-    backgroundColor: COLORS.surface,
-    borderColor: COLORS.border,
-  },
-  ageChipOn: {
-    backgroundColor: COLORS.primary,
-    borderColor: '#1e40af',
-    borderWidth: 2,
-  },
-  ageChipPressed: {
-    opacity: 0.92,
-  },
-  ageChipLabel: {
-    fontSize: 17,
-    fontWeight: '800',
-    color: COLORS.text,
-    textAlign: 'center',
-  },
-  ageChipLabelOn: {
-    color: '#ffffff',
-  },
-  scopeLine: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: COLORS.textMuted,
-    lineHeight: 22,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: SPACING.gapMd,
-    marginTop: SPACING.gapSm,
-  },
-  vitalCard: {
-    ...CARD.base,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    backgroundColor: COLORS.surface,
-    paddingVertical: 18,
-    minHeight: 152,
-    gap: 8,
-  },
-  vitalTitle: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: COLORS.text,
-    lineHeight: 20,
-  },
-  vitalRange: {
-    fontSize: 26,
-    fontWeight: '800',
-    color: COLORS.text,
-    letterSpacing: -0.3,
-    marginTop: 4,
-  },
-  vitalUnit: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: COLORS.primary,
-  },
-  vitalHint: {
-    fontSize: 14,
-    lineHeight: 19,
-    fontWeight: '600',
-    color: '#57534e',
-    marginTop: 4,
-  },
-});

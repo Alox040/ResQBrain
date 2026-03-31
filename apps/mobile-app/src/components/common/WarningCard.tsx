@@ -1,16 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
 import { SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 export type WarningCardProps = {
   title: string;
   body: string;
   icon?: keyof typeof Ionicons.glyphMap;
   accessibilityRole?: 'alert' | 'text';
-  /** dosage callout uses stronger body typography */
   tone?: 'default' | 'dosage';
-  /** stärkere optische Priorität (z. B. Algorithmus-Warnung oben) */
   prominent?: boolean;
   style?: ViewStyle;
 };
@@ -24,7 +24,10 @@ export function WarningCard({
   prominent = false,
   style,
 }: WarningCardProps) {
-  const iconSize = tone === 'dosage' ? 18 : 22;
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
+  const iconSize = tone === 'dosage' ? 24 : 26;
 
   return (
     <View
@@ -37,13 +40,19 @@ export function WarningCard({
       accessibilityRole={accessibilityRole}
     >
       <View style={styles.titleRow}>
-        <Ionicons name={icon} size={iconSize} color="#b45309" />
-        <Text style={tone === 'dosage' ? styles.titleDosage : styles.title}>
+        <Ionicons name={icon} size={iconSize} color={colors.warningIcon} />
+        <Text
+          style={
+            tone === 'dosage' ? styles.titleDosage : styles.title
+          }
+        >
           {title}
         </Text>
       </View>
       <Text
-        style={tone === 'dosage' ? styles.bodyDosage : styles.bodyDefault}
+        style={
+          tone === 'dosage' ? styles.bodyDosage : styles.bodyDefault
+        }
       >
         {body}
       </Text>
@@ -51,56 +60,56 @@ export function WarningCard({
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: SPACING.radius,
-    padding: SPACING.screenPadding,
-    backgroundColor: '#fffbeb',
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-    gap: SPACING.gapSm,
-  },
-  cardDosage: {
-    borderRadius: SPACING.radiusSm,
-  },
-  cardProminent: {
-    paddingVertical: SPACING.screenPadding + 2,
-    paddingHorizontal: SPACING.screenPadding + 2,
-    borderWidth: 2,
-    borderColor: '#d97706',
-    backgroundColor: '#fffbeb',
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.gapSm,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    color: '#b45309',
-  },
-  titleDosage: {
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    color: '#b45309',
-  },
-  bodyDefault: {
-    ...TYPOGRAPHY.body,
-    color: '#78350f',
-    flexShrink: 1,
-    fontSize: 17,
-    lineHeight: 26,
-  },
-  bodyDosage: {
-    fontSize: 18,
-    lineHeight: 28,
-    fontWeight: '600',
-    color: '#78350f',
-    flexShrink: 1,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    card: {
+      borderRadius: SPACING.radius,
+      padding: SPACING.screenPadding,
+      backgroundColor: colors.warningBg,
+      borderWidth: 2,
+      borderColor: colors.warningBorder,
+      gap: SPACING.gapSm,
+    },
+    cardDosage: {
+      paddingVertical: SPACING.screenPadding + 4,
+    },
+    cardProminent: {
+      paddingVertical: SPACING.screenPadding + 4,
+      paddingHorizontal: SPACING.screenPadding + 2,
+      borderWidth: 3,
+      borderColor: colors.warningBorderStrong,
+      backgroundColor: colors.warningBgProminent,
+    },
+    titleRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: SPACING.gapSm,
+    },
+    title: {
+      ...TYPOGRAPHY.sectionTitle,
+      flex: 1,
+      fontSize: 13,
+      color: colors.warningTitle,
+    },
+    titleDosage: {
+      ...TYPOGRAPHY.sectionTitle,
+      flex: 1,
+      fontSize: 13,
+      color: colors.warningTitle,
+    },
+    bodyDefault: {
+      ...TYPOGRAPHY.body,
+      color: colors.warningBody,
+      flexShrink: 1,
+      fontWeight: '600',
+    },
+    bodyDosage: {
+      fontSize: 22,
+      lineHeight: 32,
+      fontWeight: '700',
+      color: colors.warningBody,
+      flexShrink: 1,
+      letterSpacing: -0.2,
+    },
+  });
+}

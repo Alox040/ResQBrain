@@ -2,10 +2,10 @@ import {
   toLookupContentKey,
   type LookupContentKey,
 } from '@/lookup/loadLookupBundle';
-import { getActiveLookupStore } from '@/lookup/lookupSource';
+import type { LookupRamStore } from '@/lookup/loadLookupBundle';
 import type { Algorithm, ContentItem, ContentKind, ContentListItem, Medication } from '@/types/content';
 
-const store = getActiveLookupStore();
+let store: LookupRamStore | null = null;
 
 export type ContentKey = LookupContentKey;
 
@@ -13,28 +13,46 @@ export function toContentKey(kind: ContentKind, id: string): ContentKey {
   return toLookupContentKey(kind, id);
 }
 
-/** Active RAM store: embedded seed via `@/lookup/lookupSource` (validated at first resolve). */
-export const medications: Medication[] = store.medications;
+function requireStore(): LookupRamStore {
+  if (!store) {
+    throw new Error(
+      'contentIndex not initialized. Call initializeContent(bundle) before using content selectors.',
+    );
+  }
+  return store;
+}
 
-/** Active RAM store: embedded seed via `@/lookup/lookupSource` (validated at first resolve). */
-export const algorithms: Algorithm[] = store.algorithms;
+/**
+ * Inject the active lookup bundle (cached or embedded) into the app-level content index.
+ * Must be called before screens render.
+ */
+export function initializeContent(bundle: LookupRamStore): void {
+  store = bundle;
+  medications = bundle.medications;
+  algorithms = bundle.algorithms;
+  contentItems = bundle.contentItems;
+  contentLookup = bundle.contentLookup;
+  searchItems = bundle.searchItems;
+  searchIndexItems = bundle.searchIndexItems;
+}
 
-export const contentItems: ContentItem[] = store.contentItems;
-
-export const contentLookup: Record<ContentKey, ContentItem> = store.contentLookup;
-
-export const searchItems: ContentListItem[] = store.searchItems;
+/** Live bindings updated by {@link initializeContent}. */
+export let medications: Medication[] = [];
+export let algorithms: Algorithm[] = [];
+export let contentItems: ContentItem[] = [];
+export let contentLookup: Record<ContentKey, ContentItem> = {};
+export let searchItems: ContentListItem[] = [];
 
 export type SearchIndexItem = ContentListItem & {
   searchTerms: string[];
 };
 
-export const searchIndexItems: SearchIndexItem[] = store.searchIndexItems;
+export let searchIndexItems: SearchIndexItem[] = [];
 
 export function getMedicationById(medicationId: string): Medication | undefined {
-  return store.getMedicationById(medicationId);
+  return requireStore().getMedicationById(medicationId);
 }
 
 export function getAlgorithmById(algorithmId: string): Algorithm | undefined {
-  return store.getAlgorithmById(algorithmId);
+  return requireStore().getAlgorithmById(algorithmId);
 }

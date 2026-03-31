@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Image,
   type ImageSourcePropType,
@@ -7,16 +7,15 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 export type EmptyStateProps = {
-  /** When true, the block is rendered */
   when: boolean;
   message: string;
-  /** Zweizeiler / nächster Hinweis (ohne neue Datenlogik). */
   hint?: string;
   imageSource?: ImageSourcePropType;
-  /** Primary or secondary action row */
   action?: React.ReactNode;
   style?: ViewStyle;
 };
@@ -29,6 +28,9 @@ export function EmptyState({
   action,
   style,
 }: EmptyStateProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   if (!when) {
     return null;
   }
@@ -56,31 +58,33 @@ export function EmptyState({
   );
 }
 
-const styles = StyleSheet.create({
-  wrap: {
-    minHeight: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: SPACING.screenPaddingBottom,
-    gap: SPACING.screenPadding,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    maxWidth: '80%',
-  },
-  message: {
-    ...TYPOGRAPHY.body,
-    textAlign: 'center',
-    color: COLORS.textMuted,
-    maxWidth: 320,
-  },
-  hint: {
-    ...TYPOGRAPHY.bodyMuted,
-    textAlign: 'center',
-    fontSize: 14,
-    lineHeight: 20,
-    maxWidth: 320,
-    marginTop: SPACING.gapXs,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    wrap: {
+      minHeight: 200,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: SPACING.screenPaddingBottom,
+      gap: SPACING.screenPadding,
+    },
+    image: {
+      width: 200,
+      height: 200,
+      maxWidth: '80%',
+    },
+    message: {
+      ...TYPOGRAPHY.body,
+      textAlign: 'center',
+      color: colors.textMuted,
+      maxWidth: 320,
+    },
+    hint: {
+      ...TYPOGRAPHY.bodyMuted,
+      textAlign: 'center',
+      lineHeight: 22,
+      maxWidth: 320,
+      marginTop: SPACING.gapXs,
+      color: colors.textMuted,
+    },
+  });
+}

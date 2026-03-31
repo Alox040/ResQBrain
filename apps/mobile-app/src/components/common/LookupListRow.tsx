@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -7,7 +7,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { CARD, COLORS, LAYOUT, SPACING } from '@/theme';
+import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 const DEFAULT_MIN_HEIGHT = LAYOUT.listRowMinHeight;
 
@@ -33,6 +35,9 @@ export function LookupListRow({
   minHeight = DEFAULT_MIN_HEIGHT,
   style,
 }: LookupListRowProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <Pressable
       onPress={onPress}
@@ -55,48 +60,50 @@ export function LookupListRow({
           </Text>
         </View>
       </View>
-      <Ionicons name="chevron-forward" size={22} color={COLORS.textMuted} />
+      <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
     </Pressable>
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    ...CARD.base,
-    paddingVertical: SPACING.screenPadding,
-    gap: SPACING.gapSm,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  rowBody: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.gapMd,
-    minWidth: 0,
-  },
-  leading: {
-    flexShrink: 0,
-  },
-  textCol: {
-    flex: 1,
-    minWidth: 0,
-    gap: 6,
-  },
-  rowPressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-    borderColor: '#bfdbfe',
-  },
-  label: {
-    fontSize: 19,
-    fontWeight: '700',
-    color: COLORS.text,
-    flexShrink: 1,
-    letterSpacing: -0.2,
-  },
-  subtitle: {
-    fontSize: 15,
-    lineHeight: 23,
-    color: COLORS.textMuted,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    row: {
+      ...CARD.shell,
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      paddingVertical: SPACING.screenPadding,
+      gap: SPACING.gapSm,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    rowBody: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: SPACING.gapMd,
+      minWidth: 0,
+    },
+    leading: {
+      flexShrink: 0,
+    },
+    textCol: {
+      flex: 1,
+      minWidth: 0,
+      gap: 6,
+    },
+    rowPressed: {
+      backgroundColor: colors.pressedRowBg,
+      borderColor: colors.pressedRowBorder,
+    },
+    label: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+      flexShrink: 1,
+      letterSpacing: -0.2,
+    },
+    subtitle: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+    },
+  });
+}

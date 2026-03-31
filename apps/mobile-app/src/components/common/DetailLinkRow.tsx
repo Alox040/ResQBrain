@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -7,15 +7,16 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
-const DEFAULT_MIN_HEIGHT = 56;
+const DEFAULT_MIN_HEIGHT = LAYOUT.minTap;
 
 export type DetailLinkRowProps = {
   label: string;
   onPress: () => void;
   accessibilityLabel: string;
-  /** Kleines Kontext-Label (z. B. „Algorithmus“, „Medikament“). */
   contextLabel?: string;
   minHeight?: number;
   style?: ViewStyle;
@@ -29,6 +30,9 @@ export function DetailLinkRow({
   minHeight = DEFAULT_MIN_HEIGHT,
   style,
 }: DetailLinkRowProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <Pressable
       onPress={onPress}
@@ -45,43 +49,44 @@ export function DetailLinkRow({
         {contextLabel ? (
           <Text style={styles.context}>{contextLabel}</Text>
         ) : null}
-        <Text style={styles.label}>{label}</Text>
+        <Text style={styles.linkLabel}>{label}</Text>
       </View>
-      <Ionicons name="chevron-forward" size={22} color={COLORS.textMuted} />
+      <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
     </Pressable>
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 14,
-    paddingHorizontal: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    gap: SPACING.gapSm,
-  },
-  pressed: {
-    backgroundColor: COLORS.primaryMutedBg,
-  },
-  labelCol: {
-    flex: 1,
-    gap: SPACING.gapXs,
-  },
-  context: {
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
-    color: COLORS.textMuted,
-  },
-  label: {
-    ...TYPOGRAPHY.body,
-    flexShrink: 1,
-    color: COLORS.primary,
-    fontWeight: '600',
-    fontSize: 17,
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: SPACING.gapMd,
+      paddingHorizontal: SPACING.gapSm + 2,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+      gap: SPACING.gapSm,
+    },
+    pressed: {
+      backgroundColor: colors.pressedRowBg,
+    },
+    labelCol: {
+      flex: 1,
+      gap: SPACING.gapXs,
+    },
+    context: {
+      fontSize: 11,
+      fontWeight: '700',
+      letterSpacing: 0.5,
+      textTransform: 'uppercase',
+      color: colors.textMuted,
+    },
+    linkLabel: {
+      ...TYPOGRAPHY.body,
+      flexShrink: 1,
+      color: colors.link,
+      fontWeight: '700',
+    },
+  });
+}

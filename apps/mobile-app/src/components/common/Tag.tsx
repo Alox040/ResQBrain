@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { COLORS } from '@/theme';
+import { LAYOUT, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 export type TagProps = {
   label: string;
@@ -16,6 +18,9 @@ export type TagProps = {
 };
 
 export function Tag({ label, selected = false, onPress, style }: TagProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const body = (
     <Text style={[styles.text, selected ? styles.textSelected : styles.textPlain]}>
       {label}
@@ -47,32 +52,34 @@ export function Tag({ label, selected = false, onPress, style }: TagProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  base: {
-    minHeight: 48,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 999,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  plain: {
-    borderColor: COLORS.border,
-    backgroundColor: COLORS.surface,
-  },
-  selected: {
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.primaryMutedBg,
-  },
-  text: {
-    fontSize: 16,
-  },
-  textPlain: {
-    color: COLORS.text,
-  },
-  textSelected: {
-    color: COLORS.primary,
-    fontWeight: '600',
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    base: {
+      minHeight: LAYOUT.minTap,
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+      borderRadius: 999,
+      borderWidth: 2,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    plain: {
+      borderColor: colors.border,
+      backgroundColor: colors.surface,
+    },
+    selected: {
+      borderColor: colors.primary,
+      backgroundColor: colors.primaryMutedBg,
+    },
+    text: {
+      ...TYPOGRAPHY.body,
+    },
+    textPlain: {
+      color: colors.text,
+    },
+    textSelected: {
+      color: colors.primary,
+      fontWeight: '700',
+    },
+  });
+}

@@ -68,6 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   labelDisabled: {
-    color: COLORS.textMuted,
+    color: '#9ca3af',
   },
 });

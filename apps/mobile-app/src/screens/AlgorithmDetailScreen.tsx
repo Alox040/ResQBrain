@@ -17,8 +17,8 @@ import { ScreenContainer } from '@/components/layout';
 import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
 import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
-import { useFavoriteToggle } from '@/features/favorites/favoritesStore';
-import { recordHistoryOpen } from '@/features/history/historyStore';
+import { useFavoriteToggle } from '@/state/favoritesStore';
+import { addRecent, recentContentKey } from '@/state/recentStore';
 import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
 
@@ -61,18 +61,24 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
           ? () => (
               <Pressable
                 onPress={() => void toggleFavoriteItem()}
-                hitSlop={14}
+                hitSlop={10}
                 accessibilityRole="button"
                 accessibilityLabel={
                   isFavorite
                     ? 'Aus Favoriten entfernen'
                     : 'Zu Favoriten hinzufügen'
                 }
-                style={{ marginRight: 4 }}
+                style={{
+                  marginRight: 4,
+                  minWidth: 56,
+                  minHeight: 56,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
                 <Ionicons
                   name={isFavorite ? 'star' : 'star-outline'}
-                  size={24}
+                  size={26}
                   color="#fbbf24"
                 />
               </Pressable>
@@ -83,7 +89,7 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
 
   React.useEffect(() => {
     if (algorithm) {
-      void recordHistoryOpen(algorithm.id, 'algorithm');
+      void addRecent(recentContentKey('algorithm', algorithm.id));
     }
   }, [algorithm?.id]);
 

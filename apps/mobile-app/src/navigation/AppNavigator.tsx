@@ -2,18 +2,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { AlgorithmDetailScreen } from '@/screens/AlgorithmDetailScreen';
 import { MedicationDetailScreen } from '@/screens/MedicationDetailScreen';
 import { DoseCalculatorScreen } from '@/screens/DoseCalculatorScreen';
 import { AlgorithmListScreen } from '@/screens/AlgorithmListScreen';
 import { FavoritesScreen } from '@/screens/FavoritesScreen';
-import { HistoryScreen } from '@/screens/HistoryScreen';
 import { VitalReferenceScreen } from '@/features/references/VitalReferenceScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { MedicationListScreen } from '@/screens/MedicationListScreen';
 import { SearchScreen } from '@/screens/SearchScreen';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
+import { useTheme } from '@/theme/ThemeContext';
+import { TYPOGRAPHY } from '@/theme';
 
 export type { HomeStackParamList };
 
@@ -36,7 +37,6 @@ export type RootTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Search: undefined;
   Favorites: undefined;
-  History: undefined;
   MedicationList: NavigatorScreenParams<MedicationStackParamList>;
   AlgorithmList: NavigatorScreenParams<AlgorithmStackParamList>;
 };
@@ -45,22 +45,28 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const MedicationStack = createNativeStackNavigator<MedicationStackParamList>();
 const AlgorithmStack = createNativeStackNavigator<AlgorithmStackParamList>();
-const headerStyle = { backgroundColor: '#111827' } as const;
-const headerTitleStyle = {
-  fontSize: 18,
-  fontWeight: '700',
-} as const;
-const sharedStackScreenOptions = {
-  headerStyle,
-  headerTintColor: '#f9fafb',
-  headerTitleStyle,
-  headerBackTitleVisible: false,
-  contentStyle: { backgroundColor: '#f3f4f6' },
-} as const;
+
+function useStackScreenOptions() {
+  const { colors } = useTheme();
+  return useMemo(
+    () => ({
+      headerStyle: { backgroundColor: colors.navHeaderBg },
+      headerTintColor: colors.navHeaderText,
+      headerTitleStyle: {
+        ...TYPOGRAPHY.title,
+        color: colors.navHeaderText,
+      },
+      headerBackTitleVisible: false,
+      contentStyle: { backgroundColor: colors.bg },
+    }),
+    [colors],
+  );
+}
 
 function HomeStackNavigator() {
+  const screenOptions = useStackScreenOptions();
   return (
-    <HomeStack.Navigator screenOptions={sharedStackScreenOptions}>
+    <HomeStack.Navigator screenOptions={screenOptions}>
       <HomeStack.Screen
         name="HomeMain"
         component={HomeScreen}
@@ -76,10 +82,9 @@ function HomeStackNavigator() {
 }
 
 function MedicationStackNavigator() {
+  const screenOptions = useStackScreenOptions();
   return (
-    <MedicationStack.Navigator
-      screenOptions={sharedStackScreenOptions}
-    >
+    <MedicationStack.Navigator screenOptions={screenOptions}>
       <MedicationStack.Screen
         name="MedicationList"
         component={MedicationListScreen}
@@ -100,10 +105,9 @@ function MedicationStackNavigator() {
 }
 
 function AlgorithmStackNavigator() {
+  const screenOptions = useStackScreenOptions();
   return (
-    <AlgorithmStack.Navigator
-      screenOptions={sharedStackScreenOptions}
-    >
+    <AlgorithmStack.Navigator screenOptions={screenOptions}>
       <AlgorithmStack.Screen
         name="AlgorithmList"
         component={AlgorithmListScreen}
@@ -119,26 +123,45 @@ function AlgorithmStackNavigator() {
 }
 
 export function AppNavigator() {
+  const { colors } = useTheme();
+
+  const tabOptions = useMemo(
+    () => ({
+      headerStyle: { backgroundColor: colors.navHeaderBg },
+      headerTintColor: colors.navHeaderText,
+      headerTitleStyle: {
+        ...TYPOGRAPHY.title,
+        color: colors.navHeaderText,
+      },
+      tabBarStyle: { backgroundColor: colors.tabBarBg },
+      tabBarActiveTintColor: colors.tabActive,
+      tabBarInactiveTintColor: colors.tabInactive,
+    }),
+    [colors],
+  );
+
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerStyle,
-        headerTintColor: '#f9fafb',
-        headerTitleStyle,
-        tabBarStyle: { backgroundColor: '#111827' },
-        tabBarActiveTintColor: '#60a5fa',
-        tabBarInactiveTintColor: '#9ca3af',
-      }}
-    >
+    <Tab.Navigator screenOptions={tabOptions}>
       <Tab.Screen
         name="Home"
         component={HomeStackNavigator}
-        options={{ title: 'Start', headerShown: false }}
+        options={{
+          title: 'Start',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size ?? 24} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name="Search"
         component={SearchScreen}
-        options={{ title: 'Suche' }}
+        options={{
+          title: 'Suche',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search-outline" size={size ?? 24} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name="Favorites"
@@ -146,29 +169,31 @@ export function AppNavigator() {
         options={{
           title: 'Favoriten',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="History"
-        component={HistoryScreen}
-        options={{
-          title: 'Verlauf',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="time-outline" size={size ?? 24} color={color} />
+            <Ionicons name="star-outline" size={size ?? 24} color={color} />
           ),
         }}
       />
       <Tab.Screen
         name="MedicationList"
         component={MedicationStackNavigator}
-        options={{ title: 'Medikamente', headerShown: false }}
+        options={{
+          title: 'Medikamente',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="medkit-outline" size={size ?? 24} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name="AlgorithmList"
         component={AlgorithmStackNavigator}
-        options={{ title: 'Algorithmen', headerShown: false }}
+        options={{
+          title: 'Algorithmen',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="git-branch-outline" size={size ?? 24} color={color} />
+          ),
+        }}
       />
     </Tab.Navigator>
   );

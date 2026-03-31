@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   },
   description:
     "ResQBrain: Plattform-Idee für versionierte medizinische und operative Inhalte im Rettungsdienst — in früher Phase, mit Einladung zu Feedback und Umfrage.",
+  icons: {
+    icon: "/favicon.png",
+  },
   openGraph: {
     title: siteTitle,
     description:

@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
-  FlatList,
-  type ListRenderItemInfo,
+  SectionList,
+  type SectionListRenderItemInfo,
   StyleSheet,
   View,
 } from 'react-native';
@@ -18,7 +18,7 @@ import { ScreenContainer } from '@/components/layout';
 import {
   useFavoritesSorted,
   type FavoriteRecord,
-} from '@/features/favorites/favoritesStore';
+} from '@/state/favoritesStore';
 import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
@@ -41,14 +41,20 @@ const styles = StyleSheet.create({
   content: { paddingBottom: SPACING.screenPaddingBottom },
   contentEmpty: { flexGrow: 1 },
   listHeader: { paddingBottom: SPACING.gapMd },
+  sectionHeader: { paddingTop: SPACING.gapMd, paddingBottom: SPACING.gapSm },
 });
 
-function FavoritesListHeader() {
+type FavoritesSection = {
+  title: string;
+  data: FavoriteRecord[];
+};
+
+function FavoritesListIntro() {
   return (
     <View style={styles.listHeader}>
       <SectionHeader
         title="Favoriten"
-        description="Markierte Inhalte — neueste zuerst."
+        description="Medikamente und Algorithmen — getrennt nach Typ, neueste zuerst."
         size="comfortable"
       />
     </View>
@@ -58,6 +64,19 @@ function FavoritesListHeader() {
 export function FavoritesScreen() {
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
   const favorites = useFavoritesSorted();
+
+  const sections = useMemo((): FavoritesSection[] => {
+    const medications = favorites.filter((f) => f.kind === 'medication');
+    const algorithms = favorites.filter((f) => f.kind === 'algorithm');
+    const out: FavoritesSection[] = [];
+    if (medications.length > 0) {
+      out.push({ title: 'Medikamente', data: medications });
+    }
+    if (algorithms.length > 0) {
+      out.push({ title: 'Algorithmen', data: algorithms });
+    }
+    return out;
+  }, [favorites]);
 
   const openItem = useCallback(
     (item: FavoriteRecord) => {
@@ -77,7 +96,7 @@ export function FavoritesScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<FavoriteRecord>) => {
+    ({ item }: SectionListRenderItemInfo<FavoriteRecord, FavoritesSection>) => {
       const badge =
         item.kind === 'medication' ? KIND_BADGE_MEDICATION : KIND_BADGE_ALGORITHM;
       const vm = resolveContentViewModel(item.id, item.kind);
@@ -108,11 +127,20 @@ export function FavoritesScreen() {
     [],
   );
 
+  const renderSectionHeader = useCallback(
+    ({ section }: { section: FavoritesSection }) => (
+      <View style={styles.sectionHeader}>
+        <SectionHeader title={section.title} size="compact" />
+      </View>
+    ),
+    [],
+  );
+
   if (favorites.length === 0) {
     return (
       <ScreenContainer>
         <View style={[styles.wrap, styles.contentEmpty]}>
-          <FavoritesListHeader />
+          <FavoritesListIntro />
           <EmptyState
             when={true}
             message="Noch keine Favoriten"
@@ -126,15 +154,18 @@ export function FavoritesScreen() {
   return (
     <ScreenContainer>
       <View style={styles.wrap}>
-        <FlatList
+        <SectionList
           style={styles.list}
-          data={favorites}
+          sections={sections}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
+          renderSectionHeader={renderSectionHeader}
+          SectionSeparatorComponent={() => null}
           ItemSeparatorComponent={FlatListSeparator}
-          ListHeaderComponent={FavoritesListHeader}
+          ListHeaderComponent={FavoritesListIntro}
           contentContainerStyle={styles.content}
           keyboardShouldPersistTaps="handled"
+          stickySectionHeadersEnabled={false}
         />
       </View>
     </ScreenContainer>

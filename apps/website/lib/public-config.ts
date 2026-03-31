@@ -8,12 +8,12 @@
  */
 
 /** Aktive Umfrage (Microsoft Forms). */
-export const surveyPublishedUrlFromCode = "https://forms.cloud.microsoft/r/tw508dTuDK";
+export const surveyPublishedUrlFromCode = "<FORM_LINK_HIER_EINFÜGEN>";
 
 /**
  * Abgeschlossene Umfrage — referenziert unter `/mitwirkung`, nicht in `resolveSurveyLink()`.
  */
-export const surveyClosedDocumentationUrlFromCode = "https://forms.cloud.microsoft/r/quaHYEbjAC";
+export const surveyClosedDocumentationUrlFromCode = "https://forms.cloud.microsoft/r/ZFVgC0L1BZ";
 
 /** Öffentliche Zusammenfassung / Datei zu den Ergebnissen der ersten (abgeschlossenen) Umfrage. */
 export const firstSurveyResultsUrlFromCode =

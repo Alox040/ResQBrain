@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 export type DetailUnavailableRowProps = {
   message: string;
@@ -11,6 +13,9 @@ export function DetailUnavailableRow({
   message,
   detailLine,
 }: DetailUnavailableRowProps) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.row}>
       {detailLine ? (
@@ -21,21 +26,27 @@ export function DetailUnavailableRow({
   );
 }
 
-const styles = StyleSheet.create({
-  row: {
-    paddingVertical: 14,
-    paddingHorizontal: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-    gap: SPACING.gapXs,
-    backgroundColor: '#fafafa',
-  },
-  detail: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontSize: 13,
-  },
-  message: {
-    ...TYPOGRAPHY.bodyMuted,
-    fontStyle: 'italic',
-  },
-});
+function createStyles(colors: AppPalette) {
+  return StyleSheet.create({
+    row: {
+      paddingVertical: SPACING.gapMd,
+      paddingHorizontal: SPACING.gapSm + 2,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+      gap: SPACING.gapXs,
+      backgroundColor: colors.surfaceMuted,
+      minHeight: LAYOUT_MIN,
+    },
+    detail: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+    },
+    message: {
+      ...TYPOGRAPHY.bodyMuted,
+      fontStyle: 'italic',
+      color: colors.textMuted,
+    },
+  });
+}
+
+const LAYOUT_MIN = 56;

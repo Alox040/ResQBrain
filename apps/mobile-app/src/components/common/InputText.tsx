@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { COLORS, SPACING } from '@/theme';
+import { SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 import { Label } from './Label';
 
 export type InputTextProps = TextInputProps & {
@@ -27,10 +29,13 @@ export function InputText({
   postfixIcon,
   containerStyle,
   style,
-  placeholderTextColor = COLORS.textMuted,
+  placeholderTextColor: placeholderTextColorProp,
   ...rest
 }: InputTextProps) {
+  const { colors, isDark } = useTheme();
+  const styles = useMemo(() => createStyles(colors, isDark), [colors, isDark]);
   const hasError = Boolean(error);
+  const placeholderTextColor = placeholderTextColorProp ?? colors.textMuted;
 
   return (
     <View style={[styles.wrapper, containerStyle]}>
@@ -42,7 +47,7 @@ export function InputText({
         ) : null}
         <TextInput
           placeholderTextColor={placeholderTextColor}
-          selectionColor={COLORS.primary}
+          selectionColor={colors.primary}
           autoCapitalize="none"
           autoCorrect={false}
           style={[
@@ -64,51 +69,55 @@ export function InputText({
   );
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    gap: SPACING.gapSm,
-  },
-  fieldRow: {
-    position: 'relative',
-  },
-  prefix: {
-    position: 'absolute',
-    left: 14,
-    top: 0,
-    bottom: 0,
-    zIndex: 1,
-    justifyContent: 'center',
-  },
-  postfix: {
-    position: 'absolute',
-    right: 12,
-    top: 0,
-    bottom: 0,
-    justifyContent: 'center',
-  },
-  input: {
-    backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 999,
-    paddingHorizontal: SPACING.screenPadding,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: COLORS.text,
-  },
-  inputWithPrefix: {
-    paddingLeft: 44,
-  },
-  inputError: {
-    borderColor: '#f87171',
-    backgroundColor: '#fef2f2',
-  },
-  help: {
-    fontSize: 14,
-    color: COLORS.textMuted,
-  },
-  errorText: {
-    fontSize: 14,
-    color: '#dc2626',
-  },
-});
+function createStyles(colors: AppPalette, isDark: boolean) {
+  return StyleSheet.create({
+    wrapper: {
+      gap: SPACING.gapSm,
+    },
+    fieldRow: {
+      position: 'relative',
+    },
+    prefix: {
+      position: 'absolute',
+      left: 14,
+      top: 0,
+      bottom: 0,
+      zIndex: 1,
+      justifyContent: 'center',
+    },
+    postfix: {
+      position: 'absolute',
+      right: 12,
+      top: 0,
+      bottom: 0,
+      justifyContent: 'center',
+    },
+    input: {
+      backgroundColor: colors.surface,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 999,
+      paddingHorizontal: SPACING.screenPadding,
+      paddingVertical: 12,
+      ...TYPOGRAPHY.body,
+      color: colors.text,
+      minHeight: 56,
+    },
+    inputWithPrefix: {
+      paddingLeft: 44,
+    },
+    inputError: {
+      borderColor: '#f87171',
+      backgroundColor: isDark ? '#450a0a' : '#fef2f2',
+    },
+    help: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+    },
+    errorText: {
+      fontSize: 14,
+      color: '#f87171',
+      fontWeight: '600',
+    },
+  });
+}

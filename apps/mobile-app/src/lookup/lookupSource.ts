@@ -1,5 +1,7 @@
-import { loadLookupBundle, type LookupRamStore } from './loadLookupBundle';
+import { buildLookupRamStore, loadLookupBundle, type LookupRamStore } from './loadLookupBundle';
 import type { LookupManifest } from './lookupSchema';
+import { loadBundle, saveBundle } from '@/lookup/lookupCache';
+import { validateLookupBundle } from '@/lookup/validateLookupBundle';
 
 /**
  * Which physical layer supplied the active in-memory lookup store.
@@ -25,6 +27,65 @@ let activeStore: LookupRamStore | null = null;
 /** Set alongside `activeStore` whenever resolution logic picks a layer (today always `embedded`). */
 let activeProvisionSource: LookupProvisionSource = 'embedded';
 
+type LookupLoadedSource = 'cached' | 'embedded';
+
+let loadPromise: Promise<LookupLoadedSource> | null = null;
+
+/**
+ * Phase-2 provisioning: cached → embedded.
+ *
+ * Call once at app start; safe to call multiple times (dedupes via `loadPromise`).
+ */
+export async function loadLookupSource(): Promise<LookupLoadedSource> {
+  if (activeStore) return activeProvisionSource === 'cached' ? 'cached' : 'embedded';
+  if (!loadPromise) {
+    loadPromise = (async () => {
+      const cached = await loadBundle().catch(() => null);
+      if (cached) {
+        const res = validateLookupBundle({
+          manifest: cached.manifest as unknown,
+          medications: cached.medications as unknown,
+          algorithms: cached.algorithms as unknown,
+        });
+        if (res.ok) {
+          activeProvisionSource = 'cached';
+          activeStore = buildLookupRamStore(res.data);
+          return 'cached' as const;
+        }
+      }
+      activeProvisionSource = 'embedded';
+      activeStore = loadLookupBundle();
+      // After seed load: persist it, but only when bundleId changed.
+      const cachedBundleId =
+        cached && typeof cached.manifest?.bundleId === 'string'
+          ? cached.manifest.bundleId
+          : null;
+      const embeddedBundleId = activeStore.manifest.bundleId;
+      if (cachedBundleId !== embeddedBundleId) {
+        await saveBundle({
+          manifest: activeStore.manifest,
+          medications: activeStore.medications,
+          algorithms: activeStore.algorithms,
+        });
+      }
+      return 'embedded' as const;
+    })();
+  }
+  return loadPromise;
+}
+
+/**
+ * Initializes the in-memory lookup store after {@link loadLookupSource}.
+ *
+ * Today this is a small explicit step so App startup can:
+ * `const bundle = await loadLookupSource(); initializeLookupStore(bundle);`
+ */
+export function initializeLookupStore(_bundle: LookupLoadedSource): void {
+  // `loadLookupSource` already sets `activeStore`; this ensures late callers
+  // (or future refactors) still get a RAM store deterministically.
+  resolveActiveLookupStore();
+}
+
 /**
  * Resolves the singleton RAM store for the app process.
  *
@@ -45,6 +106,7 @@ function resolveActiveLookupStore(): LookupRamStore {
   // Future: const fallback = tryLoadFallbackBundleStore();
   // …
 
+  // If the app forgot to call `loadLookupSource()` at startup, fall back to the embedded seed.
   activeProvisionSource = 'embedded';
   activeStore = loadLookupBundle();
   return activeStore;
