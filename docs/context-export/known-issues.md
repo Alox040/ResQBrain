@@ -4,41 +4,40 @@ Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Syst
 
 ## Dokumentation vs. Code
 
-- **`docs/status/PROJECT_STATUS.md`:** Beschreibt Implementierung von Loader/`contentIndex` als ausstehend — **im Code vorhanden** (`loadLookupBundle.ts`, `contentIndex.ts`, Screens).
-- **`docs/roadmap/PROJECT_ROADMAP.md`:** Mehrere Phase-0-Mobile-Punkte als `[ ]`, obwohl zugehörige Funktionen im Repository implementiert sind (Listen, Details, Suche, Bundle-Load).
+- **`docs/status/PROJECT_STATUS.md` (28. März 2026):** Block 1 (Seed, Loader, `contentIndex`) als Code noch offen — **im Repo vorhanden:** `loadLookupBundle.ts`, `contentIndex.ts`, Screens.
+- **`docs/roadmap/PROJECT_ROADMAP.md`:** Phase-0-Punkte Suche/Details/Seed teils `[ ]`, obwoil die zugehörigen Implementierungen in `apps/mobile-app/` existieren.
+- **`README.md`:** Website-Routen-Tabelle und „fehlende MVP-Screens“ passen nicht zum Build-Output (8 statische Routen inkl. `/kontakt`, `/links`, `/mitwirkung`) und zur Mobile-App.
+- **`README.md` (Risiken):** Erwähnung Platzhalter-Umfrage — **`apps/website/lib/public-config.ts`** enthält konkrete Microsoft-Forms-URLs.
 
-## Repository-Struktur / Routing
+## Repository-Struktur / Website
 
-- **Zwei Website-Spuren:** Kanonisch für Build ist `apps/website/`. Zusätzlich existieren **`/app/page.tsx`** und **`/components/`** am Repo-Root mit anderen Imports — **nicht** von Root-`pnpm build` gebaut. Risiko: falsches Root-Verzeichnis bei Hosting.
-- **Root `tsconfig.json`:** `extends: "expo/tsconfig.base"` — ungewöhnlich für reines Monorepo-Root ohne eigenes Expo-App-Target im Root-`package.json`.
+- **Zwei aktive Website-Pfade:** Kanonisch für Root-Build ist **`apps/website/`**. Zusätzlich **`apps/website-old/`** vollständige ältere App + Root-`app/`/`components/` — nicht an Root-`pnpm build` gekoppelt.
+- **Root `tsconfig.json`:** `extends: "expo/tsconfig.base"` — weiterhin atypisch für reines Monorepo-Root ohne Expo-Target im Root-`package.json`.
 
-## Build / CI
+## Build / CI / Validierung
 
-- **Keine CI-Konfiguration** gefunden (keine `.github/workflows/*`, keine `.gitlab-ci*.yml`).
-- **Mobile-App:** nicht Teil von `pnpm build` am Root — separater Expo-Workflow nötig.
+- **Keine CI-Konfiguration** unter `.github/` oder `.gitlab-ci*.yml` (Suche 31. März 2026).
+- **`scripts/validate-routing.ts`:** Exit **1** — erwartet u. a. `HeroSection`, `CTASection`, Footer-Muster; aktive `apps/website` nutzt `HomePageSections` / andere Section-Namen.
+- **`scripts/validate-content-isolation.ts`:** Exit **1** — meldet u. a. „unerwartete“ Routen `/kontakt`, `/links`, `/mitwirkung` und Check „Root = apps/website“ als **fail** bei vorhandener **`vercel.json` am Repository-Root** (laut Skriptausgabe: „Repo-Root vercel.json vorhanden“).
+- **Mobile-App:** nicht Teil von Root-`pnpm build`.
 
 ## Navigation / App
 
-- Keine automatisierten Testläufe für React Navigation in diesem Export ausgeführt; **Typecheck** (`tsc --noEmit`) in `apps/mobile-app` war **ohne Fehler** (einmaliger Lauf).
+- Keine automatisierten UI-Testläufe für React Navigation in diesem Export; **Typecheck** (`tsc --noEmit`) in `apps/mobile-app` war **ohne Fehler** (Lauf 31. März 2026).
 
 ## Expo / SDK
 
-- Keine Konfliktfälle im Export gemessen; **Abhängigkeiten** laut `apps/mobile-app/package.json`: Expo 54, RN 0.81.5, React 19.1.0 — Kombination ist fest verdrahtt; Kompatibilitätsprobleme hier nicht runtime-getestet.
+- **Abhängigkeiten** laut `apps/mobile-app/package.json`: Expo 54, RN 0.81.5, React 19.1.0 — Laufzeit auf Geräten hier nicht verifiziert.
 
 ## Encoding / Website
 
-- **`lib/site.ts`:** Navigation/Metadaten nutzen ASCII-Ersatzschreibweisen (`Loesung`, `fuer` in anderen Dateien).
-- **`TemporaryEncodingTest.tsx`:** Debug-Komponente mit Unicode-Escapes; **nicht** in produktiven Pages importiert (Repo-Suche nur Selbstreferenz).
+- **`TemporaryEncodingTest`:** nur unter **`apps/website-old/components/debug/`**, nicht unter **`apps/website`**.
 
 ## Deployment
 
-- **Vercel `ignoreCommand`:** Builds auf Nicht-`main`/`master`-Branches werden unterdrückt — beabsichtigt laut Script-Kommentar und Logik.
+- **`apps/website/vercel.json`:** kein `ignoreCommand` — Branch-Builds werden durch diese Datei **nicht** unterdrückt (im Gegensatz zu `apps/website-old/vercel.json`).
 - **`docs/status/PROJECT_STATUS.md`:** Hinweis, dass produktives Deployment nicht aus dem täglichen Build allein folgt.
 
 ## Datenmodell-Drift
 
-- **Drei parallele Medikations-/Algorithmus-Modelle:** Phase-0 JSON + App-Typen, Plattform-`content/entities`, Domain-`lookup/entities` — Abgleich/Mapping ist **nicht** in der Mobile-App auf `@resqbrain/domain` umgesetzt (`package.json` ohne diese Dependency).
-
-## README / Historie
-
-- **`docs/status/PROJECT_STATUS.md`:** Erwähnung früherer README-Konfliktmarker — aktueller README-Zustand im Export nicht erneut auf Konfliktmarker geprüft.
+- **Phase-0 JSON + App-Typen**, **Plattform-`content/entities`**, **Domain-`lookup/entities`**, **`DbrdNormalized*`** — mehrere Modelle; Mobile hängt **nicht** an `@resqbrain/domain` (`package.json` ohne Dependency).

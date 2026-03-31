@@ -4,66 +4,64 @@
 
 ## Next.js-Struktur
 
-- **`apps/website/app/layout.tsx`** — Root-Layout: Inter-Font (latin + latin-ext), `lang="de"`, Header, `children`, Footer-Links aus `getLegalViewModel()`.
-- **`apps/website/app/page.tsx`** — Startseite: komponiert Sections (Hero, Surveys, Roadmap, Problem, Solution, Features, Use Cases, Trust, CTA, Footer, `MobileStickyCTA`).
-- **`apps/website/app/impressum/page.tsx`**, **`apps/website/app/datenschutz/page.tsx`** — Rechtstexte (Imports aus `legal/`).
-- **Next-Version:** `package.json` → `next ^16.2.1` (Build-Output im Export-Lauf: Next.js 16.2.1 mit Turbopack).
+- **`apps/website/app/layout.tsx`** — Root-Layout: Inter-Font (`latin`, `latin-ext`), `lang="de"`, `SiteShell` um `children`, Metadaten mit `sitePublicUrl` aus `lib/site-content.ts`, `siteTitle` aus `lib/routes.ts`.
+- **`apps/website/app/page.tsx`** — Startseite: rendert `HomePageSections` aus `components/home/home-page-sections.tsx`.
+- **Weitere Routen:** `app/kontakt/page.tsx`, `app/links/page.tsx`, `app/mitwirkung/page.tsx`, `app/impressum/page.tsx`, `app/datenschutz/page.tsx`.
+- **Next-Version:** `package.json` → `next ^16.2.1` (Build-Lauf: Next.js 16.2.1 mit Turbopack).
 
 ## Sections (Startseite)
 
-Reihenfolge laut `app/page.tsx`:
+Reihenfolge laut `components/home/home-page-sections.tsx`:
 
-1. HeroSection  
-2. SurveysSection  
-3. RoadmapSection  
-4. ProblemSection  
-5. SolutionSection  
-6. FeatureSection  
-7. UseCasesSection  
-8. TrustSection  
-9. CTASection  
-10. FooterSection  
-11. MobileStickyCTA  
+1. `HomeHero`  
+2. `SurveyInviteSection`  
+3. `ProblemBenefitsSection`  
+4. `FeaturesOverviewSection`  
+5. `AudiencesSection`  
+6. `PilotFeedbackSection`  
+7. `CollaborationSection`  
+8. `FaqSection`  
+
+(Frühere Export-Version mit `SurveysSection`, `RoadmapSection`, `CTASection`, `MobileStickyCTA` gehört zur **`apps/website-old/`-Struktur**, nicht zur aktiven `apps/website`.)
 
 ## Routing
 
-| Route | Datei | Build-Modus (Export-Lauf) |
-|-------|--------|---------------------------|
+| Route | Datei | Build-Modus (Lauf 31. März 2026) |
+|-------|--------|----------------------------------|
 | `/` | `app/page.tsx` | Static (○) |
+| `/kontakt` | `app/kontakt/page.tsx` | Static |
+| `/links` | `app/links/page.tsx` | Static |
+| `/mitwirkung` | `app/mitwirkung/page.tsx` | Static |
 | `/impressum` | `app/impressum/page.tsx` | Static |
 | `/datenschutz` | `app/datenschutz/page.tsx` | Static |
 | `/_not-found` | Framework | Static |
 
 ## Umfragen-Integration
 
-- **`components/sections/SurveysSection.tsx`:** Zwei Einträge mit festen URLs:
-  - `https://forms.cloud.microsoft/r/tw508dTuDK` (Status „active“)
-  - `https://forms.cloud.microsoft/r/quaHYEbjAC` (Status „completed“)
-- Kein separates Survey-Backend im Repository-Auszug — nur externe Formular-Links.
+- **`lib/public-config.ts`:** `surveyPublishedUrlFromCode` → Microsoft Forms (`forms.cloud.microsoft/r/tw508dTuDK`); abgeschlossene Umfrage dokumentiert unter `surveyClosedDocumentationUrlFromCode` (`…/quaHYEbjAC`). `NEXT_PUBLIC_RESQBRAIN_SURVEY_URL` überschreibt die veröffentlichte URL.
+- **`lib/routes.ts`:** `resolveSurveyLink()` — externe HTTPS-URL wenn konfiguriert, sonst intern ` /mitwirkung#umfrage`.
+- **`components/sections/survey-invite-section.tsx`:** Primär-CTA über `SurveyCtaLink`; sekundär Link nach `routes.kontakt`.
+- **`app/mitwirkung/page.tsx`:** Erklärtexte und erneuter Umfrage-Zugang; kein eingebettetes Formular auf der Site.
+- Kein separates Survey-Backend im Repository — nur konfigurierbare externe Links.
 
 ## CTA / Buttons
 
-- **`CTASection.tsx`:** Nutzt `getContactViewModel()` aus `lib/site-selectors.ts`:
-  - Primärer Button: `contactHref` → `mailto:triggerhub@outlook.com` mit Betreff „Kontakt ResQBrain“ (E-Mail aus `lib/site.ts`: `contact.email`).
-  - Sekundär: `learnMoreHref` → `mailto:` mit Betreff „Mehr erfahren ResQBrain“.
-- **`MobileStickyCTA`:** Konstante `ENABLE_MOBILE_STICKY_CTA = false` — rendert `null` (Pilot-Sticky-CTA deaktiviert).
+- **Umfrage-Bereich:** Text und Buttons in `SurveyInviteSection` (siehe oben); Kontakt über `Link` zu `/kontakt`.
+- **Weitere CTAs:** abhängig von den jeweiligen Section-Komponenten (nicht jede Section hier einzeln zitiert).
 
 ## Deployment (Vercel)
 
-- **`apps/website/vercel.json`:**  
-  `"ignoreCommand": "node ../../scripts/vercel-ignore.js"`
-- **`scripts/vercel-ignore.js`:** Build wird **übersprungen** (Exit **0**), wenn `VERCEL_GIT_COMMIT_REF` nicht in `{main, master}`; sonst Exit **1** (= Build **nicht** ignorieren).  
+- **`vercel.json` am Repository-Root:** u. a. `rootDirectory: "apps/website"`, gleiche install/build-Befehle wie die App, `outputDirectory: "apps/website/.next"`.
+- **`apps/website/vercel.json`:** `framework`, `installCommand`, `buildCommand` — **ohne** `ignoreCommand` in dieser Datei.
+- **`apps/website-old/vercel.json`:** weiterhin `ignoreCommand` → `node ../../scripts/vercel-ignore.js` (nur für diese Kopie nachweisbar).
 - **Live-Deployment:** in diesem Export nicht per API oder Dashboard verifiziert.
 
-## Bekannte UI-/Copy-Besonderheiten
+## Encoding / Copy
 
-- **`lib/site.ts`:** Teilstrings bewusst ohne Umlaute (z. B. `"Loesung"` in Navigation, `"Plattform fuer"` in description) — ASCII-Ersatzdarstellung in Konfiguration.
-- **`SurveysSection.tsx`:** Text „fuer“ / „besser“ ohne Umlaute in sichtbaren Strings.
+- **`apps/website`:** Keine `TemporaryEncodingTest`-Komponente (Repo-Suche: Vorkommen nur unter `apps/website-old/components/debug/` und in alter Doku).
+- Sichtbare Umlaute kommen in Metadaten und Section-Texten vor (keine ASCII-only-Pflicht für die gesamte Site aus diesem Export ableitbar).
 
-## Encoding / Debug
+## Duplikat / Legacy
 
-- **`components/debug/TemporaryEncodingTest.tsx`:** Zeigt Unicode-Escape-Sequenzen (`\u00E4` etc.) im JSX-String — **nur** diese Datei gefunden; **kein** Import dieser Komponente an anderer Stelle im Repo (Suche nach `TemporaryEncodingTest` nur Treffer in der Datei selbst).
-
-## Duplikat / Legacy am Repo-Root
-
-- Zusätzlich existieren **`/app/page.tsx`** und **`/components/`** am Root mit anderer Section-Zusammenstellung und Imports wie `@/components/sections/hero` — **nicht** das deployte Website-Paket laut Root-`pnpm build` (siehe `deployment.md`).
+- **`apps/website-old/`** — vollständigere alte Marketing-Site im Workspace.
+- **Root `app/page.tsx`, `components/`** — nicht das deployte Website-Paket laut Root-`pnpm build` (siehe `deployment.md`).

@@ -1,21 +1,37 @@
 # Projektstatus
 
-**Stand:** 28. März 2026
+**Stand:** 31. März 2026
 
 ## Gesamtstatus
 
-ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig und statisch vorrenderbar. **Phase 0 (Lookup-first Mobile):** Architektur- und Kontextstand ist **final dokumentiert** und **Re-validiert (PASS)**; Umsetzung **Block 1** (Seed, Loader, `contentIndex`) ist vorbereitet, im Code noch offen.
+ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig und statisch vorrenderbar. **Phase 0 (Lookup-first Mobile):** Architektur- und Kontextstand ist **final dokumentiert** und **Re-validiert (PASS)**; **Block 1** (Seed, Validierung, Lookup-Bundle-Loader, `contentIndex`, Lookup-Screens inkl. Suche) ist **im Code umgesetzt** — siehe Checkliste unten.
 
 ## Mobile / Phase 0 (Lookup MVP)
 
 | Aspekt | Status |
 |--------|--------|
-| **Datenquelle Phase 0** | **JSON-Bundle** unter `data/lookup-seed/` inkl. `manifest.json` (`schemaVersion`, `bundleId`) — kanonisch. TS-Module unter `apps/mobile-app/src/data/` nur Übergang bis Loader. Datenform: `lookup-data-shape.md`; Ablauf: `content-seed-plan.md`. |
+| **Datenquelle Phase 0** | **JSON-Bundle** unter `data/lookup-seed/` inkl. `manifest.json` (`schemaVersion`, `bundleId`) — kanonisch; App-Lesepfad über `loadLookupBundle` / `contentIndex`. Datenform: `lookup-data-shape.md`; Ablauf: `content-seed-plan.md`. |
 | **Offline-Strategie** | **Lokales/eingebettetes Bundle**, kein Remote-Zwang; Start → laden/validieren → RAM-Store + In-Memory-Suchindex; **keine Sync-Engine**. Spec: `docs/context/offline-phase0-decision.md`. |
 | **Screen-Spezifikation** | **Definiert** — vier Lookup-Screens (Medikament/Algorithmus Liste + Detail): `docs/context/mobile-phase0-screens.md`. |
 | **Architektur** | **Konsolidiert** — `docs/architecture/lookup-first-architecture.md` mit klarem Phase-0-Subset vs. Zielarchitektur; deckungsgleich mit Phase-0-Kontextdateien. |
 | **Re-Validierung** | **Bestanden (PASS)** — Abgleich Scope, kein Sync, keine Dosierungs-/Verzweigungslogik in Phase 0, JSON als Quelle, keine Governance-UI in der App. |
-| **Implementierung** | **Block 1 vorbereitet** (Anforderungen/DoD in `docs/context/next-steps-laptop-to-pc.md`): Seed + Validierung + Loader; `contentIndex` nur über Bundle (**eine** inhaltliche Quelle für Details, danach Listen/Suche/Querverweise). Code-Umsetzung ausstehend. |
+| **Implementierung** | **Block 1 umgesetzt** — Loader (`loadLookupBundle`), `contentIndex`, Listen/Detail/Suche; eingebettetes Offline-Bundle ohne Netzwerk. **Offen:** persistenter Offline-Speicher, Sync, Favoriten, Verlauf (siehe Checkliste). |
+
+### Phase 0 — Umsetzung (Ist vs. offen)
+
+| Punkt | Status |
+|-------|--------|
+| Lookup-Bundle-Loader (inkl. Validierung, `contentIndex`) | erledigt |
+| Medikamentenliste | erledigt |
+| Algorithmenliste | erledigt |
+| Medikamentendetail | erledigt |
+| Algorithmusdetail | erledigt |
+| Suchscreen | erledigt |
+| Offline: Bundle laden (eingebettete JSON-Daten, ohne Netzwerk) | erledigt |
+| Persistenter Offline-Speicher | offen |
+| Sync | offen |
+| Favoriten | offen |
+| Verlauf (History) | offen |
 
 ## Domain
 
@@ -42,10 +58,13 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Route | Datei | Hinweis |
 |-------|-------|---------|
 | `/` | `apps/website/app/page.tsx` | Static |
+| `/kontakt` | `apps/website/app/kontakt/page.tsx` | Static |
+| `/links` | `apps/website/app/links/page.tsx` | Static |
+| `/mitwirkung` | `apps/website/app/mitwirkung/page.tsx` | Static |
 | `/impressum` | `apps/website/app/impressum/page.tsx` | Static |
 | `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | Static |
 
-Interne Anker wurden auf existierende Section-IDs abgestimmt (z. B. `#feedback`, `#cta`, `#features`, `#top`). Validierung: `pnpm --filter @resqbrain/website run validate:routing`.
+Interne Anker: siehe `apps/website/lib/routes.ts` (z. B. `#mitmachen`, `#funktionen`, `#faq`). Validierung: bei Bedarf `pnpm exec tsx scripts/validate-routing.ts` (Stand Skript ggf. veraltet gegenüber aktueller Site).
 
 ## Build
 

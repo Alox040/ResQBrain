@@ -1,6 +1,6 @@
 # Projekt-Roadmap
 
-**Stand:** 26. März 2026
+**Stand:** 31. März 2026
 
 ## Legende
 
@@ -21,11 +21,19 @@
 | Domain-Paket (Typen, Invarianten) | [~] |
 | Öffentliche Website (Landing, Legal) | [x] |
 | Website Messaging auf Einsatzfokus | [x] |
-| Seed-Daten aufbereiten (Medikamente + Algorithmen) | [ ] |
-| Offline-Datenhaltung (lokal-erste Architektur) | [ ] |
-| Schnelle lokale Suche (< 3 Sekunden) | [ ] |
-| Mobile App — Medikament-Detail-Ansicht | [ ] |
-| Mobile App — Algorithmus-Schritt-Ansicht | [ ] |
+| Seed-Daten aufbereiten (Medikamente + Algorithmen) | [x] |
+| Lookup-Bundle-Loader (`loadLookupBundle`, `contentIndex`) | [x] |
+| Medikamentenliste (Mobile) | [x] |
+| Algorithmenliste (Mobile) | [x] |
+| Medikamentendetail (Mobile) | [x] |
+| Algorithmusdetail / Schrittansicht (Mobile, linear) | [x] |
+| Suchscreen (Mobile) | [x] |
+| Offline: Bundle laden (eingebettete Daten, ohne Netzwerk) | [x] |
+| Schnelle lokale Suche (< 3 Sekunden) | [x] |
+| Persistenter Offline-Speicher | [ ] |
+| Sync | [ ] |
+| Favoriten | [ ] |
+| Verlauf (History) | [ ] |
 | Einsatz-optimierte UI (Schriftgroesse, Handschuhbedienung, Kontrast, schnelle Navigation) | [ ] |
 | Pilot-Wache als feste Konfiguration | [ ] |
 
@@ -37,8 +45,8 @@
 |-------|--------|
 | Dosierungsrechner (gewichtsbasiert) | [–] |
 | Vitalwert-Referenzen nach Altersgruppe | [–] |
-| Favoriten (Medikamente + Algorithmen) | [–] |
-| Verlauf (zuletzt aufgerufen) | [–] |
+| Favoriten (Medikamente + Algorithmen) | [ ] |
+| Verlauf (zuletzt aufgerufen) | [ ] |
 | Push-Updates bei Netzverbindung | [–] |
 
 ---
@@ -82,4 +90,4 @@
 
 ## Nächste Aktion
 
-**Phase 0:** Seed-Daten prüfen, Offline-Datenhaltung entscheiden, erste Mobile-App-Ansicht aufsetzen.
+**Phase 0:** Persistenter Offline-Speicher und Sync konzipieren; Einsatz-UI verfeinern; Pilot-Konfiguration festziehen. Favoriten und Verlauf gemäß Backlog.

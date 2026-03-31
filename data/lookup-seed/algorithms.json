@@ -31,7 +31,7 @@
   {
     "id": "alg-reanimation-erwachsene",
     "kind": "algorithm",
-    "label": "Reanimation Erwachsene (Überblick)",
+    "label": "Reanimation ALS (Überblick)",
     "indication": "Kreislaufstillstand bei Erwachsenen — strukturierte Einsatzreihenfolge",
     "tags": [
       "kreislauf"
@@ -39,7 +39,10 @@
     "searchTerms": [
       "cpr",
       "kre",
-      "basic life support"
+      "basic life support",
+      "als",
+      "advanced life support",
+      "reanimation"
     ],
     "steps": [
       {
@@ -62,8 +65,264 @@
       }
     ],
     "relatedMedicationIds": [
-      "med-adrenalin-i-m"
+      "med-adrenalin-i-m",
+      "med-amiodaron"
     ],
     "warnings": "Keine Dosierung ohne Bindung an den freigegebenen Medikamenten-Text der Organisation; die App führt keine Berechnung aus.\n\nVereinfachtes Schulungsbeispiel; produktive Inhalte durch freigegebenen Stand der Pilot-Wache ersetzen."
+  },
+  {
+    "id": "alg-bradykardie",
+    "kind": "algorithm",
+    "label": "Bradykardie — Erstmaßnahmen",
+    "indication": "Symptomatische Bradykardie (Herzfrequenz < 60/min mit hämodynamischer Instabilität)",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "bradykardie",
+      "bradykardes",
+      "langsamer puls"
+    ],
+    "steps": [
+      {
+        "text": "Vitalzeichen erheben; Monitoring anlegen (EKG, SpO2, NIBP)."
+      },
+      {
+        "text": "Atemweg sichern und O2-Gabe nach Bedarf und lokalem Leitfaden."
+      },
+      {
+        "text": "Venösen Zugang legen."
+      },
+      {
+        "text": "Bei hämodynamischer Instabilität: Atropin nach lokalem Protokoll und Medikamententext."
+      },
+      {
+        "text": "NA-Nachforderung und Transportentscheidung nach lokalem Standard."
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-atropin"
+    ]
+  },
+  {
+    "id": "alg-tachykardie",
+    "kind": "algorithm",
+    "label": "Tachykardie — Erstmaßnahmen",
+    "indication": "Symptomatische Tachykardie (Herzfrequenz > 150/min mit hämodynamischer Instabilität)",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "tachykardie",
+      "schneller puls",
+      "svt",
+      "vt",
+      "vorhofflimmern"
+    ],
+    "steps": [
+      {
+        "text": "Vitalzeichen erheben; 12-Kanal-EKG aufzeichnen."
+      },
+      {
+        "text": "Atemweg sichern und O2-Gabe nach Bedarf und lokalem Leitfaden."
+      },
+      {
+        "text": "Venösen Zugang legen."
+      },
+      {
+        "text": "Bei Instabilität: Rhythmus beurteilen; Medikation nur nach lokalem Protokoll — siehe verknüpfte Medikamente."
+      },
+      {
+        "text": "NA-Nachforderung und Transportentscheidung nach lokalem Standard."
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-amiodaron"
+    ],
+    "warnings": "Antiarrhythmika nur nach Diagnose und freigegebenem Protokoll; keine Dosierungsberechnung durch die App."
+  },
+  {
+    "id": "alg-asthma",
+    "kind": "algorithm",
+    "label": "Asthma — Exazerbation (Erstmaßnahmen)",
+    "indication": "Akute Asthmaexazerbation mit Bronchospasmus und Dyspnoe",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "asthma",
+      "bronchospasmus",
+      "dyspnoe",
+      "bronchialasthma"
+    ],
+    "steps": [
+      {
+        "text": "Patienten beruhigen; aufrechte Körperposition (Oberkörper hoch) ermöglichen."
+      },
+      {
+        "text": "O2-Gabe nach Bedarf und lokalem Leitfaden; SpO2-Zielbereich beachten."
+      },
+      {
+        "text": "Inhalationstherapie: Salbutamol nach lokalem Protokoll und Medikamententext."
+      },
+      {
+        "text": "Bei schwerer Exazerbation: weiteres Vorgehen ausschließlich nach freigegebenem Protokoll — ggf. Adrenalin."
+      },
+      {
+        "text": "NA-Nachforderung und Transportentscheidung nach Schweregrad."
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-salbutamol",
+      "med-adrenalin-i-m"
+    ],
+    "warnings": "Dosierung und Applikationsweg ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation."
+  },
+  {
+    "id": "alg-hypoglykaemie",
+    "kind": "algorithm",
+    "label": "Hypoglykämie — Erstmaßnahmen",
+    "indication": "Symptomatische Hypoglykämie (BZ < 3,3 mmol/l bzw. < 60 mg/dl mit klinischen Zeichen)",
+    "tags": [
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "hypoglykämie",
+      "unterzucker",
+      "bz erniedrigt",
+      "glucose",
+      "diabetes"
+    ],
+    "steps": [
+      {
+        "text": "BZ-Messung; Symptome und Bewusstseinslage beurteilen."
+      },
+      {
+        "text": "Bei Kooperation und intakten Schutzreflexen: orale Glucosegabe nach lokalem Standard."
+      },
+      {
+        "text": "Bei schwerer Hypoglykämie oder Bewusstlosigkeit: venösen Zugang legen; Glucose 40 % nach lokalem Protokoll und Medikamententext."
+      },
+      {
+        "text": "BZ-Kontrolle nach Intervention; Symptome neu beurteilen."
+      },
+      {
+        "text": "Ursachenklärung und Transportentscheidung nach klinischem Bild."
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-glucose-40"
+    ]
+  },
+  {
+    "id": "alg-krampfanfall",
+    "kind": "algorithm",
+    "label": "Krampfanfall — Erstmaßnahmen",
+    "indication": "Akuter generalisierter Krampfanfall",
+    "tags": [
+      "neurologie"
+    ],
+    "searchTerms": [
+      "krampfanfall",
+      "epilepsie",
+      "epileptischer anfall",
+      "status epilepticus"
+    ],
+    "steps": [
+      {
+        "text": "Eigensicherung; Patienten vor Verletzungen schützen (keine Fixierung erzwingen)."
+      },
+      {
+        "text": "Anfallsdauer messen; Atemweg beurteilen."
+      },
+      {
+        "text": "Nach Anfallsende: stabile Seitenlage; O2-Gabe nach Bedarf."
+      },
+      {
+        "text": "Bei prolongiertem Anfall: venösen Zugang legen; Antikonvulsivum nach lokalem Protokoll und Medikamententext."
+      },
+      {
+        "text": "NA-Nachforderung bei Status epilepticus oder unklarer Ursache."
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-midazolam"
+    ],
+    "warnings": "Antikonvulsiva nur nach freigegebenem Protokoll und Indikation; keine Dosierungsberechnung durch die App."
+  },
+  {
+    "id": "alg-acs",
+    "kind": "algorithm",
+    "label": "ACS — Akutes Koronarsyndrom (Erstmaßnahmen)",
+    "indication": "Verdacht auf akutes Koronarsyndrom (STEMI, NSTEMI, instabile Angina)",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "stemi",
+      "nstemi",
+      "angina pectoris"
+    ],
+    "steps": [
+      {
+        "text": "Monitoring anlegen (EKG, SpO2, NIBP); 12-Kanal-EKG so früh wie möglich."
+      },
+      {
+        "text": "Venösen Zugang legen; Blutabnahme nach lokalem Standard."
+      },
+      {
+        "text": "O2 nur bei SpO2 < 94 % nach lokalem Leitfaden."
+      },
+      {
+        "text": "Medikation nach lokalem Protokoll und Medikamententext — siehe verknüpfte Medikamente."
+      },
+      {
+        "text": "NA-Nachforderung; Voranmeldung im Herzkatheterlabor nach lokalem Standard."
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-ass-iv",
+      "med-heparin"
+    ],
+    "warnings": "Keine Medikamentengabe ohne Ausschluss von Kontraindikationen; Dosierung ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation."
+  },
+  {
+    "id": "alg-stroke",
+    "kind": "algorithm",
+    "label": "Stroke — Verdacht auf Schlaganfall (Erstmaßnahmen)",
+    "indication": "Verdacht auf akuten ischämischen oder hämorrhagischen Schlaganfall",
+    "tags": [
+      "neurologie",
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "stroke",
+      "schlaganfall",
+      "apoplex",
+      "tia",
+      "be-fast",
+      "fast"
+    ],
+    "steps": [
+      {
+        "text": "BE-FAST-Schema: Balance, Eyes, Face, Arms, Speech, Time — Zeitpunkt des letzten Wohlbefindens festhalten."
+      },
+      {
+        "text": "Vitalzeichen erheben; neurologischen Status dokumentieren."
+      },
+      {
+        "text": "O2-Gabe nur bei SpO2 < 94 % nach lokalem Leitfaden; Hypoglykämie ausschließen (BZ-Messung)."
+      },
+      {
+        "text": "Keine Antihypertensiva präklinisch ohne ärztliche Anordnung und freigegebenes Protokoll."
+      },
+      {
+        "text": "Stroke-Unit-Voranmeldung und schnellstmöglicher Transport."
+      }
+    ],
+    "relatedMedicationIds": []
   }
 ]

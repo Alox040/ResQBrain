@@ -1,62 +1,77 @@
 # Repository-Struktur (Export)
 
-**Methode:** Verzeichnisbaum bis Tiefe 2 (Auszug), ausgeblendet: `node_modules`, `.git`, größere `dist-*`, `.expo`. Vollständige Tiefe nur dort sinnvoll, wo explizit genannt.
+**Methode:** Verzeichnisscan Repository-Root 31. März 2026; in der Darstellung ausgelassen: `node_modules`, größere Build-Artefakte.
 
 ```
 ResQBrain/
-├── apps/                    # Workspace-Apps (pnpm workspaces)
+├── apps/
 │   ├── mobile-app/          # Expo + React Native (Lookup MVP)
-│   └── website/             # Next.js 16 Marketing-Site (@resqbrain/website)
-├── packages/                # Workspace-Glob `packages/*`
+│   ├── website/             # Next.js Marketing-Site (@resqbrain/website)
+│   └── website-old/         # Ältere Next.js-Site (eigenes package.json)
+├── packages/
 │   ├── domain/              # @resqbrain/domain — einziges Paket mit package.json unter packages/
-│   ├── shared/              # Ordner ohne package.json (leer / Platzhalter)
-│   └── ui/                  # Ordner ohne package.json (leer / Platzhalter)
-├── docs/                    # Kanonische und ergänzende Dokumentation
-│   ├── architecture/        # Technische Architektur
-│   ├── context/             # Produkt- & Plattformkontext
-│   ├── context-export/      # Dieser Export (externe Analyse)
-│   ├── legacy/              # Nur-Lese-Legacy-Snapshots
-│   ├── planning/            # Planungsartefakte
-│   ├── product/             # Produktdokus
-│   ├── roadmap/             # Roadmaps
-│   ├── sources/             # Referenzmaterial (Screenshots u. a.)
-│   ├── status/              # Projektstatus, Sessions
-│   └── surveys/             # Umfrage-Rohdaten/Exporte (Struktur)
+│   ├── shared/              # Ordner ohne package.json
+│   └── ui/                  # Ordner ohne package.json
+├── docs/
+│   ├── architecture/
+│   ├── context/
+│   ├── context-export/      # Dieser Export
+│   ├── legacy/
+│   ├── planning/
+│   ├── product/
+│   ├── roadmap/
+│   ├── sources/
+│   ├── status/
+│   └── surveys/
 ├── data/
 │   ├── lookup-seed/         # Phase-0 JSON (manifest, medications, algorithms)
-│   └── schemas/             # Leer im Export-Scan (keine Dateien gefunden)
-├── scripts/                 # Automatisierung: Validierung, Vercel-Ignore, Status-Renderer
-├── prompts/                 # Agent-/LLM-Prompt-Vorlagen
-├── configs/                 # Konfigurationsartefakte (Inhalt nicht im flachen Scan)
-├── content/                 # z. B. reddit/.gitkeep
-├── tmp/                     # Temporäre/abgelegte Dateien
-├── app/                     # Root: alternative Next-Seiten (nicht Root-build)
-├── components/              # Root: alternative UI-Sections (nicht Root-build)
-├── src/                     # Root: weiteres Quellverzeichnis (leer/unbenutzt im Export nicht verifiziert)
-├── backend/                 # Leer im Export-Scan
-├── .cursor/                 # Editor-Regeln
-├── package.json             # Root-Workspace (build → nur Website)
+│   └── schemas/             # dbrd-normalized.schema.ts, dbrd-normalized.examples.json
+├── scripts/
+│   ├── dbrd/                # Normalisierung, Lookup-Seed, Validierung
+│   ├── status/
+│   ├── utils/
+│   ├── vercel-ignore.js
+│   ├── validate-routing.ts
+│   ├── validate-content-isolation.ts
+│   └── check-german-umlauts.ts
+├── prompts/
+├── configs/
+├── content/
+├── tmp/
+├── app/                     # Root: alternative Next-Seiten (nicht an Root-build gekoppelt)
+├── components/              # Root: alternative UI
+├── src/                     # Root: ohne Dateien im flachen Scan
+├── backend/                 # Ohne Dateien im flachen Scan
+├── .claude/
+├── .cursor/
+├── .expo/                   # Expo-Artefakte (Workspace)
+├── .gitignore
+├── package.json             # Root-Workspace; build → nur Website
 ├── pnpm-workspace.yaml
 ├── pnpm-lock.yaml
 ├── tsconfig.json            # extends expo/tsconfig.base
+├── vercel.json              # Root: rootDirectory apps/website, build/install (siehe deployment.md)
 ├── README.md
 ├── CLAUDE.md
-└── AGENT_RULES.md
+├── AGENT_RULES.md
+└── ResQBrain_Project_Status.pdf
 ```
 
 ## Kurzbeschreibung je Hauptordner
 
 | Ordner | Zweck (nachweisbar) |
 |--------|----------------------|
-| **apps/mobile-app** | Produktive Expo-App: Navigation, Screens, Lookup-Loader, Theme |
-| **apps/website** | Produktive Next.js-Website inkl. `vercel.json`, `app/` Routes |
+| **apps/mobile-app** | Expo-App: Navigation, Screens, Lookup in `src/lookup`, `src/data` |
+| **apps/website** | Next.js-Website: `app/`, `components/`, `lib/`; Ziel von Root-`pnpm build` |
+| **apps/website-old** | Frühere Website-Variante u. a. mit `phase11:website`, `vercel.json` + `ignoreCommand` |
 | **packages/domain** | Domänenlogik: Content, Governance, Versioning, Release, Lifecycle, Audit, Survey, Lookup-Entities |
-| **data/lookup-seed** | Eingebettete JSON-Daten für die Mobile-Phase-0 |
-| **scripts** | `validate-routing`, `validate-content-isolation`, `vercel-ignore`, Status-Rendering, Git/FS-Helfer |
+| **data/lookup-seed** | Phase-0-JSON für die Mobile-App |
+| **data/schemas** | DBRD-Normalisierungsschema + Beispiele |
+| **scripts** | DBRD-Pipeline, Validierung, Vercel-Ignore, Status-Rendering, Helfer |
 | **docs** | Architektur-, Kontext-, Status- und Roadmap-Dokumente |
-| **docs/context-export** | Dieser Export für externe Analyse |
-| **prompts** | Textvorlagen für verschiedene Tools/Agenten |
-| **app/** + **components/** (Root) | Parallele Website-Struktur; nicht an `pnpm build` gekoppelt |
+| **docs/context-export** | Dieser Export |
+| **app/** + **components/** (Root) | Parallele/alte Next-Struktur; nicht Root-`pnpm build` |
+| **src/** (Root) | Leer im Scan |
 
 ## Workspace-Definition
 
@@ -68,9 +83,9 @@ packages:
   - "packages/*"
 ```
 
-Unter `packages/` existiert nur **`packages/domain/package.json`** als definiertes Paket; `shared/` und `ui/` sind Ordner **ohne** `package.json` (Platzhalter / leer).
-</think>
+Unter `packages/` existiert nur **`packages/domain/package.json`** als definiertes Paket; `shared/` und `ui/` sind Ordner **ohne** `package.json`.
 
+## Hinweis Vercel
 
-<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>
-Shell
+- **`vercel.json` am Repository-Root** setzt u. a. `rootDirectory: "apps/website"`.
+- **`apps/website/vercel.json`** existiert zusätzlich mit framework/install/build (ohne `rootDirectory` in dieser Datei im Export-Scan).

@@ -3,7 +3,8 @@
 ## Ordnerstruktur (relevant für Produkt)
 
 - **`apps/mobile-app/`** — Expo-App: `App.tsx`, `src/navigation`, `src/screens`, `src/data`, `src/lookup`, `src/types`, `src/ui`.
-- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (Layout, Sections, UI), `lib/` (Site-Konfiguration, ViewModels).
+- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (u. a. `home/`, `sections/`, `layout/`, `links/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `public-config.ts`, `site-content.ts`), `data/links.ts`.
+- **`apps/website-old/`** — ältere Next.js-Website im gleichen Monorepo (eigenes `app/`, `components/`, `lib/site.ts` u. a.); Referenz, nicht das Build-Ziel von Root-`pnpm build`.
 - **`packages/domain/src/`** — Domain-Logik, u. a.:
   - `content/entities/` — ApprovalStatus, ScopeTarget, Algorithm, Medication, Protocol, Guideline, ContentPackage, ContentPackageFoundation
   - `versioning/entities/` — u. a. CompositionEntry, ContentPackageVersion, ReleaseVersion, LineageState, …
@@ -12,9 +13,10 @@
   - `governance/` — Policies, Entities, `approval/services/ApprovalEngine.ts`, `services/PermissionEngine.ts`
   - `audit/`, `survey/`, `tenant/`, `lookup/entities/` (eigenes Lookup-Modell im Domain-Paket)
 - **`data/lookup-seed/`** — Phase-0-JSON: `manifest.json`, `medications.json`, `algorithms.json`.
-- **`scripts/`** — Validierung, Vercel-Ignore, Status-Renderer, Umlaut-Check u. a.
+- **`data/schemas/`** — `dbrd-normalized.schema.ts`, `dbrd-normalized.examples.json` (Normalisierungsschicht, kein Ersatz für Domain-Entities).
+- **`scripts/`** — u. a. `dbrd/` (Normalisierung, Lookup-Seed-Build, Validierung), `vercel-ignore.js`, `validate-routing.ts`, `validate-content-isolation.ts`, `status/`, `check-german-umlauts.ts`.
 
-**Zusatz (Root, nicht von Root-Build genutzt):** `app/`, `components/` am Repository-Root — parallele/alte Website-Struktur mit anderen Import-Pfaden.
+**Zusatz (Root, nicht von Root-Build genutzt):** `app/`, `components/` am Repository-Root — parallele/alte Struktur.
 
 ## Navigation (Mobile-App)
 
@@ -26,6 +28,16 @@
 
 **Einstieg:** `App.tsx` — `NavigationContainer` + `AppNavigator`.
 
+## Navigation / Routing (aktive Website)
+
+**Datei:** `apps/website/lib/routes.ts`
+
+- Statische Routen: `home` `/`, `kontakt` `/kontakt`, `links` `/links`, `mitwirkung` `/mitwirkung`, `impressum`, `datenschutz`.
+- `mainNav` / `footerNav` verweisen auf Anker auf der Startseite (`#mitmachen`, `#funktionen`, `#zielgruppen`, `#faq`) und auf Kontakt/Links.
+- Umfrage-Ziel: `resolveSurveyLink()` nutzt `getSurveyPublishedUrl()` aus `lib/public-config.ts` (HTTPS) oder Fallback intern `/mitwirkung#umfrage`.
+
+**Layout:** `app/layout.tsx` — `SiteShell` um `children`, Metadaten inkl. `sitePublicUrl` aus `lib/site-content.ts`.
+
 ## Domain Layer (`@resqbrain/domain`)
 
 - **Exportfassade:** `packages/domain/src/index.ts` re-exportiert Content-Factory-Funktionen, Typen, Governance-Evaluatoren, `Versioning`, `Audit`, `release`, `survey`, `Lookup`.
@@ -36,7 +48,7 @@
 ### A) Mobile Phase 0 (`apps/mobile-app/src/types/content.ts`)
 
 - `ContentKind`: `'medication' | 'algorithm'`
-- `ContentTag`: festes Vokabular (kreislauf, atemwege, neurologie, …)
+- `ContentTag`: festes Vokabular (kreislauf, atemwege, neurologie, …) — abgestimmt mit `lookupSchema.ts` (`CONTENT_TAG_VALUES`)
 - `Medication`: Basis-Felder + `dosage`, `relatedAlgorithmIds`
 - `Algorithm`: Basis-Felder + `steps: { text }[]`, optional `warnings`, `relatedMedicationIds`
 - `ContentItem` — Union
@@ -57,7 +69,7 @@ Validierung der Keys: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM
 ## Release Engine
 
 - **`packages/domain/src/release/ReleaseEngine.ts`** — Release-Flow mit Policy-/Capability-Bezug (Importe aus Governance, Content, Versioning); dazu Tests `release.engine.test.ts`.
-- **Mobile/Website:** kein direkter Aufruf dieser Engine in den App-Ordnern (innerhalb dieses Exports nicht gesucht).
+- **Mobile/Website:** kein direkter Aufruf dieser Engine in den App-Ordnern (innerhalb dieses Exports nicht vollständig durchsucht).
 
 ## Content-Struktur (App-Laufzeit)
 

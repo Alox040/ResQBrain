@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(grep -r \"lookup-seed\\\\|medications\\\\|algorithms\" E:/Programmierung/ResQBrain/scripts/ E:/Programmierung/ResQBrain/apps/mobile-app/src/ --include=*.ts -l)"
     ]
   }
 }

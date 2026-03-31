@@ -1,6 +1,6 @@
 # Datenstrukturen (Export)
 
-Es existieren **mehrere konkurrierende bzw. parallele Modelle** im Repo (absichtlich getrennt: Phase-0-App vs. Plattform-Domain vs. Domain-„Lookup“-Submodule).
+Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase-0-App vs. Plattform-Domain vs. Domain-„Lookup“-Submodule vs. DBRD-Normalisierung).
 
 ---
 
@@ -10,13 +10,13 @@ Es existieren **mehrere konkurrierende bzw. parallele Modelle** im Repo (absicht
 
 - `schemaVersion`, `bundleId`, optional: `displayName`, `locale`, `contentCutoffDate`, `generatedAt`
 
-**Aktueller Inhalt** (Beispiel): `schemaVersion: "1"`, `bundleId: "pilot-wache-001"`, `locale: "de"`, …
+**Aktueller Inhalt (Export):** u. a. `schemaVersion: "1"`, `bundleId: "pilot-wache-001"`, `generatedAt` — optionale Felder können fehlen.
 
 ### Medication (JSON + App-Typ `Medication`)
 
 - **Keys im JSON** (Whitelist `MEDICATION_ITEM_KEYS`):  
   `id`, `kind` (`"medication"`), `label`, `indication`, `tags`, `searchTerms`, `notes`, `dosage`, `relatedAlgorithmIds`
-- **TypeScript-Shape:** `apps/mobile-app/src/types/content.ts` — `Medication` erweitert gemeinsame Basis (`id`, `kind`, `label`, `indication`, `tags`, `searchTerms`, `notes?`) um `dosage`, `relatedAlgorithmIds`.
+- **TypeScript-Shape:** `apps/mobile-app/src/types/content.ts` — `Medication` erweitert gemeinsame Basis um `dosage`, `relatedAlgorithmIds`.
 
 ### Algorithm (JSON + App-Typ `Algorithm`)
 
@@ -25,10 +25,16 @@ Es existieren **mehrere konkurrierende bzw. parallele Modelle** im Repo (absicht
 - **Schritt:** nur `text` (`ALGORITHM_STEP_KEYS`)
 - **TypeScript:** `Algorithm` mit `steps: AlgorithmStep[]`, `warnings?`, `relatedMedicationIds`
 
-### Umfang der Seed-Dateien (gezählt)
+### Umfang der Seed-Dateien (gezählt, Export)
 
 - `medications.json`: **2** Objekte mit `"id"`.
 - `algorithms.json`: **2** Objekte mit `"id"`.
+
+### Pipeline (Repo)
+
+- **`data/schemas/dbrd-normalized.schema.ts`** — internes Normalisierungsmodell (Provenance, `NormalizedAlgorithmStep` mit `order`/`text`, Freigabestatus-Werte parallel zur Domain, ohne Org-/Audit-Objekte).
+- **`data/schemas/dbrd-normalized.examples.json`** — Beispielinstanzen.
+- **`scripts/dbrd/`** — Extraktion/Normalisierung/Validierung und `build-lookup-seed` (Mapping → `data/lookup-seed/`); Root-Scripts `pnpm dbrd:*`.
 
 ---
 
@@ -53,7 +59,7 @@ Weitere Versioning-Exporte: `ReleaseVersion`, `CompositionEntry`, … (`versioni
 ## 4) Release (Plattform)
 
 - **`ReleaseEngine`:** `packages/domain/src/release/ReleaseEngine.ts` — Eingaben u. a. `ReleaseContentPackageInput` mit Actor, `contentPackage`, `versionId`, Audit-Metadaten (genaue Felder im Quelltext).
-- **`ReleaseVersion`-Entity** unter `versioning/entities/ReleaseVersion.ts` (nicht vollständig zitiert in diesem Export).
+- **`ReleaseVersion`-Entity** unter `versioning/entities/ReleaseVersion.ts`.
 
 ---
 
@@ -66,7 +72,7 @@ Weitere Versioning-Exporte: `ReleaseVersion`, `CompositionEntry`, … (`versioni
 | **Guideline** | `content/entities/Guideline.ts` | `guidelineCategory`, `evidenceBasis`, `advisory`, References auf Protocol, Version/Approval, … |
 | **Protocol** | `content/entities/Protocol.ts` | (im Export nicht Zeile für Zeile ausgewiesen; Datei existiert) |
 
-**Wichtig:** Diese Shapes sind **nicht identisch** mit Phase-0-JSON der Mobile-App.
+**Wichtig:** Diese Shapes sind **nicht identisch** mit Phase-0-JSON der Mobile-App oder mit `DbrdNormalized*`-Typen; Mapping erfolgt über die DBRD-/Seed-Pipeline, nicht automatisch zur Laufzeit in der App.
 
 ---
 
@@ -80,4 +86,5 @@ Eigenes **Lookup-Medikament** (`Medication.ts`): `kind: 'Medication'`, `name`, `
 
 ## Ordner `data/schemas/`
 
-- Verzeichnis existiert im Repo-Baum; **Inhalt:** im Export-Lauf keine Dateien unter `data/schemas/` gefunden (leer oder nur Platzhalter ohne Dateien). **Kanonsiche Phase-0-Daten** liegen unter `data/lookup-seed/` (3 JSON-Dateien).
+- Enthält **`dbrd-normalized.schema.ts`** und **`dbrd-normalized.examples.json`** (nicht leer).
+- Kanonische ausgelieferte Phase-0-JSON-Dateien für die Mobile-App liegen unter **`data/lookup-seed/`** (3 JSON-Dateien: manifest, medications, algorithms).

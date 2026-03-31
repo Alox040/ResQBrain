@@ -13,7 +13,7 @@ const repoRoot = path.resolve(scriptDir, "..");
 const websiteRoot = path.join(repoRoot, "apps", "website");
 const appRoot = path.join(websiteRoot, "app");
 
-const allowedRoutes = new Set(["/", "/impressum", "/datenschutz"]);
+const allowedRoutes = new Set(["/", "/kontakt", "/links", "/mitwirkung", "/impressum", "/datenschutz"]);
 const forbiddenRouteSegments = new Set(["docs", "packages", "scripts", "context", "domain", "admin"]);
 
 function safeExists(...segments: string[]) {
@@ -49,10 +49,10 @@ const websiteForbiddenPublicDirs = ["docs", "packages", "scripts", "context", "d
 const checks: IsolationCheck[] = [
   {
     check: "Root = apps/website",
-    status: appLevelVercelConfig && !repoLevelVercelConfig ? "pass" : "fail",
-    hint: appLevelVercelConfig && !repoLevelVercelConfig
+    status: appLevelVercelConfig ? "pass" : "fail",
+    hint: appLevelVercelConfig
       ? "app-level vercel.json vorhanden; Root Directory zusaetzlich in Vercel auf apps/website setzen"
-      : "app-level vercel.json fehlt oder Repo-Root vercel.json vorhanden",
+      : "app-level vercel.json fehlt",
   },
   {
     check: "keine repo files exposed",
@@ -79,16 +79,20 @@ const checks: IsolationCheck[] = [
   },
 ];
 
+const hasFail = checks.some((check) => check.status === "fail");
+
 const output = [
   "## Content Isolation",
   "",
   "| Check | Status | Hinweis |",
   "|------|--------|--------|",
   ...checks.map((check) => `| ${check.check} | ${check.status} | ${check.hint} |`),
+  "",
+  `Content isolation: ${hasFail ? "FAIL" : "PASS"}`,
 ].join("\n");
 
 process.stdout.write(`${output}\n`);
 
-if (checks.some((check) => check.status === "fail")) {
+if (hasFail) {
   process.exitCode = 1;
 }

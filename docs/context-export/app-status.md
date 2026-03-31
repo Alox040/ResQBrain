@@ -17,12 +17,12 @@
 ## Navigation Flow
 
 - **Tabs:** Home, Search, MedicationList (Stack), AlgorithmList (Stack) — siehe `AppNavigator.tsx`.
-- **Detail-Navigation:** Von Listen zu Detail per IDs; Suche nutzt `navigation.navigate` in den jeweiligen Tab/Stack (Logik in `SearchScreen.tsx`, ab Zeile ~42ff. im gelesenen Ausschnitt).
+- **Detail-Navigation:** Von Listen zu Detail per IDs; Suche nutzt `navigation.navigate` in den jeweiligen Tab/Stack (Logik in `SearchScreen.tsx`).
 
 ## Medication Flow
 
 - **Liste + Detail:** implementiert (Stack `MedicationList` → `MedicationDetail`).
-- **Daten:** `contentIndex.ts` → `loadLookupBundle()` aus `data/lookup-seed/medications.json` (validiert).
+- **Daten:** `contentIndex.ts` bezieht Daten aus `loadLookupBundle()` (`src/lookup/loadLookupBundle.ts`) — validiertes `medications.json`.
 
 ## Algorithm Flow
 
@@ -30,7 +30,7 @@
 
 ## Search Flow
 
-- **Implementiert:** `SearchScreen` filtert `contentItems` mit `matchesLookupBundleItem` — case-insensitive `includes()` auf `label`, `indication`, `searchTerms`, bei Medikation zusätzlich `dosage`/`notes`, bei Algorithmus `notes`/`warnings`/Schritt-Texte (Kommentar im Code: kein Fuzzy, keine KI).
+- **Implementiert:** `SearchScreen` filtert über Bundle-Index — case-insensitive `includes()` auf `label`, `indication`, `searchTerms`, bei Medikation zusätzlich `dosage`/`notes`, bei Algorithmus `notes`/`warnings`/Schritt-Texte (kein Fuzzy, keine KI laut Codekommentar).
 - **Zusätzlicher Filter:** `kindFilter` all | medication | algorithm.
 
 ## Detail Screens
@@ -39,24 +39,25 @@
 
 ## Mock-Daten vs. echte Daten
 
-- **Keine Netzwerk-API** im gelesenen Datenpfad: JSON wird **zur Build-/Bundle-Zeit** importiert in `loadLookupBundle.ts` (`import … from '../../../../data/lookup-seed/…'`).
-- Inhalt ist **Seed-Daten** mit `bundleId: "pilot-wache-001"` im Manifest — keine Trennung „Mock“/„Produktion“ im Code ausgedrückt, nur statische Seed-Dateien.
+- **Keine Netzwerk-API** im Datenpfad: JSON wird zur Bundling-Zeit importiert in `loadLookupBundle.ts` (`import … from '../../../../data/lookup-seed/…'`).
+- Inhalt ist **Seed-JSON**; `manifest.json` enthält u. a. `bundleId: "pilot-wache-001"` — keine separate „Mock“-Kennzeichnung im Code.
 
 ## Offline Support
 
-- **Kommentar in `loadLookupBundle.ts`:** „No persistence, no network, no sync — bundle only.“
-- **RAM-Store** nach Validierung — **keine** AsyncStorage/SQLite o. Ä. in den gelesenen Dateien nachgewiesen.
+- **Kommentar in `loadLookupBundle.ts` (Typ `LookupRamStore`):** „No persistence, no network, no sync — bundle only.“
+- **RAM-Store** nach Validierung — **keine** AsyncStorage/SQLite in den für diesen Export gelesenen Dateien nachgewiesen.
 
 ## Expo-Status
 
-- **`app.json`:** Name ResQBrain, Slug `resqbrain`, Version 0.1.0, Portrait, Icons/Splash konfiguriert.
+- **`app.json`:** Name ResQBrain, Slug `resqbrain`, Version 0.1.0, Portrait, Icons/Splash konfiguriert (Details in Datei).
 - **Scripts:** `expo start`, `expo export` für Android/iOS nach `dist-validation` / `dist-validation-ios`.
 
 ## Build / Typecheck-Status
 
-- **`tsc --noEmit`** in `apps/mobile-app`: erfolgreich (Export-Lauf).
-- **Root `pnpm build`:** baut nur die Website, nicht die Mobile-App.
+- **`tsc --noEmit`** in `apps/mobile-app`: erfolgreich (Lauf 31. März 2026).
+- **Root `pnpm build`:** baut nur die Website (`@resqbrain/website`), nicht die Mobile-App.
 
 ## Sonstiges im App-Ordner
 
-- **`design/Extract UX and UI Requirements/`** — separates Vite/Design-Unterprojekt; in `tsconfig.json` der Mobile-App **excluded**.
+- **`design/Extract UX and UI Requirements/`** — separates Vite/Design-Unterprojekt; in `tsconfig.json` der Mobile-App typischerweise excluded.
+- **`ui8/_extracted/...`** — extrahierte Drittanbieter-Struktur mit eigenem `package.json`; nicht Teil des Mobile-Build-Pfads dieses Exports.

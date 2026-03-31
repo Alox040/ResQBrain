@@ -24,9 +24,25 @@ Kurzstatus (automatisch aus den aktuellen Kontextdateien ableitbar):
 
 - **Aktuelle Phase:** Phase 0 (Lookup-first MVP)
 - **Produktiv sichtbar:** Mobile Lookup-Navigation + statische Website
-- **MVP-Fokus:** Algorithm-/Medication-Lookup, Listen/Details, statische Daten
-- **Noch offen:** Offline-Strategie, Datenvollstaendigkeit, fehlende MVP-Screens
+- **MVP-Fokus:** Algorithm-/Medication-Lookup, Listen/Details, Suche, eingebettetes Offline-Bundle (ohne API)
+- **Noch offen:** persistenter Offline-Speicher, Sync, Favoriten, Verlauf; Datenvollstaendigkeit / Seed-Ausbau
 - **Nicht im aktuellen MVP-UI:** KI, Lernlogik, Organisations-/Versionierungsoberflaeche
+
+### Phase 0 — Umsetzung (Kurz)
+
+| Bereich | Status |
+|---------|--------|
+| Lookup-Bundle-Loader | erledigt |
+| Medikamentenliste | erledigt |
+| Algorithmenliste | erledigt |
+| Medikamentendetail | erledigt |
+| Algorithmusdetail | erledigt |
+| Suchscreen | erledigt |
+| Offline: Bundle laden (ohne Netzwerk) | erledigt |
+| Persistenter Offline-Speicher | offen |
+| Sync | offen |
+| Favoriten | offen |
+| Verlauf (History) | offen |
 
 Kontextquellen:
 
@@ -79,7 +95,7 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 ## Aktueller Stand
 
 - Domain-Paket mit Content- und Versioning-Teilmengen; TypeScript-Kompilat über `compile:content` und `compile:versioning`.  
-- Website als Next.js-App mit statischen Routen `/`, `/impressum`, `/datenschutz`.  
+- Website als Next.js-App mit statischen Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`.  
 - Monorepo-Build am Root: `pnpm build` (baut die Website).
 
 ## Heute erledigt
@@ -117,10 +133,13 @@ Letzter vollständiger Website-Build in der Abschlusssession: **erfolgreich** (N
 | Route | Status |
 |-------|--------|
 | `/` | OK (Landing) |
+| `/kontakt` | OK |
+| `/links` | OK |
+| `/mitwirkung` | OK |
 | `/impressum` | OK |
 | `/datenschutz` | OK |
 
-Footer- und CTA-Links zeigen auf die obigen Routen bzw. interne Anker (`#cta`, `#features`, `#top`, `#feedback`). Validierung: `pnpm --filter @resqbrain/website run validate:routing`.
+Navigation und Anker: `apps/website/lib/routes.ts`.
 
 ## Mitmachen
 

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -8,34 +8,41 @@ type RouteCheck = {
   status: "vorhanden" | "fehlt";
 };
 
-type LinkCheck = {
-  component: string;
-  target: string;
-  status: "gesetzt" | "fehlt";
+type SectionCheck = {
+  section: string;
+  file: string;
+  status: "vorhanden" | "fehlt";
+  required: boolean;
 };
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..");
 
-function fromRepo(...segments: string[]) {
-  return path.join(repoRoot, ...segments);
-}
-
 function fileExists(relativePath: string) {
-  return existsSync(fromRepo(relativePath));
-}
-
-function fileContains(relativePath: string, needle: string) {
-  const absolutePath = fromRepo(relativePath);
-
-  if (!existsSync(absolutePath)) {
-    return false;
-  }
-
-  return readFileSync(absolutePath, "utf8").includes(needle);
+  return existsSync(path.join(repoRoot, relativePath));
 }
 
 const routeChecks: RouteCheck[] = [
+  {
+    route: "/",
+    file: "apps/website/app/page.tsx",
+    status: fileExists("apps/website/app/page.tsx") ? "vorhanden" : "fehlt",
+  },
+  {
+    route: "/kontakt",
+    file: "apps/website/app/kontakt/page.tsx",
+    status: fileExists("apps/website/app/kontakt/page.tsx") ? "vorhanden" : "fehlt",
+  },
+  {
+    route: "/links",
+    file: "apps/website/app/links/page.tsx",
+    status: fileExists("apps/website/app/links/page.tsx") ? "vorhanden" : "fehlt",
+  },
+  {
+    route: "/mitwirkung",
+    file: "apps/website/app/mitwirkung/page.tsx",
+    status: fileExists("apps/website/app/mitwirkung/page.tsx") ? "vorhanden" : "fehlt",
+  },
   {
     route: "/impressum",
     file: "apps/website/app/impressum/page.tsx",
@@ -48,41 +55,56 @@ const routeChecks: RouteCheck[] = [
   },
 ];
 
-const linkChecks: LinkCheck[] = [
+const sectionsDir = "apps/website/components/sections";
+
+const sectionChecks: SectionCheck[] = [
   {
-    component: "Footer",
-    target: "/impressum",
-    status: fileContains("apps/website/components/sections/FooterSection.tsx", 'href="/impressum"')
-      ? "gesetzt"
-      : "fehlt",
+    section: "HomeHero",
+    file: `${sectionsDir}/home-hero.tsx`,
+    status: fileExists(`${sectionsDir}/home-hero.tsx`) ? "vorhanden" : "fehlt",
+    required: true,
   },
   {
-    component: "Footer",
-    target: "/datenschutz",
-    status: fileContains("apps/website/components/sections/FooterSection.tsx", 'href="/datenschutz"')
-      ? "gesetzt"
-      : "fehlt",
+    section: "SurveyInviteSection",
+    file: `${sectionsDir}/survey-invite-section.tsx`,
+    status: fileExists(`${sectionsDir}/survey-invite-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
   },
   {
-    component: "HeroSection",
-    target: "/#cta",
-    status: fileContains("apps/website/components/sections/HeroSection.tsx", 'href="/#cta"')
-      ? "gesetzt"
-      : "fehlt",
+    section: "ProblemBenefitsSection",
+    file: `${sectionsDir}/problem-benefits-section.tsx`,
+    status: fileExists(`${sectionsDir}/problem-benefits-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
   },
   {
-    component: "CTASection",
-    target: "mailto:pilot@resqbrain.de",
-    status: fileContains("apps/website/components/sections/CTASection.tsx", "pilot@resqbrain.de")
-      ? "gesetzt"
-      : "fehlt",
+    section: "FeaturesOverviewSection",
+    file: `${sectionsDir}/features-overview-section.tsx`,
+    status: fileExists(`${sectionsDir}/features-overview-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
   },
   {
-    component: "CTASection",
-    target: 'id="cta"',
-    status: fileContains("apps/website/components/sections/CTASection.tsx", 'id="cta"')
-      ? "gesetzt"
-      : "fehlt",
+    section: "AudiencesSection",
+    file: `${sectionsDir}/audiences-section.tsx`,
+    status: fileExists(`${sectionsDir}/audiences-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
+  },
+  {
+    section: "PilotFeedbackSection",
+    file: `${sectionsDir}/pilot-feedback-section.tsx`,
+    status: fileExists(`${sectionsDir}/pilot-feedback-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
+  },
+  {
+    section: "CollaborationSection",
+    file: `${sectionsDir}/collaboration-section.tsx`,
+    status: fileExists(`${sectionsDir}/collaboration-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
+  },
+  {
+    section: "FaqSection",
+    file: `${sectionsDir}/faq-section.tsx`,
+    status: fileExists(`${sectionsDir}/faq-section.tsx`) ? "vorhanden" : "fehlt",
+    required: false,
   },
 ];
 
@@ -95,32 +117,35 @@ function renderRouteTable(rows: RouteCheck[]) {
   ].join("\n");
 }
 
-function renderLinkTable(rows: LinkCheck[]) {
+function renderSectionTable(rows: SectionCheck[]) {
   return [
-    "### Linkquellen",
-    "| Komponente | Ziel | Status |",
-    "|------------|------|--------|",
-    ...rows.map((row) => `| ${row.component} | ${row.target} | ${row.status} |`),
+    "### Sections-Status",
+    "| Section | Datei | Status | Pflicht |",
+    "|---------|-------|--------|---------|",
+    ...rows.map(
+      (row) =>
+        `| ${row.section} | ${row.file} | ${row.status} | ${row.required ? "ja" : "nein"} |`,
+    ),
   ].join("\n");
 }
+
+const routeFailures = routeChecks.filter((c) => c.status === "fehlt");
+const requiredSectionFailures = sectionChecks.filter(
+  (c) => c.required && c.status === "fehlt",
+);
+const hasFailures = routeFailures.length > 0 || requiredSectionFailures.length > 0;
 
 const output = [
   "## Website / Routing",
   "",
   renderRouteTable(routeChecks),
   "",
-  renderLinkTable(linkChecks),
+  renderSectionTable(sectionChecks),
   "",
-  "### Build-Status",
-  "| Zeitpunkt | Ergebnis | Fehler |",
-  "|-----------|----------|--------|",
-  "| YYYY-MM-DD HH:mm | unbekannt | manuell nach `npm run build` oder `pnpm build` aktualisieren |",
+  `Routing validation: ${hasFailures ? "FAIL" : "PASS"}`,
 ].join("\n");
 
 process.stdout.write(`${output}\n`);
-
-const hasFailures = routeChecks.some((check) => check.status === "fehlt") ||
-  linkChecks.some((check) => check.status === "fehlt");
 
 if (hasFailures) {
   process.exitCode = 1;

@@ -13,7 +13,9 @@
       "acetylsalicylsäure"
     ],
     "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
-    "relatedAlgorithmIds": [],
+    "relatedAlgorithmIds": [
+      "alg-acs"
+    ],
     "notes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend."
   },
   {
@@ -34,8 +36,162 @@
     "dosage": "Erwachsene (Orientierung): i.v./i.o. z. B. 1 mg bei KRE im Rhythmus des Algorithmus.\n\nKinder: nach pädiatrischem Schema der Pilot-Wache; Applikationsweg und Verdünnung strikt nach organisationsspezifischem Protokoll — keine automatische Dosisberechnung in der App.",
     "relatedAlgorithmIds": [
       "alg-anaphylaxie-basics",
-      "alg-reanimation-erwachsene"
+      "alg-reanimation-erwachsene",
+      "alg-asthma"
     ],
     "notes": "Kontraindikationen und relative Kontraindikationen ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation prüfen.\n\nDie App ersetzt keine ärztliche Entscheidung; Inhalte nur im Kontext der freigegebenen Organisation nutzen."
+  },
+  {
+    "id": "med-amiodaron",
+    "kind": "medication",
+    "label": "Amiodaron",
+    "indication": "Kammerflimmern und pulslose ventrikuläre Tachykardie im Reanimationsverlauf; hämodynamisch stabile VT — nach lokalem Leitfaden",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "amiodaron",
+      "cordarex",
+      "antiarrhythmikum"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [
+      "alg-reanimation-erwachsene",
+      "alg-tachykardie"
+    ],
+    "notes": "Lesetext ohne Rechner; keine Dosierungsberechnung durch die App."
+  },
+  {
+    "id": "med-atropin",
+    "kind": "medication",
+    "label": "Atropin",
+    "indication": "Symptomatische Bradykardie — nach lokalem Leitfaden",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "atropin",
+      "atropinsulfat"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [
+      "alg-bradykardie"
+    ],
+    "notes": "Lesetext ohne Rechner; Ausschluss von Kontraindikationen vor Gabe verpflichtend."
+  },
+  {
+    "id": "med-midazolam",
+    "kind": "medication",
+    "label": "Midazolam",
+    "indication": "Krampfanfall, Sedierung — nach lokalem Leitfaden",
+    "tags": [
+      "neurologie",
+      "analgesie"
+    ],
+    "searchTerms": [
+      "midazolam",
+      "dormicum",
+      "benzodiazepine"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [
+      "alg-krampfanfall"
+    ],
+    "notes": "Lesetext ohne Rechner; Atemdepression und Blutdruckabfall möglich — engmaschiges Monitoring nach Gabe."
+  },
+  {
+    "id": "med-ketamin",
+    "kind": "medication",
+    "label": "Ketamin (S-Ketamin)",
+    "indication": "Analgesie und Analgosedierung — nach lokalem Leitfaden",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "ketamin",
+      "s-ketamin",
+      "esketamin",
+      "ketanest"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [],
+    "notes": "Lesetext ohne Rechner; Kombination mit Benzodiazepinen nach lokalem Protokoll."
+  },
+  {
+    "id": "med-fentanyl",
+    "kind": "medication",
+    "label": "Fentanyl",
+    "indication": "Starke Schmerzen, Analgesie — nach lokalem Leitfaden",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "fentanyl",
+      "fentanil",
+      "opioid"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [],
+    "notes": "Lesetext ohne Rechner; Atemdepression möglich — Monitoring und Antagonist (Naloxon) vorhalten."
+  },
+  {
+    "id": "med-salbutamol",
+    "kind": "medication",
+    "label": "Salbutamol (Inhalation)",
+    "indication": "Bronchospasmus, akute Asthmaexazerbation — nach lokalem Leitfaden",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "salbutamol",
+      "ventolin",
+      "sultanol",
+      "beta-2-mimetikum"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [
+      "alg-asthma"
+    ],
+    "notes": "Lesetext ohne Rechner; Tachykardie als Nebenwirkung möglich."
+  },
+  {
+    "id": "med-glucose-40",
+    "kind": "medication",
+    "label": "Glucose 40 %",
+    "indication": "Schwere symptomatische Hypoglykämie — nach lokalem Leitfaden",
+    "tags": [
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "glukose",
+      "glucose",
+      "dextrose",
+      "40 prozent",
+      "unterzucker"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [
+      "alg-hypoglykaemie"
+    ],
+    "notes": "Lesetext ohne Rechner; streng i.v. — Paravasation vermeiden."
+  },
+  {
+    "id": "med-heparin",
+    "kind": "medication",
+    "label": "Heparin",
+    "indication": "Antikoagulation bei ACS — nach lokalem Leitfaden und Indikation",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "heparin",
+      "unfraktioniertes heparin"
+    ],
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "relatedAlgorithmIds": [
+      "alg-acs"
+    ],
+    "notes": "Lesetext ohne Rechner; Ausschluss von Blutungsrisiken und Kontraindikationen vor Gabe verpflichtend."
   }
 ]
