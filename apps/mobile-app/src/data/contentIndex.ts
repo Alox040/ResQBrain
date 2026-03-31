@@ -1,4 +1,5 @@
 import {
+  loadLookupBundle,
   toLookupContentKey,
   type LookupContentKey,
 } from '@/lookup/loadLookupBundle';
@@ -6,6 +7,7 @@ import type { LookupRamStore } from '@/lookup/loadLookupBundle';
 import type { Algorithm, ContentItem, ContentKind, ContentListItem, Medication } from '@/types/content';
 
 let store: LookupRamStore | null = null;
+let storeLoadPromise: Promise<LookupRamStore> | null = null;
 
 export type ContentKey = LookupContentKey;
 
@@ -34,6 +36,22 @@ export function initializeContent(bundle: LookupRamStore): void {
   contentLookup = bundle.contentLookup;
   searchItems = bundle.searchItems;
   searchIndexItems = bundle.searchIndexItems;
+}
+
+/**
+ * Optional singleton loader for callers that want contentIndex to own bundle loading.
+ * Uses `loadLookupBundle()` once and reuses the resolved in-memory store afterwards.
+ */
+export async function initializeContentFromLookupBundle(): Promise<LookupRamStore> {
+  if (store) return store;
+  if (!storeLoadPromise) {
+    storeLoadPromise = (async () => {
+      const bundle = await loadLookupBundle();
+      initializeContent(bundle);
+      return bundle;
+    })();
+  }
+  return storeLoadPromise;
 }
 
 /** Live bindings updated by {@link initializeContent}. */

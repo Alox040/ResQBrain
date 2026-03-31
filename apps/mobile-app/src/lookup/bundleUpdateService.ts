@@ -1,5 +1,5 @@
 import { saveBundle, getBundleVersion } from './bundleStorage';
-import { loadLookupBundle } from './loadLookupBundle';
+import { loadEmbeddedLookupBundle } from './loadLookupBundle';
 import type { LookupBundleSnapshot } from './lookupCache';
 import { validateLookupBundle } from './validateLookupBundle';
 
@@ -36,7 +36,7 @@ function getSnapshotVersion(bundle: LookupBundleSnapshot): string | null {
 }
 
 function getEmbeddedVersion(): string | null {
-  const embeddedBundle = loadLookupBundle();
+  const embeddedBundle = loadEmbeddedLookupBundle();
   return embeddedBundle.versionInfo.version ?? embeddedBundle.manifest.bundleId ?? null;
 }
 

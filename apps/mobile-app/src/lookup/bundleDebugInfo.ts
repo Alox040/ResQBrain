@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LookupSource } from './sourceResolver';
+import type { LookupSource } from './lookupSource';
 
 const BUNDLE_DEBUG_INFO_KEY = '@resqbrain/lookup/debug-info-v1';
 
@@ -9,12 +9,10 @@ export type BundleDebugInfo = {
   lastUpdate: string | null;
 };
 
+const LOOKUP_SOURCE_VALUES = new Set<string>(['embedded', 'cached', 'updated', 'fallback']);
+
 function isLookupSource(value: unknown): value is LookupSource {
-  return (
-    value === LookupSource.EMBEDDED ||
-    value === LookupSource.CACHED ||
-    value === LookupSource.UPDATED
-  );
+  return typeof value === 'string' && LOOKUP_SOURCE_VALUES.has(value);
 }
 
 function parseBundleDebugInfo(raw: unknown): BundleDebugInfo | null {

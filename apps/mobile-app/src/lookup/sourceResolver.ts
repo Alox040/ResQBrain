@@ -1,26 +1,22 @@
 import { loadBundle as loadUpdatedBundle } from './bundleStorage';
-import { loadLookupBundle } from './loadLookupBundle';
+import { loadEmbeddedLookupBundle } from './loadLookupBundle';
 import { loadBundle as loadCachedBundle, type LookupBundleSnapshot } from './lookupCache';
-import type { LookupManifest } from './lookupSchema';
+import type { BundleMeta, LookupSource } from './lookupSource';
 import { validateLookupBundle } from './validateLookupBundle';
 
-export enum LookupSource {
-  EMBEDDED = 'embedded',
-  CACHED = 'cached',
-  UPDATED = 'updated',
-}
+export type { LookupSource } from './lookupSource';
 
 export type ResolvedLookupBundle = {
-  bundle: LookupBundleSnapshot;
   source: LookupSource;
-  version: string;
+  bundle: LookupBundleSnapshot;
+  meta: BundleMeta;
 };
 
-const SAFE_FALLBACK_MANIFEST: LookupManifest = {
+const SAFE_FALLBACK_MANIFEST = {
   schemaVersion: '1',
   bundleId: 'safe-fallback',
   version: '0',
-};
+} as const;
 
 function toSnapshot(bundle: LookupBundleSnapshot): LookupBundleSnapshot {
   return {
@@ -52,14 +48,22 @@ function validateSnapshot(
   };
 }
 
+function extractMeta(manifest: LookupBundleSnapshot['manifest']): BundleMeta {
+  return {
+    bundleId: manifest.bundleId,
+    generatedAt: manifest.generatedAt ?? manifest.createdAt ?? null,
+    schemaVersion: manifest.schemaVersion,
+  };
+}
+
 function buildResolvedBundle(
   bundle: LookupBundleSnapshot,
   source: LookupSource,
 ): ResolvedLookupBundle {
   return {
-    bundle,
     source,
-    version: bundle.manifest.version ?? bundle.manifest.bundleId ?? '0',
+    bundle,
+    meta: extractMeta(bundle.manifest),
   };
 }
 
@@ -89,7 +93,7 @@ async function tryLoadCachedBundle(): Promise<LookupBundleSnapshot | null> {
 
 function tryLoadEmbeddedBundle(): LookupBundleSnapshot | null {
   try {
-    const embeddedStore = loadLookupBundle();
+    const embeddedStore = loadEmbeddedLookupBundle();
     return toSnapshot({
       manifest: embeddedStore.manifest,
       medications: embeddedStore.medications,
@@ -103,18 +107,18 @@ function tryLoadEmbeddedBundle(): LookupBundleSnapshot | null {
 export async function resolveLookupBundle(): Promise<ResolvedLookupBundle> {
   const updatedBundle = await tryLoadUpdatedBundle();
   if (updatedBundle) {
-    return buildResolvedBundle(updatedBundle, LookupSource.UPDATED);
+    return buildResolvedBundle(updatedBundle, 'updated');
   }
 
   const cachedBundle = await tryLoadCachedBundle();
   if (cachedBundle) {
-    return buildResolvedBundle(cachedBundle, LookupSource.CACHED);
+    return buildResolvedBundle(cachedBundle, 'cached');
   }
 
   const embeddedBundle = tryLoadEmbeddedBundle();
   if (embeddedBundle) {
-    return buildResolvedBundle(embeddedBundle, LookupSource.EMBEDDED);
+    return buildResolvedBundle(embeddedBundle, 'embedded');
   }
 
-  return buildResolvedBundle(buildSafeFallbackBundle(), LookupSource.EMBEDDED);
+  return buildResolvedBundle(buildSafeFallbackBundle(), 'fallback');
 }

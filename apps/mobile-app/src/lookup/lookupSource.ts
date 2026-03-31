@@ -1,31 +1,47 @@
-import { buildLookupRamStore, loadLookupBundle, type LookupRamStore } from './loadLookupBundle';
+import {
+  buildLookupRamStore,
+  loadEmbeddedLookupBundle,
+  loadLookupBundleWithSource,
+  type LookupRamStore,
+} from './loadLookupBundle';
 import type { LookupManifest } from './lookupSchema';
-import { loadBundle, saveBundle } from '@/lookup/lookupCache';
-import { validateLookupBundle } from '@/lookup/validateLookupBundle';
 
 /**
  * Which physical layer supplied the active in-memory lookup store.
  *
- * - **embedded** — JSON shipped with the app (`data/lookup-seed/`), validated at load. **Only layer used today.**
- * - **updated** — reserved: bundle from a future offline update / sync pipeline (e.g. downloaded artifact applied to disk).
- * - **cached** — reserved: warm or secondary on-device copy (e.g. last-known-good snapshot separate from “updated”).
- * - **fallback** — reserved: minimal emergency bundle when updated/cached data is missing or corrupt.
+ * - **embedded** — JSON shipped with the app (`data/lookup-seed/`), validated at load.
+ * - **cached** — warm on-device copy previously persisted from embedded or an update.
+ * - **updated** — bundle applied from a remote sync pipeline.
+ * - **fallback** — minimal emergency bundle when all other layers are missing or corrupt.
  */
-export type LookupProvisionSource =
+export type LookupSource =
   | 'embedded'
-  | 'updated'
   | 'cached'
+  | 'updated'
   | 'fallback';
 
+/** @deprecated Use `LookupSource` */
+export type LookupProvisionSource = LookupSource;
+
+/**
+ * Extracted manifest fields used for diagnostics and update checks.
+ * Maps directly to `LookupManifest` fields.
+ */
+export type BundleMeta = {
+  bundleId: string;
+  generatedAt: string | null;
+  schemaVersion: string;
+};
+
 export type LookupSourceDescriptor = {
-  provisionSource: LookupProvisionSource;
+  provisionSource: LookupSource;
   manifest: LookupManifest;
 };
 
 let activeStore: LookupRamStore | null = null;
 
 /** Set alongside `activeStore` whenever resolution logic picks a layer (today always `embedded`). */
-let activeProvisionSource: LookupProvisionSource = 'embedded';
+let activeProvisionSource: LookupSource = 'embedded';
 
 type LookupLoadedSource = 'cached' | 'embedded';
 
@@ -43,7 +59,7 @@ function logLookupLoadError(layer: string, error: unknown): void {
 
 function loadEmbeddedStoreSafely(): LookupRamStore {
   try {
-    return loadLookupBundle();
+    return loadEmbeddedLookupBundle();
   } catch (error) {
     logLookupLoadError('embedded', error);
     return buildLookupRamStore({
@@ -63,48 +79,19 @@ export async function loadLookupSource(): Promise<LookupLoadedSource> {
   if (activeStore) return activeProvisionSource === 'cached' ? 'cached' : 'embedded';
   if (!loadPromise) {
     loadPromise = (async () => {
-      let cached: Awaited<ReturnType<typeof loadBundle>> = null;
       try {
-        cached = await loadBundle();
+        const result = await loadLookupBundleWithSource();
+        activeProvisionSource = result.source;
+        activeStore = result.store;
+        return result.source;
       } catch (error) {
         logLookupLoadError('cached', error);
+        activeProvisionSource = 'embedded';
+        activeStore = loadEmbeddedStoreSafely();
+        return 'embedded' as const;
+      } finally {
+        loadPromise = null;
       }
-
-      try {
-        if (cached) {
-          const res = validateLookupBundle({
-            manifest: cached.manifest as unknown,
-            medications: cached.medications as unknown,
-            algorithms: cached.algorithms as unknown,
-          });
-          if (res.ok) {
-            activeProvisionSource = 'cached';
-            activeStore = buildLookupRamStore(res.data);
-            return 'cached' as const;
-          }
-
-          logLookupLoadError('cached', new Error(res.errors.join('; ')));
-        }
-      } catch (error) {
-        logLookupLoadError('cached', error);
-      }
-
-      activeProvisionSource = 'embedded';
-      activeStore = loadEmbeddedStoreSafely();
-      // After seed load: persist it, but only when bundleId changed.
-      const cachedBundleId =
-        cached && typeof cached.manifest?.bundleId === 'string'
-          ? cached.manifest.bundleId
-          : null;
-      const embeddedBundleId = activeStore.manifest.bundleId;
-      if (cachedBundleId !== embeddedBundleId) {
-        await saveBundle({
-          manifest: activeStore.manifest,
-          medications: activeStore.medications,
-          algorithms: activeStore.algorithms,
-        });
-      }
-      return 'embedded' as const;
     })();
   }
   return loadPromise;
@@ -157,7 +144,7 @@ export function getActiveLookupStore(): LookupRamStore {
  * Provisioning label for the active bundle.
  * Today always `'embedded'`; will differ once optional layers exist.
  */
-export function getActiveLookupProvisionSource(): LookupProvisionSource {
+export function getActiveLookupProvisionSource(): LookupSource {
   resolveActiveLookupStore();
   return activeProvisionSource;
 }

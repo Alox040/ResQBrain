@@ -1,5 +1,7 @@
 import type { Algorithm, ContentItem, ContentKind, Medication } from '../types/content';
 import type { LookupManifest } from './lookupSchema';
+import { isNewerBundle } from './lookupBundleVersion';
+import { loadStoredBundle } from './lookupStorage';
 import { validateLookupBundle } from './validateLookupBundle';
 
 /** Kanonische Phase-0-Quelle: `data/lookup-seed/` (Repo-Root). */
@@ -7,7 +9,7 @@ import manifestJson from '../../../../data/lookup-seed/manifest.json';
 import medicationsJson from '../../../../data/lookup-seed/medications.json';
 import algorithmsJson from '../../../../data/lookup-seed/algorithms.json';
 
-/** Stable key for map lookup — matches `contentIndex` convention. */
+/** Stable key for map lookup â€” matches `contentIndex` convention. */
 export type LookupContentKey = `${ContentKind}:${string}`;
 
 export function toLookupContentKey(kind: ContentKind, id: string): LookupContentKey {
@@ -33,7 +35,7 @@ export type LookupBundleVersionInfo = {
 
 /**
  * In-memory Phase-0 lookup store: validated bundle + indexes for list/search/detail.
- * No persistence, no network, no sync — bundle only.
+ * No persistence, no network, no sync â€” bundle only.
  */
 export type LookupRamStore = {
   manifest: LookupManifest;
@@ -46,6 +48,13 @@ export type LookupRamStore = {
   searchIndexItems: LookupSearchIndexItem[];
   getMedicationById: (medicationId: string) => Medication | undefined;
   getAlgorithmById: (algorithmId: string) => Algorithm | undefined;
+};
+
+export type LookupLoadedBundleSource = 'embedded' | 'cached';
+
+export type LoadedLookupBundle = {
+  source: LookupLoadedBundleSource;
+  store: LookupRamStore;
 };
 
 export function buildLookupRamStore(bundle: {
@@ -106,10 +115,10 @@ export function buildLookupRamStore(bundle: {
 }
 
 /**
- * Loads the embedded Phase-0 JSON bundle, validates it, and returns a RAM-only store.
+ * Loads and validates the embedded Phase-0 JSON bundle.
  * Throws if the bundle is invalid (fail-fast at startup or test).
  */
-export function loadLookupBundle(): LookupRamStore {
+export function loadEmbeddedLookupBundle(): LookupRamStore {
   const result = validateLookupBundle({
     manifest: manifestJson as unknown,
     medications: medicationsJson as unknown,
@@ -123,4 +132,29 @@ export function loadLookupBundle(): LookupRamStore {
   }
 
   return buildLookupRamStore(result.data);
+}
+
+export async function loadLookupBundleWithSource(): Promise<LoadedLookupBundle> {
+  const embeddedStore = loadEmbeddedLookupBundle();
+  const storedBundle = await loadStoredBundle();
+
+  if (storedBundle && isNewerBundle(storedBundle, embeddedStore)) {
+    return {
+      source: 'cached',
+      store: buildLookupRamStore(storedBundle),
+    };
+  }
+
+  return {
+    source: 'embedded',
+    store: embeddedStore,
+  };
+}
+
+/**
+ * Loads embedded data first, then prefers a stored bundle only when it is newer.
+ */
+export async function loadLookupBundle(): Promise<LookupRamStore> {
+  const result = await loadLookupBundleWithSource();
+  return result.store;
 }
