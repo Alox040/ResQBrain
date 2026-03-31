@@ -1,0 +1,26 @@
+:root {
+  --color-background: #f4f6f8;
+  --color-foreground: #10151a;
+  --color-muted: #51606f;
+  --color-border: #d5dde5;
+  --color-surface: #ffffff;
+  --container: 1120px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--color-foreground);
+  background: var(--color-background);
+}
+
+a {
+  color: inherit;
+}
