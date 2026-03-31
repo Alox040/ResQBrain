@@ -1,0 +1,7058 @@
+[
+  {
+    "id": "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+    "kind": "algorithm",
+    "label": "ACS – Algorithmus Acetylsalicylsäure + Heparin",
+    "indication": "ACS – Algorithmus Acetylsalicylsäure + Heparin",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acetylsalicylsaure",
+      "acs",
+      "acs algorithmus acetylsalicylsaure heparin",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "heparin",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "nste-acs",
+      "nstemi",
+      "stemi"
+    ],
+    "steps": [
+      {
+        "text": "Allergie gegen ASS"
+      },
+      {
+        "text": "Allergie gegen Heparin"
+      },
+      {
+        "text": "Hinweise auf aktive Blutung"
+      },
+      {
+        "text": "Hinweise auf frischen Schlaganfall"
+      },
+      {
+        "text": "mg ASS i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "I"
+      },
+      {
+        "text": "E"
+      },
+      {
+        "text": "Heparin i"
+      },
+      {
+        "text": "Hinweise für Aortendissektion"
+      },
+      {
+        "text": "Schmerzen zwischen den Schulter-"
+      },
+      {
+        "text": "Reißender Schmerzcharakter"
+      },
+      {
+        "text": "RR-Differenz von mehr als 20 mmHg"
+      },
+      {
+        "text": "Bekanntes thorakales Aortenaneurysma"
+      },
+      {
+        "text": "Akute neurologische Auffälligkeiten"
+      },
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      },
+      {
+        "text": "Algorithmen Diazepam Midazolam"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "Hinweise auf aktive Blutung?",
+      "Hinweise auf frischen Schlaganfall?",
+      "KEINE ASS-Gabe + Heparin-Gabe",
+      "KEINE Heparin-Gabe",
+      "KEINE ASS-Gabe",
+      "Hinweise für Aortendissektion?"
+    ]
+  },
+  {
+    "id": "alg-acs-algorithmus-diazepam",
+    "kind": "algorithm",
+    "label": "ACS – Algorithmus Diazepam",
+    "indication": "ACS – Algorithmus Diazepam",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "acs algorithmus diazepam",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "diazepam",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "nste-acs",
+      "nstemi",
+      "stemi"
+    ],
+    "steps": [
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Diazepam-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Langsame Gabe von 2,5 mg 0,5 ml Diazepam i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "bis maximal 5 mg Gesamtdosis"
+      },
+      {
+        "text": "wiederholen"
+      },
+      {
+        "text": "Infusion langsam stellen, um schnelles Einspülen zu vermeiden"
+      },
+      {
+        "text": "entspannter Zustand erreicht"
+      },
+      {
+        "text": "Agitiertheit abgeklungen"
+      },
+      {
+        "text": "mg Diazepam Gesamtdosis"
+      },
+      {
+        "text": "erreicht"
+      },
+      {
+        "text": "Starker Erregungszustand Agitiertheit"
+      },
+      {
+        "text": "Diazepam 10 mg 2 ml aufziehen"
+      },
+      {
+        "text": "IMMER O2-Gabe SpO2-Überwachung vor Diazepam-Medikation"
+      },
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "KEINE Diazepam-Gabe",
+      "IMMER O2-Gabe + SpO2-Überwachung vor Diazepam-Medikation",
+      "KEINE weitere Diazepam-Gabe"
+    ]
+  },
+  {
+    "id": "alg-acs-algorithmus-glyceroltrinitrat-spray",
+    "kind": "algorithm",
+    "label": "ACS – Algorithmus Glyceroltrinitrat-Spray",
+    "indication": "ACS – Algorithmus Glyceroltrinitrat-Spray",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "acs algorithmus glyceroltrinitrat-spray",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "glyceroltrinitrat",
+      "glyceroltrinitrat-spray",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "nste-acs",
+      "nstemi",
+      "spray",
+      "stemi"
+    ],
+    "steps": [
+      {
+        "text": "RRsys 100 mmHg"
+      },
+      {
+        "text": ",4 1,2 mg Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "nach RR dosiert sublingual"
+      },
+      {
+        "text": "Zielwert: RRsys 140 mmHg"
+      },
+      {
+        "text": ",4 0,8 mg Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "KEIN Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Lagerung nach Kreislaufsituation, RR-Messung, EKG , SpO2"
+      },
+      {
+        "text": "Besserung der Beschwerden nach 3 5 Minuten"
+      },
+      {
+        "text": "Wilkinson-Stokes, M, Betson J, Sawyer S"
+      },
+      {
+        "text": "Emerg Med J, 2023; 40:108 113; Adverse events from nitrate administration during right ventricular myocardial infarction:"
+      },
+      {
+        "text": "a systematic review and meta-analysis; T"
+      },
+      {
+        "text": "Unger et al: 2020 International Society of Hypertension -"
+      },
+      {
+        "text": "PDE-5-Inhibitoren in den letzten 48 h"
+      },
+      {
+        "text": "vorsichtige Nitratgabe mit 0,4 mg je Einzelgabe, dann weiter dosiert nach Blutdruck"
+      },
+      {
+        "text": "PDE-5-Inhibitoren: Werden nicht nur zur Behandlung der erektilen Dysfunktion, sondern auch"
+      },
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "** PDE-5-Inhibitoren: Werden nicht nur zur Behandlung der erektilen Dysfunktion, sondern auch"
+    ]
+  },
+  {
+    "id": "alg-acs-algorithmus-metoprolol",
+    "kind": "algorithm",
+    "label": "ACS – Algorithmus Metoprolol",
+    "indication": "ACS – Algorithmus Metoprolol",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "acs algorithmus metoprolol",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "metoprolol",
+      "nste-acs",
+      "nstemi",
+      "stemi"
+    ],
+    "steps": [
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      },
+      {
+        "text": "Algorithmen Diazepam Midazolam"
+      },
+      {
+        "text": "Algorithmus Metoprolol"
+      },
+      {
+        "text": "Monitoring Defibrillationsbereitschaft"
+      },
+      {
+        "text": "Bradykardie 60 Minute"
+      },
+      {
+        "text": "Asthma bronchiale vorbekannt"
+      },
+      {
+        "text": "RRsys 120 mmHg"
+      },
+      {
+        "text": "AV-Block II oder AV-Block III"
+      },
+      {
+        "text": "Unverträglichkeit gegen -Blocker"
+      },
+      {
+        "text": "Fehlende Hinweise für STEMI"
+      },
+      {
+        "text": "sehr hohem Risiko"
+      },
+      {
+        "text": "Hinweise für Lungenstauung"
+      },
+      {
+        "text": "Langsame Gabe von 2,5 mg 2,5 ml Metoprolol i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Nach 5 Minuten ggf"
+      },
+      {
+        "text": "wiederholen bis maximal 15 mg Gesamtdosis"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "KEINE Metoprolol-Gabe",
+      "Fehlende Hinweise für STEMI?",
+      "Fehlende Hinweise für NSTE-ACS mit",
+      "Hinweise für Lungenstauung?"
+    ]
+  },
+  {
+    "id": "alg-acs-algorithmus-midazolam",
+    "kind": "algorithm",
+    "label": "ACS – Algorithmus Midazolam",
+    "indication": "ACS – Algorithmus Midazolam",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "acs algorithmus midazolam",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "midazolam",
+      "nste-acs",
+      "nstemi",
+      "stemi"
+    ],
+    "steps": [
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Midazolam-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Langsame Gabe von 2 mg 2 ml Midazolam i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "bis maximal 4 mg Gesamtdosis"
+      },
+      {
+        "text": "wiederholen"
+      },
+      {
+        "text": "Infusion langsam stellen, um schnelles Einspülen zu vermeiden"
+      },
+      {
+        "text": "Starker Erregungszustand Agitiertheit"
+      },
+      {
+        "text": "Midazolam 5 mg 5 ml aufziehen"
+      },
+      {
+        "text": "IMMER O2-Gabe SpO2-Überwachung vor Midazolam-Medikation"
+      },
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      },
+      {
+        "text": "Algorithmen Diazepam Midazolam"
+      },
+      {
+        "text": "Algorithmus Metoprolol"
+      },
+      {
+        "text": "Monitoring Defibrillationsbereitschaft"
+      },
+      {
+        "text": "entspannter Zustand erreicht"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "KEINE Midazolam-Gabe",
+      "IMMER O2-Gabe + SpO2-Überwachung vor Midazolam-Medikation",
+      "KEINE weitere Midazolam-Gabe"
+    ]
+  },
+  {
+    "id": "alg-acs-algorithmus-morphin-antiemetika",
+    "kind": "algorithm",
+    "label": "ACS – Algorithmus Morphin + Antiemetika",
+    "indication": "ACS – Algorithmus Morphin + Antiemetika",
+    "tags": [
+      "kreislauf",
+      "antiemese"
+    ],
+    "searchTerms": [
+      "acs",
+      "acs algorithmus morphin antiemetika",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "antiemetika",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "morphin",
+      "nste-acs",
+      "nstemi",
+      "stemi"
+    ],
+    "steps": [
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      },
+      {
+        "text": "Algorithmen Diazepam Midazolam"
+      },
+      {
+        "text": "Algorithmus Metoprolol"
+      },
+      {
+        "text": "Monitoring Defibrillationsbereitschaft"
+      },
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Morphin-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Schmerzstärke nach NRS 4"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang laufende kristalloide Infusion"
+      },
+      {
+        "text": "Morphin aufziehen und beschriften: 10 mg Morphin 10 ml NaCl 0,9"
+      },
+      {
+        "text": "Opiatassoziierte Übelkeit gut erträglich"
+      },
+      {
+        "text": "Langsame Gabe von 2 mg 2 ml Morphin i"
+      },
+      {
+        "text": "Alle 2 Minuten:"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-kristalloide-infusion",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin",
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "KEINE Morphin-Gabe",
+      "KEINE weitere Morphin-Gabe",
+      "KEINE Begleitmedikation mit",
+      "IMMER O2-Gabe + SpO2-Überwachung vor Morphin-Medikation"
+    ]
+  },
+  {
+    "id": "alg-alkylphosphatintoxikation-atropin",
+    "kind": "algorithm",
+    "label": "Alkylphosphatintoxikation – Atropin",
+    "indication": "Alkylphosphatintoxikation – Atropin",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "alkylphosphatintoxikation",
+      "alkylphosphatintoxikation atropin",
+      "atropin"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Reanimation"
+      },
+      {
+        "text": "Algorithmus"
+      },
+      {
+        "text": "Geringe"
+      },
+      {
+        "text": "Intoxikation"
+      },
+      {
+        "text": "KEINE weitere"
+      },
+      {
+        "text": "O2-Gabe 15 l min, ggf"
+      },
+      {
+        "text": "Maskenbeatmung,"
+      },
+      {
+        "text": "EKG, SpO2"
+      },
+      {
+        "text": "Vital bedrohter Patient"
+      },
+      {
+        "text": "Erneute Beurteilung nach Testdosis:"
+      },
+      {
+        "text": "Mundtrockenheit"
+      },
+      {
+        "text": "Tachykardie"
+      },
+      {
+        "text": "Mydriasis"
+      },
+      {
+        "text": "Erneute Beurteilung:"
+      },
+      {
+        "text": "Speichelfluss und Bronchialsekretion nachlassend"
+      },
+      {
+        "text": "Bronchospasmus nachlassend"
+      },
+      {
+        "text": "Miosis nachlassend"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "Wiederholung nach 10 Minuten"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-atropinsulfat"
+    ],
+    "warnings": [
+      "KEINE weitere",
+      "Hinweise auf",
+      "Besondere Beachtung des Eigenschutzes! Kontaktgift!"
+    ]
+  },
+  {
+    "id": "alg-anaphylaxie-erwachsener",
+    "kind": "algorithm",
+    "label": "Anaphylaxie – Erwachsener",
+    "indication": "Anaphylaxie – Erwachsener",
+    "tags": [
+      "schock",
+      "atemwege"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "anaphylaxie erwachsener",
+      "erwachsener"
+    ],
+    "steps": [
+      {
+        "text": "Stadium II III: Zusätzliche ABCDE-Probleme"
+      },
+      {
+        "text": "Atemwegsstörung"
+      },
+      {
+        "text": "z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "Schwellung, Heiserkeit, Stridor,"
+      },
+      {
+        "text": "Sprechen erschwert"
+      },
+      {
+        "text": "Belüftungsstörung"
+      },
+      {
+        "text": "Tachypnoe, Keuchen,"
+      },
+      {
+        "text": "Zyanose, SpO2 92"
+      },
+      {
+        "text": "min oder Abfall RR um 20 mmHg"
+      },
+      {
+        "text": "Juckreiz"
+      },
+      {
+        "text": "Hautreaktion"
+      },
+      {
+        "text": "Flush"
+      },
+      {
+        "text": "O2-Gabe 15 l min, Lagerung nach Kreislauf"
+      },
+      {
+        "text": "Wenn nach 5 Minuten keine Besserung:"
+      },
+      {
+        "text": "Wiederholung Adrenalin 1:1"
+      },
+      {
+        "text": "0,5 mg i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": ",5 ml"
+      },
+      {
+        "text": "Adrenalin 1:1"
+      },
+      {
+        "text": ",5 mg i"
+      },
+      {
+        "text": ",5 ml Oberschenkel"
+      },
+      {
+        "text": "mg Adrenalin pur mit"
+      },
+      {
+        "text": "O2 vernebeln"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-adrenalin",
+      "med-cimetidin",
+      "med-clemastin",
+      "med-dimetinden",
+      "med-kristalloide-infusion",
+      "med-prednisolon"
+    ]
+  },
+  {
+    "id": "alg-anaphylaxie-kind",
+    "kind": "algorithm",
+    "label": "Anaphylaxie – Kind",
+    "indication": "Anaphylaxie – Kind",
+    "tags": [
+      "schock",
+      "atemwege",
+      "kinder"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "anaphylaxie kind",
+      "kind"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang kritisch prüfen"
+      },
+      {
+        "text": "Zugang und 10 ml kgKG kristalloide"
+      },
+      {
+        "text": "Infusionslösung, ggf"
+      },
+      {
+        "text": "wiederholen"
+      },
+      {
+        "text": "Kontinuierliches Monitoring: AF, HF, EKG, SpO2, RR"
+      },
+      {
+        "text": "Akuter Beginn"
+      },
+      {
+        "text": "Allergie bekannt"
+      },
+      {
+        "text": "Juckreiz"
+      },
+      {
+        "text": "Flush"
+      },
+      {
+        "text": "Zyanose, SpO2 92"
+      },
+      {
+        "text": "min oder Abfall RR um 20 mmHg"
+      },
+      {
+        "text": "O2-Gabe 15 l min, Lagerung nach Kreislauf"
+      },
+      {
+        "text": "12 J"
+      },
+      {
+        "text": ": Adrenalin 1:1"
+      },
+      {
+        "text": "0,5 mg i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": ",5 ml"
+      },
+      {
+        "text": "Kind 6 12 J"
+      },
+      {
+        "text": "0,3 mg i"
+      },
+      {
+        "text": ",3 ml"
+      },
+      {
+        "text": "Kind 6 J"
+      },
+      {
+        "text": "0,15 mg i"
+      },
+      {
+        "text": ",15 ml"
+      },
+      {
+        "text": "Wenn nach 5 Minuten keine Besserung:"
+      },
+      {
+        "text": ":"
+      },
+      {
+        "text": "mg Prednisolon 2,0 mg Clemastin"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-adrenalin",
+      "med-clemastin",
+      "med-kristalloide-infusion",
+      "med-prednisolon",
+      "med-prednison"
+    ]
+  },
+  {
+    "id": "alg-anwendung-von-thoraxkompressionsgeraeten-mcpr",
+    "kind": "algorithm",
+    "label": "Anwendung von Thoraxkompressionsgeräten (mCPR)",
+    "indication": "Anwendung von Thoraxkompressionsgeräten (mCPR)",
+    "tags": [
+      "reanimation",
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "anwendung",
+      "anwendung von thoraxkompressionsgeraten mcpr",
+      "cpr",
+      "kreislaufstillstand",
+      "mcpr",
+      "reanimation",
+      "thoraxkompressionsgeraten"
+    ],
+    "steps": [
+      {
+        "text": "Einsatz von Thorakompressionsgeräten"
+      },
+      {
+        "text": "nach kritischer Wertung erwägen"
+      },
+      {
+        "text": "Transport"
+      },
+      {
+        "text": "KEINE Verwendung von"
+      },
+      {
+        "text": "Thoraxkompressionsgeräten"
+      },
+      {
+        "text": "Protrahierte Reanimation zur Behebung reversibler Ursachen medizinisch sinnvoll"
+      },
+      {
+        "text": "und aussichtsreich"
+      },
+      {
+        "text": "Sichere Indikation zum Transport in eine Klinik unter laufender Reanimation"
+      },
+      {
+        "text": "etCO2-Werte 10mmHg"
+      },
+      {
+        "text": "Zügiges Erreichen erfolgsversprechender Therapien möglich 1 Stunde nach Kollaps"
+      },
+      {
+        "text": "Transport im fahrenden RTW unter Reanimation erforderlich"
+      },
+      {
+        "text": "Therapieabbruchentscheidung in die Kliniken, außer bei besonderer Begründbarkeit"
+      },
+      {
+        "text": "Anbau-bedingte No-flow -Zeiten sind auf 5-10 Sekunden zu begrenzen"
+      }
+    ],
+    "warnings": [
+      "KEINE Verwendung von",
+      "Sicherheit des Personals / Suffiziente CPR nicht sichergestellt",
+      "KEINE Transporte unter laufender Reanimation zur Verlagerung der"
+    ]
+  },
+  {
+    "id": "alg-atemwegsnotfaelle-bei-trachealkanuelentraegern-absaugen-wechsel",
+    "kind": "algorithm",
+    "label": "Atemwegsnotfälle bei Trachealkanülenträgern – Absaugen/Wechsel",
+    "indication": "Atemwegsnotfälle bei Trachealkanülenträgern – Absaugen/Wechsel",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "absaugen",
+      "atemwegsnotfalle",
+      "atemwegsnotfalle bei trachealkanulentragern absaugen wechsel",
+      "trachealkanulentragern",
+      "wechsel"
+    ],
+    "steps": [
+      {
+        "text": "Alternative Maßnahmen prüfen:"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "bei Problemen kleinere Trachealkanüle"
+      },
+      {
+        "text": "wählen"
+      },
+      {
+        "text": "Notfallmaßnahme: Bei chirurgischer"
+      },
+      {
+        "text": "Tracheotomie kurzes Einbringen eines"
+      },
+      {
+        "text": "Endotrachealtubus durch das Tracheostoma,"
+      },
+      {
+        "text": "Anamnese: Art der Tracheotomie bekannt"
+      },
+      {
+        "text": "Dilatativ"
+      },
+      {
+        "text": "Chirurgisch"
+      },
+      {
+        "text": "Dislokation der Kanüle"
+      },
+      {
+        "text": "V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "Sekretverlegung"
+      },
+      {
+        "text": "Verborkung"
+      },
+      {
+        "text": "Kanüle möglich"
+      },
+      {
+        "text": "Kanüle durchgängig"
+      },
+      {
+        "text": "Kanülendysfunktion"
+      },
+      {
+        "text": "Absaugen über die einliegende Trachealkanüle"
+      },
+      {
+        "text": "Bestmögliche Präoxygenierung"
+      },
+      {
+        "text": "Abtrennen des Anschlusskonus von einem"
+      },
+      {
+        "text": "Absaugkatheter möglichst Größe 16 Ch 18 Ch"
+      },
+      {
+        "text": "Aufbringen von Gleitmittel auf den Katheter"
+      }
+    ],
+    "warnings": [
+      "Hinweise in den Erläuterungen"
+    ]
+  },
+  {
+    "id": "alg-atemwegsnotfaelle-bei-trachealkanuelentraegern-dislokation",
+    "kind": "algorithm",
+    "label": "Atemwegsnotfälle bei Trachealkanülenträgern – Dislokation",
+    "indication": "Atemwegsnotfälle bei Trachealkanülenträgern – Dislokation",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "atemwegsnotfalle",
+      "atemwegsnotfalle bei trachealkanulentragern dislokation",
+      "dislokation",
+      "trachealkanulentragern"
+    ],
+    "steps": [
+      {
+        "text": "Hochdosierte O2-Gabe"
+      },
+      {
+        "text": "Beatmung erforderlich"
+      },
+      {
+        "text": "Supraglottische Atemwegs-"
+      },
+      {
+        "text": "sicherung Beatmung erwägen"
+      },
+      {
+        "text": "Endotracheale Intubation"
+      },
+      {
+        "text": "erwägen"
+      },
+      {
+        "text": "Wiedereinlage einer neuen"
+      },
+      {
+        "text": "Maskenbeatmung nur"
+      },
+      {
+        "text": "Oxygenierung sichergestellt"
+      },
+      {
+        "text": "Atmung Beatmung suffizient"
+      },
+      {
+        "text": "Dilatationstracheostoma"
+      },
+      {
+        "text": "Chirurgisches Tracheostoma"
+      },
+      {
+        "text": "bei Z"
+      },
+      {
+        "text": "n"
+      },
+      {
+        "text": "Laryngektomie"
+      },
+      {
+        "text": "Fortsetzung der O2-Gabe Beatmung"
+      },
+      {
+        "text": "Überwachung inkl"
+      },
+      {
+        "text": "SpO2 etCO2"
+      },
+      {
+        "text": "Bei Dislokation Anamnese: Art der Tracheotomie bekannt"
+      },
+      {
+        "text": "Dilatativ"
+      },
+      {
+        "text": "Chirurgisch"
+      }
+    ],
+    "warnings": [
+      "KEINE Gesichtsmaskenbeatmung",
+      "Keine oroendotracheale Intubation",
+      "KEINE Wiedereinlage-",
+      "* Hinweise in den Erläuterungen beachten!"
+    ]
+  },
+  {
+    "id": "alg-bedrohliche-bradykardie",
+    "kind": "algorithm",
+    "label": "Bedrohliche Bradykardie",
+    "indication": "Bedrohliche Bradykardie",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "bedrohliche",
+      "bedrohliche bradykardie",
+      "bradykardie"
+    ],
+    "steps": [
+      {
+        "text": "Überbrückungsmaßnahme:"
+      },
+      {
+        "text": "Falls nachweisbarer, aber noch"
+      },
+      {
+        "text": "unzureichender Atropin-Effekt:"
+      },
+      {
+        "text": "Erneut 0,5 mg Atropin i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Steigerung bis Gesamtdosis von"
+      },
+      {
+        "text": "mg Atropin möglich"
+      },
+      {
+        "text": "10 g min Adrenalin i"
+      },
+      {
+        "text": "Kontinuierliche Überwachung"
+      },
+      {
+        "text": "mg Adrenalin 1:1"
+      },
+      {
+        "text": "in 100 ml"
+      },
+      {
+        "text": "NaCl 0,9 lösen"
+      },
+      {
+        "text": "Aufziehen in 5-ml-Spritze:"
+      },
+      {
+        "text": ",2 ml 2 g"
+      },
+      {
+        "text": ",4 ml 4 g"
+      },
+      {
+        "text": ",6 ml 6 g"
+      },
+      {
+        "text": ",8 ml 8 g"
+      },
+      {
+        "text": ",0 ml 10 g"
+      },
+      {
+        "text": "Dosis 2 10 g min i"
+      },
+      {
+        "text": ",5 mg Atropin i"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-adrenalin",
+      "med-atropinsulfat",
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "und Beobachtung"
+    ]
+  },
+  {
+    "id": "alg-bevorstehende-geburt-transportentscheidung",
+    "kind": "algorithm",
+    "label": "Bevorstehende Geburt – Transportentscheidung",
+    "indication": "Bevorstehende Geburt – Transportentscheidung",
+    "tags": [
+      "gynaekologie",
+      "geburt",
+      "entscheidung"
+    ],
+    "searchTerms": [
+      "bevorstehende",
+      "bevorstehende geburt transportentscheidung",
+      "geburt",
+      "transportentscheidung"
+    ],
+    "steps": [
+      {
+        "text": "Notfalltransport in den Kreißsaal"
+      },
+      {
+        "text": "Algorithmus einsetzende Geburt"
+      },
+      {
+        "text": "Hinweise in den Erläuterungen beachten"
+      },
+      {
+        "text": "Kein Transport Geburt vor Ort"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Bevorstehende oder einsetzende Geburt"
+      },
+      {
+        "text": "Wehentätigkeit 2 Minuten"
+      },
+      {
+        "text": "Vorzeitiger Blasensprung Wehen"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Mutterpass einsehen und mitnehmen"
+      },
+      {
+        "text": "Lagerung in bequemer Position"
+      },
+      {
+        "text": "Vorsicht: Vena-cava-Kompressionssyndrom"
+      },
+      {
+        "text": "Lagerung in Linksseitenlage anstreben"
+      },
+      {
+        "text": "Anzahl der vorangegangenen Schwanger-"
+      },
+      {
+        "text": "Schwangerschaftsverlauf"
+      },
+      {
+        "text": "Zeitgerechte und normale Kindsentwicklung"
+      },
+      {
+        "text": "Geburtshilfliche Symptomatik Schmerzen,"
+      },
+      {
+        "text": "Geburtsmodus vorangegangener Geburten"
+      }
+    ],
+    "warnings": [
+      "* Hinweise in den Erläuterungen beachten!",
+      "Keine Geburt vor Ort"
+    ]
+  },
+  {
+    "id": "alg-bronchoobstruktion-erwachsener",
+    "kind": "algorithm",
+    "label": "Bronchoobstruktion – Erwachsener",
+    "indication": "Bronchoobstruktion – Erwachsener",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "bronchoobstruktion",
+      "bronchoobstruktion erwachsener",
+      "erwachsener"
+    ],
+    "steps": [
+      {
+        "text": "Deutliche Besserung"
+      },
+      {
+        "text": "HF 150 min oder TAA schnell"
+      },
+      {
+        "text": "Erneute Beurteilung der Atmung"
+      },
+      {
+        "text": "Engmaschiges Monitoring permanente Neubeurteilung"
+      },
+      {
+        "text": "mg Salbutamol über O2-Verneblermaske"
+      },
+      {
+        "text": "Einmalig: 50 mg Prednisolon-Äquivalent i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Parallel: i"
+      },
+      {
+        "text": "Zugang Gabe kristalloider Infusion 500 ml"
+      },
+      {
+        "text": "Einmalig: 0,5 mg Ipratropiumbromid"
+      },
+      {
+        "text": "über O2-Verneblermaske"
+      },
+      {
+        "text": "Hub Salbutamol-Aerosol möglich"
+      },
+      {
+        "text": "Lagerung nach Kreislauf, O2-Gabe, RR, HF, EKG, SpO2"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-ipratropiumbromid",
+      "med-prednisolon",
+      "med-salbutamol"
+    ]
+  },
+  {
+    "id": "alg-bronchoobstruktion-kind",
+    "kind": "algorithm",
+    "label": "Bronchoobstruktion – Kind",
+    "indication": "Bronchoobstruktion – Kind",
+    "tags": [
+      "atemwege",
+      "kinder"
+    ],
+    "searchTerms": [
+      "bronchoobstruktion",
+      "bronchoobstruktion kind",
+      "kind"
+    ],
+    "steps": [
+      {
+        "text": "Lagerung nach Kreislauf, O2-Gabe, RR, HF, EKG, SpO2"
+      },
+      {
+        "text": "Lippenbremse erläutern, zum Einsatz der Atemhilfsmuskulatur anleiten"
+      },
+      {
+        "text": "Deutliche Besserung"
+      },
+      {
+        "text": "Extreme Tachykardie"
+      },
+      {
+        "text": "Zunächst KEIN"
+      },
+      {
+        "text": "Salbutamol"
+      },
+      {
+        "text": ",5 mg Salbutamol über O2-Verneblermaske"
+      },
+      {
+        "text": "Einmalig: 100 mg Prednison Prednisolon rektal oder 1 mg kg KG i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Parallel: i"
+      },
+      {
+        "text": "Zugang langsame Gabe kristalloider Infusion 10 ml kg KG"
+      },
+      {
+        "text": "Einmalig: 0,25 mg Ipratropiumbromid über O2-Verneblermaske"
+      },
+      {
+        "text": "Erneute Beurteilung der Atmung"
+      },
+      {
+        "text": "Hub Salbutamol-Aerosol möglich"
+      },
+      {
+        "text": "Verdachtsdiagnose Bronchoobstruktion"
+      },
+      {
+        "text": "Asthma bronchiale vorbekannt"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-ipratropiumbromid",
+      "med-prednisolon",
+      "med-prednison",
+      "med-salbutamol"
+    ],
+    "warnings": [
+      "(Die Anlage des i.v.-Zugangs darf die antiobstruktive Therapie nicht verzögern!)"
+    ]
+  },
+  {
+    "id": "alg-checkliste-befoerderungsverzicht-ablehnung-durch-notsan",
+    "kind": "algorithm",
+    "label": "Checkliste: Beförderungsverzicht/Ablehnung durch NotSan",
+    "indication": "Checkliste: Beförderungsverzicht/Ablehnung durch NotSan",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "ablehnung",
+      "beforderungsverzicht",
+      "checkliste",
+      "checkliste beforderungsverzicht ablehnung durch notsan",
+      "durch",
+      "notsan"
+    ],
+    "steps": [
+      {
+        "text": "Wird eine der Fragen Nr"
+      },
+      {
+        "text": "18 mit JA beantwortet, ist eine Beförderungsablehnung durch den Notfallsanitäter nicht anzuraten"
+      },
+      {
+        "text": "18 mit JA beantwortet, ist ein Beförderungsverzicht in beiderseitigem Einvernehmen nicht anzuraten"
+      },
+      {
+        "text": "Ist der Patient 18 Jahren"
+      },
+      {
+        "text": "Gesetzlicher Betreuer Gesundheit Aufenthalt nicht anwesend nicht erreichbar"
+      },
+      {
+        "text": "Hinweise auf vorliegende oder drohende Hilflosigkeit"
+      },
+      {
+        "text": "Hinweise auf Einschränkung der Einwilligungsfähigkeit"
+      },
+      {
+        "text": "Fehlende unklare Weiterbetreuung"
+      },
+      {
+        "text": "Bedarf des Transportmittels KTW z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "liegende schonende Beförderung, O2-Gabe"
+      },
+      {
+        "text": "Vorliegen einer gültigen ärztlichen Einweisung"
+      },
+      {
+        "text": "Strukturierte Untersuchung Anamnese war nicht durchführbar"
+      },
+      {
+        "text": "Vorliegendes neu aufgetretenes ABCDE-Problem"
+      },
+      {
+        "text": "Objektivierbare, akute schwere Erkrankung akute schwere Verletzung"
+      },
+      {
+        "text": "Situation nicht als Bagatellverletzung -erkrankung eingeschätzt"
+      },
+      {
+        "text": "Hinweise auf relevante Hypo- Hyperglykämie"
+      },
+      {
+        "text": "Bestehende starke Schmerzzustände NRS 4 oder erfolgte Analgesie"
+      },
+      {
+        "text": "Verschlechterung des Gesundheitszustands zu erwarten"
+      },
+      {
+        "text": "Hinweise auf Drogenintoxikation oder ausgeprägten beeinträchtigenden Medikamenteneinfluss"
+      },
+      {
+        "text": "Akute oder drohende Lebensgefahr"
+      },
+      {
+        "text": "Drohende schwere Gesundheitsschäden"
+      }
+    ],
+    "warnings": [
+      "Gesetzlicher Betreuer (Gesundheit/Aufenthalt) nicht anwesend/nicht erreichbar?",
+      "Hinweise auf vorliegende oder drohende Hilflosigkeit?",
+      "Hinweise auf Einschränkung der Einwilligungsfähigkeit?",
+      "Strukturierte Untersuchung/Anamnese war nicht durchführbar?",
+      "Situation nicht als Bagatellverletzung/-erkrankung eingeschätzt?",
+      "Hinweise auf relevante Hypo-/Hyperglykämie?",
+      "Hinweise auf Drogenintoxikation oder ausgeprägten/beeinträchtigenden Medikamenteneinfluss?",
+      "Person und Situation, gegenwärtig einwilligungsfähig und nicht verwirrt, gang- und standsicher)"
+    ]
+  },
+  {
+    "id": "alg-checkliste-versorgungs-befoerderungsablehnung-durch-patienten",
+    "kind": "algorithm",
+    "label": "Checkliste: Versorgungs-/Beförderungsablehnung durch Patienten",
+    "indication": "Checkliste: Versorgungs-/Beförderungsablehnung durch Patienten",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "beforderungsablehnung",
+      "checkliste",
+      "checkliste versorgungs- beforderungsablehnung durch patienten",
+      "durch",
+      "patienten",
+      "versorgungs",
+      "versorgungs-"
+    ],
+    "steps": [
+      {
+        "text": "Wird eine der Fragen Nr"
+      },
+      {
+        "text": "16 mit JA beantwortet, ist die Nachforderung eines Notarztes dringend empfohlen"
+      },
+      {
+        "text": "Ist der Patient 18 Jahren und nicht rechtlich Gesundheit Aufenthalt betreut"
+      },
+      {
+        "text": "Hinweise auf vorliegende oder drohende Hilflosigkeit"
+      },
+      {
+        "text": "Hinweise auf Schlaftrunkenheit -wandel"
+      },
+      {
+        "text": "Hinweise auf Drogenintoxikation oder ausgeprägten beeinträchtigenden Medikamenteneinfluss"
+      },
+      {
+        "text": "Hinweise auf Fieberdelirium"
+      },
+      {
+        "text": "Hinweise auf neu aufgetretene Desorientierung"
+      },
+      {
+        "text": "Bestehende retrograde Amnesie"
+      },
+      {
+        "text": "Z"
+      },
+      {
+        "text": "n"
+      },
+      {
+        "text": "zerebralem Krampfanfall in Zusammenhang mit dem aktuellen Einsatz"
+      },
+      {
+        "text": "Hinweise auf Bewusstseinsstörungen unter Hypo- Hyperglykämie"
+      },
+      {
+        "text": "Bestehende starke Schmerzzustände"
+      },
+      {
+        "text": "Hinweise auf höchstgradige psychische oder körperliche Erschöpfung"
+      },
+      {
+        "text": "Direkt zuvor bestehende Bewusstlosigkeit"
+      },
+      {
+        "text": "Hinweise auf Suizidalität"
+      },
+      {
+        "text": "Hinweise auf Fremdgefährdung"
+      },
+      {
+        "text": "Akute oder drohende Lebensgefahr"
+      },
+      {
+        "text": "Drohende schwere Gesundheitsschäden"
+      },
+      {
+        "text": "Bedenken Zweifel seitens des Notfallsanitäters"
+      },
+      {
+        "text": "In Anlehnung an die Algorithmen für den Rettungsdienst im Land Schleswig-Holstein, Version 5"
+      }
+    ],
+    "warnings": [
+      "Ist der Patient < 18 Jahren und nicht rechtlich (Gesundheit/Aufenthalt) betreut?",
+      "Hinweise auf vorliegende oder drohende Hilflosigkeit?",
+      "Hinweise auf Schlaftrunkenheit/-wandel?",
+      "Hinweise auf Drogenintoxikation oder ausgeprägten/beeinträchtigenden Medikamenteneinfluss?",
+      "Hinweise auf Fieberdelirium?",
+      "Hinweise auf neu aufgetretene Desorientierung?",
+      "Hinweise auf Bewusstseinsstörungen unter Hypo-/Hyperglykämie?",
+      "Hinweise auf höchstgradige psychische oder körperliche Erschöpfung?"
+    ]
+  },
+  {
+    "id": "alg-dislozierter-oder-funktionsgestoerter-transurethraler-blasenkatheter",
+    "kind": "algorithm",
+    "label": "Dislozierter oder funktionsgestörter transurethraler Blasenkatheter",
+    "indication": "Dislozierter oder funktionsgestörter transurethraler Blasenkatheter",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "blasenkatheter",
+      "dislozierter",
+      "dislozierter oder funktionsgestorter transurethraler blasenkatheter",
+      "funktionsgestorter",
+      "oder",
+      "transurethraler"
+    ],
+    "steps": [
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "steriles Anspülen Aspirieren am Katheter mit NaCl bei V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "Verstopfung"
+      },
+      {
+        "text": "EINLAGE EINES NEUEN TRANSURETHRALEN BLASENKATHETERS"
+      },
+      {
+        "text": "Gründliche Desinfektion des Urogenitalbereichs mit Schleimhautdesinfektionsmittel"
+      },
+      {
+        "text": "Verwendung von ausreichend anästhetischem Gleitmittel"
+      },
+      {
+        "text": "Einlegen des Blasenkatheters ohne Gewalt"
+      },
+      {
+        "text": "Blockung des Blasenkatheters mit 8- bis 10-prozentiger Glycerol-Wasser-Lösung oder Wasser"
+      },
+      {
+        "text": "Auffangen des Urins im Urinbeutel"
+      },
+      {
+        "text": "Bei Männern: Sicheres Reponieren der Vorhaut nach Katheteranlage"
+      },
+      {
+        "text": "Kontrolle der erfolgreichen Einlage:"
+      },
+      {
+        "text": "Abfließen von klarem Urin"
+      },
+      {
+        "text": "Fehlen des Nachweises einer Makrohämaturie sichtbares Blut im Urin"
+      },
+      {
+        "text": "Fehlen einer Pyurie Eiterableitung über den Blasenkatheter"
+      },
+      {
+        "text": "Fehlen relevanter Schmerzen beim Patienten nach Kathetereinlage"
+      },
+      {
+        "text": "Nierenlager nicht klopfschmerzhaft"
+      },
+      {
+        "text": "Fehlende Hinweise auf Harnwegsinfekt"
+      },
+      {
+        "text": "Fehlende Hinweise auf Sepsis"
+      },
+      {
+        "text": "ABCDE-Problem"
+      },
+      {
+        "text": "Patient mit disloziertem oder"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "• Nierenlager nicht klopfschmerzhaft?",
+      "• Fehlende Hinweise auf Harnwegsinfekt?",
+      "• Fehlende Hinweise auf Sepsis?",
+      "KEINE Manipulation"
+    ]
+  },
+  {
+    "id": "alg-dyspnoe-kind",
+    "kind": "algorithm",
+    "label": "Dyspnoe – Kind",
+    "indication": "Dyspnoe – Kind",
+    "tags": [
+      "atemwege",
+      "kinder"
+    ],
+    "searchTerms": [
+      "dyspnoe",
+      "dyspnoe kind",
+      "kind"
+    ],
+    "steps": [
+      {
+        "text": "Fremdkörperaspiration"
+      },
+      {
+        "text": "Beobachtetes Ereignis"
+      },
+      {
+        "text": "Plötzlicher Beginn"
+      },
+      {
+        "text": "Husten und Würgen"
+      },
+      {
+        "text": "Kind hat gerade gegessen"
+      },
+      {
+        "text": "oder gespielt"
+      },
+      {
+        "text": "Inspiratorischer Stridor"
+      },
+      {
+        "text": "Alter meist bis zu 3 Jahre"
+      },
+      {
+        "text": "Exspiratorisches Giemen"
+      },
+      {
+        "text": "vorbekannt"
+      },
+      {
+        "text": "Extreme Instabilität"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-adrenalin"
+    ],
+    "warnings": [
+      "nicht kritisch krank"
+    ]
+  },
+  {
+    "id": "alg-einsetzende-geburt",
+    "kind": "algorithm",
+    "label": "Einsetzende Geburt",
+    "indication": "Einsetzende Geburt",
+    "tags": [
+      "gynaekologie",
+      "geburt"
+    ],
+    "searchTerms": [
+      "einsetzende",
+      "einsetzende geburt",
+      "geburt"
+    ],
+    "steps": [
+      {
+        "text": "Geburtszeitpunkt:"
+      },
+      {
+        "text": "Als Geburtszeitpunkt gilt die Zeit, zu der das Kind vollständig und lebend aus dem"
+      },
+      {
+        "text": "Mutterleib ausgetreten ist"
+      },
+      {
+        "text": "Transport"
+      },
+      {
+        "text": "Algorithmus Neugeborenenversorgung direkt nach der Geburt"
+      },
+      {
+        "text": "Regelmäßige Wehen 2 Minuten"
+      },
+      {
+        "text": "Presswehen, Pressdrang"
+      },
+      {
+        "text": "Abdominelle Schmerzen"
+      },
+      {
+        "text": "Vorangehender Kindskopf in der Vulva sichtbar"
+      },
+      {
+        "text": "Klaffen des Anus"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "Blutabgang"
+      },
+      {
+        "text": "Flüssigkeitsabgang, Blasensprung"
+      },
+      {
+        "text": "IMMER Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Ruhige Umgebung schaffen"
+      },
+      {
+        "text": "Ausreichende Raumtemperatur sicherstellen"
+      },
+      {
+        "text": "Gebärende und deren Partner beruhigen"
+      },
+      {
+        "text": "Gebärende nicht mehr laufen lassen"
+      },
+      {
+        "text": "Lagerung ggf"
+      },
+      {
+        "text": "in Rückenlage mit leicht erhöhtem"
+      }
+    ],
+    "warnings": [
+      "• Gebärende nicht mehr laufen lassen",
+      "GEBURT – Geburtsfortschritt beobachten – NICHT EINGREIFEN!",
+      "• Nachgeburt nicht abwarten – Mutter + Kind (+ ggf. Plazenta) in die nächstgelegene Geburtsklinik",
+      "Nicht am Kind ziehen!"
+    ]
+  },
+  {
+    "id": "alg-entlastungspunktion-spannungspneumothorax",
+    "kind": "algorithm",
+    "label": "Entlastungspunktion – Spannungspneumothorax",
+    "indication": "Entlastungspunktion – Spannungspneumothorax",
+    "tags": [
+      "atemwege",
+      "verfahren"
+    ],
+    "searchTerms": [
+      "entlastungspunktion",
+      "entlastungspunktion spannungspneumothorax",
+      "spannungspneumothorax"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Die Entlastungspunktion ersetzt keine Thoraxdrainage"
+      },
+      {
+        "text": "IMMER den Spannungspneumothorax unter Beatmungsbedingungen bedenken"
+      },
+      {
+        "text": "Notfallthorakotomie: Hinweise bei den Erläuterungen beachten"
+      },
+      {
+        "text": "Pneumothorax sehr wahrscheinlich"
+      },
+      {
+        "text": "Kontinuierliche Beurteilung"
+      },
+      {
+        "text": "Gesamtkontext am wahrscheinlichsten"
+      },
+      {
+        "text": "Tachypnoe und akute Dyspnoe"
+      },
+      {
+        "text": "Atemgeräusch"
+      },
+      {
+        "text": "Thoraxschmerz"
+      },
+      {
+        "text": "Eventuell Hautemphysem"
+      },
+      {
+        "text": "Schnelle Verschlechterung"
+      },
+      {
+        "text": "Tachykardie"
+      },
+      {
+        "text": "Hypotonie Schock"
+      },
+      {
+        "text": "Halsvenenstauung"
+      },
+      {
+        "text": "Normale Atemfrequenz"
+      },
+      {
+        "text": "Vorhandenes Atemgeräusch"
+      },
+      {
+        "text": "Fehlender Thoraxschmerz"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "IMMER den Spannungspneumothorax unter Beatmungsbedingungen bedenken!",
+      "*Notfallthorakotomie: Hinweise bei den Erläuterungen beachten",
+      "KEINE Entlastungspunktion!"
+    ]
+  },
+  {
+    "id": "alg-entscheidung-anlage-einer-beckenschlinge",
+    "kind": "algorithm",
+    "label": "Entscheidung – Anlage einer Beckenschlinge",
+    "indication": "Entscheidung – Anlage einer Beckenschlinge",
+    "tags": [
+      "verfahren",
+      "entscheidung"
+    ],
+    "searchTerms": [
+      "anlage",
+      "beckenschlinge",
+      "einer",
+      "entscheidung",
+      "entscheidung anlage einer beckenschlinge"
+    ],
+    "steps": [
+      {
+        "text": "Kreislaufinstabilität vorliegend"
+      },
+      {
+        "text": "HF 100 min, RRsys 90 mmHg"
+      },
+      {
+        "text": "Eingeschränkte Beurteilbarkeit"
+      },
+      {
+        "text": "z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "reduzierte GCS 13"
+      },
+      {
+        "text": "Hinweise auf Drogen"
+      },
+      {
+        "text": "Überlagernde ablenkende Verletzungen"
+      },
+      {
+        "text": "Unfähigkeit zur Kommunikation"
+      },
+      {
+        "text": "Äußere Wunden sichtbar"
+      },
+      {
+        "text": "Prellmarken oder Hämatome"
+      },
+      {
+        "text": "Beckenfehlstellungen bds"
+      },
+      {
+        "text": "Beine außenrotiert"
+      },
+      {
+        "text": "Beinlängendifferenz"
+      },
+      {
+        "text": "Offensichtliche rektale vaginale Blutung"
+      },
+      {
+        "text": "Palpation der Symphyse Symphysensprengung"
+      },
+      {
+        "text": "Schmerzangaben"
+      },
+      {
+        "text": "Verkehrsunfall mit Hochrasanztrauma"
+      },
+      {
+        "text": "Kollision eines Fußgängers Radfahrers mit einem PKW LKW"
+      },
+      {
+        "text": "Sturz aus einer Höhe 3 m"
+      },
+      {
+        "text": "Überrolltrauma"
+      }
+    ],
+    "warnings": [
+      "Hinweise auf Drogen?",
+      "Keine routinemäßige Prüfung auf",
+      "Beckenschlinge NICHT indiziert!"
+    ]
+  },
+  {
+    "id": "alg-entscheidung-ueber-die-befoerderung-von-patienten",
+    "kind": "algorithm",
+    "label": "Entscheidung über die Beförderung von Patienten",
+    "indication": "Entscheidung über die Beförderung von Patienten",
+    "tags": [
+      "entscheidung"
+    ],
+    "searchTerms": [
+      "beforderung",
+      "entscheidung",
+      "entscheidung uber die beforderung von patienten",
+      "patienten",
+      "uber"
+    ],
+    "steps": [
+      {
+        "text": "Beförderung"
+      },
+      {
+        "text": "erforderlich"
+      },
+      {
+        "text": "Patient willigt"
+      },
+      {
+        "text": "in Beförderung ein"
+      },
+      {
+        "text": "Patient lehnt Versorgung"
+      },
+      {
+        "text": "Beförderung ab"
+      },
+      {
+        "text": "nach Checkliste möglich"
+      },
+      {
+        "text": "möglich"
+      },
+      {
+        "text": "Patienten"
+      },
+      {
+        "text": "In Anlehnung an die Algorithmen für den Rettungsdienst im Land Schleswig-Holstein, Version 5"
+      }
+    ],
+    "warnings": [
+      "KEINE Beförderung",
+      "Keine Beförderung"
+    ]
+  },
+  {
+    "id": "alg-entscheidungsfindung-bei-traumapatienten",
+    "kind": "algorithm",
+    "label": "Entscheidungsfindung bei Traumapatienten",
+    "indication": "Entscheidungsfindung bei Traumapatienten",
+    "tags": [
+      "trauma",
+      "entscheidung",
+      "organisation"
+    ],
+    "searchTerms": [
+      "entscheidungsfindung",
+      "entscheidungsfindung bei traumapatienten",
+      "traumapatienten"
+    ],
+    "steps": [
+      {
+        "text": "Primary survey Erster Untersuchungs- und Behandlungsgang"
+      },
+      {
+        "text": "Entscheidung: Kritischer oder Nicht kritischer Patient Zeitplanung Management"
+      },
+      {
+        "text": "Exsanguination"
+      },
+      {
+        "text": "Lebensbedrohliche externe Blutung"
+      },
+      {
+        "text": "Sind die Atemwege aktuell ausreichend frei"
+      },
+      {
+        "text": "HWS"
+      },
+      {
+        "text": "Auffälligkeiten bei Inspektion der Atemwege"
+      },
+      {
+        "text": "Hinweise für Ersticken"
+      },
+      {
+        "text": "Frustrane Atembemühungen"
+      },
+      {
+        "text": "Verlegung durch Weichteile, Blut, Erbrochenes,"
+      },
+      {
+        "text": "Fremdkörper"
+      },
+      {
+        "text": "Ist die Belüftung aktuell ausreichend"
+      },
+      {
+        "text": "Atemfrequenz"
+      },
+      {
+        "text": "Atemtiefe"
+      },
+      {
+        "text": "Halsvenenstauung"
+      },
+      {
+        "text": "Thorakale Auffälligkeiten"
+      },
+      {
+        "text": "Thorax palpatorisch stabil Emphysem"
+      },
+      {
+        "text": "Beidseitige Belüftung in Auskultation nachweisbar"
+      }
+    ],
+    "warnings": [
+      "Entscheidung: Kritischer oder Nicht kritischer Patient + Zeitplanung (Management)",
+      "• Hinweise für Ersticken?",
+      "• Hinweise auf Blutungen abdominell?",
+      "• Hinweise auf Blutungen in das Becken?(KIPS:",
+      "• Hinweise auf Blutungen in die"
+    ]
+  },
+  {
+    "id": "alg-entscheidungsfindung-erforderlichkeit-notarzt",
+    "kind": "algorithm",
+    "label": "Entscheidungsfindung Erforderlichkeit Notarzt",
+    "indication": "Entscheidungsfindung Erforderlichkeit Notarzt",
+    "tags": [
+      "entscheidung",
+      "organisation"
+    ],
+    "searchTerms": [
+      "entscheidungsfindung",
+      "entscheidungsfindung erforderlichkeit notarzt",
+      "erforderlichkeit",
+      "notarzt"
+    ],
+    "steps": [
+      {
+        "text": "Konkrete akute vitale Bedrohung nach Einschätzung des NotSan erwartbar"
+      },
+      {
+        "text": "Gefährdeter Atemweg, der nicht gesichert werden kann"
+      },
+      {
+        "text": "Z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": ":"
+      },
+      {
+        "text": "Anhaltend fehlende Schutzreflexe"
+      },
+      {
+        "text": "Schwere anhaltende und therapierefraktäre Vigilanzminderung GCS 8"
+      },
+      {
+        "text": "Trauma des Halses mit Hinweisen für Atemwegsbedrohung z"
+      },
+      {
+        "text": "Heiserkeit,"
+      },
+      {
+        "text": "Engegefühl im Hals, kloßige Sprache"
+      },
+      {
+        "text": "Anhaltender Krampfanfall, der nicht durch NotSan-Medikation durchbrochen werden"
+      },
+      {
+        "text": "Akute lebensbedrohliche oder zunehmend lebensbedrohliche Atemnot"
+      },
+      {
+        "text": "25 Minute"
+      },
+      {
+        "text": "110 Minute"
+      },
+      {
+        "text": "Zyanose trotz O2-Gabe"
+      },
+      {
+        "text": "Anhaltende Leitsymptome medizinische Probleme in Kombination mit dem"
+      },
+      {
+        "text": "Patientenzustand weisen auf unmittelbaren lebensbedrohlichen Zustand hin"
+      },
+      {
+        "text": "Hypoxieanzeichen siehe 3"
+      },
+      {
+        "text": "Unmittelbar einsetzende Geburt"
+      },
+      {
+        "text": "Besondere Therapien vor Ort oder während des Transports erforderlich, die Notarzt-"
+      },
+      {
+        "text": "fertigkeiten erfordern"
+      },
+      {
+        "text": "Versorgungs- Transportablehnung durch den Patienten trotz akuter Lebensgefahr"
+      }
+    ],
+    "warnings": [
+      "2. Gefährdeter Atemweg, der nicht gesichert werden kann? Z. B.:",
+      "• Trauma des Halses mit Hinweisen für Atemwegsbedrohung (z. B. Heiserkeit,",
+      "• Anhaltender Krampfanfall, der nicht durch NotSan-Medikation durchbrochen werden"
+    ]
+  },
+  {
+    "id": "alg-entscheidungsfindung-schockraumindikation-n-trauma",
+    "kind": "algorithm",
+    "label": "Entscheidungsfindung Schockraumindikation n. Trauma",
+    "indication": "Entscheidungsfindung Schockraumindikation n. Trauma",
+    "tags": [
+      "trauma",
+      "schock",
+      "entscheidung",
+      "organisation"
+    ],
+    "searchTerms": [
+      "entscheidungsfindung",
+      "entscheidungsfindung schockraumindikation n trauma",
+      "schockraumindikation",
+      "trauma"
+    ],
+    "steps": [
+      {
+        "text": "Verletzungsmuster:"
+      },
+      {
+        "text": "Querschnittsverletzung Sensomotorisches Defizit nach Trauma"
+      },
+      {
+        "text": "Vorliegen von penetrierenden Verletzungen der Rumpf- Hals-Region"
+      },
+      {
+        "text": "Frakturen von mehr als 2 proximalen Knochen"
+      },
+      {
+        "text": "instabiler Thorax oder offene Thoraxverletzung"
+      },
+      {
+        "text": "Mechanisch instabile Beckenfrakturen"
+      },
+      {
+        "text": "Amputationsverletzung proximal der Hände Füße"
+      },
+      {
+        "text": "Verbrennungen 20 ggf"
+      },
+      {
+        "text": "auch direkt Schwerbrandverletzteneinheit"
+      },
+      {
+        "text": "Absturz Sturz aus über 3 Meter Höhe"
+      },
+      {
+        "text": "bei Kindern: doppelte Körperhöhe, und oder 3 m"
+      },
+      {
+        "text": "Verkehrsunfall mit"
+      },
+      {
+        "text": "Herausschleudern eines Insassen aus dem Fahrzeug"
+      },
+      {
+        "text": "Fraktur langer Röhrenknochen Femur, Humerus, Unterschenkel, Unterarm"
+      },
+      {
+        "text": "Z"
+      },
+      {
+        "text": "n"
+      },
+      {
+        "text": "Atemwegssicherung Notfallnarkose Intubation"
+      },
+      {
+        "text": "Thoraxentlastungspunktion Thoraxdrainage nach Trauma"
+      },
+      {
+        "text": "Thorakotomie Perikardentlastung nach Trauma"
+      },
+      {
+        "text": "Anlage eines Tourniquets"
+      },
+      {
+        "text": "Katechoalminpflichtigkeit"
+      }
+    ]
+  },
+  {
+    "id": "alg-erkennen-des-kritisch-kranken-kindes",
+    "kind": "algorithm",
+    "label": "Erkennen des kritisch kranken Kindes",
+    "indication": "Erkennen des kritisch kranken Kindes",
+    "tags": [
+      "kinder"
+    ],
+    "searchTerms": [
+      "des",
+      "erkennen",
+      "erkennen des kritisch kranken kindes",
+      "kindes",
+      "kranken",
+      "kritisch"
+    ],
+    "steps": [
+      {
+        "text": "Reaktion des Kindes"
+      },
+      {
+        "text": "Atemweg beurteilen"
+      },
+      {
+        "text": "Atmung beurteilen"
+      },
+      {
+        "text": "Normale Atmung feststellbar"
+      },
+      {
+        "text": "Lebenszeichen"
+      },
+      {
+        "text": "Puls"
+      },
+      {
+        "text": "Bewusstseinslage prüfen"
+      },
+      {
+        "text": "Beatmungen"
+      },
+      {
+        "text": "Thoraxkompressionen"
+      },
+      {
+        "text": "O2-Gabe assistierte Beatmung"
+      },
+      {
+        "text": "Atemweg offen und sicher"
+      },
+      {
+        "text": "Atemweg gefährdet verlegt"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang i"
+      },
+      {
+        "text": "o"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "von 10 ml kgKG"
+      }
+    ]
+  },
+  {
+    "id": "alg-eskalierendes-atemwegsmanagement",
+    "kind": "algorithm",
+    "label": "Eskalierendes Atemwegsmanagement",
+    "indication": "Eskalierendes Atemwegsmanagement",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "atemwegsmanagement",
+      "eskalierendes",
+      "eskalierendes atemwegsmanagement"
+    ],
+    "steps": [
+      {
+        "text": "A-Problem Atemwegsverlegung"
+      },
+      {
+        "text": "Bolusgeschehen"
+      },
+      {
+        "text": "Fremdkörper"
+      },
+      {
+        "text": "Algorithmus Fremdkörperentfernung"
+      },
+      {
+        "text": "Spontanatmung suffizient vorhanden"
+      },
+      {
+        "text": "Atemwegssicherung erfolgreich"
+      },
+      {
+        "text": "Atemwegssicherung erforderlich"
+      },
+      {
+        "text": "Beatmungsbeginn:"
+      },
+      {
+        "text": "Beutel-Masken-Beatmung mit 100 O2"
+      },
+      {
+        "text": "Atemwegssicherung mit 2"
+      },
+      {
+        "text": "Generation"
+      },
+      {
+        "text": "Kopf überstrecken, Kinn anheben"
+      },
+      {
+        "text": "Esmarch-Handgriff oder"
+      },
+      {
+        "text": "Nasopharyngealtubus z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "Wendl"
+      },
+      {
+        "text": "Oropharyngealtubus z"
+      },
+      {
+        "text": "Guedel"
+      },
+      {
+        "text": "Stabile Seitenlage erwägen"
+      },
+      {
+        "text": "Beatmung mit 100 O2"
+      },
+      {
+        "text": "Beutel-Masken-Beatmung möglich"
+      },
+      {
+        "text": "Kontinuierliche Überwachung von Atemweg und Atmung Beatmung IMMER mittels:"
+      },
+      {
+        "text": "Kapnografie etCO2"
+      }
+    ],
+    "warnings": [
+      "(Achtung: HWS-Verletzungen)"
+    ]
+  },
+  {
+    "id": "alg-fremdkoerperentfernung-erwachsener",
+    "kind": "algorithm",
+    "label": "Fremdkörperentfernung – Erwachsener",
+    "indication": "Fremdkörperentfernung – Erwachsener",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "erwachsener",
+      "fremdkorperentfernung",
+      "fremdkorperentfernung erwachsener"
+    ],
+    "steps": [
+      {
+        "text": "ERC-Leitlinie 2025"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Erstickungsanfall in Zusammenhang mit Essen oder Trinken"
+      },
+      {
+        "text": "Hinweise auf erhöhte Gefahr durch Intoxikation"
+      },
+      {
+        "text": "Hinweise auf Schluckstörung z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "neurologische Erkrankungen"
+      },
+      {
+        "text": "Hinweise auf Atemwegserkrankungen"
+      },
+      {
+        "text": "Hinweise auf geistige Erkrankungen"
+      },
+      {
+        "text": "Ineffektives Husten"
+      },
+      {
+        "text": "Patient ringt nach Luft"
+      },
+      {
+        "text": "Patient bewusstseinsgetrübt"
+      },
+      {
+        "text": "Effektives Husten"
+      },
+      {
+        "text": "Patient atmet offensichtlich"
+      },
+      {
+        "text": "Patient bewusstseinsklar"
+      },
+      {
+        "text": "Ist das Husten effektiv"
+      },
+      {
+        "text": "Zum Husten ermutigen"
+      },
+      {
+        "text": "Erfolgreich"
+      },
+      {
+        "text": "Beginn der"
+      },
+      {
+        "text": "Patient nach vorne"
+      }
+    ],
+    "warnings": [
+      "• Hinweise auf erhöhte Gefahr durch Intoxikation?",
+      "• Hinweise auf Schluckstörung (z. B. neurologische Erkrankungen)?",
+      "• Hinweise auf Atemwegserkrankungen?",
+      "• Hinweise auf geistige Erkrankungen?",
+      "Atmen scheint nicht möglich zu sein",
+      "Antworten nicht möglich/Stimmlosigkeit"
+    ]
+  },
+  {
+    "id": "alg-fremdkoerperentfernung-kind",
+    "kind": "algorithm",
+    "label": "Fremdkörperentfernung – Kind",
+    "indication": "Fremdkörperentfernung – Kind",
+    "tags": [
+      "kinder"
+    ],
+    "searchTerms": [
+      "fremdkorperentfernung",
+      "fremdkorperentfernung kind",
+      "kind"
+    ],
+    "steps": [
+      {
+        "text": "Effektives Husten"
+      },
+      {
+        "text": "Schreie oder Antwort"
+      },
+      {
+        "text": "auf Ansprache"
+      },
+      {
+        "text": "Lautes Husten"
+      },
+      {
+        "text": "Einatmen vor dem"
+      },
+      {
+        "text": "Husten möglich"
+      },
+      {
+        "text": "Ineffektives Husten"
+      },
+      {
+        "text": "Ist das Husten effektiv"
+      },
+      {
+        "text": "Beatmungen"
+      },
+      {
+        "text": "Beginn der Reanimation"
+      },
+      {
+        "text": "2"
+      },
+      {
+        "text": "Rückenschläge"
+      },
+      {
+        "text": "Kompressionen"
+      },
+      {
+        "text": "Kontinuierliche Beurteilung"
+      },
+      {
+        "text": "Zum Husten ermutigen"
+      }
+    ]
+  },
+  {
+    "id": "alg-hypertensiver-notfall-urapidil-metoprolol",
+    "kind": "algorithm",
+    "label": "Hypertensiver Notfall – Urapidil + Metoprolol",
+    "indication": "Hypertensiver Notfall – Urapidil + Metoprolol",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "hypertensiver",
+      "hypertensiver notfall urapidil metoprolol",
+      "metoprolol",
+      "notfall",
+      "urapidil"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Klinisch beschwerdefrei"
+      },
+      {
+        "text": "Hypertensive Blutdrucklage einziges Symptom"
+      },
+      {
+        "text": "RRsys 180 mmHg und oder RRdia 110 mmHg"
+      },
+      {
+        "text": "Zeichen einer Organfunktionsstörung"
+      },
+      {
+        "text": "z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": ": Kopfschmerzen, Augenflimmern, Übelkeit, Druck im Kopf, hochroter Kopf"
+      },
+      {
+        "text": "Organfunktionsstörung"
+      },
+      {
+        "text": "Dyspnoe mit Lungenstauung"
+      },
+      {
+        "text": "Zielwert: RRsys 140 mmHg"
+      },
+      {
+        "text": "RRsys 120 mmHg"
+      },
+      {
+        "text": "Asthma bronchiale vorbekannt"
+      },
+      {
+        "text": "Unverträglichkeit gegen -Blocker"
+      },
+      {
+        "text": "Gabe von 2,5 mg Metoprolol langsam i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Wdh"
+      },
+      {
+        "text": "bis maximal 15 mg"
+      },
+      {
+        "text": "Angina pectoris"
+      },
+      {
+        "text": "BE-FAST-Test positiv"
+      },
+      {
+        "text": "Ziel-RRsys 120 mmHg"
+      },
+      {
+        "text": "andere Zielwerte angegeben sind, 25 des"
+      },
+      {
+        "text": "Werten RRsys 220 mmHg oder"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-metoprolol",
+      "med-urapidil"
+    ],
+    "warnings": [
+      "Ausgangswertes nicht überschreiten!",
+      "KEINE Urapidil-Therapie"
+    ]
+  },
+  {
+    "id": "alg-hypoglykaemie",
+    "kind": "algorithm",
+    "label": "Hypoglykämie",
+    "indication": "Hypoglykämie",
+    "tags": [
+      "stoffwechsel",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "glucose",
+      "glukose",
+      "hypoglykaemie",
+      "hypoglykamie",
+      "unterzucker"
+    ],
+    "steps": [
+      {
+        "text": "Suche nach anderen Ursachen"
+      },
+      {
+        "text": "Glucagon kann bei Alkoholismus oder Mangelernährung unwirksam sein"
+      },
+      {
+        "text": "Symptomatik abgeklungen"
+      },
+      {
+        "text": "Transport"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Lagerung nach Bewusstseinslage"
+      },
+      {
+        "text": "Gabe von 5 10 g Glucose i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "als Glucose 20 25 50 ml"
+      },
+      {
+        "text": "einmalig 1 mg Glucagon i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "oder 3 mg intranasal"
+      },
+      {
+        "text": "Gabe von einmalig 100 mg"
+      },
+      {
+        "text": "Thiamin Vitamin B1 i"
+      },
+      {
+        "text": "Gabe von"
+      },
+      {
+        "text": "10 g Glucose oral"
+      },
+      {
+        "text": "Kontrollmessung des BZ aus kapillärem Mischblut nach 2 3 Minuten"
+      },
+      {
+        "text": "BZ-Wert ausgeglichen"
+      },
+      {
+        "text": "Erneute Beurteilung nach ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Bewusstseinsgetrübt"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-glucagon",
+      "med-glucose",
+      "med-thiamin-vitamin-b1"
+    ],
+    "warnings": [
+      "Nicht bewusstseinsgetrübt?"
+    ]
+  },
+  {
+    "id": "alg-iv-zugang",
+    "kind": "algorithm",
+    "label": "i.v.-Zugang",
+    "indication": "i.v.-Zugang",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "-zugang",
+      "i v -zugang",
+      "zugang"
+    ],
+    "steps": [
+      {
+        "text": "Erfolgreiche Anlage"
+      },
+      {
+        "text": "Zu erwartende Medikamentengabe Infusionstherapie"
+      },
+      {
+        "text": "Aufklärung und Einwilligung"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "Blutentnahme"
+      },
+      {
+        "text": "Verlaufskontrolle:"
+      },
+      {
+        "text": "Auf Schwellung,"
+      },
+      {
+        "text": "Lagerung Stauung Desinfektion"
+      },
+      {
+        "text": "Prüfen alternativer Zugangswege"
+      },
+      {
+        "text": "Ablehnung der Maßnahme durch den Patienten"
+      },
+      {
+        "text": "Infektion an der Punktionsstelle"
+      },
+      {
+        "text": "Verletzung an der Extremität mit Ausweichmöglichkeit auf andere Punktionsstelle"
+      },
+      {
+        "text": "Dialyseshunt in der Extremität, an der punktiert werden soll"
+      },
+      {
+        "text": "Aufklärung über:"
+      },
+      {
+        "text": "Fehllage"
+      },
+      {
+        "text": "Entzündung"
+      },
+      {
+        "text": "Verletzung von Nerven und Arterien"
+      }
+    ],
+    "warnings": [
+      "KEINE Punktion!",
+      "Keine Punktion bei:"
+    ]
+  },
+  {
+    "id": "alg-inhalative-analgesie-methoxyfluran",
+    "kind": "algorithm",
+    "label": "Inhalative Analgesie Methoxyfluran",
+    "indication": "Inhalative Analgesie Methoxyfluran",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "analgesie",
+      "inhalative",
+      "inhalative analgesie methoxyfluran",
+      "methoxyfluran"
+    ],
+    "steps": [
+      {
+        "text": "Keine Medikation mit Methoxyfluran"
+      },
+      {
+        "text": "Zunächst keine weitere Medikation"
+      },
+      {
+        "text": "mit Methoxyfluran"
+      },
+      {
+        "text": "ABCDE-Herangehensweise Traumatischer Schmerz NRS 4"
+      },
+      {
+        "text": "Analgesie bei traumatischem Schmerz inhalativ sinnvoll"
+      },
+      {
+        "text": "Lagerung, nicht medikamentöse Schmerztherapie,"
+      },
+      {
+        "text": "Monitoring SpO2 und Atemfrequenz"
+      },
+      {
+        "text": "Kontraindikationen vorliegend"
+      },
+      {
+        "text": "18 Lebensjahre"
+      },
+      {
+        "text": "Narkosezwischenfälle auch familiär"
+      },
+      {
+        "text": "Maligne Hyperthermie"
+      },
+      {
+        "text": "Allergie Unverträglichkeit auf Narkotika"
+      },
+      {
+        "text": "Eingeschränkter Bewusstseinszustand"
+      },
+      {
+        "text": "Anstieg der Körpertemperatur"
+      },
+      {
+        "text": "Schwere Leber- Nierenerkrankungen"
+      },
+      {
+        "text": "aktuelle Antibiotikatherapie"
+      },
+      {
+        "text": "Therapie mit CYP450-induzierten"
+      },
+      {
+        "text": "klinisch manifeste Herz-Kreislauf- Instabilität"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-fentanyl",
+      "med-methoxyfluran"
+    ],
+    "warnings": [
+      "Keine Medikation mit Methoxyfluran",
+      "Lagerung, nicht medikamentöse Schmerztherapie,",
+      "Kontraindikationen vorliegend?"
+    ]
+  },
+  {
+    "id": "alg-intraossaerer-zugang-erwachsener",
+    "kind": "algorithm",
+    "label": "Intraossärer Zugang – Erwachsener",
+    "indication": "Intraossärer Zugang – Erwachsener",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "erwachsener",
+      "intraossarer",
+      "intraossarer zugang erwachsener",
+      "zugang"
+    ],
+    "steps": [
+      {
+        "text": "Anlage des intraossären Zugangs"
+      },
+      {
+        "text": "Lagehinweise: Blut am Trokar"
+      },
+      {
+        "text": "Blut aspirierbar"
+      },
+      {
+        "text": "Reanimation Bewusstloser Patient und oder"
+      },
+      {
+        "text": "bekannte Lidocain-Allergie"
+      },
+      {
+        "text": "ml 40 mg Lidocain 2 über 1 2 Minuten"
+      },
+      {
+        "text": "Schnelles Freispülen Bolusgabe"
+      },
+      {
+        "text": "mit 5 10 ml NaCl 0,9"
+      },
+      {
+        "text": "ml 20 mg Lidocain 2 über 1 Minute"
+      },
+      {
+        "text": "Therapie Druckinfusion"
+      },
+      {
+        "text": "zeitdringlich und innerhalb von 120 Sekunden"
+      },
+      {
+        "text": "möglich"
+      },
+      {
+        "text": "AUSWAHL EINES ANDEREN"
+      },
+      {
+        "text": "Auswahl des Punktionsortes:"
+      },
+      {
+        "text": "Proximaler Humerus"
+      },
+      {
+        "text": "Proximale Tibia"
+      },
+      {
+        "text": "Distale Tibia"
+      },
+      {
+        "text": "Ortsbezogene Kontraindikationen"
+      },
+      {
+        "text": "Infektion im Punktionsbereich"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-lidocain",
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "Lagehinweise: Blut am Trokar? Blut aspirierbar?",
+      "Ortsbezogene Kontraindikationen?",
+      "KEINE Lidocain-Gabe"
+    ]
+  },
+  {
+    "id": "alg-intraossaerer-zugang-kind",
+    "kind": "algorithm",
+    "label": "Intraossärer Zugang – Kind",
+    "indication": "Intraossärer Zugang – Kind",
+    "tags": [
+      "verfahren",
+      "kinder"
+    ],
+    "searchTerms": [
+      "intraossarer",
+      "intraossarer zugang kind",
+      "kind",
+      "zugang"
+    ],
+    "steps": [
+      {
+        "text": "Anlage des intraossären Zugangs"
+      },
+      {
+        "text": "Schnelles Freispülen Bolusgabe"
+      },
+      {
+        "text": "mit 2 5 ml NaCl 0,9"
+      },
+      {
+        "text": "Therapie Druckinfusion"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Akut vital bedrohtes Kind Reanimation"
+      },
+      {
+        "text": "AUSWAHL EINES ANDEREN"
+      },
+      {
+        "text": "Auswahl des Punktionsortes:"
+      },
+      {
+        "text": "Proximaler Humerus Jugendliche"
+      },
+      {
+        "text": "Distales Femur"
+      },
+      {
+        "text": "Proximale Tibia"
+      },
+      {
+        "text": "Distale Tibia"
+      },
+      {
+        "text": "Ortsbezogene Kontraindikationen"
+      },
+      {
+        "text": "Infektion im Punktionsbereich"
+      },
+      {
+        "text": "Fraktur im Punktionsbereich"
+      },
+      {
+        "text": "Prothese im Punktionsbereich"
+      },
+      {
+        "text": "Vorausgegangene intraossäre Punktion"
+      },
+      {
+        "text": "letzten 48 Stunden"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-lidocain",
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "Ortsbezogene Kontraindikationen?",
+      "Lagehinweise: Blut am Trokar? Blut aspirierbar?",
+      "Die Gabe von Lidocain ist bei pädiatrischen Patienten nicht empfohlen!"
+    ]
+  },
+  {
+    "id": "alg-kardiales-lungenoedem-glyceroltrinitrat-furosemid",
+    "kind": "algorithm",
+    "label": "Kardiales Lungenödem – Glyceroltrinitrat + Furosemid",
+    "indication": "Kardiales Lungenödem – Glyceroltrinitrat + Furosemid",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "furosemid",
+      "glyceroltrinitrat",
+      "kardiales",
+      "kardiales lungenodem glyceroltrinitrat furosemid",
+      "lungenodem"
+    ],
+    "steps": [
+      {
+        "text": "KEIN Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "KEINE Furosemid-Gabe"
+      },
+      {
+        "text": "PDE-5-Inhibitoren in den letzten 48 h"
+      },
+      {
+        "text": "Medikamente zur Behandlung der"
+      },
+      {
+        "text": "erektilen Dysfunktion und der"
+      },
+      {
+        "text": "pulmonalen arteriellen Hypertonie"
+      },
+      {
+        "text": ",4 1,2 mg Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Zielwert: RRsys 140 mmHg"
+      },
+      {
+        "text": "RRsys 100 mmHg"
+      },
+      {
+        "text": "mg Furosemid i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Engmaschige RR-Kontrolle, 12-Kanal-EKG schreiben, i"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Erneute Beurteilung, ggf"
+      },
+      {
+        "text": "Wiederholung nach 3 5 Minuten"
+      },
+      {
+        "text": "Furosemid-Unverträglichkeit"
+      },
+      {
+        "text": "PDE-5-Inhibitoren:"
+      },
+      {
+        "text": "RRsys 180 mmHg und oder RRdia 110 mmHg"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-furosemid",
+      "med-glyceroltrinitrat"
+    ],
+    "warnings": [
+      "KEINE Furosemid-Gabe",
+      "** Die NIV-Therapie soll durch die medikamentöse Therapie nicht verzögert werden!",
+      "Werden nicht nur zur Behandlung der erektilen Dysfunktion, sondern auch zur Behandlung der"
+    ]
+  },
+  {
+    "id": "alg-krampfanfall-erwachsener",
+    "kind": "algorithm",
+    "label": "Krampfanfall – Erwachsener",
+    "indication": "Krampfanfall – Erwachsener",
+    "tags": [
+      "neurologie"
+    ],
+    "searchTerms": [
+      "erwachsener",
+      "krampfanfall",
+      "krampfanfall erwachsener"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise Schutz vor Verletzungen"
+      },
+      {
+        "text": "Andauernder Krampfanfall"
+      },
+      {
+        "text": "Temperatur 37,5 C V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "Epilepsie"
+      },
+      {
+        "text": "Paracetamol-Unverträglichkeit"
+      },
+      {
+        "text": "Schwere Leberzirrhose"
+      },
+      {
+        "text": "Paracetamol 1000 mg i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "über 15 Minuten"
+      },
+      {
+        "text": "Auswahl Zugangsweg: i"
+      },
+      {
+        "text": "n"
+      },
+      {
+        "text": ", bukkal, i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "oder Anlage i"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "und situativ günstiger"
+      },
+      {
+        "text": "BZ-Messung, EKG, SpO2, i"
+      },
+      {
+        "text": "Zugang falls noch nicht geschehen"
+      },
+      {
+        "text": "situativ günstiger"
+      },
+      {
+        "text": "Midazolam 1 mg ml für i"
+      },
+      {
+        "text": "Zugang:"
+      },
+      {
+        "text": "Erwachsener 40 kg KG: 5 mg langsam i"
+      },
+      {
+        "text": "Erwachsener 40 kg KG: 10 mg langsam i"
+      },
+      {
+        "text": "Gabe von einmalig 100 mg Thiamin"
+      },
+      {
+        "text": "Vitamin B1 i"
+      },
+      {
+        "text": "Minuten"
+      },
+      {
+        "text": "MAXIMAL 1 ml"
+      },
+      {
+        "text": "Midazolam 5 mg ml :"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-midazolam",
+      "med-paracetamol",
+      "med-thiamin-vitamin-b1"
+    ],
+    "warnings": [
+      "V.a. Psychogener, nicht epileptischer Anfall",
+      "BZ-Messung, EKG, SpO2, i.v.-Zugang – falls noch nicht geschehen",
+      "Wenn Hinweise auf alkoholassoziierten",
+      "Keine Paracetamol-Gabe"
+    ]
+  },
+  {
+    "id": "alg-krampfanfall-kind",
+    "kind": "algorithm",
+    "label": "Krampfanfall – Kind",
+    "indication": "Krampfanfall – Kind",
+    "tags": [
+      "neurologie",
+      "kinder"
+    ],
+    "searchTerms": [
+      "kind",
+      "krampfanfall",
+      "krampfanfall kind"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Lagerung nach Bewusstseinslage, Schutz vor Verletzungen"
+      },
+      {
+        "text": "Andauernder Krampfanfall"
+      },
+      {
+        "text": "Schutz vor Verletzungen"
+      },
+      {
+        "text": "Auswahl Zugangsweg: intranasal oder rektal"
+      },
+      {
+        "text": "BZ-Messung, EKG, SpO2, i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang falls noch nicht geschehen"
+      },
+      {
+        "text": "Applikation situativ günstiger"
+      },
+      {
+        "text": "Fieberkrampf"
+      },
+      {
+        "text": "Körpertemperatur 38,5 C"
+      },
+      {
+        "text": "situativ günstiger"
+      },
+      {
+        "text": "Midazolam 5 mg 1 ml über"
+      },
+      {
+        "text": "10 kg KG 1 Jahr : 2,5 mg 0,5 ml"
+      },
+      {
+        "text": "20 kg KG:"
+      },
+      {
+        "text": "mg 1,0 ml"
+      },
+      {
+        "text": "mg 2,0 ml"
+      },
+      {
+        "text": "bis 6 Monate:"
+      },
+      {
+        "text": "mg"
+      },
+      {
+        "text": "Monate bis 2 Jahre: 60 mg"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-diazepam",
+      "med-ibuprofen",
+      "med-midazolam",
+      "med-paracetamol"
+    ],
+    "warnings": [
+      "BZ-Messung, EKG, SpO2, i.v.-Zugang – falls noch nicht geschehen"
+    ]
+  },
+  {
+    "id": "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+    "kind": "algorithm",
+    "label": "Leitalgorithmus akuter Thoraxschmerz – ACS",
+    "indication": "Leitalgorithmus akuter Thoraxschmerz – ACS",
+    "tags": [
+      "kreislauf",
+      "analgesie"
+    ],
+    "searchTerms": [
+      "acs",
+      "akuter",
+      "akutes",
+      "akutes koronarsyndrom",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "leitalgorithmus",
+      "leitalgorithmus akuter thoraxschmerz acs",
+      "nste-acs",
+      "nstemi",
+      "stemi",
+      "thoraxschmerz"
+    ],
+    "steps": [
+      {
+        "text": "Rhythmusstörung"
+      },
+      {
+        "text": "NSTE-ACS mit sehr hohem Risiko:"
+      },
+      {
+        "text": "Beachte Ausführungen ACS"
+      },
+      {
+        "text": "Direktübergabe nicht möglich:"
+      },
+      {
+        "text": "Vorgehen nach lokalem Protokoll"
+      },
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Monitoring Defibrillationsbereitschaft"
+      },
+      {
+        "text": "STEMI"
+      },
+      {
+        "text": "NSTE-ACS mit sehr hohem Risiko"
+      },
+      {
+        "text": "Lagerung, angepasste O2-Gabe, RR-Messung, EKG, SpO2, i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Transport einleiten"
+      },
+      {
+        "text": "Kanal-EKG schnellstmöglich ableiten"
+      },
+      {
+        "text": "Enge- Druckgefühl meist 20 Minuten"
+      },
+      {
+        "text": "Ausstrahlung in Arme, Kiefer,"
+      },
+      {
+        "text": "Dyspnoe"
+      },
+      {
+        "text": "Übelkeit, Brechreiz"
+      },
+      {
+        "text": "Kaltschweißigkeit, fahle Blässe"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "Direktübergabe nicht möglich:",
+      "IMMER Direktübergabe an das"
+    ]
+  },
+  {
+    "id": "alg-leitalgorithmus-kardiales-lungenoedem",
+    "kind": "algorithm",
+    "label": "Leitalgorithmus kardiales Lungenödem",
+    "indication": "Leitalgorithmus kardiales Lungenödem",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "kardiales",
+      "leitalgorithmus",
+      "leitalgorithmus kardiales lungenodem",
+      "lungenodem"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Rhythmusstörung"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "parallel Algorithmen"
+      },
+      {
+        "text": "Bradykardie Tachykardie"
+      },
+      {
+        "text": "ACS"
+      },
+      {
+        "text": "parallel"
+      },
+      {
+        "text": "Extreme Instabilität"
+      },
+      {
+        "text": "Beatmung"
+      },
+      {
+        "text": "O2-Gabe 15 l min über Maske mit Reservoir, RR-Messung, EKG, SpO2 , i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Lagerung nach Kreislauf, möglichst Herzbettlage anstreben"
+      },
+      {
+        "text": "Engmaschige RR-Kontrolle, 12-Kanal-EKG schreiben"
+      },
+      {
+        "text": "Zielwert: RRsys 140 mmHg"
+      },
+      {
+        "text": "Einleitung eines zügigen Transports"
+      },
+      {
+        "text": "RRsys 180 mmHg und oder RRdia 110 mmHg"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-furosemid",
+      "med-glyceroltrinitrat"
+    ],
+    "warnings": [
+      "Algorithmus NIV – Nicht invasive Ventilation"
+    ]
+  },
+  {
+    "id": "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+    "kind": "algorithm",
+    "label": "Leitalgorithmus Schmerzzustände NRS ≥ 4",
+    "indication": "Leitalgorithmus Schmerzzustände NRS ≥ 4",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "leitalgorithmus",
+      "leitalgorithmus schmerzzustande nrs 4",
+      "nrs",
+      "schmerzskala",
+      "schmerzzustande"
+    ],
+    "steps": [
+      {
+        "text": "Sonstiger Schmerz"
+      },
+      {
+        "text": "Kolikartiger Schmerz"
+      },
+      {
+        "text": "Algorithmus"
+      },
+      {
+        "text": "Traumatischer Schmerz,"
+      },
+      {
+        "text": "Immobilisierender"
+      },
+      {
+        "text": "Rückenschmerz,"
+      },
+      {
+        "text": "Beschwerden Koliken"
+      },
+      {
+        "text": "Esketamin Midazolam"
+      },
+      {
+        "text": "Dokumentation und Austragen im BtM-Buch"
+      },
+      {
+        "text": "betäubungsmittelrechtlichen Vorgaben nach 13 Absatz 1b BtMG zu beachten"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-fentanyl",
+      "med-methoxyfluran",
+      "med-midazolam",
+      "med-morphin",
+      "med-naloxon",
+      "med-sufentanil"
+    ],
+    "warnings": [
+      "Kontraindikationen gegen",
+      "KEINE Esketamin-Gabe!",
+      "KEINE Midazolam-Gabe!"
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-akuter-thoraxschmerz-bemerkungen",
+    "kind": "algorithm",
+    "label": "Leitsymptom akuter Thoraxschmerz – Bemerkungen",
+    "indication": "Leitsymptom akuter Thoraxschmerz – Bemerkungen",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "akuter",
+      "bemerkungen",
+      "leitsymptom",
+      "leitsymptom akuter thoraxschmerz bemerkungen",
+      "thoraxschmerz"
+    ],
+    "steps": [
+      {
+        "text": "ST-Streckenhebungen in zwei benachbarten Ableitungen"
+      },
+      {
+        "text": "ST-Streckenhebungen in V2 V3:"
+      },
+      {
+        "text": "0,25 mV bei Männern unter 40 Jahren"
+      },
+      {
+        "text": "0,2 mV bei Männern über 40 Jahren"
+      },
+      {
+        "text": "0,15 mV bei Frauen"
+      },
+      {
+        "text": "ST-Streckenhebungen 0,1 mV in zwei benachbarten Ableitungen in allen anderen"
+      },
+      {
+        "text": "Ableitungsabschnitten Extremitäten- und Brustwandableitungen außer V2 V3"
+      },
+      {
+        "text": "Linksschenkelblock"
+      },
+      {
+        "text": "Rechtsschenkelblock mit anhaltenden klinischen Ischämiesymptomen"
+      },
+      {
+        "text": "Bei ST-Streckensenkungen in V1 V3 sollen V7 V9 abgeleitet werden"
+      },
+      {
+        "text": "V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "akuten STEMI dann bei ST-Streckenhebungen 0,05 mV in V7 V9"
+      },
+      {
+        "text": "Zur Auswertung dieser feinen EKG-Veränderungen sollte immer eine Amplitudeneinstellung"
+      },
+      {
+        "text": "von 20 mm mV herangezogen werden"
+      },
+      {
+        "text": "ST-Streckenhebungen von 0,2 mV in den Ableitungen V2 und V3"
+      },
+      {
+        "text": "ST-Streckenhebungen von 0,1 mV in 2 zusammengehörenden Extremitäten- oder"
+      },
+      {
+        "text": "Brustschmerz oder Druckgefühl, Brennen im Brustkorb"
+      },
+      {
+        "text": "der Patienten präsentieren sich mit Brustschmerzen oder Druckgefühl"
+      },
+      {
+        "text": "häufig Verdauungsstörungen Oberbauchschmerzen und Schulter- Armschmerzen"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-metoprolol",
+      "med-morphin"
+    ],
+    "warnings": [
+      "erforderlicher Laborparameter und Risikobewertungen erst innerklinisch und nicht im präklinischen Be-",
+      "Es handelt sich üblicherweise nicht um eine Rettungsdienstentscheidung."
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-bewusstseinsstoerung-verdacht-auf-hypoglykaemie-kind",
+    "kind": "algorithm",
+    "label": "Leitsymptom Bewusstseinsstörung V.a. Hypoglykämie Kind",
+    "indication": "Leitsymptom Bewusstseinsstörung V.a. Hypoglykämie Kind",
+    "tags": [
+      "stoffwechsel",
+      "neurologie",
+      "kinder"
+    ],
+    "searchTerms": [
+      "bewusstseinsstorung",
+      "glucose",
+      "glukose",
+      "hypoglykaemie",
+      "hypoglykamie",
+      "kind",
+      "leitsymptom",
+      "leitsymptom bewusstseinsstorung v a hypoglykamie kind",
+      "unterzucker"
+    ],
+    "steps": [
+      {
+        "text": "Suche nach anderen Ursachen"
+      },
+      {
+        "text": "Symptomatik abgeklungen"
+      },
+      {
+        "text": "Transport"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Lagerung nach Bewusstseinslage"
+      },
+      {
+        "text": "BZ-Wert 60 mg dl"
+      },
+      {
+        "text": "Kontrollmessung des BZ aus kapillärem Mischblut nach 2 3 Minuten"
+      },
+      {
+        "text": "BZ-Wert ausgeglichen"
+      },
+      {
+        "text": "Erneute Beurteilung nach ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Bewusstseinsgetrübt"
+      },
+      {
+        "text": "Lagerung nach Kreislauf"
+      },
+      {
+        "text": "Fähig zu schlucken"
+      },
+      {
+        "text": "Nicht bewusstseinsgetrübt"
+      },
+      {
+        "text": "Gabe von 0,2 g kg KG Glucose i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "4 kg KG"
+      },
+      {
+        "text": ",8 g"
+      },
+      {
+        "text": "ml G 20"
+      },
+      {
+        "text": "Säuglinge 6 Monate"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-glucose"
+    ],
+    "warnings": [
+      "Nicht bewusstseinsgetrübt?"
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-dyspnoe-schock-verdacht-auf-lungenembolie-erwachsener",
+    "kind": "algorithm",
+    "label": "Leitsymptom Dyspnoe/Schock – V. a. Lungenembolie – Erwachsener",
+    "indication": "Leitsymptom Dyspnoe/Schock – V. a. Lungenembolie – Erwachsener",
+    "tags": [
+      "schock",
+      "atemwege"
+    ],
+    "searchTerms": [
+      "dyspnoe",
+      "erwachsener",
+      "leitsymptom",
+      "leitsymptom dyspnoe schock v a lungenembolie erwachsener",
+      "lungenembolie",
+      "schock"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Hinweise für aktive Blutung"
+      },
+      {
+        "text": "Allergie gegen Heparin"
+      },
+      {
+        "text": "Lungenembolie anamnestisch und im"
+      },
+      {
+        "text": "Gesamtkontext eher unwahrscheinlich"
+      },
+      {
+        "text": "Gabe von 80 I"
+      },
+      {
+        "text": "E"
+      },
+      {
+        "text": "kgKG"
+      },
+      {
+        "text": "50 kgKG: 4"
+      },
+      {
+        "text": "I"
+      },
+      {
+        "text": "Heparin i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "60 kgKG: 5"
+      },
+      {
+        "text": "70 kgKG: 5"
+      },
+      {
+        "text": "80 kgKG: 6"
+      },
+      {
+        "text": "90 kgKG: 7"
+      },
+      {
+        "text": "E: Heparin i"
+      },
+      {
+        "text": "100 kgKG: 8"
+      },
+      {
+        "text": "Bei Hypotension Gabe von 500 ml kristalloider Infusion, ggf"
+      },
+      {
+        "text": "Wiederholung"
+      },
+      {
+        "text": "Lagerung nach Kreislauf, O2-Gabe 15 l min, RR, HF, EKG, SpO2, 12-Kanal-EKG, Anlage i"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Hinweise für Aortendissektion"
+      },
+      {
+        "text": "Schmerzen zwischen den Schulterblättern"
+      },
+      {
+        "text": "Reißender Schmerzcharakter"
+      },
+      {
+        "text": "RR-Differenz von mehr als 20 mmHg zwischen"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-heparin"
+    ],
+    "warnings": [
+      "Hinweise für aktive Blutung?",
+      "Hinweise für Aortendissektion?",
+      "Hinweise für Rechtsherzbelastung?",
+      "Symptome/Anamnese/Beobachtung",
+      "KEINE Heparin-Gabe"
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-schmerzzustaende-nrs-4-kind-30-kgkg",
+    "kind": "algorithm",
+    "label": "Leitsymptom Schmerzzustände NRS ≥ 4 - Kind < 30 kgKG",
+    "indication": "Leitsymptom Schmerzzustände NRS ≥ 4 - Kind < 30 kgKG",
+    "tags": [
+      "analgesie",
+      "kinder"
+    ],
+    "searchTerms": [
+      "kgkg",
+      "kind",
+      "leitsymptom",
+      "leitsymptom schmerzzustande nrs 4 - kind 30 kgkg",
+      "nrs",
+      "schmerzskala",
+      "schmerzzustande"
+    ],
+    "steps": [
+      {
+        "text": "Schmerzursache ergründen"
+      },
+      {
+        "text": "Traumatischer Schmerz"
+      },
+      {
+        "text": "Analgosedation nach"
+      },
+      {
+        "text": "Schrittmachertherapie"
+      },
+      {
+        "text": "Sonstiger Schmerz"
+      },
+      {
+        "text": "Kolikartiger Schmerz"
+      },
+      {
+        "text": "EUSEM Guidelines for the management of acute pain in emergency situations 2025 update"
+      }
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-sonstige-schmerzen-koliken-kind",
+    "kind": "algorithm",
+    "label": "Leitsymptom sonstige Schmerzen/Koliken – Kind",
+    "indication": "Leitsymptom sonstige Schmerzen/Koliken – Kind",
+    "tags": [
+      "analgesie",
+      "kinder"
+    ],
+    "searchTerms": [
+      "kind",
+      "koliken",
+      "leitsymptom",
+      "leitsymptom sonstige schmerzen koliken kind",
+      "schmerzen",
+      "sonstige"
+    ],
+    "steps": [
+      {
+        "text": "Paracetamol-Suppositorien"
+      },
+      {
+        "text": "bis 6 Monate:"
+      },
+      {
+        "text": "mg"
+      },
+      {
+        "text": "ab 7 Monate - 2 Jahre:"
+      },
+      {
+        "text": "Jahre - 8 Jahre:"
+      },
+      {
+        "text": "8 Jahre:"
+      },
+      {
+        "text": "Allergie Unverträglichkeit"
+      },
+      {
+        "text": "ABCDE-Herangehensweise Schmerzen NRS 4"
+      },
+      {
+        "text": "Vitale Bedrohung"
+      },
+      {
+        "text": "Schmerzen NRS 4"
+      },
+      {
+        "text": "Erwäge: Algorithmus"
+      },
+      {
+        "text": "Traumatischer Schmerz - Kind 30 kgKG"
+      },
+      {
+        "text": "vergangenen 8 Stunden ,"
+      },
+      {
+        "text": "mg kg KG durch weitere Dosis erreicht"
+      },
+      {
+        "text": "Erwäge auch die Vernebelung von 50 mg Esketamin 25 mg 1 ml Dosis nach Wirkung über eine"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-paracetamol"
+    ],
+    "warnings": [
+      "KEINE Paracetamol-Gabe"
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-sonstige-schmerzen-koliken-kopfschmerz-erw",
+    "kind": "algorithm",
+    "label": "Leitsymptom Sonstige Schmerzen/Koliken/Kopfschmerz Erw.",
+    "indication": "Leitsymptom Sonstige Schmerzen/Koliken/Kopfschmerz Erw.",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "erw",
+      "koliken",
+      "kopfschmerz",
+      "leitsymptom",
+      "leitsymptom sonstige schmerzen koliken kopfschmerz erw",
+      "schmerzen",
+      "sonstige"
+    ],
+    "steps": [
+      {
+        "text": "Langsame Gabe von"
+      },
+      {
+        "text": "mg Butylscopolamin i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Weitere Versorgung nach rettungsdienstlichem Standard - Transport"
+      },
+      {
+        "text": "Butylscopolamin-Unverträglichkeit"
+      },
+      {
+        "text": "Beschwerde gebessert"
+      },
+      {
+        "text": "NRS 2-3"
+      },
+      {
+        "text": "Schwangerschaft Stillzeit"
+      },
+      {
+        "text": "Metamizol-Unverträglichkeit"
+      },
+      {
+        "text": "Vitale Bedrohung"
+      },
+      {
+        "text": "Schmerzen NRS 4"
+      },
+      {
+        "text": "Paracetamol -Unverträglichkeit"
+      },
+      {
+        "text": "Schwere Leberzirrhose"
+      },
+      {
+        "text": "Patienten 10 J"
+      },
+      {
+        "text": "kg KG: 0,5 g Metamizol"
+      },
+      {
+        "text": "Patienten 53 kg KG: 1,0 g Metamizol"
+      },
+      {
+        "text": "Infusion über 15 Minuten"
+      },
+      {
+        "text": "Aufklärung über sehr seltene Komplikation vor Gabe von Metamizol:"
+      },
+      {
+        "text": "mg Paracetamol-Infusionslösung"
+      },
+      {
+        "text": "über 15 Minuten"
+      },
+      {
+        "text": "V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "Gallenkolik als Schmerzursache"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-butylscopolamin",
+      "med-esketamin",
+      "med-metamizol",
+      "med-paracetamol"
+    ],
+    "warnings": [
+      "KEINE Metamizol/PCM-Gabe",
+      "KEINE Butylscopolamin-Gabe",
+      "KEINE Metamizol-Gabe",
+      "klinische Hinweise auf eine Agranulozytose (Abfall der weißen Blutkörperchen) sein. In diesen Fällen muss um-"
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-verbrennung-verbruehung-erwachsener",
+    "kind": "algorithm",
+    "label": "Leitsymptom Verbrennung/Verbrühung – Erwachsener",
+    "indication": "Leitsymptom Verbrennung/Verbrühung – Erwachsener",
+    "tags": [
+      "trauma",
+      "verbrennung"
+    ],
+    "searchTerms": [
+      "erwachsener",
+      "leitsymptom",
+      "leitsymptom verbrennung verbruhung erwachsener",
+      "verbrennung",
+      "verbruhung"
+    ],
+    "steps": [
+      {
+        "text": "Externe Kühlung beenden"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Hinweise für akutes A-Problem"
+      },
+      {
+        "text": "Hinweise für akutes B-Problem"
+      },
+      {
+        "text": "Hinweise auf relevante CO-Intoxikation"
+      },
+      {
+        "text": "Konsequenter Wärmeerhalt"
+      },
+      {
+        "text": "Schmerzen NRS 4"
+      },
+      {
+        "text": "Infusionstherapie 500 1"
+      },
+      {
+        "text": "ml"
+      },
+      {
+        "text": "Lagerung nach Kreislauf, O2-Gabe 15 l min, RR, HF, EKG, SpO2, SpCO wenn möglich, Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Grad 1"
+      },
+      {
+        "text": "Grad 2"
+      },
+      {
+        "text": "Grad 3"
+      },
+      {
+        "text": "ledrige Haut, ggf"
+      },
+      {
+        "text": "Verkohlung Grad 4"
+      }
+    ],
+    "warnings": [
+      "Hinweise für akutes A-Problem?",
+      "Hinweise für akutes B-Problem?",
+      "Hinweise auf relevante CO-Intoxikation?",
+      "Nicht invasive Ventilation"
+    ]
+  },
+  {
+    "id": "alg-leitsymptom-verbrennung-verbruehung-kind",
+    "kind": "algorithm",
+    "label": "Leitsymptom Verbrennung/Verbrühung – Kind",
+    "indication": "Leitsymptom Verbrennung/Verbrühung – Kind",
+    "tags": [
+      "trauma",
+      "verbrennung",
+      "kinder"
+    ],
+    "searchTerms": [
+      "kind",
+      "leitsymptom",
+      "leitsymptom verbrennung verbruhung kind",
+      "verbrennung",
+      "verbruhung"
+    ],
+    "steps": [
+      {
+        "text": "Externe Kühlung beenden"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Hinweise für akutes A-Problem"
+      },
+      {
+        "text": "Hinweise für akutes B-Problem"
+      },
+      {
+        "text": "Hinweise auf relevante CO-Intoxikation"
+      },
+      {
+        "text": "Konsequenter Wärmeerhalt"
+      },
+      {
+        "text": "Schmerzen NRS 4"
+      },
+      {
+        "text": "Infusionstherapie 10 ml kg KG maximal 500 ml"
+      },
+      {
+        "text": "Lagerung nach Kreislauf, O2-Gabe 15 l min, RR, HF, EKG, SpO2, SpCO wenn möglich, Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Grad 1"
+      },
+      {
+        "text": "Grad 2"
+      },
+      {
+        "text": "Grad 3"
+      },
+      {
+        "text": "ledrige Haut, ggf"
+      },
+      {
+        "text": "Verkohlung Grad 4"
+      },
+      {
+        "text": "Jahre"
+      },
+      {
+        "text": "Verbrennungsmedizin DGV - AWMF 006-128"
+      }
+    ],
+    "warnings": [
+      "Hinweise für akutes A-Problem?",
+      "Hinweise für akutes B-Problem?",
+      "Hinweise auf relevante CO-Intoxikation?",
+      "Nicht invasive Ventilation"
+    ]
+  },
+  {
+    "id": "alg-management-des-patienten-im-haemorrhagischen-schock",
+    "kind": "algorithm",
+    "label": "Management des Patienten im hämorrhagischen Schock",
+    "indication": "Management des Patienten im hämorrhagischen Schock",
+    "tags": [
+      "schock"
+    ],
+    "searchTerms": [
+      "des",
+      "hamorrhagischen",
+      "management",
+      "management des patienten im hamorrhagischen schock",
+      "patienten",
+      "schock"
+    ],
+    "steps": [
+      {
+        "text": "X-ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Ursache äußere Blutung"
+      },
+      {
+        "text": "Kombinationsverletzungen möglich"
+      },
+      {
+        "text": "Konsequenter Wärmeerhalt"
+      },
+      {
+        "text": "Zügigen Transport initiieren"
+      },
+      {
+        "text": "Allergie gegen Tranexamsäure"
+      },
+      {
+        "text": "KEINE Tranexamsäure-Gabe"
+      },
+      {
+        "text": "Hinweise auf akute Thrombose Embolie"
+      },
+      {
+        "text": "Fortsetzung der Standardtherapie und"
+      },
+      {
+        "text": "Blutungskontrolle erfolgreich"
+      },
+      {
+        "text": "Blutungsräume bedenken"
+      },
+      {
+        "text": "Beckenschlinge bei Trauma erwägen"
+      },
+      {
+        "text": "Luftsaugende Thoraxwunden abdichten"
+      },
+      {
+        "text": "z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "seitiger Folienverband"
+      },
+      {
+        "text": "Gynäkologische Blutung"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Angepasste Volumentherapie mit"
+      },
+      {
+        "text": "Ziel: RRsys 80 90 mmHg"
+      },
+      {
+        "text": "ml kristalloide Lösung"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-kristalloide-infusion",
+      "med-nacl-09-prozent",
+      "med-tranexamsaeure"
+    ],
+    "warnings": [
+      "KEINE Tranexamsäure-Gabe",
+      "Hinweise auf akute Thrombose/Embolie?",
+      "an nicht kontrollierte innere Blutungen",
+      "3. Tourniquet bei nicht erfolgreicher"
+    ]
+  },
+  {
+    "id": "alg-management-massiver-aeusserer-blutungen-haemostatika",
+    "kind": "algorithm",
+    "label": "Management massiver äußerer Blutungen – Hämostatika",
+    "indication": "Management massiver äußerer Blutungen – Hämostatika",
+    "tags": [
+      "trauma"
+    ],
+    "searchTerms": [
+      "ausserer",
+      "blutungen",
+      "hamostatika",
+      "management",
+      "management massiver ausserer blutungen hamostatika",
+      "massiver"
+    ],
+    "steps": [
+      {
+        "text": "Direkte Kompression auf die Wunde"
+      },
+      {
+        "text": "Anlage eines Druckverbands"
+      },
+      {
+        "text": "Tourniquet bei nicht erfolgreicher Blutungskontrolle an Extremitäten, ansonsten"
+      },
+      {
+        "text": "manuelle Kompression"
+      },
+      {
+        "text": "Primäre Anlage eines Tourniquets bei:"
+      },
+      {
+        "text": "Mehreren Blutungsquellen an einer Extremität"
+      },
+      {
+        "text": "Schwerer Blutung mit ABC-Problem"
+      },
+      {
+        "text": "Mehreren Verletzten mit Blutungen"
+      },
+      {
+        "text": "Gefahrensituation"
+      },
+      {
+        "text": "Wound packing mit hämostatischen Verbandsstoffen:"
+      },
+      {
+        "text": "Wundhöhle komplett mittels des hämostatischen Verbandsstoffs austamponieren"
+      },
+      {
+        "text": "Nach kompletter Tamponade direkten Druck auf die austamponierte Wunde ausüben"
+      },
+      {
+        "text": "Dauer des Drucks gemäß Herstellerangabe meist zwischen 1 3 Minuten"
+      },
+      {
+        "text": "Druckverband über der austamponierten Wunde anlegen"
+      },
+      {
+        "text": "Stammnahen Blutungen z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "Axilla, Leiste , die für das Tourniquet nicht zugänglich"
+      },
+      {
+        "text": "Massiven Blutungen am Körperstamm"
+      },
+      {
+        "text": "Massive äußere Blutung"
+      },
+      {
+        "text": "Einleitung des zügigen Transports in geeignete Klinik"
+      }
+    ],
+    "warnings": [
+      "3. Tourniquet bei nicht erfolgreicher Blutungskontrolle an Extremitäten, ansonsten",
+      "Nicht kontrollierbaren Blutungen trotz angelegtem Tourniquet",
+      "• Stammnahen Blutungen (z. B. Axilla, Leiste), die für das Tourniquet nicht zugänglich",
+      "Bewegungen vermeiden, um erfolgte Blutstillung nicht zu verschlechtern!"
+    ]
+  },
+  {
+    "id": "alg-massive-belkeit-erbrechen-antiemetikum",
+    "kind": "algorithm",
+    "label": "Massive Übelkeit/Erbrechen – Antiemetikum",
+    "indication": "Massive Übelkeit/Erbrechen – Antiemetikum",
+    "tags": [
+      "antiemese"
+    ],
+    "searchTerms": [
+      "antiemetikum",
+      "erbrechen",
+      "massive",
+      "massive ubelkeit erbrechen antiemetikum",
+      "ubelkeit"
+    ],
+    "steps": [
+      {
+        "text": "Opiatassoziierte Übelkeit"
+      },
+      {
+        "text": "Chemotherapieassoziierte Übelkeit"
+      },
+      {
+        "text": "Schwangerschaft Stillzeit"
+      },
+      {
+        "text": "Unverträglichkeit"
+      },
+      {
+        "text": "Kind 12 Jahre"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Vitale Bedrohung"
+      },
+      {
+        "text": "Schwangerschaft 7"
+      },
+      {
+        "text": "9"
+      },
+      {
+        "text": "Monat"
+      },
+      {
+        "text": "Bekannte Epilepsie"
+      },
+      {
+        "text": "Akuter Asthmaanfall"
+      },
+      {
+        "text": "Bekanntes Long-QT-Syndrom"
+      },
+      {
+        "text": "Engwinkelglaukom"
+      },
+      {
+        "text": "Infusion von 500 ml"
+      },
+      {
+        "text": "mg Ondansetron i"
+      },
+      {
+        "text": "Zugang Infusion von 500 ml kristalloider Lösung langsame Gabe von Dimenhydrinat über 2 Minuten"
+      },
+      {
+        "text": "14 Jahre"
+      },
+      {
+        "text": "Kind 6 - 14 Jahre"
+      },
+      {
+        "text": "50"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-dimenhydrinat",
+      "med-ondansetron"
+    ],
+    "warnings": [
+      "KEINE Ondansetron-Gabe",
+      "KEINE Dimenhydrinat-Gabe",
+      "KEINE Vomex-A®-Gabe"
+    ]
+  },
+  {
+    "id": "alg-medikamentenapplikation",
+    "kind": "algorithm",
+    "label": "Medikamentenapplikation",
+    "indication": "Medikamentenapplikation",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "medikamentenapplikation"
+    ],
+    "steps": [
+      {
+        "text": "Geplante Medikamentenapplikation"
+      },
+      {
+        "text": "Dokumentation"
+      },
+      {
+        "text": "Indikation geprüft und bestätigt"
+      },
+      {
+        "text": "Aufklärung über Nebenwirkungen"
+      },
+      {
+        "text": "Einwilligung des Patienten"
+      },
+      {
+        "text": "Mutmaßliche Einwilligung bedenken"
+      },
+      {
+        "text": "Entscheidung zur Applikation"
+      },
+      {
+        "text": "Anwenden der modifizierten"
+      },
+      {
+        "text": "R-Regel :"
+      },
+      {
+        "text": "Auffälligkeiten NEIN bei der modifizierten 6-R-Regel"
+      },
+      {
+        "text": "Die modifizierte 6-R-Regel bezieht sich auf die bekannte 8-R-Regel im Umgang mit Arzneimitteln"
+      },
+      {
+        "text": "Sie wurde in diesem Algorithmus"
+      },
+      {
+        "text": "Kontraindikationen ausgeschlossen"
+      }
+    ],
+    "warnings": [
+      "Kontraindikationen ausgeschlossen?",
+      "KEINE Applikation"
+    ]
+  },
+  {
+    "id": "alg-nasenbluten-epistaxis",
+    "kind": "algorithm",
+    "label": "Nasenbluten – Epistaxis",
+    "indication": "Nasenbluten – Epistaxis",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "epistaxis",
+      "nasenbluten",
+      "nasenbluten epistaxis"
+    ],
+    "steps": [
+      {
+        "text": "Transport immer bei:"
+      },
+      {
+        "text": "Langanhaltender Epistaxis"
+      },
+      {
+        "text": "Epistaxis unter Therapie mit Gerinnungshemmern"
+      },
+      {
+        "text": "Patientenalter 60 Jahre aufgrund erhöhter Rezidivgefahr"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Anhaltendes Nasenbluten aus einem"
+      },
+      {
+        "text": "Lagerung mit vornübergebeugtem Kopf"
+      },
+      {
+        "text": "Nasenflügel komprimieren 15 Minuten"
+      },
+      {
+        "text": "Platzieren von Eiskrawatte Kühlpack im"
+      },
+      {
+        "text": "In den Rachen ablaufendes Blut aus-"
+      },
+      {
+        "text": "Bei persistierender oder starker Epistaxis:"
+      },
+      {
+        "text": "Gabe von 0,5 g TXA über Mucosal"
+      },
+      {
+        "text": "Hypertensive Entgleisung"
+      },
+      {
+        "text": "j"
+      },
+      {
+        "text": "ajem"
+      },
+      {
+        "text": "Massive Epistaxis lebensbedrohend"
+      },
+      {
+        "text": "Anhaltende Epistaxis aus einem"
+      },
+      {
+        "text": "Absaugen"
+      },
+      {
+        "text": "Einbringen einer kommerziellen"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-adrenalin"
+    ]
+  },
+  {
+    "id": "alg-neugeborenenversorgung-direkt-nach-der-geburt",
+    "kind": "algorithm",
+    "label": "Neugeborenenversorgung direkt nach der Geburt",
+    "indication": "Neugeborenenversorgung direkt nach der Geburt",
+    "tags": [
+      "gynaekologie",
+      "geburt",
+      "kinder"
+    ],
+    "searchTerms": [
+      "direkt",
+      "geburt",
+      "nach",
+      "neugeborenenversorgung",
+      "neugeborenenversorgung direkt nach der geburt"
+    ],
+    "steps": [
+      {
+        "text": "Trocknen des Kindes"
+      },
+      {
+        "text": "Feuchte Tücher entfernen und Wärmeerhalt"
+      },
+      {
+        "text": "Uhrzeit notieren und Uhr starten"
+      },
+      {
+        "text": "Vollzogene Geburt im Rettungsdienst"
+      },
+      {
+        "text": "Schnelle Beurteilung durchführen mit Fokus auf:"
+      },
+      {
+        "text": "Muskeltonus, Atmung, Herzfrequenz"
+      },
+      {
+        "text": "Erneute Beurteilung"
+      },
+      {
+        "text": "Alle 30 Sekunden erneute Beurteilung"
+      },
+      {
+        "text": "Pulsfrequenz 60 min"
+      },
+      {
+        "text": "Beginn mit CPR Verhältnis 3:1"
+      },
+      {
+        "text": "Kompressionen 1 Beatmung"
+      },
+      {
+        "text": "Beatmung bis Atmung suffizient"
+      },
+      {
+        "text": "und Pulsfrequenz 100 min"
+      },
+      {
+        "text": "Repositionierung des Kopfes"
+      },
+      {
+        "text": "Doppel-C-Griff Esmarch-Handgriff"
+      },
+      {
+        "text": "Atemwegssicherung erwägen z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "Larynxmaske"
+      },
+      {
+        "text": "Beatmungen wiederholen"
+      }
+    ],
+    "warnings": [
+      "Wenn die Herzfrequenz nicht ansteigt, Kontrolle der Thoraxexkursionen unter Beatmung!",
+      "Thorax hebt sich NICHT unter Beatmung"
+    ]
+  },
+  {
+    "id": "alg-niv-algorithmus-morphingabe",
+    "kind": "algorithm",
+    "label": "NIV – Algorithmus Morphingabe",
+    "indication": "NIV – Algorithmus Morphingabe",
+    "tags": [
+      "atemwege",
+      "beatmung"
+    ],
+    "searchTerms": [
+      "algorithmus",
+      "invasive",
+      "morphingabe",
+      "nicht",
+      "nicht invasive ventilation",
+      "niv",
+      "niv algorithmus morphingabe",
+      "ventilation"
+    ],
+    "steps": [
+      {
+        "text": "Schmerzstärke nach NRS 4"
+      },
+      {
+        "text": "KEINE Morphin-Gabe"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang laufende kristalloide Infusion"
+      },
+      {
+        "text": "Am Patienten bereithalten: Beatmungsbeutel Maske, Guedel-Tubus, supraglottische"
+      },
+      {
+        "text": "Atemwegssicherung, Absaugbereitschaft"
+      },
+      {
+        "text": "Morphin aufziehen und beschriften: 10 mg Morphin 10 ml NaCl 0,9"
+      },
+      {
+        "text": "Alle 2 Minuten:"
+      },
+      {
+        "text": "Schmerzstärke NRS 4 gebessert"
+      },
+      {
+        "text": "IMMER O2-Gabe SpO2-Überwachung vor Morphin-Medikation"
+      },
+      {
+        "text": "Morphinunverträglichkeit"
+      },
+      {
+        "text": "Opiatassoziierte Übelkeit gut erträglich"
+      },
+      {
+        "text": "Gabe eines Antiemetikums i"
+      },
+      {
+        "text": "Dokumentation und Austragen im BtM-Buch"
+      },
+      {
+        "text": "Langsame Gabe von 2 mg 2 ml Morphin i"
+      },
+      {
+        "text": "Toleranz gebessert"
+      },
+      {
+        "text": "Agitiertheit"
+      },
+      {
+        "text": "Ausgeprägte Unruhe und Stress"
+      },
+      {
+        "text": "Eingeschränkte Maskentoleranz,"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-kristalloide-infusion",
+      "med-morphin",
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "KEINE Morphin-Gabe",
+      "KEINE weitere Morphin-Gabe",
+      "IMMER O2-Gabe + SpO2-Überwachung vor Morphin-Medikation",
+      "KEINE Begleitmedikation mit"
+    ]
+  },
+  {
+    "id": "alg-niv-nicht-invasive-ventilation",
+    "kind": "algorithm",
+    "label": "NIV – Nicht invasive Ventilation",
+    "indication": "NIV – Nicht invasive Ventilation",
+    "tags": [
+      "atemwege",
+      "beatmung"
+    ],
+    "searchTerms": [
+      "invasive",
+      "nicht",
+      "nicht invasive ventilation",
+      "niv",
+      "niv nicht invasive ventilation",
+      "ventilation"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Rhythmusstörung"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "parallel Algorithmen"
+      },
+      {
+        "text": "Bradykardie Tachykardie"
+      },
+      {
+        "text": "ACS"
+      },
+      {
+        "text": "parallel"
+      },
+      {
+        "text": "Extreme Instabilität"
+      },
+      {
+        "text": "Beatmung"
+      },
+      {
+        "text": "Lagerung nach Kreislauf, möglichst Herzbettlage anstreben"
+      },
+      {
+        "text": "Indikation für NIV gegeben"
+      },
+      {
+        "text": "z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": ":"
+      },
+      {
+        "text": "SpO2 unter 90 trotz Sauerstoffgabe 15 l min"
+      },
+      {
+        "text": "AF 25 min"
+      },
+      {
+        "text": "Einsatz der Atemhilfsmuskulatur"
+      },
+      {
+        "text": "CO-Intoxikation"
+      },
+      {
+        "text": "Kontraindikation für NIV"
+      },
+      {
+        "text": "Bewusstlosigkeit"
+      },
+      {
+        "text": "Unkontrollierte Agitiertheit"
+      },
+      {
+        "text": "Bedrohter Atemweg"
+      }
+    ],
+    "warnings": [
+      "Kontraindikation für NIV?",
+      "Kontinuierliche Beobachtung des",
+      "KEINE NIV-Therapie"
+    ]
+  },
+  {
+    "id": "alg-notfallkardioversion",
+    "kind": "algorithm",
+    "label": "Notfallkardioversion",
+    "indication": "Notfallkardioversion",
+    "tags": [
+      "kreislauf",
+      "verfahren"
+    ],
+    "searchTerms": [
+      "notfallkardioversion"
+    ],
+    "steps": [
+      {
+        "text": "Notfallkardioversion EKV"
+      },
+      {
+        "text": "Klebeelektroden aufkleben,"
+      },
+      {
+        "text": "Position: Sternum Apex"
+      },
+      {
+        "text": "Reanimationsbereitschaft herstellen"
+      },
+      {
+        "text": "Defibrillationsmodus wählen"
+      },
+      {
+        "text": "Synchronisation einschalten"
+      },
+      {
+        "text": "Energie wählen"
+      },
+      {
+        "text": "Abgabe von bis zu 3 Elektrokardio-"
+      },
+      {
+        "text": "Versuch: 120 J synchronisiert biphasisch"
+      },
+      {
+        "text": "Versuch: xxx J synchronisiert biphasisch"
+      },
+      {
+        "text": "Bei Konversion des Herzrhythmus"
+      },
+      {
+        "text": "Kontrolle der peripheren und"
+      },
+      {
+        "text": "Bewusstseinsstörung GCS 10"
+      },
+      {
+        "text": "Hypoperfusion"
+      },
+      {
+        "text": "Massive Instabilität"
+      },
+      {
+        "text": "Rhythmusstörung"
+      },
+      {
+        "text": "mg Amiodaron in Glucose 5"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-amiodaron",
+      "med-glucose"
+    ],
+    "warnings": [
+      "keine Konversion des Herzrhythmus",
+      "KEINE Amiodaron-Gabe"
+    ]
+  },
+  {
+    "id": "alg-opiatintoxikation-naloxon",
+    "kind": "algorithm",
+    "label": "Opiatintoxikation – Naloxon",
+    "indication": "Opiatintoxikation – Naloxon",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "atemdepression",
+      "intox",
+      "naloxon",
+      "opiat",
+      "opiatintoxikation",
+      "opiatintoxikation naloxon",
+      "opioid"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "Erneute Beurteilung, ggf"
+      },
+      {
+        "text": "Wiederholung nach 3 5 Minuten"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "stabile Seitenlage; Versorgung nach rettungsdienstlichem Standard"
+      },
+      {
+        "text": "H HITS"
+      },
+      {
+        "text": "Anamnestische"
+      },
+      {
+        "text": "Hinweise auf"
+      },
+      {
+        "text": "Opiatintoxikation"
+      },
+      {
+        "text": ",4 mg Naloxon i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "Verdachtsdiagnose: Akute Opiatintoxikation"
+      },
+      {
+        "text": "Miosis stecknadelkopfgroße Pupillen"
+      },
+      {
+        "text": "Atemdepression mit Bradypnoe oder Apnoe"
+      },
+      {
+        "text": "Bewusstseinsstörung"
+      },
+      {
+        "text": "Hypotension"
+      },
+      {
+        "text": "Einstichstellen"
+      },
+      {
+        "text": "Opiatpflaster"
+      },
+      {
+        "text": "Anamnestische Hinweise auf Opiatkonsum oder"
+      },
+      {
+        "text": "Medikamente"
+      },
+      {
+        "text": "Vital bedrohter Patient"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-naloxon"
+    ],
+    "warnings": [
+      "Hinweise auf",
+      "• Anamnestische Hinweise auf Opiatkonsum oder"
+    ]
+  },
+  {
+    "id": "alg-permissive-hypotension-bei-nicht-kontrollierbaren-blutungen",
+    "kind": "algorithm",
+    "label": "Permissive Hypotension bei nicht kontrollierbaren Blutungen",
+    "indication": "Permissive Hypotension bei nicht kontrollierbaren Blutungen",
+    "tags": [
+      "trauma"
+    ],
+    "searchTerms": [
+      "blutungen",
+      "hypotension",
+      "kontrollierbaren",
+      "nicht",
+      "permissive",
+      "permissive hypotension bei nicht kontrollierbaren blutungen"
+    ],
+    "steps": [
+      {
+        "text": "Nicht kontrollierbare Blutung"
+      },
+      {
+        "text": "V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "intrathorakale, intraabdominelle oder retroperitoneale Blutung"
+      },
+      {
+        "text": "KOMPENSIERTER SCHOCK"
+      },
+      {
+        "text": "Symptome:"
+      },
+      {
+        "text": "Atemfrequenz normal bis leicht erhöht"
+      },
+      {
+        "text": "Herzfrequenz 120 Minute"
+      },
+      {
+        "text": "Blutdruck normal NICHT erniedrigt"
+      },
+      {
+        "text": "Keine bzw"
+      },
+      {
+        "text": "geringe vegetative"
+      },
+      {
+        "text": "Deutliche Tachypnoe"
+      },
+      {
+        "text": "Blutdruck erniedrigt"
+      },
+      {
+        "text": "Vegetative Symptome kalter Schweiß"
+      },
+      {
+        "text": "Mentaler Status verändert, verwirrt,"
+      },
+      {
+        "text": "Vermutetes SHT spinales Trauma"
+      },
+      {
+        "text": "Schwangerschaft"
+      },
+      {
+        "text": "RRsys 80 90 mmHg"
+      }
+    ],
+    "warnings": [
+      "Nicht kontrollierbare Blutung?",
+      "• Blutdruck normal – NICHT erniedrigt!",
+      "Mentaler Status nicht wesentlich",
+      "KEINE Flüssigkeitstherapie!"
+    ]
+  },
+  {
+    "id": "alg-pseudokrupp-adrenalin-glucocorticoide",
+    "kind": "algorithm",
+    "label": "Pseudokrupp – Adrenalin + Glucocorticoide",
+    "indication": "Pseudokrupp – Adrenalin + Glucocorticoide",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "glucocorticoide",
+      "pseudokrupp",
+      "pseudokrupp adrenalin glucocorticoide"
+    ],
+    "steps": [
+      {
+        "text": "Monatsschrift Kinderheilkunde 2011 159: 938 947"
+      },
+      {
+        "text": "Atemwegsinfektionen 3"
+      },
+      {
+        "text": "Auflage 2013, Therapieempfehlungen der Arzneimittelkommission der deutschen Ärzteschaft"
+      },
+      {
+        "text": "O2-Gabe 8 15 l min, EKG, HF, RR, SpO2 Ziel 92"
+      },
+      {
+        "text": "Einleitung des Transports"
+      },
+      {
+        "text": "mg Prednison Prednisolon als Zäpfchen"
+      },
+      {
+        "text": "Anfeuchten der Atemluft"
+      },
+      {
+        "text": "mg 4 ml Adrenalin 1:1000 pur"
+      },
+      {
+        "text": "Verdachtsdiagnose akuter Pseudokrupp-Anfall"
+      },
+      {
+        "text": "Alter meist bis zu 3 Jahre"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-adrenalin",
+      "med-prednisolon",
+      "med-prednison"
+    ],
+    "warnings": [
+      "Allgemeinzustand oftmals nicht kritisch krank"
+    ]
+  },
+  {
+    "id": "alg-regelmaessige-schmalkomplextachykardie-metoprolol",
+    "kind": "algorithm",
+    "label": "Regelmäßige Schmalkomplextachykardie – Metoprolol",
+    "indication": "Regelmäßige Schmalkomplextachykardie – Metoprolol",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "metoprolol",
+      "regelmassige",
+      "regelmassige schmalkomplextachykardie metoprolol",
+      "schmalkomplextachykardie"
+    ],
+    "steps": [
+      {
+        "text": "Erneut"
+      },
+      {
+        "text": "bewerten"
+      },
+      {
+        "text": "Tachykardie"
+      },
+      {
+        "text": "Schmaler QRS"
+      },
+      {
+        "text": "Monomorphe QRS"
+      },
+      {
+        "text": "Regelmäßig"
+      },
+      {
+        "text": "Regelmäßige SVT"
+      },
+      {
+        "text": "Bedrohliche Zeichen vorhanden"
+      },
+      {
+        "text": "Thoraxschmerz, Herzinsuffizienz, Schock, Synkopen, siehe Erläuterungen"
+      },
+      {
+        "text": "Gabe von 5000 I"
+      },
+      {
+        "text": "E"
+      },
+      {
+        "text": "Heparin i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Valsalva-Pressversuch mit 20ml-Spritze"
+      },
+      {
+        "text": "Kontinuierliche EKG-Dokumentation"
+      },
+      {
+        "text": "über 15 Sekunden, dann Oberkörper"
+      },
+      {
+        "text": "Langsame Gabe von 2,5 mg 2,5 ml"
+      },
+      {
+        "text": "Nach 5 Minuten ggf"
+      },
+      {
+        "text": "wiederholen mit"
+      },
+      {
+        "text": ",5 mg 2,5 ml Metoprolol"
+      },
+      {
+        "text": "bis maximal 15 mg Gesamtdosis"
+      },
+      {
+        "text": "Kanal-EKG nach Konversion"
+      },
+      {
+        "text": "Transport, bei Rezidiv wiederholen"
+      },
+      {
+        "text": "Hinweise für aktive Blutung"
+      },
+      {
+        "text": "Hinweise für frischen Schlaganfall"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-heparin",
+      "med-metoprolol"
+    ],
+    "warnings": [
+      "• Hinweise für aktive Blutung?",
+      "• Hinweise für frischen Schlaganfall?",
+      "KEINE Metoprolol-Gabe",
+      "KEINE Heparin-Gabe",
+      "Keine Metoprolol-Gabe!"
+    ]
+  },
+  {
+    "id": "alg-respiratorisches-versagen-kind",
+    "kind": "algorithm",
+    "label": "Respiratorisches Versagen – Kind",
+    "indication": "Respiratorisches Versagen – Kind",
+    "tags": [
+      "beatmung",
+      "kinder"
+    ],
+    "searchTerms": [
+      "kind",
+      "respiratorisches",
+      "respiratorisches versagen kind",
+      "versagen"
+    ],
+    "steps": [
+      {
+        "text": "Atemfrequenz"
+      },
+      {
+        "text": "Tachypnoe"
+      },
+      {
+        "text": "Bradypnoe"
+      },
+      {
+        "text": "Erhöhte Atemarbeit"
+      },
+      {
+        "text": "Einziehungen Nasenflügeln Kopfnicken"
+      },
+      {
+        "text": "und Kontraktion der vorderen Brustmuskeln"
+      },
+      {
+        "text": "Vermindertes Tidalvolumen"
+      },
+      {
+        "text": "Bewusstseinstrübung"
+      },
+      {
+        "text": "Erschöpfung"
+      },
+      {
+        "text": "Beutel-Masken-Beatmung mit 100 O2 suffizient möglich"
+      },
+      {
+        "text": "Beatmung fortsetzen"
+      },
+      {
+        "text": "Passenden Guedel-Tubus verwenden"
+      },
+      {
+        "text": "Doppel-C-Griff verwenden"
+      },
+      {
+        "text": "Optimierung des Maskensitzes"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "Rachentubus verwenden"
+      },
+      {
+        "text": "Suffiziente Beatmung möglich"
+      },
+      {
+        "text": "Atemwegshilfe der 2"
+      },
+      {
+        "text": "Generation"
+      },
+      {
+        "text": "Blässe und Zyanose trotz O2-Gabe"
+      },
+      {
+        "text": "Veränderung der Herzfrequenz"
+      }
+    ]
+  },
+  {
+    "id": "alg-sepsis",
+    "kind": "algorithm",
+    "label": "Sepsis",
+    "indication": "Sepsis",
+    "tags": [
+      "schock"
+    ],
+    "searchTerms": [
+      "sepsis"
+    ],
+    "steps": [
+      {
+        "text": "qSOFA-Score 2 oder 3 Punkte"
+      },
+      {
+        "text": "V"
+      },
+      {
+        "text": "a"
+      },
+      {
+        "text": "Sepsis"
+      },
+      {
+        "text": "Kontinuierliches Monitoring:"
+      },
+      {
+        "text": "AF, HF, EKG, SpO2, RR"
+      },
+      {
+        "text": "qSOFA-Score nur 1 Punkt"
+      },
+      {
+        "text": "Standardversorgung"
+      },
+      {
+        "text": "Sepsis wahrscheinlichste Verdachtsdiagnose"
+      },
+      {
+        "text": "Keine andere und bessere Erklärung"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang 30 ml kg KG kristalloide"
+      },
+      {
+        "text": "Hypotonie mit RRsys 100 mmHg"
+      },
+      {
+        "text": "Fieber 38,0 C nicht zwingend , ggf"
+      },
+      {
+        "text": "36,0 C"
+      },
+      {
+        "text": "Husten, Auswurf"
+      },
+      {
+        "text": "Grippale Symptome"
+      },
+      {
+        "text": "Hauterscheinungen z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "Petechien, Erysipel, Wunden"
+      },
+      {
+        "text": "Beschwerden einer Gastroenteritis z"
+      },
+      {
+        "text": "Erbrechen, Diarrhö"
+      },
+      {
+        "text": "Hinweise auf Harnwegsinfekt z"
+      },
+      {
+        "text": "typischer Geruch, Katheterurin auffällig aussehend"
+      },
+      {
+        "text": "Anamnestische Hinweise z"
+      },
+      {
+        "text": "bekannte Infektion, Immunsuppression"
+      },
+      {
+        "text": "22 min"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-kristalloide-infusion"
+    ],
+    "warnings": [
+      "Keine andere und bessere Erklärung?",
+      "• Fieber > 38,0 °C (nicht zwingend), ggf. < 36,0 °C",
+      "• Hinweise auf Harnwegsinfekt (z. B. typischer Geruch, Katheterurin auffällig aussehend)",
+      "• Anamnestische Hinweise (z. B. bekannte Infektion, Immunsuppression)"
+    ]
+  },
+  {
+    "id": "alg-starker-erregungszustand-erwachsener",
+    "kind": "algorithm",
+    "label": "Starker Erregungszustand – Erwachsener",
+    "indication": "Starker Erregungszustand – Erwachsener",
+    "tags": [
+      "neurologie"
+    ],
+    "searchTerms": [
+      "erregungszustand",
+      "erwachsener",
+      "starker",
+      "starker erregungszustand erwachsener"
+    ],
+    "steps": [
+      {
+        "text": "Starker Erregungszustand"
+      },
+      {
+        "text": "Psychischer Ausnahmezustand"
+      },
+      {
+        "text": "Hyperventilation Hyperventilationstetanie"
+      },
+      {
+        "text": "Aggressivität"
+      },
+      {
+        "text": "Agitiertheit"
+      },
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Diazepam- Lorazepam-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Orale bukkale Gabe von 1 mg Lorazepam Tavor Expidet"
+      },
+      {
+        "text": "ODER nasale Gabe von 10 mg Midazolam über MAD"
+      },
+      {
+        "text": "Langsame Gabe von 2,5 mg 0,5 ml Diazepam i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "bis maximal 5 mg Gesamtdosis wiederholen"
+      },
+      {
+        "text": "Alternativ: Langsame Gabe von 2 mg Midazolam 2 ml bis"
+      },
+      {
+        "text": "maximal 4 mg Gesamtdosis wiederholen"
+      },
+      {
+        "text": "entspannter Zustand erreicht"
+      },
+      {
+        "text": "Agitiertheit abgeklungen"
+      },
+      {
+        "text": "Starker Erregungszustand Agitiertheit"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-diazepam",
+      "med-kristalloide-infusion",
+      "med-lorazepam",
+      "med-midazolam"
+    ],
+    "warnings": [
+      "KEINE Gabe von Sedativa",
+      "IMMER O2-Gabe + SpO2-Überwachung vor Medikation"
+    ]
+  },
+  {
+    "id": "alg-tachykarde-herzrhythmusstoerungen",
+    "kind": "algorithm",
+    "label": "Tachykarde Herzrhythmusstörungen",
+    "indication": "Tachykarde Herzrhythmusstörungen",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "herzrhythmusstorungen",
+      "tachykarde",
+      "tachykarde herzrhythmusstorungen"
+    ],
+    "steps": [
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "parallel"
+      },
+      {
+        "text": "Algorithmus ACS"
+      },
+      {
+        "text": "ABCDE-Herangehensweise"
+      },
+      {
+        "text": "O2-Gabe, Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "QRS breit 120ms"
+      },
+      {
+        "text": "regelmäßig"
+      },
+      {
+        "text": "QRS schmal 120ms"
+      },
+      {
+        "text": "Kontinuierliches Monitoring: AF, HF, EKG, SpO2, Blutdruck"
+      },
+      {
+        "text": "Möglichst Ableitung eines 12-Kanal-EKG und"
+      },
+      {
+        "text": "Dokumentation der Rhythmusstörung"
+      },
+      {
+        "text": "Sinustachykardie"
+      },
+      {
+        "text": "Andere Bedarfstachykardie"
+      },
+      {
+        "text": "Reversible Ursache"
+      },
+      {
+        "text": "Bedrohliche Zeichen vorhanden"
+      },
+      {
+        "text": "QRS-Breite"
+      },
+      {
+        "text": "kontinuierliches Monitoring"
+      }
+    ],
+    "warnings": [
+      "KEINE Rhythmustherapie!"
+    ]
+  },
+  {
+    "id": "alg-transport-versorgung-invasiv-heimbeatmeter-patienten",
+    "kind": "algorithm",
+    "label": "Transport/Versorgung invasiv heimbeatmeter Patienten",
+    "indication": "Transport/Versorgung invasiv heimbeatmeter Patienten",
+    "tags": [
+      "beatmung"
+    ],
+    "searchTerms": [
+      "heimbeatmeter",
+      "invasiv",
+      "patienten",
+      "transport",
+      "transport versorgung invasiv heimbeatmeter patienten",
+      "versorgung"
+    ],
+    "steps": [
+      {
+        "text": "ABCDE-Herangehensweise Anamnese Monitoring etCO2, SpO2, EKG, RR"
+      },
+      {
+        "text": "Erwäge die Nachforderung eines Notarztes bei Akutproblemen"
+      },
+      {
+        "text": "Erwäge Nachforderung Notarzt"
+      },
+      {
+        "text": "bei Akutproblemen"
+      },
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "Absaugen über Tracheostoma oder Trachealkanülenwechsel"
+      },
+      {
+        "text": "Wechsel auf Rettungsdienstrespirator und Einstellung des Geräts nach lokalen Vorgaben,"
+      },
+      {
+        "text": "z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": "Modus VC-SIMV, Vt 400 ml, Atemfrequenz 15 Minute, PEEP 5 mbar, PS 10 mbar"
+      },
+      {
+        "text": "Bei Transporten über 60 Minuten ist ein akkuunabhängiger Betrieb dringend empfohlen"
+      },
+      {
+        "text": "Beatmungsbeutel mit höchstmöglicher FiO2 und Beatmung über Tracheostoma"
+      },
+      {
+        "text": "Akute vitale Bedrohung"
+      },
+      {
+        "text": "Ausreichendes beatmungsfreies Intervall möglich"
+      },
+      {
+        "text": "Transport OHNE Notarzt möglich"
+      },
+      {
+        "text": "Transport unter Beatmung"
+      },
+      {
+        "text": "Stunde Leistungsdauer"
+      },
+      {
+        "text": "Transport ggf"
+      },
+      {
+        "text": "ohne Beatmung"
+      },
+      {
+        "text": "O2-Insufflation über"
+      }
+    ]
+  },
+  {
+    "id": "alg-transthorakale-schrittmachertherapie",
+    "kind": "algorithm",
+    "label": "Transthorakale Schrittmachertherapie",
+    "indication": "Transthorakale Schrittmachertherapie",
+    "tags": [
+      "kreislauf",
+      "verfahren"
+    ],
+    "searchTerms": [
+      "schrittmachertherapie",
+      "transthorakale",
+      "transthorakale schrittmachertherapie"
+    ],
+    "steps": [
+      {
+        "text": "Transthorakale"
+      },
+      {
+        "text": "Schrittmachertherapie SM"
+      },
+      {
+        "text": "Klebeelektroden aufkleben, Position:"
+      },
+      {
+        "text": "Sternum Apex"
+      },
+      {
+        "text": "Pol- 4-Pol-EKG aufkleben"
+      },
+      {
+        "text": "Schrittmacher anwählen"
+      },
+      {
+        "text": "Modus: DEMAND"
+      },
+      {
+        "text": "Frequenz: 70 min"
+      },
+      {
+        "text": "Intensität:"
+      },
+      {
+        "text": "Schnell steigern in 5-mA-Schritten, bis"
+      },
+      {
+        "text": "eine 1:1-Ankopplung erreicht ist"
+      },
+      {
+        "text": "Steigern um 15 mA als Sicherheits-"
+      },
+      {
+        "text": "Kontrolle der peripheren und"
+      },
+      {
+        "text": "Bewusstseinsstörung GCS 10"
+      },
+      {
+        "text": "Anhaltend bedrohliche Bradykardie"
+      },
+      {
+        "text": "Hypoperfusion"
+      },
+      {
+        "text": "Vigilanzbesserung unter SM"
+      },
+      {
+        "text": "Schmerzen nach NRS 4"
+      }
+    ]
+  },
+  {
+    "id": "alg-traumat-schmerz-immob-rueckenschmerz-fentanyl",
+    "kind": "algorithm",
+    "label": "Traumat. Schmerz, immob. Rückenschmerz, … Fentanyl",
+    "indication": "Traumat. Schmerz, immob. Rückenschmerz, … Fentanyl",
+    "tags": [
+      "trauma",
+      "analgesie"
+    ],
+    "searchTerms": [
+      "fentanyl",
+      "immob",
+      "ruckenschmerz",
+      "schmerz",
+      "traumat",
+      "traumat schmerz immob ruckenschmerz fentanyl"
+    ],
+    "steps": [
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Fentanyl-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Schmerzstärke nach NRS 4"
+      },
+      {
+        "text": "KEINE Fentanyl-Gabe"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang laufende kristalloide Infusion"
+      },
+      {
+        "text": "Bereithalten: Beatmungsbeutel Maske, Guedeltubus, supraglottische Atemwegshilfe 2G,"
+      },
+      {
+        "text": "Fentanyl aufziehen und bekleben: 0,1 mg Fentanyl 2 ml"
+      },
+      {
+        "text": "Langsame Gabe von 0,05 mg 1 ml Fentanyl i"
+      },
+      {
+        "text": "bis maximal 0,2 mg 4 ml Gesamtdosis wiederholen"
+      },
+      {
+        "text": "Alle 2 Minuten:"
+      },
+      {
+        "text": "Schmerzstärke NRS 4 gebessert"
+      },
+      {
+        "text": "IMMER O2-Gabe vor Fentanyl-Medikation SpO2-Überwachung"
+      },
+      {
+        "text": "Starke Schmerzen mit NRS 4"
+      },
+      {
+        "text": "Esketamin Medikation zur Analgesie nicht ausreichend"
+      },
+      {
+        "text": "Kontraindikationen gegen Esketamin Medikation"
+      },
+      {
+        "text": "Opiatassoziierte Übelkeit gut erträglich"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-fentanyl",
+      "med-kristalloide-infusion"
+    ],
+    "warnings": [
+      "KEINE Fentanyl-Gabe",
+      "KEINE weitere Fentanyl-Gabe",
+      "IMMER O2-Gabe vor Fentanyl-Medikation + SpO2-Überwachung",
+      "• Esketamin Medikation zur Analgesie nicht ausreichend",
+      "• Kontraindikationen gegen Esketamin Medikation",
+      "KEINE Begleitmedikation mit"
+    ]
+  },
+  {
+    "id": "alg-traumat-schmerz-immob-rueckenschmerz-intraven-s",
+    "kind": "algorithm",
+    "label": "Traumat. Schmerz, immob. Rückenschmerz, … INTRAVENÖS",
+    "indication": "Traumat. Schmerz, immob. Rückenschmerz, … INTRAVENÖS",
+    "tags": [
+      "trauma",
+      "analgesie"
+    ],
+    "searchTerms": [
+      "immob",
+      "intravenos",
+      "ruckenschmerz",
+      "schmerz",
+      "traumat",
+      "traumat schmerz immob ruckenschmerz intravenos"
+    ],
+    "steps": [
+      {
+        "text": "Langsame Gabe von 1,0 mg Midazolam i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "Zugang nicht möglich"
+      },
+      {
+        "text": "Traumat"
+      },
+      {
+        "text": "Schmerz,"
+      },
+      {
+        "text": "immob"
+      },
+      {
+        "text": "Rückenschmerz,"
+      },
+      {
+        "text": "NRS 4 nasal i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "Zugang kristalloide Infusion"
+      },
+      {
+        "text": "Atemwegshilfe 2G, Absaugbereitschaft"
+      },
+      {
+        "text": "Patientenvorgeschichte"
+      },
+      {
+        "text": "NRS 4 Kind"
+      },
+      {
+        "text": "ABCDE-Herangehensweise Schmerzen NRS 4"
+      },
+      {
+        "text": "Zwingend: O2-Gabe; EKG, SpO2, RR"
+      },
+      {
+        "text": "ACHTUNG: für i"
+      },
+      {
+        "text": "Esketamin 25 mg 5 ml 5 mg 1 ml Ampullen nutzen"
+      },
+      {
+        "text": "Kind 30 kg"
+      },
+      {
+        "text": "Muskuloskelettaler Schmerz"
+      },
+      {
+        "text": "Traumatischer Schmerz"
+      },
+      {
+        "text": "Immob"
+      },
+      {
+        "text": "Rückenschmerz"
+      },
+      {
+        "text": "Verbrennung"
+      },
+      {
+        "text": "Vitale Bedrohung"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-fentanyl",
+      "med-kristalloide-infusion",
+      "med-metamizol",
+      "med-midazolam",
+      "med-morphin"
+    ],
+    "warnings": [
+      "i.v.-Zugang nicht möglich?",
+      "ACHTUNG: für i.v.-Esketamin 25 mg/5 ml (= 5 mg/1 ml) Ampullen nutzen!",
+      "Kontraindikationen?",
+      "Keine ausreichende Besserung erreicht?",
+      "Umlagern/Immobilisieren noch nicht möglich?"
+    ]
+  },
+  {
+    "id": "alg-traumat-schmerz-immob-rueckenschmerz-nasal-im",
+    "kind": "algorithm",
+    "label": "Traumat. Schmerz, immob. Rückenschmerz, … NASAL/i.m.",
+    "indication": "Traumat. Schmerz, immob. Rückenschmerz, … NASAL/i.m.",
+    "tags": [
+      "trauma",
+      "analgesie"
+    ],
+    "searchTerms": [
+      "immob",
+      "nasal",
+      "ruckenschmerz",
+      "schmerz",
+      "traumat",
+      "traumat schmerz immob ruckenschmerz nasal i m"
+    ],
+    "steps": [
+      {
+        "text": "Durchführung der"
+      },
+      {
+        "text": "Versorgung nach"
+      },
+      {
+        "text": "rettungsdienstlichem"
+      },
+      {
+        "text": "Standard"
+      },
+      {
+        "text": "Z"
+      },
+      {
+        "text": "B"
+      },
+      {
+        "text": ":"
+      },
+      {
+        "text": "Immobilisation"
+      },
+      {
+        "text": "Seite 1 von 2"
+      },
+      {
+        "text": "Nach 2 3 Minuten Reassessment Schmerzstärke NRS Pflichtdokumentation"
+      },
+      {
+        "text": "Ausreichende Besserung erreicht"
+      },
+      {
+        "text": "NRS 2 3"
+      },
+      {
+        "text": "Anlage eines i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugangs nicht möglich"
+      },
+      {
+        "text": "ACHTUNG: für NASAL i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "Esketamin 250 mg 10 ml 25 mg 1 ml nutzen"
+      },
+      {
+        "text": "Gabe von Esketamin 0,5 mg kg KG nasal i"
+      },
+      {
+        "text": "Achtung: Esketamin 25 mg 1 ml nutzen"
+      },
+      {
+        "text": "Menge bei 25 mg ml"
+      },
+      {
+        "text": "30 kg KG"
+      },
+      {
+        "text": "40 kg"
+      },
+      {
+        "text": ",0 mg"
+      },
+      {
+        "text": ",6 ml"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-midazolam"
+    ],
+    "warnings": [
+      "Anlage eines i.v.-Zugangs nicht möglich!",
+      "ACHTUNG: für NASAL/i.m. Esketamin® 250 mg/10 ml (25 mg/1 ml) nutzen!",
+      "Achtung: Esketamin 25 mg/1 ml nutzen!"
+    ]
+  },
+  {
+    "id": "alg-traumat-schmerz-immob-rueckenschmerz-sufentanil",
+    "kind": "algorithm",
+    "label": "Traumat. Schmerz, immob. Rückenschmerz, … Sufentanil",
+    "indication": "Traumat. Schmerz, immob. Rückenschmerz, … Sufentanil",
+    "tags": [
+      "trauma",
+      "analgesie"
+    ],
+    "searchTerms": [
+      "immob",
+      "ruckenschmerz",
+      "schmerz",
+      "sufentanil",
+      "traumat",
+      "traumat schmerz immob ruckenschmerz sufentanil"
+    ],
+    "steps": [
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Sufentanil-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Schmerzstärke nach NRS 4"
+      },
+      {
+        "text": "KEINE Sufentanil-Gabe"
+      },
+      {
+        "text": "Sufentanil aufziehen und bekleben: 5 g Sufentanil 1 ml"
+      },
+      {
+        "text": "Langsame Gabe von 5 g 1 ml Sufentanil i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "bis maximal 20 g 4 ml Gesamtdosis wiederholen"
+      },
+      {
+        "text": "Alle 2 Minuten:"
+      },
+      {
+        "text": "Schmerzstärke NRS 4 gebessert"
+      },
+      {
+        "text": "IMMER O2-Gabe vor Sufentanil-Medikation SpO2-Überwachung"
+      },
+      {
+        "text": "Starke Schmerzen mit NRS 4"
+      },
+      {
+        "text": "Esketamin Medikation zur Analgesie nicht ausreichend"
+      },
+      {
+        "text": "Kontraindikationen gegen Esketamin Medikation"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "Zugang laufende kristalloide Infusion"
+      },
+      {
+        "text": "Bereithalten: Beatmungsbeutel Maske, Guedeltubus, supraglottische Atemwegshilfe 2G,"
+      },
+      {
+        "text": "Opiatassoziierte Übelkeit gut erträglich"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-fentanyl",
+      "med-kristalloide-infusion",
+      "med-sufentanil"
+    ],
+    "warnings": [
+      "KEINE Sufentanil-Gabe",
+      "KEINE weitere Sufentanil-Gabe",
+      "IMMER O2-Gabe vor Sufentanil-Medikation + SpO2-Überwachung",
+      "• Esketamin Medikation zur Analgesie nicht ausreichend",
+      "• Kontraindikationen gegen Esketamin Medikation",
+      "KEINE Begleitmedikation mit"
+    ]
+  },
+  {
+    "id": "alg-traumatischer-schmerz-kind-30-kg-kg-nasal-im",
+    "kind": "algorithm",
+    "label": "Traumatischer Schmerz – Kind < 30 kg KG  NASAL/i.m.",
+    "indication": "Traumatischer Schmerz – Kind < 30 kg KG  NASAL/i.m.",
+    "tags": [
+      "trauma",
+      "analgesie",
+      "kinder"
+    ],
+    "searchTerms": [
+      "kind",
+      "nasal",
+      "schmerz",
+      "traumatischer",
+      "traumatischer schmerz kind 30 kg kg nasal i m"
+    ],
+    "steps": [
+      {
+        "text": "Traumatischer Schmerz Kind 30 kg KG NASAL i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "Anlage eines i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugangs nicht möglich sinnvoll"
+      },
+      {
+        "text": "Intranasale Gabe erforderlich mit MAD -Adapter"
+      },
+      {
+        "text": "ACHTUNG: für NASAL i"
+      },
+      {
+        "text": "KIND Esketamin 25 mg 5 ml 5 mg 1 ml Brechampullen nutzen"
+      },
+      {
+        "text": "STÄNDIGE KONTROLLE"
+      },
+      {
+        "text": "BIS ZUR ÜBERGABE"
+      },
+      {
+        "text": "Gabe von Esketamin 0,5 mg kg KG i"
+      },
+      {
+        "text": "n"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "Achtung: Esketamin 5 mg 1 ml nutzen"
+      },
+      {
+        "text": "Menge bei 5 mg ml"
+      },
+      {
+        "text": "3 kg"
+      },
+      {
+        "text": ",5 mg"
+      },
+      {
+        "text": ",3 ml"
+      },
+      {
+        "text": "4 kg"
+      },
+      {
+        "text": ",0 mg"
+      },
+      {
+        "text": ",4 ml"
+      },
+      {
+        "text": "5 kg"
+      },
+      {
+        "text": ",5 ml"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-paracetamol"
+    ],
+    "warnings": [
+      "Anlage eines i.v.-Zugangs nicht möglich/sinnvoll!",
+      "ACHTUNG: für NASAL/i.m. KIND Esketamin 25 mg/5 ml (5 mg/1 ml) Brechampullen nutzen!",
+      "Achtung: Esketamin 5 mg/1 ml nutzen!",
+      "Keine ausreichende Besserung erreicht?",
+      "noch nicht möglich?",
+      "Umlagern/Immobilisieren noch nicht möglich?"
+    ]
+  },
+  {
+    "id": "alg-traumatischer-schmerz-kind-30-kg-kg-intraven-s",
+    "kind": "algorithm",
+    "label": "Traumatischer Schmerz – Kind < 30 kg KG INTRAVENÖS",
+    "indication": "Traumatischer Schmerz – Kind < 30 kg KG INTRAVENÖS",
+    "tags": [
+      "trauma",
+      "analgesie",
+      "kinder"
+    ],
+    "searchTerms": [
+      "intravenos",
+      "kind",
+      "schmerz",
+      "traumatischer",
+      "traumatischer schmerz kind 30 kg kg intravenos"
+    ],
+    "steps": [
+      {
+        "text": "Langsame Gabe von Esketamin 0,25 mg kg KG i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "mit Feindosierspritze aufziehen"
+      },
+      {
+        "text": "Konsequente Dosierung nach Tabelle"
+      },
+      {
+        "text": "i"
+      },
+      {
+        "text": "Zugang nicht möglich"
+      },
+      {
+        "text": "Traumat"
+      },
+      {
+        "text": "Schmerz Kind"
+      },
+      {
+        "text": "NRS 4"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "Zugang kristalloide Infusion"
+      },
+      {
+        "text": "Guedeltubus, supraglottische Atemwegshilfe 2G,"
+      },
+      {
+        "text": "Patientenvorgeschichte"
+      },
+      {
+        "text": "ABCDE-Herangehensweise Schmerzen NRS 4"
+      },
+      {
+        "text": "Zwingend: O2-Gabe; EKG, SpO2, RR"
+      },
+      {
+        "text": "ACHTUNG: für i"
+      },
+      {
+        "text": "Esketamin 25 mg 5 ml 5 mg 1 ml Ampullen nutzen"
+      },
+      {
+        "text": "Kind 30 kg KG"
+      },
+      {
+        "text": "Muskuloskelettaler Schmerz"
+      },
+      {
+        "text": "Traumatischer Schmerz"
+      },
+      {
+        "text": "Immob"
+      },
+      {
+        "text": "Rückenschmerz"
+      },
+      {
+        "text": "Verbrennung"
+      },
+      {
+        "text": "Vitale Bedrohung"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-esketamin",
+      "med-kristalloide-infusion",
+      "med-paracetamol"
+    ],
+    "warnings": [
+      "i.v.-Zugang nicht möglich?",
+      "ACHTUNG: für i.v. Esketamin 25 mg/5 ml (= 5 mg/1 ml) Ampullen nutzen!",
+      "Kontraindikationen?",
+      "Keine ausreichende Besserung erreicht?",
+      "noch nicht möglich?",
+      "Umlagern/Immobilisieren noch nicht möglich?"
+    ]
+  },
+  {
+    "id": "alg-verdacht-auf-drohende-addison-krise-akute-nebenniereninsuffizienz",
+    "kind": "algorithm",
+    "label": "V. a. drohende Addison-Krise – akute Nebenniereninsuffizienz",
+    "indication": "V. a. drohende Addison-Krise – akute Nebenniereninsuffizienz",
+    "tags": [
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "addison",
+      "addison-krise",
+      "akute",
+      "drohende",
+      "krise",
+      "nebenniereninsuffizienz",
+      "v a drohende addison-krise akute nebenniereninsuffizienz"
+    ],
+    "steps": [
+      {
+        "text": "mg Prednisolon i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "oder 100 mg Prednison oder Prednisolon rektal"
+      },
+      {
+        "text": "oder Notfallampulle des Patienten 100 mg Hydrocortison i"
+      },
+      {
+        "text": "oder i"
+      },
+      {
+        "text": "m"
+      },
+      {
+        "text": "ml balancierte Vollelektrolytlösung, ggf"
+      },
+      {
+        "text": "wiederholen"
+      },
+      {
+        "text": "Versorgungsempfehlungen gemäß Notfallausweis durchführen"
+      },
+      {
+        "text": "Versorgung nach rettungsdienstlichem Standard inklusive i"
+      },
+      {
+        "text": "Zugang"
+      },
+      {
+        "text": "Einleitung des Transports Übergabe mit Hinweis auf Morbus Addison"
+      },
+      {
+        "text": "Vorliegender nationaler oder europäischer Notfallausweis"
+      },
+      {
+        "text": "Patient berichtet von bekanntem Morbus Addison oder Hypophyseninsuffizienz"
+      },
+      {
+        "text": "Verdachtsdiagnose akute drohende Nebenniereninsuffizienz bei starker Belastung"
+      },
+      {
+        "text": "Schwerer Infektion Sepsis"
+      },
+      {
+        "text": "Schwerer Gastroenteritis"
+      },
+      {
+        "text": "Verkehrsunfall"
+      },
+      {
+        "text": "Schock"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-hydrocortison",
+      "med-prednisolon",
+      "med-prednison"
+    ],
+    "warnings": [
+      "Klinische Hinweise:"
+    ]
+  },
+  {
+    "id": "alg-verdacht-auf-schlaganfall",
+    "kind": "algorithm",
+    "label": "V. a. Schlaganfall",
+    "indication": "V. a. Schlaganfall",
+    "tags": [
+      "neurologie"
+    ],
+    "searchTerms": [
+      "schlaganfall",
+      "stroke",
+      "tia",
+      "v a schlaganfall"
+    ],
+    "steps": [
+      {
+        "text": "Ggf"
+      },
+      {
+        "text": "Algorithmus"
+      },
+      {
+        "text": "hypertensiver Notfall Urapidil"
+      },
+      {
+        "text": "ab: RRsys 220 mmHg oder"
+      },
+      {
+        "text": "RRdia 120 mmHg"
+      },
+      {
+        "text": "Pflichtanamnese:"
+      },
+      {
+        "text": "Symptome"
+      },
+      {
+        "text": "Beginn eingrenzen"
+      },
+      {
+        "text": "Wann zuletzt symptomfrei"
+      },
+      {
+        "text": "Neuer Schwindel"
+      },
+      {
+        "text": "Gleichgewichtsstörung"
+      },
+      {
+        "text": "Sehstörungen"
+      },
+      {
+        "text": "Kopfschmerz"
+      },
+      {
+        "text": "Vernichtungskopfschmerz"
+      },
+      {
+        "text": "Übelkeit"
+      },
+      {
+        "text": "Patientenvorgeschichte"
+      },
+      {
+        "text": "Zungenbiss"
+      },
+      {
+        "text": "Einnässen"
+      },
+      {
+        "text": "Krampfanfall"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-urapidil"
+    ],
+    "warnings": [
+      "Hinweise auf",
+      "Hinweise auf vitale Bedrohung?"
+    ]
+  },
+  {
+    "id": "alg-verdacht-auf-acs-algorithmus-morphingabe",
+    "kind": "algorithm",
+    "label": "V.a. ACS – Algorithmus Morphingabe",
+    "indication": "V.a. ACS – Algorithmus Morphingabe",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "akutes",
+      "akutes koronarsyndrom",
+      "algorithmus",
+      "herzinfarkt",
+      "koronarsyndrom",
+      "morphingabe",
+      "nste-acs",
+      "nstemi",
+      "stemi",
+      "v a acs algorithmus morphingabe"
+    ],
+    "steps": [
+      {
+        "text": "Therapie des ACS: MONA"
+      },
+      {
+        "text": "Algorithmus Morphin Antiemetika"
+      },
+      {
+        "text": "Angepasste O2-Gabe"
+      },
+      {
+        "text": "Algorithmus Glyceroltrinitrat-Spray"
+      },
+      {
+        "text": "Algorithmus ASS Heparin"
+      },
+      {
+        "text": "Algorithmen Diazepam Midazolam"
+      },
+      {
+        "text": "Algorithmus Metoprolol"
+      },
+      {
+        "text": "Monitoring Defibrillationsbereitschaft"
+      },
+      {
+        "text": "Respiratorische Insuffizienz"
+      },
+      {
+        "text": "Schwere COPD"
+      },
+      {
+        "text": "Morphin-Unverträglichkeit"
+      },
+      {
+        "text": "Vigilanzminderung GCS 13"
+      },
+      {
+        "text": "Schmerzstärke nach NRS 4"
+      },
+      {
+        "text": "Anlage i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Zugang laufende kristalloide Infusion"
+      },
+      {
+        "text": "Morphin aufziehen und beschriften: 10 mg Morphin 10 ml NaCl 0,9"
+      },
+      {
+        "text": "Alle 2 Minuten:"
+      },
+      {
+        "text": "Schmerzstärke NRS 4 gebessert"
+      },
+      {
+        "text": "IMMER O2-Gabe SpO2-Überwachung vor Morphin-Medikation"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-acetylsalicylsaeure-iv",
+      "med-diazepam",
+      "med-glyceroltrinitrat",
+      "med-heparin",
+      "med-kristalloide-infusion",
+      "med-metoprolol",
+      "med-midazolam",
+      "med-morphin",
+      "med-nacl-09-prozent"
+    ],
+    "warnings": [
+      "KEINE Morphin-Gabe",
+      "KEINE weitere Morphin-Gabe",
+      "IMMER O2-Gabe + SpO2-Überwachung vor Morphin-Medikation",
+      "KEINE Begleitmedikation mit"
+    ]
+  },
+  {
+    "id": "alg-vorhofflimmern-algorithmus-metoprolol",
+    "kind": "algorithm",
+    "label": "Vorhofflimmern – Algorithmus Metoprolol",
+    "indication": "Vorhofflimmern – Algorithmus Metoprolol",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "algorithmus",
+      "metoprolol",
+      "vorhofflimmern",
+      "vorhofflimmern algorithmus metoprolol"
+    ],
+    "steps": [
+      {
+        "text": "Tachykardie"
+      },
+      {
+        "text": "Schmale QRS-Komplex"
+      },
+      {
+        "text": "ABSOLUT unregelmäßig"
+      },
+      {
+        "text": "Vorhofflimmern"
+      },
+      {
+        "text": "Bedrohliche Zeichen vorhanden"
+      },
+      {
+        "text": "Myokardiale Ischämie, Herzinsuffizienz, Schock, Synkopen, siehe Erläuterungen"
+      },
+      {
+        "text": "Langsame Gabe von 2,5 mg 2,5 ml"
+      },
+      {
+        "text": "Metoprolol i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Gabe von 5000 I"
+      },
+      {
+        "text": "E"
+      },
+      {
+        "text": "Heparin i"
+      },
+      {
+        "text": "Nach 5 Minuten ggf"
+      },
+      {
+        "text": "wiederholen mit"
+      },
+      {
+        "text": ",5 mg 2,5 ml Metoprolol"
+      },
+      {
+        "text": "bis maximal 15 mg Gesamtdosis"
+      },
+      {
+        "text": "RR 120 mmHg"
+      },
+      {
+        "text": "Herzfrequenz 100 Minute"
+      },
+      {
+        "text": "Vorhofflimmern als Bedarfstachykardie"
+      },
+      {
+        "text": "Tachyarrhythmie"
+      },
+      {
+        "text": "RRsys 120 mmHg"
+      },
+      {
+        "text": "Asthma bronchiale vorbekannt"
+      },
+      {
+        "text": "Unverträglichkeit gegen -Blocker"
+      },
+      {
+        "text": "Hinweise für aktive Blutung"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-heparin",
+      "med-metoprolol"
+    ],
+    "warnings": [
+      "KEINE Metoprolol-Gabe",
+      "KEINE Heparin-Gabe",
+      "Keine Metoprolol-Gabe!",
+      "• Hinweise für aktive Blutung?",
+      "• Hinweise für frischen Schlaganfall?"
+    ]
+  },
+  {
+    "id": "alg-vorhofflimmern-mit-schenkelblock-metoprolol",
+    "kind": "algorithm",
+    "label": "Vorhofflimmern mit Schenkelblock – Metoprolol",
+    "indication": "Vorhofflimmern mit Schenkelblock – Metoprolol",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "metoprolol",
+      "schenkelblock",
+      "vorhofflimmern",
+      "vorhofflimmern mit schenkelblock metoprolol"
+    ],
+    "steps": [
+      {
+        "text": "Tachykardie"
+      },
+      {
+        "text": "Breite QRS"
+      },
+      {
+        "text": "Monomorphe QRS"
+      },
+      {
+        "text": "ABSOLUT unregelmäßig"
+      },
+      {
+        "text": "Vorhofflimmern Schenkelblock"
+      },
+      {
+        "text": "Bedrohliche Zeichen vorhanden"
+      },
+      {
+        "text": "Myokardiale Ischämie, Herzinsuffizienz, Schock, Synkopen, siehe Erläuterungen"
+      },
+      {
+        "text": "Langsame Gabe von 2,5 mg 2,5 ml"
+      },
+      {
+        "text": "Metoprolol i"
+      },
+      {
+        "text": "v"
+      },
+      {
+        "text": "Gabe von 5000 I"
+      },
+      {
+        "text": "E"
+      },
+      {
+        "text": "Heparin i"
+      },
+      {
+        "text": "Nach 5 Minuten ggf"
+      },
+      {
+        "text": "wiederholen mit"
+      },
+      {
+        "text": ",5 mg 2,5 ml Metoprolol"
+      },
+      {
+        "text": "bis maximal 15 mg Gesamtdosis"
+      },
+      {
+        "text": "RR 120 mmHg"
+      },
+      {
+        "text": "Herzfrequenz 100 Minute"
+      },
+      {
+        "text": "Hinweise für aktive Blutung"
+      },
+      {
+        "text": "Hinweise für frischen Schlaganfall"
+      },
+      {
+        "text": "Allergie gegen Heparin"
+      },
+      {
+        "text": "Vorbestehende Therapie mit oralen"
+      },
+      {
+        "text": "Antikoagulanzien"
+      },
+      {
+        "text": "Bestehen der Herzrhythmusstörung"
+      }
+    ],
+    "relatedMedicationIds": [
+      "med-heparin",
+      "med-metoprolol"
+    ],
+    "warnings": [
+      "• Hinweise für aktive Blutung?",
+      "• Hinweise für frischen Schlaganfall?",
+      "KEINE Metoprolol-Gabe",
+      "KEINE Heparin-Gabe",
+      "Keine Metoprolol-Gabe!"
+    ]
+  },
+  {
+    "id": "alg-wirbelsaeulenimmobilisation-bei-trauma",
+    "kind": "algorithm",
+    "label": "Wirbelsäulenimmobilisation bei Trauma",
+    "indication": "Wirbelsäulenimmobilisation bei Trauma",
+    "tags": [
+      "trauma",
+      "verfahren"
+    ],
+    "searchTerms": [
+      "trauma",
+      "wirbelsaulenimmobilisation",
+      "wirbelsaulenimmobilisation bei trauma"
+    ],
+    "steps": [
+      {
+        "text": "Transport"
+      },
+      {
+        "text": "Im Zweifel bei Trauma IMMER immobilisieren"
+      },
+      {
+        "text": "Zügiger Transport"
+      },
+      {
+        "text": "Stumpfes oder penetrierendes Trauma an Kopf, Hals oder Rumpf"
+      },
+      {
+        "text": "Stumpfes Trauma"
+      },
+      {
+        "text": "Penetrierendes Trauma"
+      },
+      {
+        "text": "Neurologisches Defizit"
+      },
+      {
+        "text": "Suche nach lebensbedrohlichen"
+      },
+      {
+        "text": "Bewusstsein GCS 15"
+      },
+      {
+        "text": "dem Verletzungsmechanismus"
+      },
+      {
+        "text": "Hinweise auf Drogeneinfluss"
+      },
+      {
+        "text": "Ablenkende Verletzungen vorhanden"
+      },
+      {
+        "text": "Überlagernde Verletzungen vorhanden"
+      },
+      {
+        "text": "Kommunikationsbarrieren vorhanden"
+      },
+      {
+        "text": "Schmerzen an der Wirbelsäule"
+      },
+      {
+        "text": "Druckschmerz"
+      },
+      {
+        "text": "Muskelhartspann"
+      },
+      {
+        "text": "Neurologische Ausfälle"
+      }
+    ],
+    "warnings": [
+      "Immobilisation NICHT indiziert",
+      "Hinweise auf Wirbelsäulenverletzung aus",
+      "• Hinweise auf Drogeneinfluss?",
+      "NICHT indiziert",
+      "Mögliche klinische Hinweise:"
+    ]
+  }
+]
