@@ -17,8 +17,17 @@ export const SPACING = {
   gapMd: 12,
   /** Vertikaler Abstand zwischen kritischen Detail-Screen-Blöcken */
   detailBlockGap: 22,
+  /** Abstand zwischen größeren Screen-Sektionen (Listen, Kurzwege) */
+  sectionStackGap: 20,
   radius: 16,
   radiusSm: 12,
+} as const;
+
+/** Notfall-orientierte Mindestmaße — WCAG-nahe Antippflächen, lesbare Zeilen */
+export const LAYOUT = {
+  minTap: 48,
+  listRowMinHeight: 104,
+  searchHitMinHeight: 100,
 } as const;
 
 export const TYPOGRAPHY = {

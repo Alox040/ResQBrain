@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   FlatList,
   type ListRenderItemInfo,
@@ -15,15 +15,17 @@ import {
   SectionHeader,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
+import type { AlgorithmViewModel } from '@/data/adapters/viewModels';
 import { algorithms } from '@/data/contentIndex';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
-import type { Algorithm } from '@/types/content';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
 
 type Nav = NativeStackNavigationProp<AlgorithmStackParamList, 'AlgorithmList'>;
 
-const algorithmListKeyExtractor = (item: Algorithm): string => item.id;
+const algorithmListKeyExtractor = (item: AlgorithmViewModel): string =>
+  item.id;
 
 const FLAT_LIST_INITIAL_NUM_TO_RENDER = 14;
 const FLAT_LIST_WINDOW_SIZE = 7;
@@ -51,8 +53,8 @@ function AlgorithmListHeader() {
     <View style={styles.listHeader}>
       <SectionHeader
         title="Algorithmen"
-        description="Schrittfolgen mit klarer Einordnung — Tippen öffnet den kompletten Ablauf."
-        size="compact"
+        description="Antippen für alle Schritte und Warnhinweise."
+        size="comfortable"
       />
     </View>
   );
@@ -60,6 +62,11 @@ function AlgorithmListHeader() {
 
 export function AlgorithmListScreen() {
   const navigation = useNavigation<Nav>();
+
+  const algorithmRows = useMemo(
+    () => algorithms.map(mapAlgorithmToViewModel),
+    [algorithms],
+  );
 
   const handlePress = useCallback(
     (algorithmId: string) => {
@@ -69,7 +76,7 @@ export function AlgorithmListScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<Algorithm>) => {
+    ({ item }: ListRenderItemInfo<AlgorithmViewModel>) => {
       const primaryTag = item.tags[0];
       const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
       const leading = tagCfg ? (
@@ -83,9 +90,9 @@ export function AlgorithmListScreen() {
       return (
         <LookupListRow
           title={item.label}
-          subtitle={item.indication}
+          subtitle={item.listSubtitle}
           onPress={() => handlePress(item.id)}
-          accessibilityLabel={`${item.label}. ${item.indication}`}
+          accessibilityLabel={`${item.label}. ${item.listSubtitle}`}
           leading={leading}
         />
       );
@@ -98,7 +105,7 @@ export function AlgorithmListScreen() {
       <View style={styles.wrap}>
         <FlatList
           style={styles.list}
-          data={algorithms}
+          data={algorithmRows}
           keyExtractor={algorithmListKeyExtractor}
           renderItem={renderItem}
           initialNumToRender={FLAT_LIST_INITIAL_NUM_TO_RENDER}
@@ -111,7 +118,7 @@ export function AlgorithmListScreen() {
           ItemSeparatorComponent={FlatListSeparator}
           contentContainerStyle={[
             styles.content,
-            algorithms.length === 0 ? styles.contentEmpty : null,
+            algorithmRows.length === 0 ? styles.contentEmpty : null,
           ]}
           showsVerticalScrollIndicator={false}
         />

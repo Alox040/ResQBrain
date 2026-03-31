@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo } from 'react';
 import { Pressable } from 'react-native';
 import {
   FlatList,
@@ -17,15 +17,17 @@ import {
   SectionHeader,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
+import type { MedicationViewModel } from '@/data/adapters/viewModels';
 import { medications } from '@/data/contentIndex';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
-import type { Medication } from '@/types/content';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { COLORS, SPACING } from '@/theme';
 
 type Nav = NativeStackNavigationProp<MedicationStackParamList, 'MedicationList'>;
 
-const medicationListKeyExtractor = (item: Medication): string => item.id;
+const medicationListKeyExtractor = (item: MedicationViewModel): string =>
+  item.id;
 
 const FLAT_LIST_INITIAL_NUM_TO_RENDER = 14;
 const FLAT_LIST_WINDOW_SIZE = 7;
@@ -53,8 +55,8 @@ function MedicationListHeader() {
     <View style={styles.listHeader}>
       <SectionHeader
         title="Medikamentenliste"
-        description="Tippen für Details zu Dosierung, Hinweisen und verknüpften Algorithmen."
-        size="compact"
+        description="Antippen für Dosierung, Hinweise und Algorithmen."
+        size="comfortable"
       />
     </View>
   );
@@ -62,6 +64,11 @@ function MedicationListHeader() {
 
 export function MedicationListScreen() {
   const navigation = useNavigation<Nav>();
+
+  const medicationRows = useMemo(
+    () => medications.map(mapMedicationToViewModel),
+    [medications],
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -87,7 +94,7 @@ export function MedicationListScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<Medication>) => {
+    ({ item }: ListRenderItemInfo<MedicationViewModel>) => {
       const primaryTag = item.tags[0];
       const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
       const leading = tagCfg ? (
@@ -101,9 +108,9 @@ export function MedicationListScreen() {
       return (
         <LookupListRow
           title={item.label}
-          subtitle={item.indication}
+          subtitle={item.listSubtitle}
           onPress={() => handlePress(item.id)}
-          accessibilityLabel={`${item.label}. ${item.indication}`}
+          accessibilityLabel={`${item.label}. ${item.listSubtitle}`}
           leading={leading}
         />
       );
@@ -116,7 +123,7 @@ export function MedicationListScreen() {
       <View style={styles.wrap}>
         <FlatList
           style={styles.list}
-          data={medications}
+          data={medicationRows}
           keyExtractor={medicationListKeyExtractor}
           renderItem={renderItem}
           initialNumToRender={FLAT_LIST_INITIAL_NUM_TO_RENDER}
@@ -129,7 +136,7 @@ export function MedicationListScreen() {
           ItemSeparatorComponent={FlatListSeparator}
           contentContainerStyle={[
             styles.content,
-            medications.length === 0 ? styles.contentEmpty : null,
+            medicationRows.length === 0 ? styles.contentEmpty : null,
           ]}
           showsVerticalScrollIndicator={false}
         />

@@ -7,9 +7,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import { CARD, COLORS, SPACING } from '@/theme';
+import { CARD, COLORS, LAYOUT, SPACING } from '@/theme';
 
-const DEFAULT_MIN_HEIGHT = 96;
+const DEFAULT_MIN_HEIGHT = LAYOUT.listRowMinHeight;
 
 export type LookupListRowProps = {
   title: string;
@@ -36,6 +36,7 @@ export function LookupListRow({
   return (
     <Pressable
       onPress={onPress}
+      hitSlop={6}
       style={({ pressed }) => [
         styles.row,
         { minHeight },
@@ -87,14 +88,15 @@ const styles = StyleSheet.create({
     borderColor: '#bfdbfe',
   },
   label: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '700',
     color: COLORS.text,
     flexShrink: 1,
+    letterSpacing: -0.2,
   },
   subtitle: {
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 23,
     color: COLORS.textMuted,
   },
 });

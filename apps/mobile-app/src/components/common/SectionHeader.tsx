@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
-import { SPACING, TYPOGRAPHY } from '@/theme';
+import { COLORS, SPACING, TYPOGRAPHY } from '@/theme';
 
 export type SectionHeaderSize = 'default' | 'compact' | 'comfortable';
 
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   wrapScreen: {
-    gap: SPACING.gapXs,
+    gap: SPACING.gapSm,
+    marginBottom: SPACING.gapXs,
   },
   titleDefault: {
     ...TYPOGRAPHY.sectionTitle,
@@ -82,7 +83,10 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.title,
   },
   screenLead: {
-    ...TYPOGRAPHY.bodyMuted,
-    marginTop: -4,
+    fontSize: 16,
+    lineHeight: 24,
+    color: COLORS.textMuted,
+    fontWeight: '500',
+    maxWidth: 560,
   },
 });

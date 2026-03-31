@@ -49,10 +49,13 @@ export function Tag({ label, selected = false, onPress, style }: TagProps) {
 
 const styles = StyleSheet.create({
   base: {
-    paddingHorizontal: 24,
+    minHeight: 48,
+    paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 999,
     borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   plain: {
     borderColor: COLORS.border,

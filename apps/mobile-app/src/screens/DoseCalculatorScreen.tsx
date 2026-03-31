@@ -19,6 +19,7 @@ import {
   WarningCard,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { medications } from '@/data/contentIndex';
 import {
   computeWeightBasedDose,
@@ -27,7 +28,7 @@ import {
 } from '@/features/doseCalculator/parseDosageForCalculator';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import type { Medication } from '@/types/content';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { CARD, COLORS, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 
 type Props = NativeStackScreenProps<
   MedicationStackParamList,
@@ -53,6 +54,11 @@ export function DoseCalculatorScreen(_props: Props) {
     const n = Number.parseFloat(t);
     return Number.isFinite(n) ? n : NaN;
   }, [weightText]);
+
+  const selectedVm = useMemo(
+    () => (selected ? mapMedicationToViewModel(selected) : undefined),
+    [selected],
+  );
 
   const spec = useMemo(
     () => (selected ? parseDosageCalculatorSpec(selected.dosage) : null),
@@ -82,64 +88,73 @@ export function DoseCalculatorScreen(_props: Props) {
 
   return (
     <ScreenContainer>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <WarningCard
-          title="Nur Orientierung"
-          body="Ergebnis aus dem Dosistext extrahiert — verbindlich bleibt das Medikamentenhandbuch der Organisation. Prüfe Einheiten, Indikation und Kontraindikationen vor jeder Gabe."
-          tone="dosage"
-          icon="warning-outline"
-          accessibilityRole="text"
-        />
-
-        <View style={styles.block}>
-          <Text style={styles.fieldLabel}>Medikament</Text>
-          <Pressable
-            onPress={() => setPickerOpen(true)}
-            style={({ pressed }) => [
-              styles.medSelector,
-              pressed && styles.medSelectorPressed,
-            ]}
-            accessibilityRole="button"
-            accessibilityLabel={`Medikament wählen. Aktuell ${selected?.label ?? 'keins'}.`}
-          >
-            <View style={styles.medSelectorTextCol}>
-              <Text style={styles.medSelectorTitle} numberOfLines={2}>
-                {selected?.label ?? 'Medikament wählen'}
-              </Text>
-              {selected ? (
-                <Text style={styles.medSelectorHint} numberOfLines={2}>
-                  {spec
-                    ? 'mg/kg-Angabe im Dosistext gefunden'
-                    : 'Keine mg/kg-Zeile im Dosistext — Rechner nicht möglich'}
-                </Text>
-              ) : null}
-            </View>
-            <Ionicons name="chevron-down" size={26} color={COLORS.primary} />
-          </Pressable>
-        </View>
-
-        <View style={styles.block}>
-          <Text style={styles.fieldLabel}>Körpergewicht (kg)</Text>
-          <TextInput
-            value={weightText}
-            onChangeText={setWeightText}
-            placeholder="z. B. 70"
-            placeholderTextColor={COLORS.textMuted}
-            keyboardType="decimal-pad"
-            selectionColor={COLORS.primary}
-            style={[styles.weightInput, weightInvalid && styles.weightInputError]}
-            accessibilityLabel="Körpergewicht in Kilogramm"
+      <View style={styles.layoutRoot}>
+        <View style={styles.stickyInputs}>
+          <WarningCard
+            title="Nur Orientierung"
+            body="Dosis aus Dosistext — verbindlich ist das Medikamentenhandbuch. Einheiten und Kontraindikationen vor Gabe prüfen."
+            tone="dosage"
+            icon="warning-outline"
+            accessibilityRole="text"
           />
-          {weightInvalid ? (
-            <Text style={styles.errorLine}>Bitte gültiges Gewicht &gt; 0 eingeben.</Text>
-          ) : null}
+
+          <View style={styles.block}>
+            <Text style={styles.fieldLabel}>Medikament</Text>
+            <Pressable
+              onPress={() => setPickerOpen(true)}
+              hitSlop={6}
+              style={({ pressed }) => [
+                styles.medSelector,
+                pressed && styles.medSelectorPressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel={`Medikament wählen. Aktuell ${selectedVm?.label ?? 'keins'}.`}
+            >
+              <View style={styles.medSelectorTextCol}>
+                <Text style={styles.medSelectorTitle} numberOfLines={2}>
+                  {selectedVm?.label ?? 'Medikament wählen'}
+                </Text>
+                {selected ? (
+                  <Text style={styles.medSelectorHint} numberOfLines={2}>
+                    {spec
+                      ? 'mg/kg-Angabe im Dosistext gefunden'
+                      : 'Keine mg/kg-Zeile im Dosistext — Rechner nicht möglich'}
+                  </Text>
+                ) : null}
+              </View>
+              <Ionicons name="chevron-down" size={26} color={COLORS.primary} />
+            </Pressable>
+          </View>
+
+          <View style={styles.block}>
+            <Text style={styles.fieldLabel}>Körpergewicht (kg)</Text>
+            <TextInput
+              value={weightText}
+              onChangeText={setWeightText}
+              placeholder="z. B. 70"
+              placeholderTextColor={COLORS.textMuted}
+              keyboardType="decimal-pad"
+              selectionColor={COLORS.primary}
+              style={[
+                styles.weightInput,
+                weightInvalid && styles.weightInputError,
+              ]}
+              accessibilityLabel="Körpergewicht in Kilogramm"
+            />
+            {weightInvalid ? (
+              <Text style={styles.errorLine}>
+                Bitte gültiges Gewicht &gt; 0 eingeben.
+              </Text>
+            ) : null}
+          </View>
         </View>
 
+        <ScrollView
+          style={styles.scrollBody}
+          contentContainerStyle={styles.contentBody}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
         <View style={styles.resultWrap}>
           {spec && Number.isFinite(weightKg) && weightKg > 0 && result ? (
             <>
@@ -179,8 +194,8 @@ export function DoseCalculatorScreen(_props: Props) {
           <View style={styles.dosageExcerpt}>
             <SectionHeader
               title="Dosistext (Auszug)"
-              size="compact"
-              description="Vollständiger Text in der Medikamenten-Detailansicht."
+              size="comfortable"
+              description="Volltext in der Medikamenten-Detailansicht."
             />
             <Text style={styles.dosageExcerptText} selectable>
               {selected.dosage.length > 420
@@ -189,7 +204,8 @@ export function DoseCalculatorScreen(_props: Props) {
             </Text>
           </View>
         ) : null}
-      </ScrollView>
+        </ScrollView>
+      </View>
 
       <Modal
         visible={pickerOpen}
@@ -215,21 +231,24 @@ export function DoseCalculatorScreen(_props: Props) {
               keyExtractor={(m) => m.id}
               ItemSeparatorComponent={FlatListSeparator}
               keyboardShouldPersistTaps="handled"
-              renderItem={({ item }) => (
-                <LookupListRow
-                  title={item.label}
-                  subtitle={
-                    parseDosageCalculatorSpec(item.dosage)
-                      ? 'Rechner: mg/kg im Text'
-                      : item.indication
-                  }
-                  onPress={() => {
-                    setSelected(item);
-                    setPickerOpen(false);
-                  }}
-                  accessibilityLabel={item.label}
-                />
-              )}
+              renderItem={({ item }) => {
+                const vm = mapMedicationToViewModel(item);
+                return (
+                  <LookupListRow
+                    title={vm.label}
+                    subtitle={
+                      parseDosageCalculatorSpec(item.dosage)
+                        ? 'Rechner: mg/kg im Text'
+                        : vm.listSubtitle
+                    }
+                    onPress={() => {
+                      setSelected(item);
+                      setPickerOpen(false);
+                    }}
+                    accessibilityLabel={vm.label}
+                  />
+                );
+              }}
             />
           </View>
         </ScreenContainer>
@@ -239,8 +258,21 @@ export function DoseCalculatorScreen(_props: Props) {
 }
 
 const styles = StyleSheet.create({
-  scroll: { flex: 1 },
-  content: {
+  layoutRoot: {
+    flex: 1,
+  },
+  stickyInputs: {
+    gap: SPACING.gapMd,
+    paddingBottom: SPACING.gapMd,
+    marginBottom: SPACING.gapSm,
+    borderBottomWidth: StyleSheet.hairlineWidth * 2,
+    borderBottomColor: COLORS.border,
+    backgroundColor: COLORS.bg,
+  },
+  scrollBody: {
+    flex: 1,
+  },
+  contentBody: {
     paddingBottom: SPACING.screenPaddingBottom,
     gap: SPACING.detailBlockGap,
   },
@@ -256,16 +288,17 @@ const styles = StyleSheet.create({
   medSelector: {
     flexDirection: 'row',
     alignItems: 'center',
-    minHeight: 72,
-    paddingVertical: 14,
+    minHeight: LAYOUT.minTap + 28,
+    paddingVertical: 16,
     paddingHorizontal: SPACING.screenPadding,
     ...CARD.base,
-    borderWidth: 2,
-    borderColor: '#93c5fd',
+    borderWidth: 1,
+    borderColor: COLORS.border,
     gap: SPACING.gapMd,
   },
   medSelectorPressed: {
     backgroundColor: COLORS.primaryMutedBg,
+    borderColor: '#93c5fd',
   },
   medSelectorTextCol: {
     flex: 1,
@@ -303,10 +336,10 @@ const styles = StyleSheet.create({
   },
   resultWrap: {
     ...CARD.base,
-    minHeight: 140,
+    minHeight: 148,
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: '#93c5fd',
+    borderWidth: 1,
+    borderColor: COLORS.border,
     backgroundColor: '#f8fafc',
   },
   resultLabel: {

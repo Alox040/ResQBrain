@@ -18,7 +18,9 @@
     "dbrd:build-lookup-seed": "tsx scripts/dbrd/build-lookup-seed.ts",
     "dbrd:build": "pnpm dbrd:validate-normalized && pnpm dbrd:build-lookup-seed",
     "build": "pnpm --filter @resqbrain/website build",
-    "build:website": "pnpm --filter @resqbrain/website build"
+    "build:website": "pnpm --filter @resqbrain/website build",
+    "mobile:verify": "pnpm --filter resqbrain-mobile run verify:local",
+    "mobile:verify:doctor": "pnpm --filter resqbrain-mobile run verify:expo-doctor"
   },
   "devDependencies": {
     "tsx": "^4.21.0",

@@ -19,10 +19,7 @@ import {
   useFavoritesSorted,
   type FavoriteRecord,
 } from '@/features/favorites/favoritesStore';
-import {
-  getAlgorithmById,
-  getMedicationById,
-} from '@/data/contentIndex';
+import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
 
@@ -51,8 +48,8 @@ function FavoritesListHeader() {
     <View style={styles.listHeader}>
       <SectionHeader
         title="Favoriten"
-        description="Zuletzt markierte Medikamente und Algorithmen — die neuesten oben."
-        size="compact"
+        description="Markierte Inhalte — neueste zuerst."
+        size="comfortable"
       />
     </View>
   );
@@ -83,12 +80,9 @@ export function FavoritesScreen() {
     ({ item }: ListRenderItemInfo<FavoriteRecord>) => {
       const badge =
         item.kind === 'medication' ? KIND_BADGE_MEDICATION : KIND_BADGE_ALGORITHM;
-      const entity =
-        item.kind === 'medication'
-          ? getMedicationById(item.id)
-          : getAlgorithmById(item.id);
-      const title = entity?.label ?? 'Eintrag nicht im Bundle';
-      const subtitle = entity?.indication ?? item.id;
+      const vm = resolveContentViewModel(item.id, item.kind);
+      const title = vm?.label ?? 'Eintrag nicht im Bundle';
+      const subtitle = vm?.listSubtitle ?? item.id;
 
       return (
         <LookupListRow

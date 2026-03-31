@@ -26,7 +26,7 @@ export function DetailSectionCard({
 }: DetailSectionCardProps) {
   return (
     <View style={[styles.card, tone === 'soft' ? styles.cardSoft : null, style]}>
-      <SectionHeader title={title} size="default" />
+      <SectionHeader title={title} size="comfortable" />
       {hint ? <Text style={styles.hint}>{hint}</Text> : null}
       {children}
     </View>
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   card: {
     ...CARD.base,
     gap: SPACING.gapMd,
+    paddingVertical: SPACING.screenPadding + 2,
   },
   cardSoft: {
     backgroundColor: '#fafafa',
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
   hint: {
     ...TYPOGRAPHY.bodyMuted,
     fontSize: 14,
-    marginTop: -6,
+    lineHeight: 20,
+    marginTop: -4,
   },
 });

@@ -14,6 +14,8 @@ import {
   WarningCard,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
+import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
 import { useFavoriteToggle } from '@/features/favorites/favoritesStore';
 import { recordHistoryOpen } from '@/features/history/historyStore';
@@ -51,13 +53,15 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: algorithm?.label ?? 'Algorithmus',
+      title: algorithm
+        ? mapAlgorithmToViewModel(algorithm).label
+        : 'Algorithmus',
       headerRight:
         algorithm != null
           ? () => (
               <Pressable
                 onPress={() => void toggleFavoriteItem()}
-                hitSlop={12}
+                hitSlop={14}
                 accessibilityRole="button"
                 accessibilityLabel={
                   isFavorite
@@ -97,6 +101,8 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     );
   }
 
+  const algorithmVm = mapAlgorithmToViewModel(algorithm);
+
   const openMedication = (medicationId: string) => {
     if (!isValidContentId(medicationId)) {
       console.warn('[AlgorithmDetail] openMedication: invalid or empty id', medicationId);
@@ -124,42 +130,44 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {algorithm.warnings ? (
+        {algorithmVm.warnings ? (
           <WarningCard
             title="Warnhinweis"
-            body={algorithm.warnings}
+            body={algorithmVm.warnings}
             prominent
           />
         ) : null}
 
         <DetailSectionCard title="Indikation">
-          <DetailBodyText variant="relaxed">{algorithm.indication}</DetailBodyText>
+          <DetailBodyText variant="relaxed">
+            {algorithmVm.indication}
+          </DetailBodyText>
         </DetailSectionCard>
 
         <DetailSectionCard
           title="Schritte"
           hint="Reihenfolge einhalten — jeder Block ist ein Arbeitsschritt."
         >
-          <DetailStepList steps={algorithm.steps} />
+          <DetailStepList steps={algorithmVm.steps} />
         </DetailSectionCard>
 
-        {algorithm.notes ? (
+        {algorithmVm.notes ? (
           <DetailSectionCard
             title="Notizen"
             hint="Zusatz zum Ablauf — unterhalb der Schritte einordnen."
             tone="soft"
           >
-            <DetailBodyText variant="relaxed">{algorithm.notes}</DetailBodyText>
+            <DetailBodyText variant="relaxed">{algorithmVm.notes}</DetailBodyText>
           </DetailSectionCard>
         ) : null}
 
-        {algorithm.relatedMedicationIds.length > 0 ? (
+        {algorithmVm.relatedMedicationIds.length > 0 ? (
           <DetailSectionCard
             title="Verwandte Medikamente"
             hint="Öffnet Dosierung und Hinweise im gleichen Bundle."
           >
             <DetailCrossRefList>
-              {algorithm.relatedMedicationIds.map((medicationId, index) => {
+              {algorithmVm.relatedMedicationIds.map((medicationId, index) => {
                 const idOk = isValidContentId(medicationId);
                 const med = idOk ? getMedicationById(medicationId) : undefined;
                 if (!idOk) {
@@ -185,13 +193,14 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
                     />
                   );
                 }
+                const medVm = mapMedicationToViewModel(med);
                 return (
                   <DetailLinkRow
                     key={medicationId}
                     contextLabel="Medikament"
-                    label={med.label}
+                    label={medVm.label}
                     onPress={() => openMedication(medicationId)}
-                    accessibilityLabel={`Medikament ${med.label} öffnen`}
+                    accessibilityLabel={`Medikament ${medVm.label} öffnen`}
                   />
                 );
               })}

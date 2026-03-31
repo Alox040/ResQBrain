@@ -13,6 +13,8 @@ import {
   WarningCard,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
+import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
 import { useFavoriteToggle } from '@/features/favorites/favoritesStore';
 import { recordHistoryOpen } from '@/features/history/historyStore';
@@ -73,13 +75,15 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: medication?.label ?? 'Medikament',
+      title: medication
+        ? mapMedicationToViewModel(medication).label
+        : 'Medikament',
       headerRight:
         medication != null
           ? () => (
               <Pressable
                 onPress={() => void toggleFavoriteItem()}
-                hitSlop={12}
+                hitSlop={14}
                 accessibilityRole="button"
                 accessibilityLabel={
                   isFavorite
@@ -119,6 +123,8 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     );
   }
 
+  const medicationVm = mapMedicationToViewModel(medication);
+
   return (
     <ScreenContainer>
       <ScrollView
@@ -127,36 +133,38 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
         showsVerticalScrollIndicator={false}
       >
         <DetailSectionCard title="Indikation">
-          <DetailBodyText variant="relaxed">{medication.indication}</DetailBodyText>
+          <DetailBodyText variant="relaxed">
+            {medicationVm.indication}
+          </DetailBodyText>
         </DetailSectionCard>
 
         <DetailSectionCard title="Dosierung" style={styles.dosageSection}>
           <WarningCard
             title="Anwendung & Dosis"
-            body={medication.dosage}
+            body={medicationVm.dosage}
             icon="warning-outline"
             tone="dosage"
             accessibilityRole="text"
           />
         </DetailSectionCard>
 
-        {medication.notes ? (
+        {medicationVm.notes ? (
           <DetailSectionCard
             title="Notizen"
             hint="Ergänzende Hinweise — nach Dosierung und Indikation einordnen."
             tone="soft"
           >
-            <DetailBodyText variant="relaxed">{medication.notes}</DetailBodyText>
+            <DetailBodyText variant="relaxed">{medicationVm.notes}</DetailBodyText>
           </DetailSectionCard>
         ) : null}
 
-        {medication.relatedAlgorithmIds.length > 0 ? (
+        {medicationVm.relatedAlgorithmIds.length > 0 ? (
           <DetailSectionCard
             title="Verwandte Algorithmen"
             hint="Öffnet die Schrittfolge im gleichen Bundle."
           >
             <DetailCrossRefList>
-              {medication.relatedAlgorithmIds.map((algorithmId, index) => {
+              {medicationVm.relatedAlgorithmIds.map((algorithmId, index) => {
                 const idOk = isValidContentId(algorithmId);
                 const alg = idOk ? getAlgorithmById(algorithmId) : undefined;
                 if (!idOk) {
@@ -182,13 +190,14 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
                     />
                   );
                 }
+                const algVm = mapAlgorithmToViewModel(alg);
                 return (
                   <DetailLinkRow
                     key={algorithmId}
                     contextLabel="Algorithmus"
-                    label={alg.label}
+                    label={algVm.label}
                     onPress={() => openAlgorithm(algorithmId)}
-                    accessibilityLabel={`Algorithmus ${alg.label} öffnen`}
+                    accessibilityLabel={`Algorithmus ${algVm.label} öffnen`}
                   />
                 );
               })}

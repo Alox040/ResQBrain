@@ -9,9 +9,13 @@ import { DoseCalculatorScreen } from '@/screens/DoseCalculatorScreen';
 import { AlgorithmListScreen } from '@/screens/AlgorithmListScreen';
 import { FavoritesScreen } from '@/screens/FavoritesScreen';
 import { HistoryScreen } from '@/screens/HistoryScreen';
+import { VitalReferenceScreen } from '@/features/references/VitalReferenceScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { MedicationListScreen } from '@/screens/MedicationListScreen';
 import { SearchScreen } from '@/screens/SearchScreen';
+import type { HomeStackParamList } from '@/navigation/homeStackParamList';
+
+export type { HomeStackParamList };
 
 export type MedicationStackParamList = {
   MedicationList: undefined;
@@ -29,7 +33,7 @@ export type AlgorithmStackParamList = {
 };
 
 export type RootTabParamList = {
-  Home: undefined;
+  Home: NavigatorScreenParams<HomeStackParamList>;
   Search: undefined;
   Favorites: undefined;
   History: undefined;
@@ -38,6 +42,7 @@ export type RootTabParamList = {
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const MedicationStack = createNativeStackNavigator<MedicationStackParamList>();
 const AlgorithmStack = createNativeStackNavigator<AlgorithmStackParamList>();
 const headerStyle = { backgroundColor: '#111827' } as const;
@@ -52,6 +57,23 @@ const sharedStackScreenOptions = {
   headerBackTitleVisible: false,
   contentStyle: { backgroundColor: '#f3f4f6' },
 } as const;
+
+function HomeStackNavigator() {
+  return (
+    <HomeStack.Navigator screenOptions={sharedStackScreenOptions}>
+      <HomeStack.Screen
+        name="HomeMain"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="VitalReference"
+        component={VitalReferenceScreen}
+        options={{ title: 'Vitalwerte' }}
+      />
+    </HomeStack.Navigator>
+  );
+}
 
 function MedicationStackNavigator() {
   return (
@@ -110,8 +132,8 @@ export function AppNavigator() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
-        options={{ title: 'Start' }}
+        component={HomeStackNavigator}
+        options={{ title: 'Start', headerShown: false }}
       />
       <Tab.Screen
         name="Search"

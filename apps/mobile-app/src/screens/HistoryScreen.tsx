@@ -15,10 +15,7 @@ import {
   SectionHeader,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
-import {
-  getAlgorithmById,
-  getMedicationById,
-} from '@/data/contentIndex';
+import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
 import {
   useHistorySorted,
   type HistoryRecord,
@@ -51,8 +48,8 @@ function HistoryListHeader() {
     <View style={styles.listHeader}>
       <SectionHeader
         title="Verlauf"
-        description="Zuletzt geöffnete Inhalte — bis zu 30 Einträge, die neuesten oben."
-        size="compact"
+        description="Zuletzt geöffnet — max. 30 Einträge, neueste oben."
+        size="comfortable"
       />
     </View>
   );
@@ -83,12 +80,9 @@ export function HistoryScreen() {
     ({ item }: ListRenderItemInfo<HistoryRecord>) => {
       const badge =
         item.kind === 'medication' ? KIND_BADGE_MEDICATION : KIND_BADGE_ALGORITHM;
-      const entity =
-        item.kind === 'medication'
-          ? getMedicationById(item.id)
-          : getAlgorithmById(item.id);
-      const title = entity?.label ?? 'Eintrag nicht im Bundle';
-      const subtitle = entity?.indication ?? item.id;
+      const vm = resolveContentViewModel(item.id, item.kind);
+      const title = vm?.label ?? 'Eintrag nicht im Bundle';
+      const subtitle = vm?.listSubtitle ?? item.id;
 
       return (
         <LookupListRow

@@ -4,34 +4,39 @@
 
 ## Gesamtstatus
 
-ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig und statisch vorrenderbar. **Phase 0 (Lookup-first Mobile):** Architektur- und Kontextstand ist **final dokumentiert** und **Re-validiert (PASS)**; **Block 1** (Seed, Validierung, Lookup-Bundle-Loader, `contentIndex`, Lookup-Screens inkl. Suche) ist **im Code umgesetzt** — siehe Checkliste unten.
+ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig. **Mobile (`apps/mobile-app`):** Phase-0-Lookup ist **umgesetzt** und um **Einsatz-nahe Features** erweitert (Favoriten, Verlauf, Suche mit Ranking, Dosisrechner, Vitalreferenz, Start/Home). **Nicht umgesetzt:** synchronisiertes oder auf das Gerät heruntergeladenes Lookup-Bundle, Backend-/Sync-Pipeline.
 
-## Mobile / Phase 0 (Lookup MVP)
+## Mobile / Phase 0 und Phase-1-nahe Features
 
 | Aspekt | Status |
 |--------|--------|
-| **Datenquelle Phase 0** | **JSON-Bundle** unter `data/lookup-seed/` inkl. `manifest.json` (`schemaVersion`, `bundleId`) — kanonisch; App-Lesepfad über `loadLookupBundle` / `contentIndex`. Datenform: `lookup-data-shape.md`; Ablauf: `content-seed-plan.md`. |
-| **Offline-Strategie** | **Lokales/eingebettetes Bundle**, kein Remote-Zwang; Start → laden/validieren → RAM-Store + In-Memory-Suchindex; **keine Sync-Engine**. Spec: `docs/context/offline-phase0-decision.md`. |
-| **Screen-Spezifikation** | **Definiert** — vier Lookup-Screens (Medikament/Algorithmus Liste + Detail): `docs/context/mobile-phase0-screens.md`. |
-| **Architektur** | **Konsolidiert** — `docs/architecture/lookup-first-architecture.md` mit klarem Phase-0-Subset vs. Zielarchitektur; deckungsgleich mit Phase-0-Kontextdateien. |
-| **Re-Validierung** | **Bestanden (PASS)** — Abgleich Scope, kein Sync, keine Dosierungs-/Verzweigungslogik in Phase 0, JSON als Quelle, keine Governance-UI in der App. |
-| **Implementierung** | **Block 1 umgesetzt** — Loader (`loadLookupBundle`), `contentIndex`, Listen/Detail/Suche; eingebettetes Offline-Bundle ohne Netzwerk. **Offen:** persistenter Offline-Speicher, Sync, Favoriten, Verlauf (siehe Checkliste). |
+| **Datenquelle** | **JSON-Bundle** `data/lookup-seed/` inkl. `manifest.json` — Einstieg über `lookupSource` → `loadLookupBundle` / `contentIndex`. |
+| **Offline (Lookup)** | Eingebettetes Bundle, Validierung beim Laden, **RAM-Store** — **kein** separates persistiertes Bundle-File durch die App. |
+| **Offline (Vorbereitung)** | `src/lookup/lookupSource.ts`: Extension Points für spätere Schichten (`cached` / `updated` / `fallback`); aktiv nur **embedded**. |
+| **Persistenz** | **Favoriten** und **Verlauf** über **AsyncStorage** (`src/storage/localStorage.ts` + Features) — unabhängig vom medizinischen Bundle-Inhalt. |
+| **Suche** | Lokales Ranking über Label, `searchTerms`, Indikation, sekundäre Felder; Filter nach Inhaltsart. |
+| **UI-Schicht** | Adapter `src/data/adapters/*` (View Models); **ohne** Kopplung an `@resqbrain/domain`. |
+| **Screens (Ist)** | Start/Home, Suche, Favoriten, Verlauf, Medikamente (Liste, Detail, **Dosisrechner**), Algorithmen (Liste, Detail), **Vitalwerte-Referenz** (eigenes Stack-Screen, statische Daten). |
+| **Re-Validierung Phase 0** | Weiterhin: kein produktives Multi-Tenant in der App, keine Governance-UI; Fokus Lookup + Einsatzhilfen. |
 
-### Phase 0 — Umsetzung (Ist vs. offen)
+### Ist vs. bewusst offen
 
 | Punkt | Status |
 |-------|--------|
-| Lookup-Bundle-Loader (inkl. Validierung, `contentIndex`) | erledigt |
-| Medikamentenliste | erledigt |
-| Algorithmenliste | erledigt |
-| Medikamentendetail | erledigt |
-| Algorithmusdetail | erledigt |
-| Suchscreen | erledigt |
-| Offline: Bundle laden (eingebettete JSON-Daten, ohne Netzwerk) | erledigt |
-| Persistenter Offline-Speicher | offen |
-| Sync | offen |
-| Favoriten | offen |
-| Verlauf (History) | offen |
+| Lookup-Bundle-Loader + `contentIndex` + Validierung | **erledigt** |
+| Listen/Detail Medikament & Algorithmus | **erledigt** |
+| Suchscreen + Ranking + Filter | **erledigt** |
+| Start/Home mit Schnellzugriff | **erledigt** |
+| Favoriten (Detail + Tab + Persistenz) | **erledigt** |
+| Verlauf (Detail + Tab + Persistenz, max. 30) | **erledigt** |
+| Dosisrechner (Parser-basiert, Orientierung) | **teilweise** — nur bei erkanntem mg/µg-pro-kg im Dosistext |
+| Vitalwerte-Referenz (Altersgruppen) | **erledigt** (statischer Content) |
+| Offline: Bundle nur eingebettet/RAM | **erledigt** (wie konzipiert für Phase 0) |
+| Offline: Bundle auf Gerät aus Download/Sync | **offen** |
+| Sync / Push-Update des Bundles | **offen** |
+| `lookupSource` nicht-embedded befüllen | **offen** (API vorbereitet) |
+
+**Lokale Checks:** `pnpm mobile:verify` — siehe `docs/context/mobile-validation-checklist.md`.
 
 ## Domain
 
@@ -42,7 +47,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `compile:content` (tsc) | Erfolgreich |
 | Barrel-Export `src/index.ts` | Konsistent mit Content-, Tenant-, Versioning- und Survey-Modulen |
 | Layering | Keine Website-/App-Imports im Domain-Paket (reine Domain-Logik) |
-| Mandantentrennung (Organization) | Modellierung im Domain-Code unverändert zentral; Runtime-Enforcement folgt mit API/Auth |
+| Mandantentrennung (Organization) | Modellierung im Domain-Code zentral; Runtime-Enforcement folgt mit API/Auth |
 
 ## Website
 
@@ -71,18 +76,21 @@ Interne Anker: siehe `apps/website/lib/routes.ts` (z. B. `#mitmachen`, `#funktio
 | Befehl | Erwartung |
 |--------|-----------|
 | `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
-| Letzter Lauf (lokal) | Erfolgreich, keine fehlenden Module |
+| `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
+| Letzter Website-Lauf (lokal) | Erfolgreich, keine fehlenden Module |
 
 ## Risiken
 
-1. **README-Konfliktmarken** waren im Repository vorhanden und mussten bereinigt werden — bei künftigen Merges auf einheitliche deutsche README-Pflege achten.
-2. **Externe Umfrage-URLs** sind Platzhalter (z. B. `mailto` bzw. generische Hinweise); echte Survey-Links und Datenschutz-Folgen müssen vor Go-Live gesetzt werden.
-3. **Produktions-Deployment** der Website ist nicht Teil des täglichen Builds; Pipeline und Hosting separat absichern.
-4. **Mandantentrennung** ist im Domain-Modell angelegt, aber noch nicht durch eine produktive API mit Auth durchgängig erzwungen.
+1. **Dosisrechner** basiert auf Heuristiken im Freitext — kein Ersatz für verbindliche Arzneimitteldokumentation; nutzerseitig klar gekennzeichnet in der App.  
+2. **Externe Umfrage-URLs** sind Platzhalter; echte Survey-Links und Datenschutz-Folgen vor Go-Live setzen.  
+3. **Produktions-Deployment** der Website und der Mobile-Pipeline separat planen.  
+4. **Mandantentrennung** im Domain-Modell, aber ohne produktive API/Auth noch nicht end-to-end erzwungen.  
+5. **expo-doctor** kann Abweichungen melden (z. B. Icon-Paket-Versionen im Monorepo) — siehe Mobile-Checkliste.
 
 ## Verweise
 
 - Architektur: `docs/architecture/`
-- Produktkontext: `docs/context/`
+- Produktkontext: `docs/context/` (priorisierte Next Steps: `docs/context/12-next-steps.md`)
 - Arbeitssession-Log: `docs/status/WORK_SESSION.md`
 - Roadmap: `docs/roadmap/PROJECT_ROADMAP.md`
+- Mobile-Validierung: `docs/context/mobile-validation-checklist.md`

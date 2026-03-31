@@ -1,11 +1,11 @@
 import {
-  loadLookupBundle,
   toLookupContentKey,
   type LookupContentKey,
 } from '@/lookup/loadLookupBundle';
+import { getActiveLookupStore } from '@/lookup/lookupSource';
 import type { Algorithm, ContentItem, ContentKind, ContentListItem, Medication } from '@/types/content';
 
-const store = loadLookupBundle();
+const store = getActiveLookupStore();
 
 export type ContentKey = LookupContentKey;
 
@@ -13,10 +13,10 @@ export function toContentKey(kind: ContentKind, id: string): ContentKey {
   return toLookupContentKey(kind, id);
 }
 
-/** Single source: `data/lookup-seed/` → `loadLookupBundle()` → validiert. */
+/** Active RAM store: embedded seed via `@/lookup/lookupSource` (validated at first resolve). */
 export const medications: Medication[] = store.medications;
 
-/** Single source: `data/lookup-seed/` → `loadLookupBundle()` → validiert. */
+/** Active RAM store: embedded seed via `@/lookup/lookupSource` (validated at first resolve). */
 export const algorithms: Algorithm[] = store.algorithms;
 
 export const contentItems: ContentItem[] = store.contentItems;

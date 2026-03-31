@@ -7,35 +7,26 @@ import {
   Text,
   View,
 } from 'react-native';
+import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SectionHeader } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
-import {
-  algorithms,
-  getAlgorithmById,
-  getMedicationById,
-  medications,
-} from '@/data/contentIndex';
+import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
+import { algorithms, medications } from '@/data/contentIndex';
 import { useFavoritesSorted } from '@/features/favorites/favoritesStore';
 import { useHistorySorted } from '@/features/history/historyStore';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
+import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import type { ContentKind } from '@/types/content';
-import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+import { CARD, COLORS, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 
 const H_CARD_MIN_WIDTH = 292;
 const H_CARD_MIN_HEIGHT = 124;
 
 function typeLabelDe(kind: ContentKind): string {
   return kind === 'medication' ? 'Medikament' : 'Algorithmus';
-}
-
-function resolveContentLabel(id: string, kind: ContentKind): string {
-  const entity =
-    kind === 'medication'
-      ? getMedicationById(id)
-      : getAlgorithmById(id);
-  return entity?.label ?? 'Nicht im Bundle';
 }
 
 type HomeCarouselCardProps = {
@@ -54,7 +45,7 @@ function HomeCarouselCard({ label, kind, onPress }: HomeCarouselCardProps) {
   return (
     <Pressable
       onPress={onPress}
-      hitSlop={8}
+      hitSlop={10}
       style={({ pressed }) => [
         styles.hCard,
         { borderColor: tone.ring },
@@ -87,6 +78,11 @@ function HomeCarouselCard({ label, kind, onPress }: HomeCarouselCardProps) {
   );
 }
 
+type HomeScreenNav = CompositeNavigationProp<
+  NativeStackNavigationProp<HomeStackParamList, 'HomeMain'>,
+  BottomTabNavigationProp<RootTabParamList>
+>;
+
 type QuickItem = {
   key: string;
   title: string;
@@ -99,7 +95,7 @@ type QuickItem = {
 };
 
 export function HomeScreen() {
-  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const navigation = useNavigation<HomeScreenNav>();
   const favorites = useFavoritesSorted();
   const recentHistory = useHistorySorted();
 
@@ -134,6 +130,16 @@ export function HomeScreen() {
       backgroundColor: COLORS.primaryMutedBg,
       emphasis: true,
       navigate: () => navigation.navigate('Search'),
+    },
+    {
+      key: 'vitals',
+      title: 'Vitalwerte',
+      subtitle:
+        'Offline-Referenz: HF, AF, RR, Blutdruck, SpO₂, Temperatur — nach Altersgruppe',
+      icon: 'pulse',
+      iconColor: '#b91c1c',
+      backgroundColor: '#fee2e2',
+      navigate: () => navigation.navigate('VitalReference'),
     },
     {
       key: 'meds',
@@ -234,7 +240,10 @@ export function HomeScreen() {
               {favorites.map((item) => (
                 <HomeCarouselCard
                   key={`fav-${item.kind}-${item.id}`}
-                  label={resolveContentLabel(item.id, item.kind)}
+                  label={
+                    resolveContentViewModel(item.id, item.kind)?.label ??
+                    'Nicht im Bundle'
+                  }
                   kind={item.kind}
                   onPress={() => openContentDetail(item.kind, item.id)}
                 />
@@ -268,7 +277,10 @@ export function HomeScreen() {
               {recentHistory.map((item) => (
                 <HomeCarouselCard
                   key={`hist-${item.kind}-${item.id}`}
-                  label={resolveContentLabel(item.id, item.kind)}
+                  label={
+                    resolveContentViewModel(item.id, item.kind)?.label ??
+                    'Nicht im Bundle'
+                  }
                   kind={item.kind}
                   onPress={() => openContentDetail(item.kind, item.id)}
                 />
@@ -281,7 +293,7 @@ export function HomeScreen() {
           <SectionHeader
             title="Kurzwege"
             size="comfortable"
-            description="Suche, Listen, Dosisrechner — gleiche Ziele wie in der unteren Navigation."
+            description="Suche, Vitalwerte, Listen, Dosisrechner — oft dieselben Ziele wie in der Tab-Leiste."
           />
 
           <View style={styles.quickList}>
@@ -358,7 +370,7 @@ export function HomeScreen() {
   );
 }
 
-const QUICK_TILE_MIN = 88;
+const QUICK_TILE_MIN = 96;
 
 const styles = StyleSheet.create({
   scroll: {
@@ -366,12 +378,13 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingBottom: SPACING.screenPaddingBottom,
-    gap: SPACING.screenPadding,
+    gap: SPACING.sectionStackGap,
   },
   heroCard: {
     ...CARD.base,
-    paddingVertical: SPACING.screenPadding,
+    paddingVertical: SPACING.screenPadding + 2,
     gap: SPACING.gapMd,
+    borderWidth: StyleSheet.hairlineWidth * 2,
   },
   eyebrow: {
     ...TYPOGRAPHY.sectionTitle,
@@ -383,7 +396,8 @@ const styles = StyleSheet.create({
   subtitle: {
     ...TYPOGRAPHY.bodyMuted,
     color: '#4b5563',
-    lineHeight: 22,
+    fontSize: 15,
+    lineHeight: 24,
   },
   subtitleStrong: {
     fontWeight: '600',
@@ -393,12 +407,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
     backgroundColor: '#f8fafc',
     borderRadius: SPACING.radiusSm,
-    borderWidth: 1,
-    borderColor: COLORS.border,
+    borderWidth: StyleSheet.hairlineWidth * 2,
+    borderColor: '#e2e8f0',
   },
   lookupHintIcon: {
     marginTop: 2,
@@ -415,16 +429,17 @@ const styles = StyleSheet.create({
   },
   sectionBlock: {
     gap: SPACING.gapMd,
+    marginTop: SPACING.gapXs,
   },
   quickList: {
     gap: SPACING.gapMd,
   },
   quickTile: {
     position: 'relative',
-    minHeight: QUICK_TILE_MIN,
+    minHeight: Math.max(QUICK_TILE_MIN, LAYOUT.minTap + 40),
     ...CARD.base,
-    paddingVertical: 14,
-    paddingTop: 18,
+    paddingVertical: 16,
+    paddingTop: 20,
   },
   quickTileEmphasis: {
     borderColor: '#93c5fd',
@@ -470,9 +485,10 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   quickTitle: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 19,
+    fontWeight: '800',
     color: COLORS.text,
+    letterSpacing: -0.2,
   },
   quickSubtitle: {
     ...TYPOGRAPHY.bodyMuted,

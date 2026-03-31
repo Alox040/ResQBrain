@@ -1,54 +1,64 @@
 # Next Steps
 
-**Stand:** 26. März 2026 — neu priorisiert nach Umfrage
+**Stand:** 31. März 2026 — abgestimmt mit dem **Ist-Stand** der Mobile-App (`apps/mobile-app`) nach Phase-0-Basis und den umgesetzten Phase-1-nahen Features.
 
-## MVP-Fokus
-
-Umfrage-Ergebnis: Einsatzkräfte brauchen Medikamentensuche, Algorithmen, Offline-Zugriff und schnelle Suche — keine Governance-Plattform.
-
-Der MVP ist damit ein **Einsatz-Tool**, nicht eine Content-Management-Plattform.
+Kanontische Produktkontexte: `docs/context/04-mvp-scope.md`, `docs/context/11-implementation-baseline.md`.
 
 ---
 
-## Sofortige Prioritäten (MVP)
+## Erreicht (Code, kein Backlog)
 
-### 1. Seed-Daten aufbereiten
-Medikamentenliste und Algorithmen als statische, versionierte Seed-Daten bereitstellen.
-- Bestehende Seed-Daten aus `data/schemas/` prüfen und bereinigen
-- Deduplizierung und Textqualität sicherstellen
-- Format definieren: was braucht die App zur Laufzeit?
+Diese Punkte sind **implementiert** und laufen gegen das eingebettete Lookup-Bundle:
 
-### 2. Offline-Datenhaltung definieren
-Entscheiden wie Inhalte auf dem Gerät gespeichert und geladen werden.
-- Lokal-erste Architektur (offline by default)
-- Synchronisationsstrategie bei Verbindung
+- **Lookup:** Loader + Validierung (`loadLookupBundle`), `contentIndex`, Listen/Detail Medikamente & Algorithmen, Querverweise zwischen Einträgen (wo im Bundle referenziert).
+- **Suche:** Lokale Suche ohne Server; Relevanz-Ranking (Label, `searchTerms`, Indikation, sekundäre Texte wie Dosistext/Notizen/Schritte); Filter „Alle / Medikamente / Algorithmen“.
+- **Start/Home:** Tab mit Statistiken, Schnellzugriff (Suche, Vitalwerte, Listen, Dosisrechner-Kachel), Karussell für Favoriten und Verlauf.
+- **Favoriten:** Stern in Detailansichten; Tab „Favoriten“; Persistenz über **AsyncStorage** (nicht im Lookup-Bundle).
+- **Verlauf:** „Zuletzt geöffnet“ (max. 30 Einträge); Tab „Verlauf“; Persistenz über **AsyncStorage**; Eintrag beim Öffnen eines Details.
+- **Dosisrechner:** Gewichtsbasierte Schätzung aus **Freitext-Dosistext** (Muster `mg|µg/mcg pro kg`, optional Min/Max); Medikamentenauswahl; ohne klinische Validierung — nur Parser + Hinweis „Orientierung“.
+- **Vitalwerte-Referenz:** Eigener Screen (Altersgruppen, HF/AF/RR/SpO₂/Temp.) — **statischer Referenzinhalt** in der App, unabhängig vom Lookup-Bundle.
+- **UI-Schicht:** View-Model-Adapter (`src/data/adapters/`) zwischen Bundle-Typen und Listen/Detail/Suche — vorbereitend für spätere Domain-/Bundle-Migration; **keine** Anbindung an `@resqbrain/domain` in der App.
+- **Offline-Updates (Vorbereitung):** `src/lookup/lookupSource.ts` — aktiv weiterhin nur **embedded** Bundle; Typen/Extension Points für spätere Schichten (`cached` / `updated` / `fallback`) **ohne** Sync/Netzwerk.
 
-### 3. Suchfunktion implementieren
-Schnelle, lokale Suche über Medikamente und Algorithmen.
-- Keine Server-Abhängigkeit im Einsatz
-- Treffsicherheit und Ladezeit < 3 Sekunden
-
-### 4. Einsatz-UI bauen (Mobile App)
-Erste Ansichten für Medikamentendetail und Algorithmus-Schritt-Ansicht.
-- Optimiert für Zeitdruck, Handschuhe, schlechte Lichtverhältnisse
-- Minimalnavigation
-
-### 5. Eine Organisation, ein Stand
-Für den MVP reicht eine fest konfigurierte Organisation (Seed-Daten einer Wache).
-- Kein Login, kein Rollen-Modell im MVP
-- Inhalte für die Pilot-Wache fest eingebaut
+**Validierung lokal:** `pnpm mobile:verify` (siehe `docs/context/mobile-validation-checklist.md`).
 
 ---
 
-## Zurückgestellt (Post MVP)
+## Kurzfristig (Offen / nächste Iterationen)
 
-- Content Lifecycle, Approval, Release Engine
-- Multi-Tenant / Organization Model
-- Rollen- und Rechtemodell
-- Audit Logging
-- Survey Engine und SurveyInsight
-- Editor UI für Algorithmen und Medikamente
-- API, Auth, produktive Deployment-Infra
-- Region/County Scoping
-- ContentPackage und Release-Bundles
-- Cross-Organization Features
+### 1. Lookup-Bundle auf dem Gerät (nicht nur RAM/Embed)
+
+- Bundle weiterhin **eingebettet** als Quelle der Wahrheit; **kein** separates „heruntergeladenes“ Bundle am Gerät.
+- Offline-Strategie für **ersetzbare** Bundles (Download, Integrität, Fallback) — an `lookupSource` andocken; **kein** Backend-Muss im ersten Schritt, kann mit lokalen Fixtures beginnen.
+
+### 2. Sync / Push-Updates
+
+- Nach Konzept: was wird wann geladen, Signierung, Fehlerpfade — **noch nicht** im Code.
+
+### 3. Seed-Daten & Pilot-Konfiguration
+
+- Datenmenge und Textqualität in `data/lookup-seed/` ausbauen; eine Organisation / Pilot-Wache weiterhin **fachlich** fokussieren (technisch: festes Bundle).
+
+### 4. Einsatz-UI
+
+- Lesbarkeit, Kontrast, große Treffer — iterativ; keine gesonderte „Hands-free“-Pflicht im Code abgebildet.
+
+### 5. Werkzeuge
+
+- ESLint für `apps/mobile-app` optional ergänzen (derzeit nur Typecheck + Nav-Skripte + Export-Check).
+- `expo-doctor`-Hinweise (z. B. `@expo/vector-icons`-Version) bereinigen, wenn relevant.
+
+---
+
+## Zurückgestellt (weiter wie in `04-mvp-scope` / Architektur)
+
+- Content Lifecycle, Governance-UI, Multi-Tenant-Runtime
+- API, Auth, Release-Pipeline für Live-Bundles
+- Editor, Survey-Produktivbetrieb
+- KI-/Lernfeatures (Phasen 2+ in der Roadmap)
+
+---
+
+## Hinweis zu Doppeldatei `next-steps.md`
+
+Die Datei `docs/context/next-steps.md` kann ältere Formulierungen enthalten. Für **priorisierte nächste Schritte** und Abgleich mit dem Repo gilt dieser Eintrag **`12-next-steps.md`** sowie `docs/roadmap/PROJECT_ROADMAP.md`.
