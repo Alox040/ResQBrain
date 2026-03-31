@@ -1,13 +1,21 @@
 import type { ReactNode } from "react";
 
+import { Container } from "@/components/ui/container";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+
 type SiteShellProps = {
   children: ReactNode;
 };
 
 export function SiteShell({ children }: SiteShellProps) {
   return (
-    <div className="site-shell min-h-screen bg-[var(--color-background)]">
-      <main className="site-main py-16 sm:py-20">{children}</main>
+    <div>
+      <SiteHeader />
+      <main>
+        <Container>{children}</Container>
+      </main>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,4 +1,5 @@
-export const siteTitle = "ResQBrain Website v2";
-
-export const siteDescription =
-  "Leere, funktionsfaehige Next.js Website als eigenstaendige Basis im ResQBrain Monorepo.";
+export const siteMetadata = {
+  title: "ResQBrain Website v2",
+  description: "Minimales, eigenstaendiges Scaffold fuer die neue Website im Monorepo.",
+  locale: "de-DE",
+} as const;

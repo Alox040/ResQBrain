@@ -1,13 +1,23 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+
+import { layout } from "@/lib/design";
 
 type ContainerProps = {
   children: ReactNode;
   className?: string;
+  maxWidth?: keyof typeof layout.width;
 };
 
-export function Container({ children, className = "" }: ContainerProps) {
+export function Container({ children, className, maxWidth = "content" }: ContainerProps) {
+  const style: CSSProperties = {
+    marginInline: "auto",
+    maxWidth: layout.width[maxWidth],
+    paddingInline: layout.container.paddingInlineMobile,
+    width: "100%",
+  };
+
   return (
-    <div className={`mx-auto w-full max-w-[var(--container)] px-4 sm:px-6 lg:px-8 ${className}`}>
+    <div className={className} style={style}>
       {children}
     </div>
   );
