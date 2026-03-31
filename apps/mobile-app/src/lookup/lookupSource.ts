@@ -31,6 +31,29 @@ type LookupLoadedSource = 'cached' | 'embedded';
 
 let loadPromise: Promise<LookupLoadedSource> | null = null;
 
+const SAFE_EMBEDDED_FALLBACK_MANIFEST: LookupManifest = {
+  schemaVersion: '1',
+  bundleId: 'embedded-fallback',
+  version: '0',
+};
+
+function logLookupLoadError(layer: string, error: unknown): void {
+  console.error(`[lookup] failed to load ${layer} bundle`, error);
+}
+
+function loadEmbeddedStoreSafely(): LookupRamStore {
+  try {
+    return loadLookupBundle();
+  } catch (error) {
+    logLookupLoadError('embedded', error);
+    return buildLookupRamStore({
+      manifest: SAFE_EMBEDDED_FALLBACK_MANIFEST,
+      medications: [],
+      algorithms: [],
+    });
+  }
+}
+
 /**
  * Phase-2 provisioning: cached → embedded.
  *
@@ -40,21 +63,34 @@ export async function loadLookupSource(): Promise<LookupLoadedSource> {
   if (activeStore) return activeProvisionSource === 'cached' ? 'cached' : 'embedded';
   if (!loadPromise) {
     loadPromise = (async () => {
-      const cached = await loadBundle().catch(() => null);
-      if (cached) {
-        const res = validateLookupBundle({
-          manifest: cached.manifest as unknown,
-          medications: cached.medications as unknown,
-          algorithms: cached.algorithms as unknown,
-        });
-        if (res.ok) {
-          activeProvisionSource = 'cached';
-          activeStore = buildLookupRamStore(res.data);
-          return 'cached' as const;
-        }
+      let cached: Awaited<ReturnType<typeof loadBundle>> = null;
+      try {
+        cached = await loadBundle();
+      } catch (error) {
+        logLookupLoadError('cached', error);
       }
+
+      try {
+        if (cached) {
+          const res = validateLookupBundle({
+            manifest: cached.manifest as unknown,
+            medications: cached.medications as unknown,
+            algorithms: cached.algorithms as unknown,
+          });
+          if (res.ok) {
+            activeProvisionSource = 'cached';
+            activeStore = buildLookupRamStore(res.data);
+            return 'cached' as const;
+          }
+
+          logLookupLoadError('cached', new Error(res.errors.join('; ')));
+        }
+      } catch (error) {
+        logLookupLoadError('cached', error);
+      }
+
       activeProvisionSource = 'embedded';
-      activeStore = loadLookupBundle();
+      activeStore = loadEmbeddedStoreSafely();
       // After seed load: persist it, but only when bundleId changed.
       const cachedBundleId =
         cached && typeof cached.manifest?.bundleId === 'string'
@@ -108,7 +144,7 @@ function resolveActiveLookupStore(): LookupRamStore {
 
   // If the app forgot to call `loadLookupSource()` at startup, fall back to the embedded seed.
   activeProvisionSource = 'embedded';
-  activeStore = loadLookupBundle();
+  activeStore = loadEmbeddedStoreSafely();
   return activeStore;
 }
 

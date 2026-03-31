@@ -12,6 +12,7 @@ import { VitalReferenceScreen } from '@/features/references/VitalReferenceScreen
 import { HomeScreen } from '@/screens/HomeScreen';
 import { MedicationListScreen } from '@/screens/MedicationListScreen';
 import { SearchScreen } from '@/screens/SearchScreen';
+import { SettingsScreen } from '@/screens/SettingsScreen';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import { useTheme } from '@/theme/ThemeContext';
 import { TYPOGRAPHY } from '@/theme';
@@ -37,6 +38,7 @@ export type RootTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Search: undefined;
   Favorites: undefined;
+  Settings: undefined;
   MedicationTab: NavigatorScreenParams<MedicationStackParamList>;
   AlgorithmTab: NavigatorScreenParams<AlgorithmStackParamList>;
 };
@@ -170,6 +172,16 @@ export function AppNavigator() {
           title: 'Favoriten',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star-outline" size={size ?? 24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" size={size ?? 24} color={color} />
           ),
         }}
       />

@@ -1,5 +1,7 @@
+import { loadBundle as loadUpdatedBundle } from './bundleStorage';
 import { loadLookupBundle } from './loadLookupBundle';
-import { loadBundle, loadUpdatedBundle, type LookupBundleSnapshot } from './lookupCache';
+import { loadBundle as loadCachedBundle, type LookupBundleSnapshot } from './lookupCache';
+import type { LookupManifest } from './lookupSchema';
 import { validateLookupBundle } from './validateLookupBundle';
 
 export enum LookupSource {
@@ -12,6 +14,12 @@ export type ResolvedLookupBundle = {
   bundle: LookupBundleSnapshot;
   source: LookupSource;
   version: string;
+};
+
+const SAFE_FALLBACK_MANIFEST: LookupManifest = {
+  schemaVersion: '1',
+  bundleId: 'safe-fallback',
+  version: '0',
 };
 
 function toSnapshot(bundle: LookupBundleSnapshot): LookupBundleSnapshot {
@@ -51,27 +59,62 @@ function buildResolvedBundle(
   return {
     bundle,
     source,
-    version: bundle.manifest.version ?? bundle.manifest.bundleId,
+    version: bundle.manifest.version ?? bundle.manifest.bundleId ?? '0',
   };
 }
 
+function buildSafeFallbackBundle(): LookupBundleSnapshot {
+  return {
+    manifest: SAFE_FALLBACK_MANIFEST,
+    medications: [],
+    algorithms: [],
+  };
+}
+
+async function tryLoadUpdatedBundle(): Promise<LookupBundleSnapshot | null> {
+  try {
+    return validateSnapshot(await loadUpdatedBundle());
+  } catch {
+    return null;
+  }
+}
+
+async function tryLoadCachedBundle(): Promise<LookupBundleSnapshot | null> {
+  try {
+    return validateSnapshot(await loadCachedBundle());
+  } catch {
+    return null;
+  }
+}
+
+function tryLoadEmbeddedBundle(): LookupBundleSnapshot | null {
+  try {
+    const embeddedStore = loadLookupBundle();
+    return toSnapshot({
+      manifest: embeddedStore.manifest,
+      medications: embeddedStore.medications,
+      algorithms: embeddedStore.algorithms,
+    });
+  } catch {
+    return null;
+  }
+}
+
 export async function resolveLookupBundle(): Promise<ResolvedLookupBundle> {
-  const updatedBundle = validateSnapshot(await loadUpdatedBundle());
+  const updatedBundle = await tryLoadUpdatedBundle();
   if (updatedBundle) {
     return buildResolvedBundle(updatedBundle, LookupSource.UPDATED);
   }
 
-  const cachedBundle = validateSnapshot(await loadBundle());
+  const cachedBundle = await tryLoadCachedBundle();
   if (cachedBundle) {
     return buildResolvedBundle(cachedBundle, LookupSource.CACHED);
   }
 
-  const embeddedStore = loadLookupBundle();
-  const embeddedBundle = toSnapshot({
-    manifest: embeddedStore.manifest,
-    medications: embeddedStore.medications,
-    algorithms: embeddedStore.algorithms,
-  });
+  const embeddedBundle = tryLoadEmbeddedBundle();
+  if (embeddedBundle) {
+    return buildResolvedBundle(embeddedBundle, LookupSource.EMBEDDED);
+  }
 
-  return buildResolvedBundle(embeddedBundle, LookupSource.EMBEDDED);
+  return buildResolvedBundle(buildSafeFallbackBundle(), LookupSource.EMBEDDED);
 }

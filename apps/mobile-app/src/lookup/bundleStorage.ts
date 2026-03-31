@@ -89,5 +89,5 @@ export async function hasBundle(): Promise<boolean> {
 
 export async function getBundleVersion(): Promise<string | null> {
   const bundle = await loadBundle();
-  return bundle?.manifest.bundleId ?? null;
+  return bundle?.manifest.version ?? bundle?.manifest.bundleId ?? null;
 }
