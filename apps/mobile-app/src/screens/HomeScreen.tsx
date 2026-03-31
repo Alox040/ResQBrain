@@ -12,7 +12,10 @@ import {
   View,
 } from 'react-native';
 import { SectionHeader } from '@/components/common';
-import { QuickAccessGrid, type QuickAccessGridItem } from '@/components/QuickAccessGrid';
+import {
+  QuickAccessGrid as QuickAccessGridView,
+  type QuickAccessGridItem,
+} from '@/components/QuickAccessGrid';
 import { ScreenContainer } from '@/components/layout';
 import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
 import { getAlgorithmById } from '@/data/contentIndex';
@@ -40,6 +43,14 @@ type ActionCardItem = {
   icon: keyof typeof Ionicons.glyphMap;
   iconColor: string;
   iconBackground: string;
+  onPress: () => void;
+};
+
+type ContentShortcutItem = {
+  id: string;
+  kind: ContentKind;
+  label: string;
+  source: 'favorite' | 'recent';
   onPress: () => void;
 };
 
@@ -112,6 +123,47 @@ function createStyles(colors: AppPalette) {
       color: colors.textMuted,
       lineHeight: 22,
     },
+    searchButton: {
+      ...CARD.shell,
+      minHeight: Math.max(88, LAYOUT.minTap + 40),
+      borderWidth: 2,
+      borderColor: colors.primary,
+      backgroundColor: colors.primaryMutedBg,
+      justifyContent: 'center',
+      paddingVertical: 14,
+    },
+    searchButtonPressed: {
+      backgroundColor: colors.pressedRowBg,
+      borderColor: colors.pressedRowBorder,
+    },
+    searchButtonRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: SPACING.gapMd,
+    },
+    searchIconWrap: {
+      width: 52,
+      height: 52,
+      borderRadius: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.primary,
+    },
+    searchTextCol: {
+      flex: 1,
+      minWidth: 0,
+      gap: 2,
+    },
+    searchTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+      lineHeight: 30,
+    },
+    searchSubtitle: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+      lineHeight: 21,
+    },
   });
 }
 
@@ -145,6 +197,114 @@ function ActionCard({ item }: { item: ActionCardItem }) {
         />
       </View>
     </Pressable>
+  );
+}
+
+function SearchButton({ onPress }: { onPress: () => void }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Search öffnen. Stichwortsuche im lokalen Bundle."
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.searchButton,
+        pressed ? styles.searchButtonPressed : null,
+      ]}
+    >
+      <View style={styles.searchButtonRow}>
+        <View style={styles.searchIconWrap}>
+          <Ionicons name="search" size={26} color={colors.onPrimary} />
+        </View>
+        <View style={styles.searchTextCol}>
+          <Text style={styles.searchTitle}>Search</Text>
+          <Text style={styles.searchSubtitle}>Direkt finden, ohne Listen-Navigation</Text>
+        </View>
+        <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
+      </View>
+    </Pressable>
+  );
+}
+
+function QuickAccessGrid({
+  items,
+}: {
+  items: QuickAccessGridItem[];
+}) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
+  return (
+    <View style={styles.sectionBlock}>
+      <SectionHeader title="Quick Access" size="comfortable" />
+      {items.length === 0 ? (
+        <View style={styles.emptyStrip}>
+          <Text style={styles.emptyStripText}>
+            Noch keine Einträge. Favoriten und zuletzt geöffnete Inhalte erscheinen hier automatisch.
+          </Text>
+        </View>
+      ) : (
+        <QuickAccessGridView items={items} />
+      )}
+    </View>
+  );
+}
+
+function RecentSection({
+  items,
+}: {
+  items: ContentShortcutItem[];
+}) {
+  const cards = useMemo(
+    () =>
+      items.slice(0, 4).map<ActionCardItem>((item) => ({
+        key: `recent-${item.kind}:${item.id}`,
+        title: item.label,
+        subtitle: item.kind === 'medication' ? 'Zuletzt geöffnetes Medikament' : 'Zuletzt geöffneter Algorithmus',
+        icon: item.kind === 'medication' ? 'time' : 'time-outline',
+        iconColor: '#0f766e',
+        iconBackground: '#ccfbf1',
+        onPress: item.onPress,
+      })),
+    [items],
+  );
+
+  return (
+    <View style={{ gap: SPACING.gapMd }}>
+      {cards.map((item) => (
+        <ActionCard key={item.key} item={item} />
+      ))}
+    </View>
+  );
+}
+
+function FavoritesSection({
+  items,
+}: {
+  items: ContentShortcutItem[];
+}) {
+  const cards = useMemo(
+    () =>
+      items.slice(0, 4).map<ActionCardItem>((item) => ({
+        key: `favorite-${item.kind}:${item.id}`,
+        title: item.label,
+        subtitle: item.kind === 'medication' ? 'Favorisiertes Medikament' : 'Favorisierter Algorithmus',
+        icon: 'star',
+        iconColor: '#a16207',
+        iconBackground: '#fef9c3',
+        onPress: item.onPress,
+      })),
+    [items],
+  );
+
+  return (
+    <View style={{ gap: SPACING.gapMd }}>
+      {cards.map((item) => (
+        <ActionCard key={item.key} item={item} />
+      ))}
+    </View>
   );
 }
 
@@ -189,25 +349,44 @@ export function HomeScreen() {
     [navigation],
   );
 
+  const favoriteShortcuts = useMemo((): ContentShortcutItem[] => {
+    return favorites.map((favorite) => ({
+      id: favorite.id,
+      kind: favorite.kind,
+      label: resolveContentViewModel(favorite.id, favorite.kind)?.label ?? 'Nicht im Bundle',
+      source: 'favorite',
+      onPress: () => openContentDetail(favorite.kind, favorite.id),
+    }));
+  }, [favorites, openContentDetail]);
+
+  const recentShortcuts = useMemo((): ContentShortcutItem[] => {
+    return recentItems.map((recent) => ({
+      id: recent.id,
+      kind: recent.kind,
+      label: resolveContentViewModel(recent.id, recent.kind)?.label ?? 'Nicht im Bundle',
+      source: 'recent',
+      onPress: () => openContentDetail(recent.kind, recent.id),
+    }));
+  }, [recentItems, openContentDetail]);
+
   const quickAccessItems = useMemo((): QuickAccessGridItem[] => {
     const seen = new Set<string>();
     const out: QuickAccessGridItem[] = [];
 
-    for (const favorite of favorites) {
+    for (const favorite of favoriteShortcuts) {
       if (out.length >= MAX_QUICK) break;
       const key = `${favorite.kind}:${favorite.id}`;
       seen.add(key);
       out.push({
         reactKey: `qa-fav-${key}`,
         kind: favorite.kind,
-        label:
-          resolveContentViewModel(favorite.id, favorite.kind)?.label ?? 'Nicht im Bundle',
-        onPress: () => openContentDetail(favorite.kind, favorite.id),
+        label: favorite.label,
+        onPress: favorite.onPress,
         source: 'favorite',
       });
     }
 
-    for (const recent of recentItems) {
+    for (const recent of recentShortcuts) {
       if (out.length >= MAX_QUICK) break;
       const key = `${recent.kind}:${recent.id}`;
       if (seen.has(key)) continue;
@@ -215,15 +394,14 @@ export function HomeScreen() {
       out.push({
         reactKey: `qa-rec-${key}`,
         kind: recent.kind,
-        label:
-          resolveContentViewModel(recent.id, recent.kind)?.label ?? 'Nicht im Bundle',
-        onPress: () => openContentDetail(recent.kind, recent.id),
+        label: recent.label,
+        onPress: recent.onPress,
         source: 'recent',
       });
     }
 
     return out;
-  }, [favorites, recentItems, openContentDetail]);
+  }, [favoriteShortcuts, recentShortcuts]);
 
   const modeCards = useMemo((): ActionCardItem[] => {
     const hasReanimation = getAlgorithmById(REANIMATION_ALGORITHM_ID) != null;
@@ -269,15 +447,6 @@ export function HomeScreen() {
 
   const navigationCards = useMemo((): ActionCardItem[] => [
     {
-      key: 'nav-search',
-      title: 'Search',
-      subtitle: 'Stichwortsuche im lokalen Bundle',
-      icon: 'search',
-      iconColor: colors.primary,
-      iconBackground: colors.primaryMutedBg,
-      onPress: () => navigation.navigate('Search'),
-    },
-    {
       key: 'nav-medications',
       title: 'Medications',
       subtitle: 'Listen, Dosierungen und Hinweise',
@@ -301,7 +470,7 @@ export function HomeScreen() {
           screen: 'AlgorithmListScreen',
         }),
     },
-  ], [colors.primary, colors.primaryMutedBg, navigation]);
+  ], [navigation]);
 
   return (
     <ScreenContainer>
@@ -311,15 +480,34 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.sectionBlock}>
-          <SectionHeader title="Quick Access" size="comfortable" />
-          {quickAccessItems.length === 0 ? (
+          <SearchButton onPress={() => navigation.navigate('Search')} />
+        </View>
+
+        <QuickAccessGrid items={quickAccessItems} />
+
+        <View style={styles.sectionBlock}>
+          <SectionHeader title="Favoriten" size="comfortable" />
+          {favoriteShortcuts.length === 0 ? (
             <View style={styles.emptyStrip}>
               <Text style={styles.emptyStripText}>
-                Noch keine Einträge. Favoriten und zuletzt geöffnete Inhalte erscheinen hier automatisch.
+                Noch keine Favoriten gesetzt. In Details mit dem Stern markieren, dann erscheinen sie hier.
               </Text>
             </View>
           ) : (
-            <QuickAccessGrid items={quickAccessItems} />
+            <FavoritesSection items={favoriteShortcuts} />
+          )}
+        </View>
+
+        <View style={styles.sectionBlock}>
+          <SectionHeader title="Zuletzt verwendet" size="comfortable" />
+          {recentShortcuts.length === 0 ? (
+            <View style={styles.emptyStrip}>
+              <Text style={styles.emptyStripText}>
+                Noch keine zuletzt verwendeten Inhalte. Geöffnete Inhalte werden automatisch gelistet.
+              </Text>
+            </View>
+          ) : (
+            <RecentSection items={recentShortcuts} />
           )}
         </View>
 

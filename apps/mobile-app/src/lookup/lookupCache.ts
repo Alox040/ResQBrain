@@ -3,6 +3,7 @@ import type { Algorithm, Medication } from '@/types/content';
 import type { LookupManifest } from '@/lookup/lookupSchema';
 
 const LOOKUP_CACHE_KEY = '@resqbrain/lookup/bundle-v1';
+const LOOKUP_UPDATED_KEY = '@resqbrain/lookup/updated-v1';
 const LOOKUP_CACHE_SCHEMA_VERSION = 1;
 
 export type LookupBundleSnapshot = {
@@ -40,6 +41,19 @@ function reviveEnvelope(raw: unknown): StoredLookupEnvelope | null {
 export async function saveBundle(
   snapshot: LookupBundleSnapshot,
 ): Promise<void> {
+  await saveEnvelope(LOOKUP_CACHE_KEY, snapshot);
+}
+
+export async function saveUpdatedBundle(
+  snapshot: LookupBundleSnapshot,
+): Promise<void> {
+  await saveEnvelope(LOOKUP_UPDATED_KEY, snapshot);
+}
+
+async function saveEnvelope(
+  storageKey: string,
+  snapshot: LookupBundleSnapshot,
+): Promise<void> {
   const envelope: StoredLookupEnvelope = {
     v: LOOKUP_CACHE_SCHEMA_VERSION,
     manifest: snapshot.manifest,
@@ -47,7 +61,7 @@ export async function saveBundle(
     algorithms: snapshot.algorithms,
   };
   try {
-    await AsyncStorage.setItem(LOOKUP_CACHE_KEY, JSON.stringify(envelope));
+    await AsyncStorage.setItem(storageKey, JSON.stringify(envelope));
   } catch {
     // bewusstes Schlucken: Persistenzfehler sollen den Einsatz nicht blockieren
   }
@@ -58,8 +72,18 @@ export async function saveBundle(
  * Gibt `null` zurück, wenn nichts oder nur veraltetes / ungültiges Format gefunden wird.
  */
 export async function loadBundle(): Promise<LookupBundleSnapshot | null> {
+  return loadEnvelope(LOOKUP_CACHE_KEY);
+}
+
+export async function loadUpdatedBundle(): Promise<LookupBundleSnapshot | null> {
+  return loadEnvelope(LOOKUP_UPDATED_KEY);
+}
+
+async function loadEnvelope(
+  storageKey: string,
+): Promise<LookupBundleSnapshot | null> {
   try {
-    const text = await AsyncStorage.getItem(LOOKUP_CACHE_KEY);
+    const text = await AsyncStorage.getItem(storageKey);
     if (!text) return null;
     let parsed: unknown;
     try {
@@ -78,4 +102,3 @@ export async function loadBundle(): Promise<LookupBundleSnapshot | null> {
     return null;
   }
 }
-

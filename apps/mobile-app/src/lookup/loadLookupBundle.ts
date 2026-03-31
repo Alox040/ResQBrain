@@ -25,12 +25,19 @@ export type LookupSearchIndexItem = LookupListItem & {
   searchTerms: string[];
 };
 
+export type LookupBundleVersionInfo = {
+  version: string | null;
+  createdAt: string | null;
+  checksum: string | null;
+};
+
 /**
  * In-memory Phase-0 lookup store: validated bundle + indexes for list/search/detail.
  * No persistence, no network, no sync — bundle only.
  */
 export type LookupRamStore = {
   manifest: LookupManifest;
+  versionInfo: LookupBundleVersionInfo;
   medications: Medication[];
   algorithms: Algorithm[];
   contentItems: ContentItem[];
@@ -47,6 +54,11 @@ export function buildLookupRamStore(bundle: {
   algorithms: Algorithm[];
 }): LookupRamStore {
   const { manifest, medications, algorithms } = bundle;
+  const versionInfo: LookupBundleVersionInfo = {
+    version: manifest.version ?? null,
+    createdAt: manifest.createdAt ?? manifest.generatedAt ?? null,
+    checksum: manifest.checksum ?? null,
+  };
 
   const contentItems: ContentItem[] = [...medications, ...algorithms];
 
@@ -81,6 +93,7 @@ export function buildLookupRamStore(bundle: {
 
   return {
     manifest,
+    versionInfo,
     medications,
     algorithms,
     contentItems,

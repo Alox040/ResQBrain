@@ -25,6 +25,9 @@ export function isContentTag(value: unknown): value is ContentTag {
 export type LookupManifest = {
   schemaVersion: string;
   bundleId: string;
+  version?: string;
+  createdAt?: string;
+  checksum?: string;
   displayName?: string;
   locale?: string;
   contentCutoffDate?: string;
@@ -35,6 +38,9 @@ export type LookupManifest = {
 export const LOOKUP_MANIFEST_KEYS = new Set([
   'schemaVersion',
   'bundleId',
+  'version',
+  'createdAt',
+  'checksum',
   'displayName',
   'locale',
   'contentCutoffDate',

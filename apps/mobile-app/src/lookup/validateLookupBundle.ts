@@ -61,6 +61,15 @@ export function validateManifest(raw: unknown): LookupValidationResult<LookupMan
   if (raw.displayName !== undefined && typeof raw.displayName !== 'string') {
     errors.push('manifest.displayName: expected string');
   }
+  if (raw.version !== undefined && typeof raw.version !== 'string') {
+    errors.push('manifest.version: expected string');
+  }
+  if (raw.createdAt !== undefined && typeof raw.createdAt !== 'string') {
+    errors.push('manifest.createdAt: expected string');
+  }
+  if (raw.checksum !== undefined && typeof raw.checksum !== 'string') {
+    errors.push('manifest.checksum: expected string');
+  }
   if (raw.locale !== undefined && typeof raw.locale !== 'string') {
     errors.push('manifest.locale: expected string');
   }
@@ -80,6 +89,9 @@ export function validateManifest(raw: unknown): LookupValidationResult<LookupMan
     bundleId: raw.bundleId as string,
   };
   if (raw.displayName !== undefined) manifest.displayName = raw.displayName as string;
+  if (raw.version !== undefined) manifest.version = raw.version as string;
+  if (raw.createdAt !== undefined) manifest.createdAt = raw.createdAt as string;
+  if (raw.checksum !== undefined) manifest.checksum = raw.checksum as string;
   if (raw.locale !== undefined) manifest.locale = raw.locale as string;
   if (raw.contentCutoffDate !== undefined) {
     manifest.contentCutoffDate = raw.contentCutoffDate as string;
