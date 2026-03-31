@@ -1,0 +1,1941 @@
+[
+  {
+    "id": "med-4-dmap",
+    "kind": "medication",
+    "label": "4-DMAP",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "4-dmap",
+      "antidote",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-acetylsalicylsaeure-iv",
+    "kind": "medication",
+    "label": "Acetylsalicylsäure i.v.",
+    "indication": "akutes Koronarsyndrom (NSTE-ACS, STE-ACS)",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "500",
+      "acetylsalicylsaeure",
+      "acetylsalicylsaure",
+      "acetylsalicylsaure ass",
+      "acetylsalicylsaure i v",
+      "acs",
+      "aspirin",
+      "aspirin i v 500 mg",
+      "ass",
+      "herzinfarkt",
+      "nstemi",
+      "stemi",
+      "thrombozytenaggregationshemmer"
+    ],
+    "dosage": "250 mg",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-leitsymptom-akuter-thoraxschmerz-bemerkungen",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe"
+    ],
+    "notes": "Trockensubstanz; Herstellerabhängige Konzentrationsverschiebungen beim Mischen möglich; auch bei vorbestehender ASS-Therapie im ACS-Kontext vorgesehen."
+  },
+  {
+    "id": "med-acetylsalicylsaeure-po",
+    "kind": "medication",
+    "label": "Acetylsalicylsäure p.o.",
+    "indication": "akutes Koronarsyndrom (NSTE-ACS, STE-ACS)",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acetylsalicylsaeure",
+      "acetylsalicylsaure",
+      "acetylsalicylsaure ass",
+      "acetylsalicylsaure p o",
+      "acs",
+      "aspirin",
+      "aspirin direkt",
+      "ass",
+      "direkt",
+      "herzinfarkt",
+      "nstemi",
+      "stemi",
+      "thrombozytenaggregationshemmer"
+    ],
+    "dosage": "250–500 mg p.o. (½–1 Kautablette je nach lokalem Protokoll)",
+    "notes": "Tabletten gut zerkauen und schlucken; auch bei vorbestehender ASS-Therapie im ACS-Kontext vorgesehen."
+  },
+  {
+    "id": "med-adenosin",
+    "kind": "medication",
+    "label": "Adenosin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "adenosin",
+      "antiarrhythmika",
+      "schlaganfall",
+      "stroke",
+      "tia"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-adrenalin",
+    "kind": "medication",
+    "label": "Adrenalin",
+    "indication": "Reanimation; bradykarde Herzrhythmusstörungen mit bedrohlicher Symptomatik; Anaphylaxie ab Stadium II mit Kreislaufbeteiligung; Pseudokrupp; Epistaxis; Schock",
+    "tags": [
+      "atemwege",
+      "kreislauf",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "000",
+      "adrenalin",
+      "adrenalin 1 1 000 infectopharm",
+      "adrenalin epinephrin",
+      "aguettant",
+      "aguettant adrenalin 1 10 000 fertigspritze",
+      "allergie",
+      "anaphylaxie",
+      "cpr",
+      "epinephrin",
+      "fertigspritze",
+      "infectopharm",
+      "kreislaufstillstand",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "medikamente",
+      "pseudokrupp",
+      "reanimation",
+      "schock",
+      "suprarenin"
+    ],
+    "dosage": "ALS Erwachsene: 1 mg i.v./i.o. alle 3–5 Minuten; Anaphylaxie Erwachsene 0,5 mg i.m.; Pseudokrupp 4 mg vernebelt; weitere alters- und indikationsabhängige Dosierungen laut Seite 35–37",
+    "relatedAlgorithmIds": [
+      "alg-anaphylaxie-erwachsener",
+      "alg-anaphylaxie-kind",
+      "alg-bedrohliche-bradykardie",
+      "alg-dyspnoe-kind",
+      "alg-nasenbluten-epistaxis",
+      "alg-pseudokrupp-adrenalin-glucocorticoide"
+    ],
+    "notes": "Kinderreanimation mit Feindosierspritze 1 mg/10 ml erläutert; Hypothermie-Hinweise und ROSC-bezogenes Zurückstellen vor Rhythmusanalyse erwähnt."
+  },
+  {
+    "id": "med-adrenalin-pumpspray",
+    "kind": "medication",
+    "label": "Adrenalin-Pumpspray",
+    "indication": "Pseudokrupp",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "adrenalin-pumpspray",
+      "antiobstruktive",
+      "antiobstruktive substanzen",
+      "epinephrin",
+      "infectokrupp",
+      "infectokrupp inhal",
+      "infectokrupp pumpspray",
+      "inhal",
+      "pseudokrupp",
+      "pumpspray",
+      "substanzen"
+    ],
+    "dosage": "7–14 Hübe (1–2 ml) = 4–8 mg",
+    "notes": "Im Regelfall Verneblung mit Adrenalin über Verneblermaske vorgesehen."
+  },
+  {
+    "id": "med-ajmalin",
+    "kind": "medication",
+    "label": "Ajmalin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "ajmalin",
+      "antiarrhythmika",
+      "schlaganfall",
+      "stroke",
+      "tia"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-aktivkohle",
+    "kind": "medication",
+    "label": "Aktivkohle",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "aktivkohle",
+      "antidote",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-alteplase-rt-pa",
+    "kind": "medication",
+    "label": "Alteplase – rt-PA",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "alteplase",
+      "alteplase rt-pa",
+      "alteplase-rt-pa",
+      "fibrinolytika",
+      "rt-pa",
+      "thrombolytika",
+      "thrombolytika fibrinolytika"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-amiodaron",
+    "kind": "medication",
+    "label": "Amiodaron",
+    "indication": "Reanimation bei persistierendem VF/pulsloser VT; tachykarde Herzrhythmusstörungen mit erheblicher Instabilität",
+    "tags": [
+      "kreislauf",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "amiodaron",
+      "cordarex",
+      "cpr",
+      "diverse",
+      "diverse generika",
+      "generika",
+      "klasse-iii-antiarrhythmika",
+      "kreislaufstillstand",
+      "reanimation",
+      "schlaganfall",
+      "stroke",
+      "tachykardie",
+      "tia"
+    ],
+    "dosage": "ALS Erwachsene 300 mg in 20 ml Glucose 5 % als Bolus, Wiederholung 150 mg möglich; instabile Tachykardie 300 mg in 100 ml Glucose 5 % über ca. 20 Minuten",
+    "relatedAlgorithmIds": [
+      "alg-notfallkardioversion"
+    ],
+    "notes": "Mit Glucose 5 % aufziehen empfohlen; Kinderreanimationsschema mit Feindosierspritze erläutert."
+  },
+  {
+    "id": "med-atropinsulfat",
+    "kind": "medication",
+    "label": "Atropinsulfat",
+    "indication": "bradykarde Herzrhythmusstörungen mit bedrohlicher Symptomatik; V. a. cholinerges Toxidrom; V. a. akute Alkylphosphatintoxikation",
+    "tags": [
+      "kreislauf",
+      "neurologie",
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antiarrhythmika",
+      "atropin",
+      "atropinsulfat",
+      "atropinsulfat b braun 0 5 mg ml",
+      "atropinum",
+      "atropinum sulfuricum eifelfango",
+      "bradykardie",
+      "braun",
+      "cholinerges",
+      "cholinerges toxidrom",
+      "eifelfango",
+      "schlaganfall",
+      "stroke",
+      "sulfuricum",
+      "tia",
+      "toxidrom"
+    ],
+    "dosage": "Erwachsene initial 0,5 mg (ERC) oder 1,0 mg (AHA), wiederholt bis 3,0 mg; Kinder 0,02 mg/kgKG",
+    "relatedAlgorithmIds": [
+      "alg-alkylphosphatintoxikation-atropin",
+      "alg-bedrohliche-bradykardie"
+    ],
+    "notes": "Bei bestimmten Bradykardien besonders sinnvoll; Kinderdosierung via Verdünnung/Feindosierspritze beschrieben."
+  },
+  {
+    "id": "med-atropinsulfat-antidot",
+    "kind": "medication",
+    "label": "Atropinsulfat (Antidot)",
+    "indication": "V. a. cholinerges Toxidrom; V. a. akute Alkylphosphatintoxikation; Kontakt zu Nervengiften",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "100",
+      "antidot",
+      "antidote",
+      "atropin",
+      "atropin antidot",
+      "atropinsulfat",
+      "atropinsulfat 100 mg antidot kohler chemie",
+      "atropinsulfat antidot",
+      "chemie",
+      "cholinerges",
+      "cholinerges toxidrom",
+      "kohler",
+      "nervengift",
+      "organophosphat",
+      "toxidrom",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Testdosis Erwachsene 1 mg / Kind 0,01 mg/kgKG; bei fehlendem Effekt Erwachsene 5 mg mit Wiederholung nach 10 Minuten / Kind 0,1 mg/kgKG",
+    "notes": "Bei schweren Intoxikationen deutlich >100 mg bei Erwachsenen möglich; Eigenschutz beachten; Obidoxim nach Atropin."
+  },
+  {
+    "id": "med-balancierte-vollelektrolytloesungen",
+    "kind": "medication",
+    "label": "Balancierte Vollelektrolytlösungen",
+    "indication": "Volumentherapie; Offenhalten eines Venenzugangs; Spüllösung für Wunden/Augen; Benetzung von Feuchtverbänden",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "balancierte",
+      "balancierte vollelektrolytlosung",
+      "balancierte vollelektrolytlosungen",
+      "infusionsloesung",
+      "infusionslosung",
+      "infusionslosungen",
+      "iso",
+      "jonosteril",
+      "sterofundin",
+      "sterofundin iso infusionslosung",
+      "volelelektrolyt",
+      "vollelektrolytlosung",
+      "vollelektrolytlosungen"
+    ],
+    "dosage": "je nach Indikation",
+    "notes": "Tabelle mit Elektrolytzusammensetzung auf Seite 47."
+  },
+  {
+    "id": "med-butylscopolamin",
+    "kind": "medication",
+    "label": "Butylscopolamin",
+    "indication": "abdominelle kolikartige Schmerzen mit NRS ≥ 4",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "analgetika",
+      "analgetika schmerztherapie",
+      "bs-ratiopharm",
+      "buscopan",
+      "butylscopolamin",
+      "kolik",
+      "n-butylscopolamin",
+      "schmerztherapie"
+    ],
+    "dosage": "20 mg",
+    "relatedAlgorithmIds": [
+      "alg-leitsymptom-sonstige-schmerzen-koliken-kopfschmerz-erw"
+    ],
+    "notes": "Bei V. a. Nierenkolik nach aktuellen Empfehlungen nicht geben."
+  },
+  {
+    "id": "med-cafedrin-und-theodrenalin",
+    "kind": "medication",
+    "label": "Cafedrin und Theodrenalin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "cafedrin",
+      "cafedrin und theodrenalin",
+      "cafedrin-und-theodrenalin",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "medikamente",
+      "theodrenalin"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-calciumgluconat-10-prozent",
+    "kind": "medication",
+    "label": "Calciumgluconat 10 %",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "calciumgluconat",
+      "calciumgluconat 10",
+      "calciumgluconat-10-prozent",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-carbetocin",
+    "kind": "medication",
+    "label": "Carbetocin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "carbetocin",
+      "medikamente",
+      "sonstige",
+      "sonstige medikamente"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-chitosan",
+    "kind": "medication",
+    "label": "Chitosan",
+    "indication": "massive äußere Blutungen; Stammblutungen und stammnahe Blutungen",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "celox",
+      "celox rapid z-gauze",
+      "chitosan",
+      "haemostatikum",
+      "hamostatika",
+      "packing",
+      "rapid",
+      "wound",
+      "wound packing",
+      "z-gauze"
+    ],
+    "dosage": "1 Z-gefaltete Celox Rapid Z-Gauze",
+    "notes": "Acht beschriebenen Schritte für Wound Packing; bei erneutem Durchbluten gesamte Verbandsstoffe entfernen und erneut vorgehen; schnellen Transport initiieren."
+  },
+  {
+    "id": "med-cimetiden",
+    "kind": "medication",
+    "label": "Cimetiden",
+    "indication": "allergische Reaktion; Zusatzmedikation bei Anaphylaxie; Schutz vor Magen- und Darmulzera",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "200",
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "anaphylaxie antihistaminika",
+      "antihistaminika",
+      "cimetiden",
+      "h2-antihistaminikum",
+      "h2-blocker",
+      "h2-blocker ratiopharm 200 mg 2 ml",
+      "ratiopharm"
+    ],
+    "dosage": "Erwachsene 200–400 mg i.v.; Kind 5 mg/kgKG",
+    "notes": "Umfangreiche Interaktionen; Einsatz kritisch prüfen."
+  },
+  {
+    "id": "med-clemastin",
+    "kind": "medication",
+    "label": "Clemastin",
+    "indication": "allergische Reaktionen; Zusatzmedikation bei anaphylaktischer Reaktion",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "anaphylaxie antihistaminika",
+      "antihistaminika",
+      "clemastin",
+      "tavegil"
+    ],
+    "dosage": "Erwachsene 2 mg i.v.; Kinder >12 J 2,0 mg / 6–12 J 1,5 mg / <6 J 1,0 mg",
+    "relatedAlgorithmIds": [
+      "alg-anaphylaxie-erwachsener",
+      "alg-anaphylaxie-kind"
+    ],
+    "notes": "Adrenalingabe bei Anaphylaxie darf nicht verzögert werden."
+  },
+  {
+    "id": "med-clonazepam",
+    "kind": "medication",
+    "label": "Clonazepam",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "clonazepam",
+      "narkotika",
+      "sedativa"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-diazepam",
+    "kind": "medication",
+    "label": "Diazepam",
+    "indication": "starke Erregungszustände (Erwachsene); Agitiertheit im Rahmen eines ACS; anhaltende zerebrale Krampfanfälle (rektal)",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "agitiertheit",
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "desitin",
+      "diazepam",
+      "diazepam desitin rectal tube 10 mg",
+      "diazepam desitin rectal tube 5 mg",
+      "diazepam lipuro",
+      "krampfanfall",
+      "lipuro",
+      "narkotika",
+      "rectal",
+      "sedativa",
+      "tube",
+      "valium"
+    ],
+    "dosage": "Injektionslösung 2,5 mg, Wiederholung nach 5 Minuten möglich, Maximaldosis 5 mg; rektal Kind <15 kg 5 mg, >15 kg 10 mg",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-krampfanfall-kind",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-starker-erregungszustand-erwachsener",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe"
+    ],
+    "notes": "Rektale Applikationsschritte auf Seite 89 beschrieben."
+  },
+  {
+    "id": "med-dimenhydrinat",
+    "kind": "medication",
+    "label": "Dimenhydrinat",
+    "indication": "massive Übelkeit",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "antiemetika",
+      "antiemetikum",
+      "dimenhydrinat",
+      "injektionslosung",
+      "uebelkeit",
+      "vomex",
+      "vomex a i v injektionslosung"
+    ],
+    "dosage": "Erwachsene/Jugendliche >14 Jahre 62 mg; Kinder 6–14 Jahre 25–50 mg; ab 6 kgKG 1,25 mg/kgKG nach Tabelle",
+    "relatedAlgorithmIds": [
+      "alg-massive-belkeit-erbrechen-antiemetikum"
+    ],
+    "notes": "Kurzinfusion in z. B. 100 ml NaCl 0,9 % zu erwägen."
+  },
+  {
+    "id": "med-dimetinden",
+    "kind": "medication",
+    "label": "Dimetinden",
+    "indication": "allergische Reaktionen; Zusatzmedikation bei anaphylaktischer Reaktion",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "anaphylaxie antihistaminika",
+      "antihistaminika",
+      "dimetinden",
+      "fenistil",
+      "histakut"
+    ],
+    "dosage": "Erwachsene 0,1 mg/kgKG; Kinder >1 Jahr 0,05–0,1 mg/kgKG",
+    "relatedAlgorithmIds": [
+      "alg-anaphylaxie-erwachsener"
+    ],
+    "notes": "Adrenalingabe bei Anaphylaxie darf nicht verzögert werden."
+  },
+  {
+    "id": "med-dobutamin",
+    "kind": "medication",
+    "label": "Dobutamin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "dobutamin",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "medikamente"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-esketamin",
+    "kind": "medication",
+    "label": "Esketamin",
+    "indication": "traumatischer Schmerz NRS ≥ 4; Lumbago/muskuloskelettaler Schmerz NRS ≥ 4; Schmerzen unter Schrittmachertherapie bei wach werdendem Patienten; Narkoseeinleitung; Analgesie per Inhalation",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "analgesie",
+      "analgetika",
+      "analgetika schmerztherapie",
+      "diverse",
+      "dsi",
+      "esketamin",
+      "esketamin diverse generika",
+      "esketaminhydrochlorid",
+      "generika",
+      "ketanest",
+      "ketanest s",
+      "schmerz",
+      "schmerztherapie",
+      "trauma",
+      "trauma schmerz"
+    ],
+    "dosage": "Analgesie >30 kg: i.v./i.o. 0,125 mg/kgKG, i.n./i.m. 0,5 mg/kgKG; <30 kg: i.v./i.o. 0,25 mg/kgKG, i.n./i.m. 0,5 mg/kgKG; p.i. 0,75–1,5 mg/kgKG; Narkoseeinleitung 0,5–1 mg/kgKG i.v. oder 2–4 mg/kgKG i.m.",
+    "relatedAlgorithmIds": [
+      "alg-inhalative-analgesie-methoxyfluran",
+      "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+      "alg-leitsymptom-sonstige-schmerzen-koliken-kind",
+      "alg-leitsymptom-sonstige-schmerzen-koliken-kopfschmerz-erw",
+      "alg-traumat-schmerz-immob-rueckenschmerz-fentanyl",
+      "alg-traumat-schmerz-immob-rueckenschmerz-intraven-s",
+      "alg-traumat-schmerz-immob-rueckenschmerz-nasal-im",
+      "alg-traumat-schmerz-immob-rueckenschmerz-sufentanil",
+      "alg-traumatischer-schmerz-kind-30-kg-kg-intraven-s",
+      "alg-traumatischer-schmerz-kind-30-kg-kg-nasal-im"
+    ],
+    "notes": "Verschiedene Konzentrationen; große therapeutische Breite; p.i. als Alternative; Hypertonie-Kontext differenziert erläutert."
+  },
+  {
+    "id": "med-etomidat",
+    "kind": "medication",
+    "label": "Etomidat",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "etomidat",
+      "narkotika",
+      "narkotika in der notfallmedizin",
+      "notfallmedizin"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-fenoterol-als-tokolytikum",
+    "kind": "medication",
+    "label": "Fenoterol (als Tokolytikum)",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "gynaekologie"
+    ],
+    "searchTerms": [
+      "als",
+      "fenoterol",
+      "fenoterol als tokolytikum",
+      "fenoterol-als-tokolytikum",
+      "medikamente",
+      "sonstige",
+      "sonstige medikamente",
+      "tokolytikum"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-fentanyl",
+    "kind": "medication",
+    "label": "Fentanyl",
+    "indication": "Analgetikum zur Narkoseeinleitung; Schmerzen mit NRS ≥ 4; Analgetikum",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "analgesie",
+      "analgetika",
+      "analgetika schmerztherapie",
+      "braun",
+      "fentanyl",
+      "fentanyl b braun",
+      "fentanyl rotexmedica",
+      "fentanyl-janssen",
+      "narkoseeinleitung",
+      "opioid",
+      "rotexmedica",
+      "schmerztherapie"
+    ],
+    "dosage": "Erwachsene 0,05–0,1 mg zur Analgesie, 0,2–0,3 mg zur Narkoseeinleitung; Kind 1–3 µg/kgKG",
+    "relatedAlgorithmIds": [
+      "alg-inhalative-analgesie-methoxyfluran",
+      "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+      "alg-traumat-schmerz-immob-rueckenschmerz-fentanyl",
+      "alg-traumat-schmerz-immob-rueckenschmerz-intraven-s",
+      "alg-traumat-schmerz-immob-rueckenschmerz-sufentanil"
+    ],
+    "notes": "Ca. 100–125 mal stärker wirksam als Morphin; kontinuierliche Überwachung/BtM-Dokumentation."
+  },
+  {
+    "id": "med-flumazenil",
+    "kind": "medication",
+    "label": "Flumazenil",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "flumazenil",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-furosemid",
+    "kind": "medication",
+    "label": "Furosemid",
+    "indication": "Lungenödem; schwere dekompensierte Herzinsuffizienz mit Lungenstauung",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "diverse",
+      "diverse generika",
+      "furosemid",
+      "furosemid-ratiopharm",
+      "generika",
+      "herzinsuffizienz",
+      "injektionslosung",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "lasix",
+      "lasix 20 mg 40 mg injektionslosung",
+      "lungenoedem",
+      "medikamente"
+    ],
+    "dosage": "40 mg",
+    "relatedAlgorithmIds": [
+      "alg-kardiales-lungenoedem-glyceroltrinitrat-furosemid",
+      "alg-leitalgorithmus-kardiales-lungenoedem"
+    ],
+    "notes": "Nicht mit anderen Medikamenten mischen; empfindlich gegenüber sauren Arzneimitteln."
+  },
+  {
+    "id": "med-glucagon",
+    "kind": "medication",
+    "label": "Glucagon",
+    "indication": "Hypoglykämie",
+    "tags": [
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "baqsimi",
+      "baqsimi 3 mg nasenpulver",
+      "glucagen",
+      "glucagen hypokit",
+      "glucagon",
+      "glucose",
+      "glukose",
+      "hypoglykaemie",
+      "hypokit",
+      "medikamente",
+      "nasenpulver",
+      "sonstige",
+      "sonstige medikamente",
+      "unterzucker"
+    ],
+    "dosage": "GlucaGen >25 kg 1 mg i.m., <25 kg 0,5 mg i.m.; Baqsimi >4 Jahre 3 mg i.n.",
+    "relatedAlgorithmIds": [
+      "alg-hypoglykaemie"
+    ],
+    "notes": "Zusätzlicher Hinweis zur Beta-Blocker-Intoxikation mit hohen Dosierungen/Infusion; Wirkung geringer bei leeren Glykogenspeichern."
+  },
+  {
+    "id": "med-glucose",
+    "kind": "medication",
+    "label": "Glucose",
+    "indication": "Hypoglykämie; Lösungsmittel für Medikamente bei Reanimation (insbesondere Amiodaron)",
+    "tags": [
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "amiodaron",
+      "amiodaron loesungsmittel",
+      "braun",
+      "dextrose",
+      "glucose",
+      "glucose 20 b braun injektionslosung",
+      "glucose 5 b braun infusionslosung",
+      "glukose",
+      "hypoglykaemie",
+      "infusionslosung",
+      "injektionslosung",
+      "loesungsmittel",
+      "medikamente",
+      "sonstige",
+      "sonstige medikamente",
+      "unterzucker"
+    ],
+    "dosage": "Erwachsene/Kind >5 Jahre: Glucose 20 % 5–10 g (25–50 ml), ggf. Wiederholung; Kinder <5 Jahre: gewichtsabhängige Tabelle Seite 128",
+    "relatedAlgorithmIds": [
+      "alg-hypoglykaemie",
+      "alg-leitsymptom-bewusstseinsstoerung-verdacht-auf-hypoglykaemie-kind",
+      "alg-notfallkardioversion"
+    ],
+    "notes": "Wache Patienten sollen zuckerhaltige Lösungen p.o. erhalten; regelmäßige BZ-Kontrollen; komplexe KH zur Rezidivprophylaxe."
+  },
+  {
+    "id": "med-glyceroltrinitrat",
+    "kind": "medication",
+    "label": "Glyceroltrinitrat",
+    "indication": "Angina pectoris; akutes Koronarsyndrom; Lungenödem",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "acs",
+      "angina",
+      "glyceroltrinitrat",
+      "gtn",
+      "herzinfarkt",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "lungenoedem",
+      "medikamente",
+      "n-spray",
+      "nitrolingual",
+      "nitrolingual n-spray",
+      "nstemi",
+      "stemi"
+    ],
+    "dosage": "0,4–1,2 mg (1–3 Hübe) s.l., nach Blutdruck dosiert",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-kardiales-lungenoedem-glyceroltrinitrat-furosemid",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-leitalgorithmus-kardiales-lungenoedem",
+      "alg-leitsymptom-akuter-thoraxschmerz-bemerkungen",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe"
+    ],
+    "notes": "Vor Applikation in die Luft sprühen; nicht schütteln; ausführliche PDE-5-Hemmer-Hinweise."
+  },
+  {
+    "id": "med-granisetron",
+    "kind": "medication",
+    "label": "Granisetron",
+    "indication": "massive Übelkeit und Erbrechen bei Erwachsenen; Begleitmedikation bei Morphingabe",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "antiemetika",
+      "antiemetikum",
+      "granisetron",
+      "granisetron hexal 1 mg ml",
+      "hexal",
+      "kevatril",
+      "uebelkeit"
+    ],
+    "dosage": "1 mg/1 ml",
+    "notes": "Wirkdauer ca. 9 Stunden."
+  },
+  {
+    "id": "med-haloperidol",
+    "kind": "medication",
+    "label": "Haloperidol",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "haloperidol",
+      "narkotika",
+      "sedativa"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-heparin",
+    "kind": "medication",
+    "label": "Heparin",
+    "indication": "akutes Koronarsyndrom; Lungenarterienembolie; arterieller oder venöser Gefäßverschluss; Antikoagulation bei Herzrhythmusstörungen",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "000-ratiopharm",
+      "acs",
+      "antikoagulanzien",
+      "antikoagulation",
+      "diverse",
+      "diverse generika",
+      "generika",
+      "heparin",
+      "heparin-natrium-25",
+      "heparin-natrium-25 000-ratiopharm",
+      "herzinfarkt",
+      "liquemin",
+      "lungenembolie",
+      "nstemi",
+      "stemi"
+    ],
+    "dosage": "Standarddosis Erwachsene: 5.000 I.E. = 1 ml i.v.",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-leitsymptom-akuter-thoraxschmerz-bemerkungen",
+      "alg-leitsymptom-dyspnoe-schock-verdacht-auf-lungenembolie-erwachsener",
+      "alg-regelmaessige-schmalkomplextachykardie-metoprolol",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe",
+      "alg-vorhofflimmern-algorithmus-metoprolol",
+      "alg-vorhofflimmern-mit-schenkelblock-metoprolol"
+    ],
+    "notes": "Bei schweren Blutungen Antagonisierung mit Protamin möglich; ACS-Leitlinienbezug 2023 erwähnt."
+  },
+  {
+    "id": "med-hydroxocobalamin",
+    "kind": "medication",
+    "label": "Hydroxocobalamin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "hydroxocobalamin",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-ibuprofen",
+    "kind": "medication",
+    "label": "Ibuprofen",
+    "indication": "Fieberkrampf bei Körpertemperatur >38,5 °C; leichte bis mittelstarke Schmerzen",
+    "tags": [
+      "analgesie",
+      "neurologie",
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "125",
+      "analgetika",
+      "analgetika schmerztherapie antipyretika",
+      "antipyretika",
+      "erdbeer",
+      "fieberkrampf",
+      "fiebersaft",
+      "ibuprofen",
+      "junior",
+      "nurofen",
+      "nurofen junior 125 mg zapfchen",
+      "nurofen junior 60 mg zapfchen",
+      "nurofen schmerz- und fiebersaft erdbeer 40 mg",
+      "schmerz",
+      "schmerz-",
+      "schmerztherapie",
+      "zapfchen"
+    ],
+    "dosage": "gewichts- und altersabhängig; Seite 120–121 enthält Saft- und Zäpfchen-Schema",
+    "relatedAlgorithmIds": [
+      "alg-krampfanfall-kind"
+    ],
+    "notes": "Tageshöchstdosis 20–30 mg/kgKG in mehreren Einzeldosen."
+  },
+  {
+    "id": "med-ipratropiumbromid",
+    "kind": "medication",
+    "label": "Ipratropiumbromid",
+    "indication": "bronchoobstruktive Zustände ergänzend nach Salbutamol; Asthma bronchiale; COPD; Anaphylaxie mit Bronchoobstruktion",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "250",
+      "500",
+      "antiobstruktive",
+      "antiobstruktive substanzen",
+      "asthma",
+      "atrovent",
+      "atrovent 250 g 2 ml",
+      "atrovent 500 g 2 ml",
+      "bronchospastik",
+      "copd",
+      "ipratropium",
+      "ipratropiumbromid",
+      "substanzen"
+    ],
+    "dosage": "Erwachsene 500 μg vernebelt; Kind 250 μg vernebelt",
+    "relatedAlgorithmIds": [
+      "alg-bronchoobstruktion-erwachsener",
+      "alg-bronchoobstruktion-kind"
+    ],
+    "notes": "NIV/Beatmung bei Vigilanzminderung unter Verneblung erwägen."
+  },
+  {
+    "id": "med-levetiracetam",
+    "kind": "medication",
+    "label": "Levetiracetam",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "levetiracetam",
+      "narkotika",
+      "sedativa"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-lidocain",
+    "kind": "medication",
+    "label": "Lidocain",
+    "indication": "Lokalanästhesie bei i.o. Zugangswegen bei Erwachsenen; ventrikuläre Herzrhythmusstörungen; Reanimation wenn Amiodaron nicht verfügbar",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "antiarrhythmika",
+      "braun",
+      "injektionslosung",
+      "io lokalanasthesie",
+      "lidocain",
+      "lidocain-hcl",
+      "lidocain-hcl b braun 2 injektionslosung",
+      "lokalanasthesie",
+      "schlaganfall",
+      "stroke",
+      "tia",
+      "xylocain",
+      "xylocain 2"
+    ],
+    "dosage": "i.o.-Lokalanästhesie Erwachsene: 40 mg initial, 20 mg nachfolgend; ventrikuläre Rhythmusstörungen 1–1,5 mg/kgKG i.v.; Reanimation Erwachsene 100 mg nach 3. Schock, ggf. 50 mg nach 5. Schock",
+    "relatedAlgorithmIds": [
+      "alg-intraossaerer-zugang-erwachsener",
+      "alg-intraossaerer-zugang-kind"
+    ],
+    "notes": "Für pädiatrische i.o.-Lokalanästhesie nicht empfohlen; Lipidrescue-Hinweis bei Lokalanästhetika-Intoxikation."
+  },
+  {
+    "id": "med-lorazepam",
+    "kind": "medication",
+    "label": "Lorazepam",
+    "indication": "starker Erregungszustand; psychischer Ausnahmezustand; starke Agitiertheit; Hyperventilationstetanie; aggressiver Agitiertheitszustand",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "agitiertheit",
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "expidet",
+      "hyperventilation",
+      "lorazepam",
+      "narkotika",
+      "sedativa",
+      "tavor",
+      "tavor 1 0 mg expidet"
+    ],
+    "dosage": "Erwachsene und Jugendliche >12 Jahren: 1,0 mg p.o. (1 Schmelztablette)",
+    "relatedAlgorithmIds": [
+      "alg-starker-erregungszustand-erwachsener"
+    ],
+    "notes": "Sedation soll letzte Therapieoption sein."
+  },
+  {
+    "id": "med-magnesiumsulfat-50-prozent",
+    "kind": "medication",
+    "label": "Magnesiumsulfat 50 %",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "antiarrhythmika",
+      "magnesiumsulfat",
+      "magnesiumsulfat 50",
+      "magnesiumsulfat-50-prozent",
+      "schlaganfall",
+      "stroke",
+      "tia"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-metamizol",
+    "kind": "medication",
+    "label": "Metamizol",
+    "indication": "abdominelle Schmerzen NRS ≥ 4; kolikartige Schmerzen; sonstige Schmerzen z. B. Kopfschmerzen",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "abdomineller",
+      "abdomineller schmerz",
+      "analgetika",
+      "analgetika schmerztherapie",
+      "g-injektionslosung",
+      "kolik",
+      "kopfschmerz",
+      "metamizol",
+      "novalgin",
+      "novalgin 1 g-injektionslosung",
+      "novaminsulfon-ratiopharm",
+      "novaminsulfon-ratiopharm 1 g 2 ml",
+      "schmerz",
+      "schmerztherapie"
+    ],
+    "dosage": "Jugendliche/Erwachsene >53 kg: 1 g in 500 ml kristalloider Infusionslösung über 15 Minuten; >10 Jahre bis <53 kg: 0,5 g in 500 ml über 15 Minuten",
+    "relatedAlgorithmIds": [
+      "alg-leitsymptom-sonstige-schmerzen-koliken-kopfschmerz-erw",
+      "alg-traumat-schmerz-immob-rueckenschmerz-intraven-s"
+    ],
+    "notes": "Sicherheitsaufklärung wegen seltener Agranulozytose; bei Nierenkolik 2 g als wirksam beschrieben."
+  },
+  {
+    "id": "med-methylprednisolon",
+    "kind": "medication",
+    "label": "Methylprednisolon",
+    "indication": "bronchoobstruktive Zustände; Anaphylaxie; Pseudokrupp; V. a. drohende Addisonkrise",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "250",
+      "addisonkrise",
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "bronchoobstruktion",
+      "forte",
+      "glukokortikoide",
+      "methylprednisolon",
+      "solubile",
+      "urbason",
+      "urbason solubile forte 250 mg"
+    ],
+    "dosage": "Erwachsene Bronchoobstruktion 50 mg; Erwachsene Anaphylaxie 250 mg; Kind Anaphylaxie >12 J 50 mg / 6–12 J 20 mg / <6 J 10 mg; Erwachsene Addisonkrise 20 mg",
+    "notes": "Nicht mit Calcium mischen."
+  },
+  {
+    "id": "med-metoclopramid",
+    "kind": "medication",
+    "label": "Metoclopramid",
+    "indication": "massive Übelkeit und Erbrechen bei Erwachsenen; Begleitmedikation bei Morphingabe",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "antiemetika",
+      "antiemetikum",
+      "metoclopramid",
+      "metoclopramidhydrochlorid",
+      "ml-injektionslosung",
+      "paspertin",
+      "paspertin 10 mg 2 ml-injektionslosung",
+      "uebelkeit"
+    ],
+    "dosage": "10 mg/2 ml",
+    "notes": "EMA-Hinweis zu p.o.-Zubereitungen wegen Dyskinesien."
+  },
+  {
+    "id": "med-metoprolol",
+    "kind": "medication",
+    "label": "Metoprolol",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "-rezeptorenblocker",
+      "metoprolol"
+    ],
+    "dosage": "Keine Details extrahiert",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-hypertensiver-notfall-urapidil-metoprolol",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-leitsymptom-akuter-thoraxschmerz-bemerkungen",
+      "alg-regelmaessige-schmalkomplextachykardie-metoprolol",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe",
+      "alg-vorhofflimmern-algorithmus-metoprolol",
+      "alg-vorhofflimmern-mit-schenkelblock-metoprolol"
+    ]
+  },
+  {
+    "id": "med-midazolam",
+    "kind": "medication",
+    "label": "Midazolam",
+    "indication": "ACS mit Agitiertheit; Erregungszustand mit erforderlicher Sedation; anhaltende Krampfanfälle; Begleitmedikation bei Esketaminanwendung",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "acs",
+      "acs agitation",
+      "agitation",
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "diverse",
+      "diverse generika",
+      "dormicum",
+      "generika",
+      "herzinfarkt",
+      "krampfanfall",
+      "midazolam",
+      "narkotika",
+      "nstemi",
+      "sedation",
+      "sedativa",
+      "stemi"
+    ],
+    "dosage": "Sedation Erwachsene 2 mg i.v., einmalige Wiederholung nach 5 Minuten, max. 4 mg; Krampfanfall i.n. Erwachsene 10 mg; Kinder gewichtsabhängig 2,5–10 mg i.n.; Krampfanfall i.v. Erwachsene 0,2 mg/kgKG bis max. 10 mg",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-krampfanfall-erwachsener",
+      "alg-krampfanfall-kind",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+      "alg-starker-erregungszustand-erwachsener",
+      "alg-traumat-schmerz-immob-rueckenschmerz-intraven-s",
+      "alg-traumat-schmerz-immob-rueckenschmerz-nasal-im",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe"
+    ],
+    "notes": "Bei i.n. nicht >1 ml pro Nasenloch; i.m.-Gabe laut Hinweis möglich."
+  },
+  {
+    "id": "med-morphin",
+    "kind": "medication",
+    "label": "Morphin",
+    "indication": "ACS mit NRS ≥ 4; Schmerzen mit NRS ≥ 4",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "acs",
+      "analgetika",
+      "analgetika schmerztherapie",
+      "herzinfarkt",
+      "merck",
+      "morphin",
+      "morphin merck",
+      "morphin msi",
+      "morphinhydrochlorid",
+      "msi",
+      "nstemi",
+      "opioid",
+      "schmerz",
+      "schmerztherapie",
+      "stemi"
+    ],
+    "dosage": "2 mg alle 2 Minuten bis maximal 10 mg",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-acetylsalicylsaeure-heparin",
+      "alg-acs-algorithmus-diazepam",
+      "alg-acs-algorithmus-glyceroltrinitrat-spray",
+      "alg-acs-algorithmus-metoprolol",
+      "alg-acs-algorithmus-midazolam",
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-leitalgorithmus-akuter-thoraxschmerz-acs",
+      "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+      "alg-leitsymptom-akuter-thoraxschmerz-bemerkungen",
+      "alg-niv-algorithmus-morphingabe",
+      "alg-traumat-schmerz-immob-rueckenschmerz-intraven-s",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe"
+    ],
+    "notes": "Kontinuierliche Überwachung, Rückfallebenen und BtM-Dokumentation erforderlich."
+  },
+  {
+    "id": "med-nacl-09-prozent",
+    "kind": "medication",
+    "label": "NaCl 0,9%",
+    "indication": "Trägerlösung für Medikamente; Spüllösung für Wunden/Augen; Benetzung von Feuchtverbänden",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "infusionslosungen",
+      "kochsalz",
+      "losung",
+      "nacl",
+      "nacl 0 9",
+      "nacl 0 9 losung",
+      "natriumchloridlosung",
+      "spuelloesung",
+      "traegerloesung"
+    ],
+    "dosage": "je nach Indikation",
+    "relatedAlgorithmIds": [
+      "alg-acs-algorithmus-morphin-antiemetika",
+      "alg-bedrohliche-bradykardie",
+      "alg-dislozierter-oder-funktionsgestoerter-transurethraler-blasenkatheter",
+      "alg-entlastungspunktion-spannungspneumothorax",
+      "alg-intraossaerer-zugang-erwachsener",
+      "alg-intraossaerer-zugang-kind",
+      "alg-management-des-patienten-im-haemorrhagischen-schock",
+      "alg-niv-algorithmus-morphingabe",
+      "alg-verdacht-auf-acs-algorithmus-morphingabe"
+    ],
+    "notes": "Nicht als Volumenersatz empfohlen."
+  },
+  {
+    "id": "med-naloxon",
+    "kind": "medication",
+    "label": "Naloxon",
+    "indication": "vital bedrohter Patient mit V. a. Opiatintoxikation; Reanimation mit V. a. Opiatintoxikation; Überdosierung mit Opiaten; Komplikationen bei Opiatmedikation",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidot",
+      "antidote",
+      "atemdepression",
+      "braun",
+      "intox",
+      "naloxon",
+      "naloxon b braun",
+      "naloxon-actavis",
+      "naloxon-ratiopharm",
+      "narcanti",
+      "opiat",
+      "opiatintoxikation",
+      "opioid",
+      "opioid overdose",
+      "overdose",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "0,4 mg i.v.; 0,8 mg i.m.; 2,0 mg i.n.; ggf. Wiederholung nach 3–5 Minuten",
+    "relatedAlgorithmIds": [
+      "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+      "alg-opiatintoxikation-naloxon"
+    ],
+    "notes": "Rebound-Phänomen möglich; i.v. außerhalb Reanimation titriert 0,1 mg/2,5 ml nach Verdünnung."
+  },
+  {
+    "id": "med-natriumhydrogencarbonat",
+    "kind": "medication",
+    "label": "Natriumhydrogencarbonat",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "natriumhydrogencarbonat",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-natriumthiosulfat-10-prozent",
+    "kind": "medication",
+    "label": "Natriumthiosulfat 10 %",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "natriumthiosulfat",
+      "natriumthiosulfat 10",
+      "natriumthiosulfat-10-prozent",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-nitrendipin",
+    "kind": "medication",
+    "label": "Nitrendipin",
+    "indication": "hypertensiver Notfall",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "akut",
+      "bayotensin",
+      "bayotensin akut",
+      "hypertensiver",
+      "hypertensiver notfall",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "medikamente",
+      "nitrendipin",
+      "notfall"
+    ],
+    "dosage": "5 mg/1 ml p.o.",
+    "notes": "Vertrieb in Deutschland laut Text eingestellt; Alternative Nifedipin erwähnt."
+  },
+  {
+    "id": "med-noradrenalin",
+    "kind": "medication",
+    "label": "Noradrenalin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "medikamente",
+      "noradrenalin"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-ondansetron",
+    "kind": "medication",
+    "label": "Ondansetron",
+    "indication": "massive Übelkeit und Erbrechen bei Erwachsenen; Begleitmedikation bei Morphingabe",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "antiemetika",
+      "braun",
+      "morphin",
+      "ondansetron",
+      "ondansetron b braun",
+      "uebelkeit",
+      "zofran"
+    ],
+    "dosage": "4 mg/2 ml",
+    "relatedAlgorithmIds": [
+      "alg-massive-belkeit-erbrechen-antiemetikum"
+    ],
+    "notes": "QT-Zeitverlängerung-Hinweis inklusive EKG-Orientierung."
+  },
+  {
+    "id": "med-oxytocin",
+    "kind": "medication",
+    "label": "Oxytocin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "medikamente",
+      "oxytocin",
+      "sonstige",
+      "sonstige medikamente"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-paracetamol",
+    "kind": "medication",
+    "label": "Paracetamol",
+    "indication": "Fieberkrampf mit Körpertemperatur >38,5 °C; sonstige Schmerzen bei Kindern <30 kgKG; kolikartige Schmerzen bei Kindern <30 kgKG; Ko-Analgetikum bei traumatischem Schmerz bei Kindern <30 kgKG",
+    "tags": [
+      "analgesie",
+      "kinder",
+      "neurologie",
+      "stoffwechsel"
+    ],
+    "searchTerms": [
+      "125",
+      "250",
+      "500",
+      "analgetika",
+      "analgetika schmerztherapie antipyretika",
+      "antipyretika",
+      "fieberkrampf",
+      "kinderschmerz",
+      "paracetamol",
+      "paracetamol 125 mg",
+      "paracetamol 250 mg",
+      "paracetamol 500 mg",
+      "schmerztherapie",
+      "zaepfchen"
+    ],
+    "dosage": ">5 kg bis 2 Jahre 125 mg; 2–6 Jahre 250 mg; Schulkind 500 mg",
+    "relatedAlgorithmIds": [
+      "alg-krampfanfall-erwachsener",
+      "alg-krampfanfall-kind",
+      "alg-leitsymptom-sonstige-schmerzen-koliken-kind",
+      "alg-leitsymptom-sonstige-schmerzen-koliken-kopfschmerz-erw",
+      "alg-traumatischer-schmerz-kind-30-kg-kg-intraven-s",
+      "alg-traumatischer-schmerz-kind-30-kg-kg-nasal-im"
+    ],
+    "notes": "Tageshöchstdosis 50 mg/kgKG; auf bereits durch Eltern gegebene Menge achten."
+  },
+  {
+    "id": "med-phenobarbital",
+    "kind": "medication",
+    "label": "Phenobarbital",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "narkotika",
+      "phenobarbital",
+      "sedativa"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-physostigmin",
+    "kind": "medication",
+    "label": "Physostigmin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "physostigmin",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-prednisolon",
+    "kind": "medication",
+    "label": "Prednisolon",
+    "indication": "bronchoobstruktive Zustände; Anaphylaxie; Pseudokrupp; V. a. drohende Addisonkrise",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "100",
+      "addisonkrise",
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "glukokortikoide",
+      "infectocortikrupp",
+      "infectocortikrupp zapfchen",
+      "klismacort",
+      "klismacort 100 mg rektalkapseln",
+      "prednisolon",
+      "pseudokrupp",
+      "rektalkapseln",
+      "solu-decortin",
+      "solu-decortin h",
+      "zapfchen"
+    ],
+    "dosage": "Erwachsene Bronchoobstruktion 50 mg; Erwachsene Anaphylaxie 250 mg; Kinder altersabhängig 10–40 mg i.v./i.o. oder 100 mg rektal; Addisonkrise 25 mg i.v./i.o. oder 100 mg rektal",
+    "relatedAlgorithmIds": [
+      "alg-anaphylaxie-erwachsener",
+      "alg-anaphylaxie-kind",
+      "alg-bronchoobstruktion-erwachsener",
+      "alg-bronchoobstruktion-kind",
+      "alg-pseudokrupp-adrenalin-glucocorticoide",
+      "alg-verdacht-auf-drohende-addison-krise-akute-nebenniereninsuffizienz"
+    ],
+    "notes": "Lösung mit Wasser für Injektionszwecke; Lichtschutz."
+  },
+  {
+    "id": "med-promethazin",
+    "kind": "medication",
+    "label": "Promethazin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie",
+      "neurologie"
+    ],
+    "searchTerms": [
+      "antiepileptika",
+      "antiepileptika sedativa und narkotika",
+      "narkotika",
+      "promethazin",
+      "sedativa"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-propofol",
+    "kind": "medication",
+    "label": "Propofol",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "narkotika",
+      "narkotika in der notfallmedizin",
+      "notfallmedizin",
+      "propofol"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-ranitidin",
+    "kind": "medication",
+    "label": "Ranitidin",
+    "indication": "allergische Reaktionen; Zusatzmedikation bei Anaphylaxie; Schutz vor Magen- und Darmulzera",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "allergie",
+      "anaphylaxie",
+      "anaphylaxie antihistaminika",
+      "antihistaminika",
+      "h2-antihistaminikum",
+      "ranitidin",
+      "ranitidin-ratiopharm",
+      "ranitidin-ratiopharm 50 mg 5 ml",
+      "zantic"
+    ],
+    "dosage": "Erwachsene 50 mg i.v.; Kind 1 mg/kgKG",
+    "notes": "BfArM/EMA-Hinweis zu Verunreinigungen/Rückrufen; Effekt bei Anaphylaxie eher ergänzend."
+  },
+  {
+    "id": "med-reproterol-009-mg",
+    "kind": "medication",
+    "label": "Reproterol 0,09 mg",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "antiobstruktive",
+      "antiobstruktive substanzen",
+      "reproterol",
+      "reproterol 0 09 mg",
+      "reproterol-009-mg",
+      "substanzen"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-rocuronium",
+    "kind": "medication",
+    "label": "Rocuronium",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "muskelrelaxanzien",
+      "rocuronium"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-salbutamol",
+    "kind": "medication",
+    "label": "Salbutamol",
+    "indication": "bronchoobstruktive Zustände; Asthma bronchiale; COPD; Anaphylaxie mit Bronchoobstruktion",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "antiobstruktive",
+      "antiobstruktive substanzen",
+      "asthma",
+      "bronchospastik",
+      "copd",
+      "dosieraerosol",
+      "fertiginhalat",
+      "salbutamol",
+      "salbutamol-ratiopharm",
+      "salbutamol-ratiopharm fertiginhalat",
+      "salbutamol-ratiopharm n dosieraerosol",
+      "substanzen",
+      "vernebler"
+    ],
+    "dosage": "Dosieraerosol Erwachsene/Kind initial 4 Hub; Vernebler Erwachsene 2,5–5 mg; Kind 1,25–2,5 mg",
+    "relatedAlgorithmIds": [
+      "alg-bronchoobstruktion-erwachsener",
+      "alg-bronchoobstruktion-kind"
+    ],
+    "notes": "Seite 71 beschreibt 9-Schritte-Anwendung per Dosieraerosol; NIV/Beatmung bei Vigilanzminderung erwägen."
+  },
+  {
+    "id": "med-simeticon",
+    "kind": "medication",
+    "label": "Simeticon",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "simeticon",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-succinylcholin-suxamethonium",
+    "kind": "medication",
+    "label": "Succinylcholin/Suxamethonium",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "muskelrelaxanzien",
+      "succinylcholin",
+      "succinylcholin suxamethonium",
+      "succinylcholin-suxamethonium",
+      "suxamethonium"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-sufentanil",
+    "kind": "medication",
+    "label": "Sufentanil",
+    "indication": "Analgetikum zur Narkoseeinleitung; Schmerzen mit NRS ≥ 4; Analgetikum",
+    "tags": [
+      "analgesie"
+    ],
+    "searchTerms": [
+      "analgesie",
+      "analgetika",
+      "analgetika schmerztherapie",
+      "mite",
+      "narkoseeinleitung",
+      "opioid",
+      "schmerztherapie",
+      "sufenta",
+      "sufenta mite",
+      "sufentanil",
+      "sufentanil-hameln",
+      "sufentanil-ratiopharm"
+    ],
+    "dosage": "Erwachsene 5 µg zur Analgesie, 20–30 µg zur Narkoseeinleitung; Kind >30 kgKG 0,25 µg/kgKG",
+    "relatedAlgorithmIds": [
+      "alg-leitalgorithmus-schmerzzustaende-nrs-4",
+      "alg-traumat-schmerz-immob-rueckenschmerz-sufentanil"
+    ],
+    "notes": "Ca. 1000 mal stärker wirksam als Morphin; kontinuierliche Überwachung/BtM-Dokumentation."
+  },
+  {
+    "id": "med-terbutalin",
+    "kind": "medication",
+    "label": "Terbutalin",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "antiobstruktive",
+      "antiobstruktive substanzen",
+      "substanzen",
+      "terbutalin"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-thiamin-vitamin-b1",
+    "kind": "medication",
+    "label": "Thiamin (Vitamin B1)",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "medikamente",
+      "sonstige",
+      "sonstige medikamente",
+      "thiamin",
+      "thiamin vitamin b1",
+      "thiamin-vitamin-b1",
+      "vitamin"
+    ],
+    "dosage": "Keine Details extrahiert",
+    "relatedAlgorithmIds": [
+      "alg-hypoglykaemie",
+      "alg-krampfanfall-erwachsener"
+    ]
+  },
+  {
+    "id": "med-toloniumchlorid",
+    "kind": "medication",
+    "label": "Toloniumchlorid",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "toxikologie"
+    ],
+    "searchTerms": [
+      "antidote",
+      "toloniumchlorid",
+      "vergiftungen",
+      "vergiftungen und antidote"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-tranexamsaeure",
+    "kind": "medication",
+    "label": "Tranexamsäure",
+    "indication": "hämorrhagischer Schock bei lebensbedrohlicher traumatischer Blutung < 3 Stunden; hämorrhagischer Schock bei lebensbedrohlicher gynäkologischer Blutung < 3 Stunden; Epistaxis lokal über MAD-Adapter; Epistaxis als Instillation in Tamponade",
+    "tags": [
+      "atemwege"
+    ],
+    "searchTerms": [
+      "antifibrinolytika",
+      "carinopharm",
+      "cyklokapron-injektionslosung",
+      "epistaxis",
+      "haemorrhagischer",
+      "haemorrhagischer schock",
+      "schock",
+      "tranexamsaeure",
+      "tranexamsaure",
+      "tranexamsaure carinopharm",
+      "txa"
+    ],
+    "dosage": "1 g/10 ml als Kurzinfusion über 10 Minuten in 100 ml NaCl 0,9 %; Epistaxis: 0,5 g/5 ml lokal",
+    "relatedAlgorithmIds": [
+      "alg-management-des-patienten-im-haemorrhagischen-schock"
+    ],
+    "notes": "Frühzeitige Gabe beschrieben als nebenwirkungsarm; im Zweifel geben; GI-Blutung laut Text nicht empfohlen."
+  },
+  {
+    "id": "med-urapidil",
+    "kind": "medication",
+    "label": "Urapidil",
+    "indication": "hypertensiver Notfall RRsys > 180 oder RRdia > 120 mmHg; hypertensiver Notfall bei V. a. Schlaganfall RRsys > 220 oder RRdia > 120 mmHg",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "carino",
+      "diverse",
+      "diverse generika",
+      "ebrantil",
+      "ebrantil i v 50 mg",
+      "generika",
+      "hypertensiver",
+      "hypertensiver notfall",
+      "kreislaufwirksame",
+      "kreislaufwirksame medikamente",
+      "medikamente",
+      "notfall",
+      "schlaganfall",
+      "stroke",
+      "tia",
+      "urapidil",
+      "urapidil 50 mg i v carino"
+    ],
+    "dosage": "10 mg i.v., ggf. alle 3 Minuten steigerbar bis 50 mg",
+    "relatedAlgorithmIds": [
+      "alg-hypertensiver-notfall-urapidil-metoprolol",
+      "alg-verdacht-auf-schlaganfall"
+    ],
+    "notes": "RR-Senkung initial meist nicht >25 % des Ausgangswerts; Zielwerte für Lungenödem, ACS, Aortendissektion genannt."
+  },
+  {
+    "id": "med-verapamil",
+    "kind": "medication",
+    "label": "Verapamil",
+    "indication": "Keine Details extrahiert",
+    "tags": [
+      "kreislauf"
+    ],
+    "searchTerms": [
+      "antiarrhythmika",
+      "schlaganfall",
+      "stroke",
+      "tia",
+      "verapamil"
+    ],
+    "dosage": "Keine Details extrahiert"
+  },
+  {
+    "id": "med-xylometazolin",
+    "kind": "medication",
+    "label": "Xylometazolin",
+    "indication": "zusätzliche Abschwellung bei Pseudokrupp; abschwellende Wirkung bei Schwellung der Nasenschleimhäute",
+    "tags": [
+      "verfahren"
+    ],
+    "searchTerms": [
+      "gegen",
+      "medikamente",
+      "otriven",
+      "otriven gegen schnupfen 0 05",
+      "pseudokrupp",
+      "schnupfen",
+      "sonstige",
+      "sonstige medikamente",
+      "xylometazolin"
+    ],
+    "dosage": "0,045 mg pro Nasenloch",
+    "notes": "Wirkeintritt 5–10 Minuten."
+  }
+]
