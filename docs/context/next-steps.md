@@ -1,35 +1,45 @@
 # Next Steps
 
-**Last Updated:** 2026-03-27
+**Last Updated:** 2026-03-31
 
-Nur konkrete naechste Tasks fuer den aktuellen MVP-Pfad:
+Nur konkrete naechste Tasks fuer den aktuellen MVP-Pfad (aus Repo-Zustand abgeleitet):
 
-## 1) Navigation Fixes
+## 1) Offline-Bundle jenseits "embedded"
 
-- Tab-/Stack-Flows vereinheitlichen (konsistente Header, Titel, Rueckwege)
-- Such-Navigation auf Detailziele robust halten (keine toten Pfade)
+- `lookupSource`-Schichten sind vorbereitet, aber nur `embedded` ist aktiv.
+- Geraete-seitige Bundle-Persistenz/Ersetzung (cached/updated/fallback) ist offen.
 
-## 2) Fehlende Screens
+## 2) Sync-/Update-Konzept
 
-- Algorithmus-Detailansicht von Platzhalter auf echte Schrittansicht bringen
-- Home-Schnellzugriffe mit Navigation verknuepfen (statt rein statischer Karten)
+- Kein Netzwerk-Sync fuer medizinische Inhalte im App-Code.
+- Update-Pfad fuer neue Bundle-Versionen ist offen.
 
-## 3) MVP Luecken schliessen
+## 3) Datenpfad konsolidieren
 
-- Lookup-Scope auf klar definierte Kerninhalte begrenzen und vervollstaendigen
-- Suchverhalten fuer echte MVP-Nutzung pruefbar machen
+- Mobile-App nutzt `data/lookup-seed/*` direkt; keine Nutzung von `@resqbrain/domain`.
+- Mapping/Vertragsklarheit zwischen Seed-JSON, App-Typen und Domain-Entitaeten fehlt als umgesetzter Laufzeitpfad.
 
-## 4) UI Vereinheitlichung
+## 4) Website-Validierungsskripte aktualisieren
 
-- einheitliche visuelle Sprache fuer Home, Listen, Detail, Search
-- Typografie-/Spacing-/Farbsystem konsistent anwenden
+- `scripts/validate-routing.ts` und `scripts/validate-content-isolation.ts` sind vorhanden.
+- Bindung an aktive `apps/website`-Struktur ist UNVERIFIED in dieser Synchronisierung.
 
-## 5) Datenstruktur
+## 5) Deployment-Status sauber dokumentieren
 
-- ein gemeinsames, stabiles Datenformat fuer Medikamente und Algorithmen festlegen
-- IDs und Referenzen app-weit konsistent machen
+- Vercel-Konfigurationen sind vorhanden (`vercel.json` Root, `apps/website/vercel.json`, `apps/website-old/vercel.json`).
+- Produktiver Deployment-Status bleibt UNVERIFIED ohne Dashboard/API-Nachweis.
 
-## 6) Mock-Daten vervollstaendigen
+## Last synchronized
 
-- Medikamenten- und Algorithmusdatensaetze auf MVP-Mindestumfang bringen
-- Textqualitaet, Vollstaendigkeit und Konsistenz bereinigen
+- 2026-03-31
+
+## Verification basis
+
+- `apps/mobile-app/src/navigation/AppNavigator.tsx`
+- `apps/mobile-app/src/screens/*`
+- `apps/mobile-app/src/lookup/*`
+- `data/lookup-seed/*`
+- `apps/website/app/*`
+- `scripts/validate-routing.ts`
+- `scripts/validate-content-isolation.ts`
+- `vercel.json`, `apps/website/vercel.json`, `apps/website-old/vercel.json`

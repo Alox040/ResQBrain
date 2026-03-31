@@ -23,6 +23,19 @@ Die Plattform ermöglicht Organisationen:
 Die Plattform ist Domain-first und vollständig UI-agnostisch.
 Keine Abhängigkeit von einem bestimmten Backend-Stack oder UI-Framework.
 
+## Last synchronized
+
+- 2026-03-31
+
+## Verification basis
+
+- `README.md`, `package.json`, `pnpm-workspace.yaml`, `vercel.json`
+- `apps/website/**`, `apps/website-old/**`
+- `apps/mobile-app/**`
+- `packages/domain/**`
+- `data/lookup-seed/**`
+- `docs/context/**`, `docs/context-export/**`
+
 ---
 
 ## Architekturprinzipien

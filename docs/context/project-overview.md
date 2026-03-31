@@ -1,52 +1,43 @@
 # Project Overview
 
-**Last Updated:** 2026-03-27
+**Last synchronized:** 2026-03-31
 
 ## Projektziel
 
-ResQBrain ist eine EMS-Plattform mit langfristigem Zielbild einer multi-tenant-faehigen, governance-gesteuerten Content-Verteilung (Algorithmen, Medikamente, Protokolle, Leitlinien).  
-Der aktuell implementierte Produktfokus liegt auf einer schnellen Lookup-App fuer Einsatzkraefte.
+ResQBrain ist eine EMS-Plattform mit Zielbild einer multi-tenant-faehigen, governance-gesteuerten Content-Verteilung.  
+Im aktuell verifizierbaren Repository-Stand liegt der implementierte Fokus auf einer Lookup-first Mobile-App plus statischer Website.
 
 ## Zielgruppe
 
-- Primaer: Rettungsdienstpersonal im Einsatz (schneller Zugriff auf Informationen)
+- Primaer: Rettungsdienstpersonal im Einsatz
 - Sekundaer: medizinische Reviewer, Ausbildende, Organisationsverantwortliche
 - Strategisch: mehrere Organisationen mit tenant-getrennter Content-Governance
 
-## MVP Definition (aktueller Arbeitsstand)
+## Verifizierter Implementierungsstand
 
-Der MVP ist aktuell als **Lookup-first Einsatz-App** definiert:
+- Mobile-App (`apps/mobile-app`) mit Home, Search, Favoriten, Verlauf, Medikamenten- und Algorithmus-Listen/Details.
+- Dosisrechner-Screen vorhanden (`src/screens/DoseCalculatorScreen.tsx`), laut Code nur bei erkannten mg/ug-pro-kg-Hinweisen sinnvoll nutzbar.
+- Vitalwerte-Referenz-Screen vorhanden (`src/features/references/VitalReferenceScreen.tsx`).
+- Datenquelle in der Mobile-App: eingebettete Seed-JSON unter `data/lookup-seed/`; keine verifizierte Netzwerk-/Sync-Quelle.
+- Website (`apps/website`) mit Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`.
+- Domain-Paket (`packages/domain`) mit mehreren Compile- und Test-Skripten.
 
-- Medikamentensuche
-- Algorithmus-Lookup
-- schnelle lokale Suche
-- Listen- und Detailansichten
-- statische Seed-/Mock-Daten
+## Bewusst NICHT verifiziert als implementiert
 
-Kein Fokus auf Governance-Workflows in der UI.
+- Produktive API/Auth-Laufzeit fuer Multi-Tenant-Betrieb.
+- Produktionsreife Offline-Sync-Engine fuer medizinische Inhalte.
+- Governance-/Versioning-UI in der Mobile-App.
+- KI-Assistenz im App-Datenpfad.
 
-## Lookup-First Ansatz
+## UNVERIFIED
 
-Die aktuelle App-Struktur priorisiert:
+- Live-Deployment-Status der Website und Mobile-Releases.
+- Operativer Einsatzstatus ausserhalb des Repository-Inhalts.
 
-1. Finden statt Editieren
-2. Lesen statt Administrieren
-3. lokale/statische Daten als Basis
-4. minimalen Navigationsaufwand fuer Zeitdruck-Situationen
+## Verification basis
 
-## Phase-0 Scope (Ist-Sicht)
-
-- Mobile App mit Home, Search, Medication- und Algorithmus-Navigation
-- Medikamentenliste mit Detailansicht aus Mock-Daten
-- Algorithmusliste und einfache Detailansicht
-- Website als statische Projekt-/Informationsflaeche (`/`, `/impressum`, `/datenschutz`)
-- Domain-Paket mit umfangreicher Modellierung und Tests fuer tenant/governance/versioning/release
-
-## Bewusst NICHT enthalten (aktuell)
-
-- keine Dosierungsberechnung im UI
-- keine KI-Assistenz
-- kein produktiver Organisationsbetrieb (Login/Auth/API fehlt)
-- keine Versionierungsoberflaeche in der App
-- keine Lernlogik im mobilen UI
-- keine produktive Offline-Sync-Engine (nur Zielbild dokumentiert)
+- `/workspace/apps/mobile-app/src/**`
+- `/workspace/apps/website/app/**`
+- `/workspace/data/lookup-seed/**`
+- `/workspace/packages/domain/package.json`
+- `/workspace/package.json`, `/workspace/vercel.json`
