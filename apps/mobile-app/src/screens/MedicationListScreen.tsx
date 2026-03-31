@@ -25,7 +25,10 @@ import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
 import { useTheme } from '@/theme/ThemeContext';
 
-type Nav = NativeStackNavigationProp<MedicationStackParamList, 'MedicationList'>;
+type Nav = NativeStackNavigationProp<
+  MedicationStackParamList,
+  'MedicationListScreen'
+>;
 
 const medicationListKeyExtractor = (item: MedicationViewModel): string =>
   item.id;

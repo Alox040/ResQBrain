@@ -1,0 +1,2254 @@
+[
+  {
+    "id": "acetylsalicylsaeure-iv",
+    "kind": "medication",
+    "label": "Acetylsalicylsäure i.v.",
+    "section": "Thrombozytenaggregationshemmer",
+    "sourcePage": 20,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Aspirin i.v. 500 mg"
+    ],
+    "activeIngredient": "Acetylsalicylsäure (ASS)",
+    "drugClass": "Thrombozytenaggregationshemmer, Analgetikum",
+    "indications": [
+      "akutes Koronarsyndrom (NSTE-ACS, STE-ACS)"
+    ],
+    "contraindications": [
+      "Allergie gegen Acetylsalicylsäure",
+      "V. a. akute Blutung",
+      "V. a. akuten Schlaganfall",
+      "V. a. Aortendissektion"
+    ],
+    "dosage": "250 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "ass",
+      "acetylsalicylsaeure",
+      "acs",
+      "aspirin"
+    ],
+    "notes": "Trockensubstanz; Herstellerabhängige Konzentrationsverschiebungen beim Mischen möglich; auch bei vorbestehender ASS-Therapie im ACS-Kontext vorgesehen."
+  },
+  {
+    "id": "acetylsalicylsaeure-po",
+    "kind": "medication",
+    "label": "Acetylsalicylsäure p.o.",
+    "section": "Thrombozytenaggregationshemmer",
+    "sourcePage": 21,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Aspirin Direkt"
+    ],
+    "activeIngredient": "Acetylsalicylsäure (ASS)",
+    "drugClass": "Thrombozytenaggregationshemmer, Analgetikum",
+    "indications": [
+      "akutes Koronarsyndrom (NSTE-ACS, STE-ACS)"
+    ],
+    "contraindications": [
+      "Allergie gegen Acetylsalicylsäure",
+      "V. a. akute Blutung",
+      "V. a. akuten Schlaganfall",
+      "V. a. Aortendissektion"
+    ],
+    "dosage": "250–500 mg p.o. (½–1 Kautablette je nach lokalem Protokoll)",
+    "applicationRoutes": [
+      "p.o."
+    ],
+    "searchTerms": [
+      "ass",
+      "acetylsalicylsaeure",
+      "acs",
+      "aspirin"
+    ],
+    "notes": "Tabletten gut zerkauen und schlucken; auch bei vorbestehender ASS-Therapie im ACS-Kontext vorgesehen."
+  },
+  {
+    "id": "heparin",
+    "kind": "medication",
+    "label": "Heparin",
+    "section": "Antikoagulanzien",
+    "sourcePage": 24,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Liquemin",
+      "Heparin",
+      "Heparin-Natrium-25.000-ratiopharm",
+      "diverse Generika"
+    ],
+    "activeIngredient": "Heparin",
+    "drugClass": "Antikoagulans",
+    "indications": [
+      "akutes Koronarsyndrom",
+      "Lungenarterienembolie",
+      "arterieller oder venöser Gefäßverschluss",
+      "Antikoagulation bei Herzrhythmusstörungen"
+    ],
+    "contraindications": [
+      "Unverträglichkeit gegen den Wirkstoff",
+      "Vorliegen einer HIT",
+      "V. a. akute Blutung",
+      "V. a. akuten Schlaganfall",
+      "V. a. Aortendissektion"
+    ],
+    "dosage": "Standarddosis Erwachsene: 5.000 I.E. = 1 ml i.v.",
+    "applicationRoutes": [
+      "i.v."
+    ],
+    "searchTerms": [
+      "heparin",
+      "acs",
+      "lungenembolie",
+      "antikoagulation"
+    ],
+    "notes": "Bei schweren Blutungen Antagonisierung mit Protamin möglich; ACS-Leitlinienbezug 2023 erwähnt."
+  },
+  {
+    "id": "alteplase-rt-pa",
+    "kind": "medication",
+    "label": "Alteplase – rt-PA",
+    "section": "Thrombolytika – Fibrinolytika",
+    "sourcePage": 26,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "alteplase-rt-pa",
+      "alteplase – rt-pa"
+    ],
+    "notes": null
+  },
+  {
+    "id": "tranexamsaeure",
+    "kind": "medication",
+    "label": "Tranexamsäure",
+    "section": "Antifibrinolytika",
+    "sourcePage": 29,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Cyklokapron-Injektionslösung",
+      "Tranexamsäure Carinopharm"
+    ],
+    "activeIngredient": "Tranexamsäure",
+    "drugClass": "Aminosäure – Antifibrinolytikum",
+    "indications": [
+      "hämorrhagischer Schock bei lebensbedrohlicher traumatischer Blutung < 3 Stunden",
+      "hämorrhagischer Schock bei lebensbedrohlicher gynäkologischer Blutung < 3 Stunden",
+      "Epistaxis lokal über MAD-Adapter",
+      "Epistaxis als Instillation in Tamponade"
+    ],
+    "contraindications": [
+      "Unverträglichkeit gegenüber dem Wirkstoff",
+      "akute Thrombosen/Embolien",
+      "Therapiebeginn bei hämorrhagischem Schock nach > 3 Stunden"
+    ],
+    "dosage": "1 g/10 ml als Kurzinfusion über 10 Minuten in 100 ml NaCl 0,9 %; Epistaxis: 0,5 g/5 ml lokal",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "intranasal lokal"
+    ],
+    "searchTerms": [
+      "tranexamsaeure",
+      "txa",
+      "epistaxis",
+      "haemorrhagischer schock"
+    ],
+    "notes": "Frühzeitige Gabe beschrieben als nebenwirkungsarm; im Zweifel geben; GI-Blutung laut Text nicht empfohlen."
+  },
+  {
+    "id": "chitosan",
+    "kind": "medication",
+    "label": "Chitosan",
+    "section": "Hämostatika",
+    "sourcePage": 30,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Celox Rapid Z-Gauze"
+    ],
+    "activeIngredient": "Chitosan",
+    "drugClass": "Hämostyptikum, Hämostatikum",
+    "indications": [
+      "massive äußere Blutungen",
+      "Stammblutungen und stammnahe Blutungen"
+    ],
+    "contraindications": [
+      "im Notfall keine"
+    ],
+    "dosage": "1 Z-gefaltete Celox Rapid Z-Gauze",
+    "applicationRoutes": [
+      "lokal (Wound Packing)"
+    ],
+    "searchTerms": [
+      "chitosan",
+      "celox",
+      "wound packing",
+      "haemostatikum"
+    ],
+    "notes": "Acht beschriebenen Schritte für Wound Packing; bei erneutem Durchbluten gesamte Verbandsstoffe entfernen und erneut vorgehen; schnellen Transport initiieren."
+  },
+  {
+    "id": "adrenalin",
+    "kind": "medication",
+    "label": "Adrenalin",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 35,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Suprarenin",
+      "Adrenalin 1:1.000 InfectoPharm",
+      "Aguettant Adrenalin 1:10.000 Fertigspritze"
+    ],
+    "activeIngredient": "Adrenalin (Epinephrin)",
+    "drugClass": "Sympathomimetikum (Katecholamin)",
+    "indications": [
+      "Reanimation",
+      "bradykarde Herzrhythmusstörungen mit bedrohlicher Symptomatik",
+      "Anaphylaxie ab Stadium II mit Kreislaufbeteiligung",
+      "Pseudokrupp",
+      "Epistaxis",
+      "Schock"
+    ],
+    "contraindications": [
+      "im Notfall keine"
+    ],
+    "dosage": "ALS Erwachsene: 1 mg i.v./i.o. alle 3–5 Minuten; Anaphylaxie Erwachsene 0,5 mg i.m.; Pseudokrupp 4 mg vernebelt; weitere alters- und indikationsabhängige Dosierungen laut Seite 35–37",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "i.m.",
+      "inhalativ/vernebelt",
+      "lokal-topisch"
+    ],
+    "searchTerms": [
+      "adrenalin",
+      "epinephrin",
+      "reanimation",
+      "anaphylaxie",
+      "schock",
+      "pseudokrupp"
+    ],
+    "notes": "Kinderreanimation mit Feindosierspritze 1 mg/10 ml erläutert; Hypothermie-Hinweise und ROSC-bezogenes Zurückstellen vor Rhythmusanalyse erwähnt."
+  },
+  {
+    "id": "noradrenalin",
+    "kind": "medication",
+    "label": "Noradrenalin",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 38,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "noradrenalin",
+      "noradrenalin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "dobutamin",
+    "kind": "medication",
+    "label": "Dobutamin",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 40,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "dobutamin",
+      "dobutamin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "cafedrin-und-theodrenalin",
+    "kind": "medication",
+    "label": "Cafedrin und Theodrenalin",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 41,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "cafedrin-und-theodrenalin",
+      "cafedrin und theodrenalin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "glyceroltrinitrat",
+    "kind": "medication",
+    "label": "Glyceroltrinitrat",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 43,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Nitrolingual N-Spray"
+    ],
+    "activeIngredient": "Glyceroltrinitrat",
+    "drugClass": "organisches Nitrat – Antianginosum",
+    "indications": [
+      "Angina pectoris",
+      "akutes Koronarsyndrom",
+      "Lungenödem"
+    ],
+    "contraindications": [
+      "Einnahme von PDE-5-Hemmstoffen innerhalb der letzten 48 Stunden",
+      "RRsys < 100 mmHg",
+      "Überempfindlichkeit gegen den Wirkstoff"
+    ],
+    "dosage": "0,4–1,2 mg (1–3 Hübe) s.l., nach Blutdruck dosiert",
+    "applicationRoutes": [
+      "s.l."
+    ],
+    "searchTerms": [
+      "gtn",
+      "glyceroltrinitrat",
+      "nitrolingual",
+      "acs",
+      "lungenoedem",
+      "angina"
+    ],
+    "notes": "Vor Applikation in die Luft sprühen; nicht schütteln; ausführliche PDE-5-Hemmer-Hinweise."
+  },
+  {
+    "id": "urapidil",
+    "kind": "medication",
+    "label": "Urapidil",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 44,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Ebrantil i.v. 50 mg",
+      "Urapidil 50 mg i.v. Carino",
+      "diverse Generika"
+    ],
+    "activeIngredient": "Urapidil",
+    "drugClass": "Antihypertensivum",
+    "indications": [
+      "hypertensiver Notfall RRsys > 180 oder RRdia > 120 mmHg",
+      "hypertensiver Notfall bei V. a. Schlaganfall RRsys > 220 oder RRdia > 120 mmHg"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen den Wirkstoff",
+      "Aortenisthmusstenose"
+    ],
+    "dosage": "10 mg i.v., ggf. alle 3 Minuten steigerbar bis 50 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "urapidil",
+      "hypertensiver notfall",
+      "schlaganfall"
+    ],
+    "notes": "RR-Senkung initial meist nicht >25 % des Ausgangswerts; Zielwerte für Lungenödem, ACS, Aortendissektion genannt."
+  },
+  {
+    "id": "nitrendipin",
+    "kind": "medication",
+    "label": "Nitrendipin",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 45,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Bayotensin akut"
+    ],
+    "activeIngredient": "Nitrendipin",
+    "drugClass": "Antihypertonikum",
+    "indications": [
+      "hypertensiver Notfall"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen Nitrendipin oder Pfefferminzöl",
+      "Hypotension",
+      "instabile Angina pectoris",
+      "akuter Myokardinfarkt innerhalb der ersten 4 Wochen",
+      "dekompensierte Herzinsuffizienz",
+      "Schwangerschaft und Stillzeit"
+    ],
+    "dosage": "5 mg/1 ml p.o.",
+    "applicationRoutes": [
+      "p.o."
+    ],
+    "searchTerms": [
+      "nitrendipin",
+      "hypertensiver notfall",
+      "bayotensin"
+    ],
+    "notes": "Vertrieb in Deutschland laut Text eingestellt; Alternative Nifedipin erwähnt."
+  },
+  {
+    "id": "furosemid",
+    "kind": "medication",
+    "label": "Furosemid",
+    "section": "Kreislaufwirksame Medikamente",
+    "sourcePage": 46,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Lasix 20 mg/40 mg Injektionslösung",
+      "Furosemid-ratiopharm",
+      "diverse Generika"
+    ],
+    "activeIngredient": "Furosemid",
+    "drugClass": "Diuretikum (Schleifendiuretikum)",
+    "indications": [
+      "Lungenödem",
+      "schwere dekompensierte Herzinsuffizienz mit Lungenstauung"
+    ],
+    "contraindications": [
+      "bekannte Überempfindlichkeit",
+      "bekannte Hypokaliämie"
+    ],
+    "dosage": "40 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "furosemid",
+      "lasix",
+      "lungenoedem",
+      "herzinsuffizienz"
+    ],
+    "notes": "Nicht mit anderen Medikamenten mischen; empfindlich gegenüber sauren Arzneimitteln."
+  },
+  {
+    "id": "balancierte-vollelektrolytloesungen",
+    "kind": "medication",
+    "label": "Balancierte Vollelektrolytlösungen",
+    "section": "Infusionslösungen",
+    "sourcePage": 47,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Jonosteril",
+      "Sterofundin ISO Infusionslösung"
+    ],
+    "activeIngredient": "balancierte Vollelektrolytlösung",
+    "drugClass": "balancierte Vollelektrolytlösung",
+    "indications": [
+      "Volumentherapie",
+      "Offenhalten eines Venenzugangs",
+      "Spüllösung für Wunden/Augen",
+      "Benetzung von Feuchtverbänden"
+    ],
+    "contraindications": [
+      "keine rettungsdienstlich relevanten bei bestehender Indikation"
+    ],
+    "dosage": "je nach Indikation",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "s.c.",
+      "lokal"
+    ],
+    "searchTerms": [
+      "jonosteril",
+      "sterofundin",
+      "volelelektrolyt",
+      "infusionsloesung"
+    ],
+    "notes": "Tabelle mit Elektrolytzusammensetzung auf Seite 47."
+  },
+  {
+    "id": "nacl-09-prozent",
+    "kind": "medication",
+    "label": "NaCl 0,9%",
+    "section": "Infusionslösungen",
+    "sourcePage": 48,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "NaCl 0,9 % Lösung"
+    ],
+    "activeIngredient": "Natriumchloridlösung",
+    "drugClass": "Infusionslösung, Trägerlösung, Spüllösung",
+    "indications": [
+      "Trägerlösung für Medikamente",
+      "Spüllösung für Wunden/Augen",
+      "Benetzung von Feuchtverbänden"
+    ],
+    "contraindications": [
+      "keine rettungsdienstlich relevanten bei bestehender Indikation"
+    ],
+    "dosage": "je nach Indikation",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "i.m.",
+      "s.c.",
+      "lokal"
+    ],
+    "searchTerms": [
+      "nacl",
+      "kochsalz",
+      "traegerloesung",
+      "spuelloesung"
+    ],
+    "notes": "Nicht als Volumenersatz empfohlen."
+  },
+  {
+    "id": "ajmalin",
+    "kind": "medication",
+    "label": "Ajmalin",
+    "section": "Antiarrhythmika",
+    "sourcePage": 53,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "ajmalin",
+      "ajmalin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "lidocain",
+    "kind": "medication",
+    "label": "Lidocain",
+    "section": "Antiarrhythmika",
+    "sourcePage": 54,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Lidocain-HCl B. Braun 2 % Injektionslösung",
+      "Xylocain 2 %"
+    ],
+    "activeIngredient": "Lidocain",
+    "drugClass": "Lokalanästhetikum; Antiarrhythmikum Klasse 1b",
+    "indications": [
+      "Lokalanästhesie bei i.o. Zugangswegen bei Erwachsenen",
+      "ventrikuläre Herzrhythmusstörungen",
+      "Reanimation wenn Amiodaron nicht verfügbar"
+    ],
+    "contraindications": [
+      "Unverträglichkeit gegen Lidocain/Lokalanästhetika"
+    ],
+    "dosage": "i.o.-Lokalanästhesie Erwachsene: 40 mg initial, 20 mg nachfolgend; ventrikuläre Rhythmusstörungen 1–1,5 mg/kgKG i.v.; Reanimation Erwachsene 100 mg nach 3. Schock, ggf. 50 mg nach 5. Schock",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "lidocain",
+      "xylocain",
+      "vf",
+      "vt",
+      "io lokalanasthesie"
+    ],
+    "notes": "Für pädiatrische i.o.-Lokalanästhesie nicht empfohlen; Lipidrescue-Hinweis bei Lokalanästhetika-Intoxikation."
+  },
+  {
+    "id": "metoprolol",
+    "kind": "medication",
+    "label": "Metoprolol",
+    "section": "β-Rezeptorenblocker",
+    "sourcePage": 56,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "metoprolol",
+      "metoprolol"
+    ],
+    "notes": null
+  },
+  {
+    "id": "amiodaron",
+    "kind": "medication",
+    "label": "Amiodaron",
+    "section": "Klasse-III-Antiarrhythmika",
+    "sourcePage": 58,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Cordarex",
+      "diverse Generika"
+    ],
+    "activeIngredient": "Amiodaron",
+    "drugClass": "Antiarrhythmikum der Klasse III, Kaliumkanalblocker",
+    "indications": [
+      "Reanimation bei persistierendem VF/pulsloser VT",
+      "tachykarde Herzrhythmusstörungen mit erheblicher Instabilität"
+    ],
+    "contraindications": [
+      "Sinustachykardie/andere Bedarfstachykardie",
+      "(Hyperthyreose)",
+      "(Jodallergie)"
+    ],
+    "dosage": "ALS Erwachsene 300 mg in 20 ml Glucose 5 % als Bolus, Wiederholung 150 mg möglich; instabile Tachykardie 300 mg in 100 ml Glucose 5 % über ca. 20 Minuten",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "amiodaron",
+      "vf",
+      "vt",
+      "tachykardie",
+      "reanimation"
+    ],
+    "notes": "Mit Glucose 5 % aufziehen empfohlen; Kinderreanimationsschema mit Feindosierspritze erläutert."
+  },
+  {
+    "id": "verapamil",
+    "kind": "medication",
+    "label": "Verapamil",
+    "section": "Antiarrhythmika",
+    "sourcePage": 60,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "verapamil",
+      "verapamil"
+    ],
+    "notes": null
+  },
+  {
+    "id": "magnesiumsulfat-50-prozent",
+    "kind": "medication",
+    "label": "Magnesiumsulfat 50 %",
+    "section": "Antiarrhythmika",
+    "sourcePage": 61,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "magnesiumsulfat-50-prozent",
+      "magnesiumsulfat 50 %"
+    ],
+    "notes": null
+  },
+  {
+    "id": "adenosin",
+    "kind": "medication",
+    "label": "Adenosin",
+    "section": "Antiarrhythmika",
+    "sourcePage": 62,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "adenosin",
+      "adenosin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "atropinsulfat",
+    "kind": "medication",
+    "label": "Atropinsulfat",
+    "section": "Antiarrhythmika",
+    "sourcePage": 64,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Atropinsulfat B. Braun 0,5 mg/ml",
+      "Atropinum sulfuricum Eifelfango"
+    ],
+    "activeIngredient": "Atropinsulfat",
+    "drugClass": "Antiarrhythmikum ohne Klasse (Parasympatholytikum)",
+    "indications": [
+      "bradykarde Herzrhythmusstörungen mit bedrohlicher Symptomatik",
+      "V. a. cholinerges Toxidrom",
+      "V. a. akute Alkylphosphatintoxikation"
+    ],
+    "contraindications": [
+      "im Notfall bei vitalen Indikationen keine Einschränkungen"
+    ],
+    "dosage": "Erwachsene initial 0,5 mg (ERC) oder 1,0 mg (AHA), wiederholt bis 3,0 mg; Kinder 0,02 mg/kgKG",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "atropin",
+      "atropinsulfat",
+      "bradykardie",
+      "cholinerges toxidrom"
+    ],
+    "notes": "Bei bestimmten Bradykardien besonders sinnvoll; Kinderdosierung via Verdünnung/Feindosierspritze beschrieben."
+  },
+  {
+    "id": "salbutamol",
+    "kind": "medication",
+    "label": "Salbutamol",
+    "section": "Antiobstruktive Substanzen",
+    "sourcePage": 69,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Salbutamol-ratiopharm N Dosieraerosol",
+      "Salbutamol-ratiopharm Fertiginhalat"
+    ],
+    "activeIngredient": "Salbutamol",
+    "drugClass": "β2-Sympathomimetikum",
+    "indications": [
+      "bronchoobstruktive Zustände",
+      "Asthma bronchiale",
+      "COPD",
+      "Anaphylaxie mit Bronchoobstruktion"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen den Wirkstoff",
+      "Herzfrequenz >150/min (relativ)",
+      "TAA mit hohen Kammerfrequenzen >150/min (relativ)",
+      "Wehentätigkeit",
+      "Schwangerschaft"
+    ],
+    "dosage": "Dosieraerosol Erwachsene/Kind initial 4 Hub; Vernebler Erwachsene 2,5–5 mg; Kind 1,25–2,5 mg",
+    "applicationRoutes": [
+      "inhalativ/vernebelt",
+      "Dosieraerosol"
+    ],
+    "searchTerms": [
+      "salbutamol",
+      "asthma",
+      "copd",
+      "bronchospastik",
+      "vernebler"
+    ],
+    "notes": "Seite 71 beschreibt 9-Schritte-Anwendung per Dosieraerosol; NIV/Beatmung bei Vigilanzminderung erwägen."
+  },
+  {
+    "id": "reproterol-009-mg",
+    "kind": "medication",
+    "label": "Reproterol 0,09 mg",
+    "section": "Antiobstruktive Substanzen",
+    "sourcePage": 71,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "reproterol-009-mg",
+      "reproterol 0,09 mg"
+    ],
+    "notes": null
+  },
+  {
+    "id": "terbutalin",
+    "kind": "medication",
+    "label": "Terbutalin",
+    "section": "Antiobstruktive Substanzen",
+    "sourcePage": 72,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "terbutalin",
+      "terbutalin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "ipratropiumbromid",
+    "kind": "medication",
+    "label": "Ipratropiumbromid",
+    "section": "Antiobstruktive Substanzen",
+    "sourcePage": 73,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Atrovent 250 μg/2 ml",
+      "Atrovent 500 μg/2 ml"
+    ],
+    "activeIngredient": "Ipratropiumbromid",
+    "drugClass": "inhalatives Parasympatholytikum",
+    "indications": [
+      "bronchoobstruktive Zustände ergänzend nach Salbutamol",
+      "Asthma bronchiale",
+      "COPD",
+      "Anaphylaxie mit Bronchoobstruktion"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen den Wirkstoff",
+      "Herzfrequenz >150/min (relativ)",
+      "TAA mit hohen Kammerfrequenzen >150/min (relativ)"
+    ],
+    "dosage": "Erwachsene 500 μg vernebelt; Kind 250 μg vernebelt",
+    "applicationRoutes": [
+      "Verneblung über O2-Maske"
+    ],
+    "searchTerms": [
+      "ipratropium",
+      "atrovent",
+      "copd",
+      "asthma",
+      "bronchospastik"
+    ],
+    "notes": "NIV/Beatmung bei Vigilanzminderung unter Verneblung erwägen."
+  },
+  {
+    "id": "adrenalin-pumpspray",
+    "kind": "medication",
+    "label": "Adrenalin-Pumpspray",
+    "section": "Antiobstruktive Substanzen",
+    "sourcePage": 74,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "InfectoKrupp Pumpspray",
+      "InfectoKrupp Inhal"
+    ],
+    "activeIngredient": "Epinephrin",
+    "drugClass": "Katecholamin",
+    "indications": [
+      "Pseudokrupp"
+    ],
+    "contraindications": [
+      "bei richtiger Indikationsstellung keine"
+    ],
+    "dosage": "7–14 Hübe (1–2 ml) = 4–8 mg",
+    "applicationRoutes": [
+      "Spray",
+      "Inhalation über Verneblermaske"
+    ],
+    "searchTerms": [
+      "adrenalin-pumpspray",
+      "epinephrin",
+      "pseudokrupp",
+      "infectokrupp"
+    ],
+    "notes": "Im Regelfall Verneblung mit Adrenalin über Verneblermaske vorgesehen."
+  },
+  {
+    "id": "methylprednisolon",
+    "kind": "medication",
+    "label": "Methylprednisolon",
+    "section": "Glukokortikoide",
+    "sourcePage": 76,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Urbason solubile forte 250 mg"
+    ],
+    "activeIngredient": "Methylprednisolon",
+    "drugClass": "Glukokortikoid",
+    "indications": [
+      "bronchoobstruktive Zustände",
+      "Anaphylaxie",
+      "Pseudokrupp",
+      "V. a. drohende Addisonkrise"
+    ],
+    "contraindications": [
+      "im Notfall keine relevanten Einschränkungen"
+    ],
+    "dosage": "Erwachsene Bronchoobstruktion 50 mg; Erwachsene Anaphylaxie 250 mg; Kind Anaphylaxie >12 J 50 mg / 6–12 J 20 mg / <6 J 10 mg; Erwachsene Addisonkrise 20 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "methylprednisolon",
+      "urbason",
+      "anaphylaxie",
+      "bronchoobstruktion",
+      "addisonkrise"
+    ],
+    "notes": "Nicht mit Calcium mischen."
+  },
+  {
+    "id": "prednisolon",
+    "kind": "medication",
+    "label": "Prednisolon",
+    "section": "Glukokortikoide",
+    "sourcePage": 77,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Solu-Decortin H",
+      "Klismacort 100 mg Rektalkapseln",
+      "Infectocortikrupp Zäpfchen"
+    ],
+    "activeIngredient": "Prednisolon",
+    "drugClass": "Glukokortikoid",
+    "indications": [
+      "bronchoobstruktive Zustände",
+      "Anaphylaxie",
+      "Pseudokrupp",
+      "V. a. drohende Addisonkrise"
+    ],
+    "contraindications": [
+      "im Notfall keine relevanten Kontraindikationen"
+    ],
+    "dosage": "Erwachsene Bronchoobstruktion 50 mg; Erwachsene Anaphylaxie 250 mg; Kinder altersabhängig 10–40 mg i.v./i.o. oder 100 mg rektal; Addisonkrise 25 mg i.v./i.o. oder 100 mg rektal",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "rektal"
+    ],
+    "searchTerms": [
+      "prednisolon",
+      "solu-decortin",
+      "pseudokrupp",
+      "anaphylaxie",
+      "addisonkrise"
+    ],
+    "notes": "Lösung mit Wasser für Injektionszwecke; Lichtschutz."
+  },
+  {
+    "id": "clemastin",
+    "kind": "medication",
+    "label": "Clemastin",
+    "section": "Anaphylaxie – Antihistaminika",
+    "sourcePage": 80,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Tavegil"
+    ],
+    "activeIngredient": "Clemastin",
+    "drugClass": "H1-Antihistaminikum",
+    "indications": [
+      "allergische Reaktionen",
+      "Zusatzmedikation bei anaphylaktischer Reaktion"
+    ],
+    "contraindications": [
+      "im Notfall kaum Einschränkungen"
+    ],
+    "dosage": "Erwachsene 2 mg i.v.; Kinder >12 J 2,0 mg / 6–12 J 1,5 mg / <6 J 1,0 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "clemastin",
+      "tavegil",
+      "anaphylaxie",
+      "allergie"
+    ],
+    "notes": "Adrenalingabe bei Anaphylaxie darf nicht verzögert werden."
+  },
+  {
+    "id": "dimetinden",
+    "kind": "medication",
+    "label": "Dimetinden",
+    "section": "Anaphylaxie – Antihistaminika",
+    "sourcePage": 81,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Histakut",
+      "Fenistil"
+    ],
+    "activeIngredient": "Dimetinden",
+    "drugClass": "H1-Antihistaminikum",
+    "indications": [
+      "allergische Reaktionen",
+      "Zusatzmedikation bei anaphylaktischer Reaktion"
+    ],
+    "contraindications": [
+      "Schwangerschaft nur nach Nutzen-Risiko-Abwägung"
+    ],
+    "dosage": "Erwachsene 0,1 mg/kgKG; Kinder >1 Jahr 0,05–0,1 mg/kgKG",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "dimetinden",
+      "fenistil",
+      "anaphylaxie",
+      "allergie"
+    ],
+    "notes": "Adrenalingabe bei Anaphylaxie darf nicht verzögert werden."
+  },
+  {
+    "id": "ranitidin",
+    "kind": "medication",
+    "label": "Ranitidin",
+    "section": "Anaphylaxie – Antihistaminika",
+    "sourcePage": 82,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Zantic",
+      "Ranitidin-ratiopharm 50 mg/5 ml"
+    ],
+    "activeIngredient": "Ranitidin",
+    "drugClass": "H2-Antihistaminikum",
+    "indications": [
+      "allergische Reaktionen",
+      "Zusatzmedikation bei Anaphylaxie",
+      "Schutz vor Magen- und Darmulzera"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "Schwangerschaft nur nach Nutzen-Risiko-Abwägung"
+    ],
+    "dosage": "Erwachsene 50 mg i.v.; Kind 1 mg/kgKG",
+    "applicationRoutes": [
+      "i.v."
+    ],
+    "searchTerms": [
+      "ranitidin",
+      "h2-antihistaminikum",
+      "anaphylaxie"
+    ],
+    "notes": "BfArM/EMA-Hinweis zu Verunreinigungen/Rückrufen; Effekt bei Anaphylaxie eher ergänzend."
+  },
+  {
+    "id": "cimetiden",
+    "kind": "medication",
+    "label": "Cimetiden",
+    "section": "Anaphylaxie – Antihistaminika",
+    "sourcePage": 83,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "H2-Blocker ratiopharm 200 mg/2 ml"
+    ],
+    "activeIngredient": "Cimetiden",
+    "drugClass": "H2-Antihistaminikum",
+    "indications": [
+      "allergische Reaktion",
+      "Zusatzmedikation bei Anaphylaxie",
+      "Schutz vor Magen- und Darmulzera"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen Cimetiden",
+      "Kinder nur nach Nutzen-Risiko-Abwägung"
+    ],
+    "dosage": "Erwachsene 200–400 mg i.v.; Kind 5 mg/kgKG",
+    "applicationRoutes": [
+      "i.v."
+    ],
+    "searchTerms": [
+      "cimetiden",
+      "h2-antihistaminikum",
+      "anaphylaxie"
+    ],
+    "notes": "Umfangreiche Interaktionen; Einsatz kritisch prüfen."
+  },
+  {
+    "id": "lorazepam",
+    "kind": "medication",
+    "label": "Lorazepam",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 87,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Tavor 1,0 mg EXPIDET"
+    ],
+    "activeIngredient": "Lorazepam",
+    "drugClass": "Benzodiazepin",
+    "indications": [
+      "starker Erregungszustand",
+      "psychischer Ausnahmezustand",
+      "starke Agitiertheit",
+      "Hyperventilationstetanie",
+      "aggressiver Agitiertheitszustand"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "Myasthenia gravis",
+      "spinale Ataxie",
+      "zerebrale Ataxie",
+      "Alkoholintoxikation oder zentraldämpfende Pharmaka",
+      "Kind < 6 Jahre",
+      "Schwangerschaft und Stillzeit"
+    ],
+    "dosage": "Erwachsene und Jugendliche >12 Jahren: 1,0 mg p.o. (1 Schmelztablette)",
+    "applicationRoutes": [
+      "p.o. (Schmelztablette)"
+    ],
+    "searchTerms": [
+      "lorazepam",
+      "tavor",
+      "agitiertheit",
+      "hyperventilation"
+    ],
+    "notes": "Sedation soll letzte Therapieoption sein."
+  },
+  {
+    "id": "diazepam",
+    "kind": "medication",
+    "label": "Diazepam",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 88,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Diazepam lipuro",
+      "Valium",
+      "Diazepam Desitin rectal tube 5 mg",
+      "Diazepam Desitin rectal tube 10 mg"
+    ],
+    "activeIngredient": "Diazepam",
+    "drugClass": "Sedativum, Antikonvulsivum, Benzodiazepin",
+    "indications": [
+      "starke Erregungszustände (Erwachsene)",
+      "Agitiertheit im Rahmen eines ACS",
+      "anhaltende zerebrale Krampfanfälle (rektal)"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen Diazepam/Benzodiazepine/Soja/Erdnuss",
+      "Myasthenia gravis",
+      "schwere Ateminsuffizienz",
+      "akute Intoxikation mit Alkohol, Schlafmitteln, Analgetika, Psychopharmaka"
+    ],
+    "dosage": "Injektionslösung 2,5 mg, Wiederholung nach 5 Minuten möglich, Maximaldosis 5 mg; rektal Kind <15 kg 5 mg, >15 kg 10 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "rektal"
+    ],
+    "searchTerms": [
+      "diazepam",
+      "valium",
+      "krampfanfall",
+      "agitiertheit"
+    ],
+    "notes": "Rektale Applikationsschritte auf Seite 89 beschrieben."
+  },
+  {
+    "id": "midazolam",
+    "kind": "medication",
+    "label": "Midazolam",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 90,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Midazolam",
+      "Dormicum",
+      "diverse Generika"
+    ],
+    "activeIngredient": "Midazolam",
+    "drugClass": "Sedativum (Benzodiazepin)",
+    "indications": [
+      "ACS mit Agitiertheit",
+      "Erregungszustand mit erforderlicher Sedation",
+      "anhaltende Krampfanfälle",
+      "Begleitmedikation bei Esketaminanwendung"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen den Wirkstoff",
+      "Myasthenia gravis pseudoparalytica"
+    ],
+    "dosage": "Sedation Erwachsene 2 mg i.v., einmalige Wiederholung nach 5 Minuten, max. 4 mg; Krampfanfall i.n. Erwachsene 10 mg; Kinder gewichtsabhängig 2,5–10 mg i.n.; Krampfanfall i.v. Erwachsene 0,2 mg/kgKG bis max. 10 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "intranasal",
+      "i.m. (Hinweistext)"
+    ],
+    "searchTerms": [
+      "midazolam",
+      "dormicum",
+      "krampfanfall",
+      "sedation",
+      "acs agitation"
+    ],
+    "notes": "Bei i.n. nicht >1 ml pro Nasenloch; i.m.-Gabe laut Hinweis möglich."
+  },
+  {
+    "id": "clonazepam",
+    "kind": "medication",
+    "label": "Clonazepam",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 93,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "clonazepam",
+      "clonazepam"
+    ],
+    "notes": null
+  },
+  {
+    "id": "phenobarbital",
+    "kind": "medication",
+    "label": "Phenobarbital",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 94,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "phenobarbital",
+      "phenobarbital"
+    ],
+    "notes": null
+  },
+  {
+    "id": "levetiracetam",
+    "kind": "medication",
+    "label": "Levetiracetam",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 95,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "levetiracetam",
+      "levetiracetam"
+    ],
+    "notes": null
+  },
+  {
+    "id": "haloperidol",
+    "kind": "medication",
+    "label": "Haloperidol",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 96,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "haloperidol",
+      "haloperidol"
+    ],
+    "notes": null
+  },
+  {
+    "id": "promethazin",
+    "kind": "medication",
+    "label": "Promethazin",
+    "section": "Antiepileptika, Sedativa und Narkotika",
+    "sourcePage": 97,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "promethazin",
+      "promethazin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "etomidat",
+    "kind": "medication",
+    "label": "Etomidat",
+    "section": "Narkotika in der Notfallmedizin",
+    "sourcePage": 100,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "etomidat",
+      "etomidat"
+    ],
+    "notes": null
+  },
+  {
+    "id": "propofol",
+    "kind": "medication",
+    "label": "Propofol",
+    "section": "Narkotika in der Notfallmedizin",
+    "sourcePage": 101,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "propofol",
+      "propofol"
+    ],
+    "notes": null
+  },
+  {
+    "id": "succinylcholin-suxamethonium",
+    "kind": "medication",
+    "label": "Succinylcholin/Suxamethonium",
+    "section": "Muskelrelaxanzien",
+    "sourcePage": 103,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "succinylcholin-suxamethonium",
+      "succinylcholin/suxamethonium"
+    ],
+    "notes": null
+  },
+  {
+    "id": "rocuronium",
+    "kind": "medication",
+    "label": "Rocuronium",
+    "section": "Muskelrelaxanzien",
+    "sourcePage": 104,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "rocuronium",
+      "rocuronium"
+    ],
+    "notes": null
+  },
+  {
+    "id": "morphin",
+    "kind": "medication",
+    "label": "Morphin",
+    "section": "Analgetika – Schmerztherapie",
+    "sourcePage": 111,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Morphin Merck",
+      "Morphin MSI"
+    ],
+    "activeIngredient": "Morphinhydrochlorid",
+    "drugClass": "Analgetikum (BtM)",
+    "indications": [
+      "ACS mit NRS ≥ 4",
+      "Schmerzen mit NRS ≥ 4"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "GCS < 14",
+      "respiratorische Insuffizienz",
+      "SpO2 < 92 %",
+      "Bradypnoe <10/min",
+      "Bradykardie <50/min",
+      "Schwangerschaft und Stillzeit",
+      "Einnahme von MAO-Hemmern in den letzten 14 Tagen"
+    ],
+    "dosage": "2 mg alle 2 Minuten bis maximal 10 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "morphin",
+      "acs",
+      "schmerz",
+      "opioid"
+    ],
+    "notes": "Kontinuierliche Überwachung, Rückfallebenen und BtM-Dokumentation erforderlich."
+  },
+  {
+    "id": "fentanyl",
+    "kind": "medication",
+    "label": "Fentanyl",
+    "section": "Analgetika – Schmerztherapie",
+    "sourcePage": 112,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Fentanyl-Janssen",
+      "Fentanyl B. Braun",
+      "Fentanyl Rotexmedica"
+    ],
+    "activeIngredient": "Fentanyl",
+    "drugClass": "Opiatanalgetikum (BtM)",
+    "indications": [
+      "Analgetikum zur Narkoseeinleitung",
+      "Schmerzen mit NRS ≥ 4",
+      "Analgetikum"
+    ],
+    "contraindications": [
+      "bekannte Überempfindlichkeit gegen Fentanyl",
+      "fehlende Beatmungsmöglichkeit"
+    ],
+    "dosage": "Erwachsene 0,05–0,1 mg zur Analgesie, 0,2–0,3 mg zur Narkoseeinleitung; Kind 1–3 µg/kgKG",
+    "applicationRoutes": [
+      "i.v.",
+      "i.m. (möglich)"
+    ],
+    "searchTerms": [
+      "fentanyl",
+      "analgesie",
+      "narkoseeinleitung",
+      "opioid"
+    ],
+    "notes": "Ca. 100–125 mal stärker wirksam als Morphin; kontinuierliche Überwachung/BtM-Dokumentation."
+  },
+  {
+    "id": "sufentanil",
+    "kind": "medication",
+    "label": "Sufentanil",
+    "section": "Analgetika – Schmerztherapie",
+    "sourcePage": 113,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Sufenta mite",
+      "Sufentanil-hameln",
+      "Sufentanil-ratiopharm"
+    ],
+    "activeIngredient": "Sufentanil",
+    "drugClass": "Opiatanalgetikum (BtM)",
+    "indications": [
+      "Analgetikum zur Narkoseeinleitung",
+      "Schmerzen mit NRS ≥ 4",
+      "Analgetikum"
+    ],
+    "contraindications": [
+      "bekannte Überempfindlichkeit",
+      "fehlende Beatmungsmöglichkeit",
+      "Kinder <30 kgKG"
+    ],
+    "dosage": "Erwachsene 5 µg zur Analgesie, 20–30 µg zur Narkoseeinleitung; Kind >30 kgKG 0,25 µg/kgKG",
+    "applicationRoutes": [
+      "i.v."
+    ],
+    "searchTerms": [
+      "sufentanil",
+      "analgesie",
+      "narkoseeinleitung",
+      "opioid"
+    ],
+    "notes": "Ca. 1000 mal stärker wirksam als Morphin; kontinuierliche Überwachung/BtM-Dokumentation."
+  },
+  {
+    "id": "esketamin",
+    "kind": "medication",
+    "label": "Esketamin",
+    "section": "Analgetika – Schmerztherapie",
+    "sourcePage": 116,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Ketanest S",
+      "Esketamin diverse Generika"
+    ],
+    "activeIngredient": "Esketaminhydrochlorid",
+    "drugClass": "Analgosedativum, Narkoanalgetikum",
+    "indications": [
+      "traumatischer Schmerz NRS ≥ 4",
+      "Lumbago/muskuloskelettaler Schmerz NRS ≥ 4",
+      "Schmerzen unter Schrittmachertherapie bei wach werdendem Patienten",
+      "Narkoseeinleitung",
+      "Analgesie per Inhalation"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "ACS",
+      "Hypertonie >180/100 mmHg in Ruhe",
+      "Schwangerschaft und Stillzeit",
+      "Eklampsie und Präeklampsie"
+    ],
+    "dosage": "Analgesie >30 kg: i.v./i.o. 0,125 mg/kgKG, i.n./i.m. 0,5 mg/kgKG; <30 kg: i.v./i.o. 0,25 mg/kgKG, i.n./i.m. 0,5 mg/kgKG; p.i. 0,75–1,5 mg/kgKG; Narkoseeinleitung 0,5–1 mg/kgKG i.v. oder 2–4 mg/kgKG i.m.",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o.",
+      "i.m.",
+      "intranasal",
+      "inhalativ"
+    ],
+    "searchTerms": [
+      "esketamin",
+      "ketanest",
+      "trauma schmerz",
+      "analgesie",
+      "dsi"
+    ],
+    "notes": "Verschiedene Konzentrationen; große therapeutische Breite; p.i. als Alternative; Hypertonie-Kontext differenziert erläutert."
+  },
+  {
+    "id": "metamizol",
+    "kind": "medication",
+    "label": "Metamizol",
+    "section": "Analgetika – Schmerztherapie",
+    "sourcePage": 118,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Novalgin 1 g-Injektionslösung",
+      "Novaminsulfon-ratiopharm 1 g/2 ml"
+    ],
+    "activeIngredient": "Metamizol",
+    "drugClass": "Analgetikum",
+    "indications": [
+      "abdominelle Schmerzen NRS ≥ 4",
+      "kolikartige Schmerzen",
+      "sonstige Schmerzen z. B. Kopfschmerzen"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen Metamizol",
+      "Schwangerschaft/Stillzeit"
+    ],
+    "dosage": "Jugendliche/Erwachsene >53 kg: 1 g in 500 ml kristalloider Infusionslösung über 15 Minuten; >10 Jahre bis <53 kg: 0,5 g in 500 ml über 15 Minuten",
+    "applicationRoutes": [
+      "i.v."
+    ],
+    "searchTerms": [
+      "metamizol",
+      "novalgin",
+      "kolik",
+      "kopfschmerz",
+      "abdomineller schmerz"
+    ],
+    "notes": "Sicherheitsaufklärung wegen seltener Agranulozytose; bei Nierenkolik 2 g als wirksam beschrieben."
+  },
+  {
+    "id": "butylscopolamin",
+    "kind": "medication",
+    "label": "Butylscopolamin",
+    "section": "Analgetika – Schmerztherapie",
+    "sourcePage": 119,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Buscopan",
+      "BS-ratiopharm"
+    ],
+    "activeIngredient": "N-Butylscopolamin",
+    "drugClass": "Spasmolytikum",
+    "indications": [
+      "abdominelle kolikartige Schmerzen mit NRS ≥ 4"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "extreme Tachykardie oder Tachyarrhythmie",
+      "Myasthenia gravis pseudoparalytica",
+      "Ileus"
+    ],
+    "dosage": "20 mg",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "butylscopolamin",
+      "buscopan",
+      "kolik"
+    ],
+    "notes": "Bei V. a. Nierenkolik nach aktuellen Empfehlungen nicht geben."
+  },
+  {
+    "id": "ibuprofen",
+    "kind": "medication",
+    "label": "Ibuprofen",
+    "section": "Analgetika – Schmerztherapie – Antipyretika",
+    "sourcePage": 120,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Nurofen Schmerz- und Fiebersaft Erdbeer 40 mg",
+      "Nurofen Junior 60 mg Zäpfchen",
+      "Nurofen Junior 125 mg Zäpfchen"
+    ],
+    "activeIngredient": "Ibuprofen",
+    "drugClass": "NSAR, Analgetikum, Antipyretikum",
+    "indications": [
+      "Fieberkrampf bei Körpertemperatur >38,5 °C",
+      "leichte bis mittelstarke Schmerzen"
+    ],
+    "contraindications": [
+      "Allergie gegen Ibuprofen",
+      "gastrointestinale Blutungen unter Ibuprofen",
+      "schwere Dehydratation",
+      "Körpergewicht <20 kg oder <6 Jahre (Saft)",
+      "Körpergewicht <6 kg oder <3 Monate (Zäpfchen)"
+    ],
+    "dosage": "gewichts- und altersabhängig; Seite 120–121 enthält Saft- und Zäpfchen-Schema",
+    "applicationRoutes": [
+      "p.o.",
+      "rektal"
+    ],
+    "searchTerms": [
+      "ibuprofen",
+      "fieberkrampf",
+      "schmerz",
+      "nurofen"
+    ],
+    "notes": "Tageshöchstdosis 20–30 mg/kgKG in mehreren Einzeldosen."
+  },
+  {
+    "id": "paracetamol",
+    "kind": "medication",
+    "label": "Paracetamol",
+    "section": "Analgetika – Schmerztherapie – Antipyretika",
+    "sourcePage": 122,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Paracetamol 125 mg",
+      "Paracetamol 250 mg",
+      "Paracetamol 500 mg"
+    ],
+    "activeIngredient": "Paracetamol",
+    "drugClass": "Analgetikum, Antipyretikum",
+    "indications": [
+      "Fieberkrampf mit Körpertemperatur >38,5 °C",
+      "sonstige Schmerzen bei Kindern <30 kgKG",
+      "kolikartige Schmerzen bei Kindern <30 kgKG",
+      "Ko-Analgetikum bei traumatischem Schmerz bei Kindern <30 kgKG"
+    ],
+    "contraindications": [
+      "Paracetamolgabe innerhalb der letzten 8 Stunden, wenn Tageshöchstdosis >50 mg/kgKG überschritten würde"
+    ],
+    "dosage": ">5 kg bis 2 Jahre 125 mg; 2–6 Jahre 250 mg; Schulkind 500 mg",
+    "applicationRoutes": [
+      "rektal"
+    ],
+    "searchTerms": [
+      "paracetamol",
+      "fieberkrampf",
+      "kinderschmerz",
+      "zaepfchen"
+    ],
+    "notes": "Tageshöchstdosis 50 mg/kgKG; auf bereits durch Eltern gegebene Menge achten."
+  },
+  {
+    "id": "dimenhydrinat",
+    "kind": "medication",
+    "label": "Dimenhydrinat",
+    "section": "Antiemetika",
+    "sourcePage": 124,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Vomex A i.v. Injektionslösung"
+    ],
+    "activeIngredient": "Dimenhydrinat",
+    "drugClass": "Antiemetikum",
+    "indications": [
+      "massive Übelkeit"
+    ],
+    "contraindications": [
+      "Schwangerschaft nur nach Nutzen-Risiko-Abwägung",
+      "letzte Schwangerschaftswochen",
+      "Long-QT-Syndrom"
+    ],
+    "dosage": "Erwachsene/Jugendliche >14 Jahre 62 mg; Kinder 6–14 Jahre 25–50 mg; ab 6 kgKG 1,25 mg/kgKG nach Tabelle",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "dimenhydrinat",
+      "vomex",
+      "uebelkeit",
+      "antiemetikum"
+    ],
+    "notes": "Kurzinfusion in z. B. 100 ml NaCl 0,9 % zu erwägen."
+  },
+  {
+    "id": "ondansetron",
+    "kind": "medication",
+    "label": "Ondansetron",
+    "section": "Antiemetika",
+    "sourcePage": 125,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Ondansetron B. Braun",
+      "Zofran"
+    ],
+    "activeIngredient": "Ondansetron",
+    "drugClass": "Antiemetikum",
+    "indications": [
+      "massive Übelkeit und Erbrechen bei Erwachsenen",
+      "Begleitmedikation bei Morphingabe"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "Schwangerschaft/Stillzeit",
+      "bekanntes Long-QT-Syndrom"
+    ],
+    "dosage": "4 mg/2 ml",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "ondansetron",
+      "zofran",
+      "uebelkeit",
+      "morphin"
+    ],
+    "notes": "QT-Zeitverlängerung-Hinweis inklusive EKG-Orientierung."
+  },
+  {
+    "id": "granisetron",
+    "kind": "medication",
+    "label": "Granisetron",
+    "section": "Antiemetika",
+    "sourcePage": 126,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Kevatril",
+      "Granisetron HEXAL 1 mg/ml"
+    ],
+    "activeIngredient": "Granisetron",
+    "drugClass": "Antiemetikum",
+    "indications": [
+      "massive Übelkeit und Erbrechen bei Erwachsenen",
+      "Begleitmedikation bei Morphingabe"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "Schwangerschaft/Stillzeit",
+      "Kinder <2 Jahre",
+      "bekanntes Long-QT-Syndrom"
+    ],
+    "dosage": "1 mg/1 ml",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "granisetron",
+      "uebelkeit",
+      "antiemetikum"
+    ],
+    "notes": "Wirkdauer ca. 9 Stunden."
+  },
+  {
+    "id": "metoclopramid",
+    "kind": "medication",
+    "label": "Metoclopramid",
+    "section": "Antiemetika",
+    "sourcePage": 127,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Paspertin 10 mg/2 ml-Injektionslösung"
+    ],
+    "activeIngredient": "Metoclopramidhydrochlorid",
+    "drugClass": "Antiemetikum",
+    "indications": [
+      "massive Übelkeit und Erbrechen bei Erwachsenen",
+      "Begleitmedikation bei Morphingabe"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit",
+      "Schwangerschaft/Stillzeit",
+      "Morbus Parkinson",
+      "vorbekannte extrapyramidale Dyskinesien",
+      "Epilepsie",
+      "Kinder <1 Jahr"
+    ],
+    "dosage": "10 mg/2 ml",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "metoclopramid",
+      "paspertin",
+      "uebelkeit",
+      "antiemetikum"
+    ],
+    "notes": "EMA-Hinweis zu p.o.-Zubereitungen wegen Dyskinesien."
+  },
+  {
+    "id": "glucose",
+    "kind": "medication",
+    "label": "Glucose",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 128,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Glucose 20 % B. Braun Injektionslösung",
+      "Glucose 5 % B. Braun Infusionslösung"
+    ],
+    "activeIngredient": "Glucose",
+    "drugClass": "Glucoselösung",
+    "indications": [
+      "Hypoglykämie",
+      "Lösungsmittel für Medikamente bei Reanimation (insbesondere Amiodaron)"
+    ],
+    "contraindications": [
+      "im Notfall keine Einschränkungen bei korrekter Indikation"
+    ],
+    "dosage": "Erwachsene/Kind >5 Jahre: Glucose 20 % 5–10 g (25–50 ml), ggf. Wiederholung; Kinder <5 Jahre: gewichtsabhängige Tabelle Seite 128",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "glucose",
+      "hypoglykaemie",
+      "dextrose",
+      "amiodaron loesungsmittel"
+    ],
+    "notes": "Wache Patienten sollen zuckerhaltige Lösungen p.o. erhalten; regelmäßige BZ-Kontrollen; komplexe KH zur Rezidivprophylaxe."
+  },
+  {
+    "id": "glucagon",
+    "kind": "medication",
+    "label": "Glucagon",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 130,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "GlucaGen HypoKit",
+      "Baqsimi 3 mg Nasenpulver"
+    ],
+    "activeIngredient": "Glucagon",
+    "drugClass": "Blutzuckersteigerndes Hormon",
+    "indications": [
+      "Hypoglykämie"
+    ],
+    "contraindications": [
+      "Baqsimi: Kind <4 Jahre"
+    ],
+    "dosage": "GlucaGen >25 kg 1 mg i.m., <25 kg 0,5 mg i.m.; Baqsimi >4 Jahre 3 mg i.n.",
+    "applicationRoutes": [
+      "i.m.",
+      "s.c.",
+      "intranasal"
+    ],
+    "searchTerms": [
+      "glucagon",
+      "hypoglykaemie",
+      "baqsimi",
+      "glucagen"
+    ],
+    "notes": "Zusätzlicher Hinweis zur Beta-Blocker-Intoxikation mit hohen Dosierungen/Infusion; Wirkung geringer bei leeren Glykogenspeichern."
+  },
+  {
+    "id": "thiamin-vitamin-b1",
+    "kind": "medication",
+    "label": "Thiamin (Vitamin B1)",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 132,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "thiamin-vitamin-b1",
+      "thiamin (vitamin b1)"
+    ],
+    "notes": null
+  },
+  {
+    "id": "xylometazolin",
+    "kind": "medication",
+    "label": "Xylometazolin",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 133,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Otriven gegen Schnupfen 0,05 %"
+    ],
+    "activeIngredient": "Xylometazolin",
+    "drugClass": "abschwellendes Nasenspray",
+    "indications": [
+      "zusätzliche Abschwellung bei Pseudokrupp",
+      "abschwellende Wirkung bei Schwellung der Nasenschleimhäute"
+    ],
+    "contraindications": [
+      "bei richtiger Indikationsstellung keine"
+    ],
+    "dosage": "0,045 mg pro Nasenloch",
+    "applicationRoutes": [
+      "intranasal"
+    ],
+    "searchTerms": [
+      "xylometazolin",
+      "otriven",
+      "pseudokrupp"
+    ],
+    "notes": "Wirkeintritt 5–10 Minuten."
+  },
+  {
+    "id": "oxytocin",
+    "kind": "medication",
+    "label": "Oxytocin",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 134,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "oxytocin",
+      "oxytocin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "carbetocin",
+    "kind": "medication",
+    "label": "Carbetocin",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 135,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "carbetocin",
+      "carbetocin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "fenoterol-als-tokolytikum",
+    "kind": "medication",
+    "label": "Fenoterol (als Tokolytikum)",
+    "section": "Sonstige Medikamente",
+    "sourcePage": 136,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "fenoterol-als-tokolytikum",
+      "fenoterol (als tokolytikum)"
+    ],
+    "notes": null
+  },
+  {
+    "id": "aktivkohle",
+    "kind": "medication",
+    "label": "Aktivkohle",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 140,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "aktivkohle",
+      "aktivkohle"
+    ],
+    "notes": null
+  },
+  {
+    "id": "atropinsulfat-antidot",
+    "kind": "medication",
+    "label": "Atropinsulfat (Antidot)",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 141,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Atropinsulfat 100 mg (Antidot – Köhler Chemie)"
+    ],
+    "activeIngredient": "Atropinsulfat",
+    "drugClass": "Antidot",
+    "indications": [
+      "V. a. cholinerges Toxidrom",
+      "V. a. akute Alkylphosphatintoxikation",
+      "Kontakt zu Nervengiften"
+    ],
+    "contraindications": [
+      "im Notfall bei vitalen Indikationen keine Einschränkungen"
+    ],
+    "dosage": "Testdosis Erwachsene 1 mg / Kind 0,01 mg/kgKG; bei fehlendem Effekt Erwachsene 5 mg mit Wiederholung nach 10 Minuten / Kind 0,1 mg/kgKG",
+    "applicationRoutes": [
+      "i.v.",
+      "i.o."
+    ],
+    "searchTerms": [
+      "atropin antidot",
+      "organophosphat",
+      "nervengift",
+      "cholinerges toxidrom"
+    ],
+    "notes": "Bei schweren Intoxikationen deutlich >100 mg bei Erwachsenen möglich; Eigenschutz beachten; Obidoxim nach Atropin."
+  },
+  {
+    "id": "naloxon",
+    "kind": "medication",
+    "label": "Naloxon",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 144,
+    "detailsAvailable": true,
+    "tradeNames": [
+      "Narcanti",
+      "Naloxon B. Braun",
+      "Naloxon-Actavis",
+      "Naloxon-ratiopharm"
+    ],
+    "activeIngredient": "Naloxon",
+    "drugClass": "Antidot bei Opiatintoxikationen",
+    "indications": [
+      "vital bedrohter Patient mit V. a. Opiatintoxikation",
+      "Reanimation mit V. a. Opiatintoxikation",
+      "Überdosierung mit Opiaten",
+      "Komplikationen bei Opiatmedikation"
+    ],
+    "contraindications": [
+      "Überempfindlichkeit gegen Naloxon"
+    ],
+    "dosage": "0,4 mg i.v.; 0,8 mg i.m.; 2,0 mg i.n.; ggf. Wiederholung nach 3–5 Minuten",
+    "applicationRoutes": [
+      "i.v.",
+      "i.m.",
+      "intranasal"
+    ],
+    "searchTerms": [
+      "naloxon",
+      "opiatintoxikation",
+      "opioid overdose",
+      "antidot"
+    ],
+    "notes": "Rebound-Phänomen möglich; i.v. außerhalb Reanimation titriert 0,1 mg/2,5 ml nach Verdünnung."
+  },
+  {
+    "id": "toloniumchlorid",
+    "kind": "medication",
+    "label": "Toloniumchlorid",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 146,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "toloniumchlorid",
+      "toloniumchlorid"
+    ],
+    "notes": null
+  },
+  {
+    "id": "4-dmap",
+    "kind": "medication",
+    "label": "4-DMAP",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 148,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "4-dmap",
+      "4-dmap"
+    ],
+    "notes": null
+  },
+  {
+    "id": "natriumthiosulfat-10-prozent",
+    "kind": "medication",
+    "label": "Natriumthiosulfat 10 %",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 149,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "natriumthiosulfat-10-prozent",
+      "natriumthiosulfat 10 %"
+    ],
+    "notes": null
+  },
+  {
+    "id": "hydroxocobalamin",
+    "kind": "medication",
+    "label": "Hydroxocobalamin",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 150,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "hydroxocobalamin",
+      "hydroxocobalamin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "physostigmin",
+    "kind": "medication",
+    "label": "Physostigmin",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 151,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "physostigmin",
+      "physostigmin"
+    ],
+    "notes": null
+  },
+  {
+    "id": "flumazenil",
+    "kind": "medication",
+    "label": "Flumazenil",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 152,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "flumazenil",
+      "flumazenil"
+    ],
+    "notes": null
+  },
+  {
+    "id": "natriumhydrogencarbonat",
+    "kind": "medication",
+    "label": "Natriumhydrogencarbonat",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 153,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "natriumhydrogencarbonat",
+      "natriumhydrogencarbonat"
+    ],
+    "notes": null
+  },
+  {
+    "id": "calciumgluconat-10-prozent",
+    "kind": "medication",
+    "label": "Calciumgluconat 10 %",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 154,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "calciumgluconat-10-prozent",
+      "calciumgluconat 10 %"
+    ],
+    "notes": null
+  },
+  {
+    "id": "simeticon",
+    "kind": "medication",
+    "label": "Simeticon",
+    "section": "Vergiftungen und Antidote",
+    "sourcePage": 155,
+    "detailsAvailable": false,
+    "tradeNames": [],
+    "activeIngredient": null,
+    "drugClass": null,
+    "indications": [],
+    "contraindications": [],
+    "dosage": null,
+    "applicationRoutes": [],
+    "searchTerms": [
+      "simeticon",
+      "simeticon"
+    ],
+    "notes": null
+  }
+]

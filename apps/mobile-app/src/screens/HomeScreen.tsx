@@ -18,8 +18,8 @@ import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel
 import { getAlgorithmById } from '@/data/contentIndex';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
-import { useFavoritesSorted } from '@/state/favoritesStore';
-import { useRecent } from '@/state/recentStore';
+import { parseFavoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
+import { useRecentStore } from '@/state/recentStore';
 import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
@@ -152,8 +152,24 @@ export function HomeScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
   const navigation = useNavigation<HomeScreenNav>();
-  const favorites = useFavoritesSorted();
-  const recentItems = useRecent();
+  const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
+  const recentItems = useRecentStore((state) => state.recentItems);
+
+  const favorites = useMemo(() => {
+    return favoriteIds
+      .map((contentKey, index) => {
+        const parsed = parseFavoriteContentKey(contentKey);
+        if (!parsed) return null;
+        return {
+          id: parsed.id,
+          kind: parsed.kind,
+          timestamp: favoriteIds.length - index,
+        };
+      })
+      .filter((record): record is { id: string; kind: ContentKind; timestamp: number } =>
+        record != null,
+      );
+  }, [favoriteIds]);
 
   const openContentDetail = useCallback(
     (kind: ContentKind, id: string) => {

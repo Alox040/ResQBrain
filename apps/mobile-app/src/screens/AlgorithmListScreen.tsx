@@ -22,7 +22,10 @@ import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
 
-type Nav = NativeStackNavigationProp<AlgorithmStackParamList, 'AlgorithmList'>;
+type Nav = NativeStackNavigationProp<
+  AlgorithmStackParamList,
+  'AlgorithmListScreen'
+>;
 
 const algorithmListKeyExtractor = (item: AlgorithmViewModel): string =>
   item.id;

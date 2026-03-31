@@ -16,7 +16,7 @@ import { ScreenContainer } from '@/components/layout';
 import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
 import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
-import { useFavoriteToggle } from '@/state/favoritesStore';
+import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
 import type { MedicationStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
@@ -55,16 +55,46 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
   const medication = getMedicationById(route.params.medicationId);
   const tabNavigation =
     navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
-  const { isFavorite, toggleFavorite: toggleFavoriteItem } = useFavoriteToggle(
-    medication?.id ?? route.params.medicationId,
+  const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+  const contentKey = favoriteContentKey(
     'medication',
+    medication?.id ?? route.params.medicationId,
   );
+  const isFavorite = favoriteIds.includes(contentKey);
   const headerTitle = medication
     ? mapMedicationToViewModel(medication).label
     : 'Medikament';
   const onPressFavorite = useCallback(() => {
-    void toggleFavoriteItem();
-  }, [toggleFavoriteItem]);
+    toggleFavorite(contentKey);
+  }, [toggleFavorite, contentKey]);
+
+  const headerRight = useCallback(() => {
+    if (medication == null) return undefined;
+    return (
+      <Pressable
+        onPress={onPressFavorite}
+        hitSlop={10}
+        accessibilityRole="button"
+        accessibilityLabel={
+          isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
+        }
+        style={{
+          marginRight: 4,
+          minWidth: HEADER_HIT,
+          minHeight: HEADER_HIT,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Ionicons
+          name={isFavorite ? 'star' : 'star-outline'}
+          size={HEADER_ICON_SIZE}
+          color="#fbbf24"
+        />
+      </Pressable>
+    );
+  }, [medication, isFavorite, onPressFavorite]);
 
   const openAlgorithm = (algorithmId: string) => {
     if (!isValidContentId(algorithmId)) {
@@ -89,36 +119,9 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: headerTitle,
-      headerRight:
-        medication != null
-          ? () => (
-              <Pressable
-                onPress={onPressFavorite}
-                hitSlop={10}
-                accessibilityRole="button"
-                accessibilityLabel={
-                  isFavorite
-                    ? 'Aus Favoriten entfernen'
-                    : 'Zu Favoriten hinzufügen'
-                }
-                style={{
-                  marginRight: 4,
-                  minWidth: HEADER_HIT,
-                  minHeight: HEADER_HIT,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Ionicons
-                  name={isFavorite ? 'star' : 'star-outline'}
-                  size={HEADER_ICON_SIZE}
-                  color="#fbbf24"
-                />
-              </Pressable>
-            )
-          : undefined,
+      headerRight,
     });
-  }, [navigation, headerTitle, medication?.id, isFavorite, onPressFavorite]);
+  }, [navigation, headerTitle, headerRight]);
 
   React.useEffect(() => {
     if (medication) {

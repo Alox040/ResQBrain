@@ -1,11 +1,7 @@
 import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
-import {
-  persist,
-  type PersistStorage,
-  type StorageValue,
-} from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import type { ContentKind } from '@/types/content';
 
 export type FavoriteRecord = {
@@ -16,13 +12,12 @@ export type FavoriteRecord = {
 };
 
 type FavoritesPersistedState = {
-  favoriteIds: Set<string>;
+  favoriteIds: string[];
 };
 
 type FavoritesStore = FavoritesPersistedState & {
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
-  getFavorites: () => string[];
 };
 
 const FAVORITES_STORAGE_KEY = '@resqbrain/local/favorites';
@@ -59,81 +54,43 @@ function normalizeFavoriteId(value: string): string | null {
   return parsed ? favoriteKey(parsed.id, parsed.kind) : null;
 }
 
-function normalizeFavoriteIds(values: Iterable<string>): Set<string> {
-  const normalized = new Set<string>();
+function normalizeFavoriteIds(values: Iterable<string>): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
 
-  for (const value of values) {
-    const normalizedId = normalizeFavoriteId(value);
+  // Treat later occurrences as newer; emit latest-first.
+  const array = Array.isArray(values) ? values : [...values];
+  for (let i = array.length - 1; i >= 0; i -= 1) {
+    const normalizedId = normalizeFavoriteId(array[i] ?? '');
     if (!normalizedId) continue;
-    if (normalized.has(normalizedId)) {
-      normalized.delete(normalizedId);
-    }
-    normalized.add(normalizedId);
+    if (seen.has(normalizedId)) continue;
+    seen.add(normalizedId);
+    out.push(normalizedId);
+    if (out.length >= MAX_FAVORITES) break;
   }
 
-  while (normalized.size > MAX_FAVORITES) {
-    const oldest = normalized.values().next().value;
-    if (typeof oldest !== 'string') break;
-    normalized.delete(oldest);
-  }
-
-  return normalized;
+  return out;
 }
 
-function parsePersistedFavorites(raw: unknown): Set<string> {
+function normalizePersistedFavoriteIds(raw: unknown): string[] {
   if (Array.isArray(raw)) {
     return normalizeFavoriteIds(
       raw.filter((value): value is string => typeof value === 'string'),
     );
   }
 
-  if (!raw || typeof raw !== 'object') {
-    return new Set<string>();
-  }
-
-  const record = raw as Record<string, unknown>;
-  const state = record.state;
-  if (!state || typeof state !== 'object') {
-    return new Set<string>();
-  }
-
-  const favoriteIdsRaw = (state as Record<string, unknown>).favoriteIds;
-  if (!Array.isArray(favoriteIdsRaw)) {
-    return new Set<string>();
-  }
-
-  return normalizeFavoriteIds(
-    favoriteIdsRaw.filter((value): value is string => typeof value === 'string'),
-  );
-}
-
-const favoritesStorage: PersistStorage<FavoritesPersistedState> = {
-  getItem: async (name: string) => {
-    const raw = await AsyncStorage.getItem(name);
-    if (!raw) return null;
-
+  // Legacy format: we previously persisted the array directly.
+  if (typeof raw === 'string') {
     try {
-      return {
-        state: {
-          favoriteIds: parsePersistedFavorites(JSON.parse(raw) as unknown),
-        },
-        version: 1,
-      } satisfies StorageValue<FavoritesPersistedState>;
+      const parsed = JSON.parse(raw) as unknown;
+      if (Array.isArray(parsed)) return normalizePersistedFavoriteIds(parsed);
     } catch {
-      return null;
+      // ignore
     }
-  },
-  setItem: async (
-    name: string,
-    value: StorageValue<FavoritesPersistedState>,
-  ) => {
-    const normalized = normalizeFavoriteIds(value.state.favoriteIds);
-    await AsyncStorage.setItem(name, JSON.stringify([...normalized]));
-  },
-  removeItem: async (name: string) => {
-    await AsyncStorage.removeItem(name);
-  },
-};
+  }
+
+  return [];
+}
 
 export const useFavoritesStore = create<FavoritesStore>()(
   persist(
@@ -145,43 +102,43 @@ export const useFavoritesStore = create<FavoritesStore>()(
       ) => void,
       get: () => FavoritesStore,
     ) => ({
-      favoriteIds: new Set<string>(),
+      favoriteIds: [],
       toggleFavorite: (id: string) => {
         const normalizedId = normalizeFavoriteId(id);
         if (!normalizedId) return;
 
         set((state: FavoritesStore) => {
-          const next = new Set(state.favoriteIds);
-          if (next.has(normalizedId)) {
-            next.delete(normalizedId);
-          } else {
-            next.add(normalizedId);
-          }
-
           return {
-            favoriteIds: normalizeFavoriteIds(next),
+            favoriteIds: state.favoriteIds.includes(normalizedId)
+              ? state.favoriteIds.filter((existing) => existing !== normalizedId)
+              : [normalizedId, ...state.favoriteIds].slice(0, MAX_FAVORITES),
           };
         });
       },
       isFavorite: (id: string) => {
         const normalizedId = normalizeFavoriteId(id);
-        return normalizedId ? get().favoriteIds.has(normalizedId) : false;
+        return normalizedId ? get().favoriteIds.includes(normalizedId) : false;
       },
-      getFavorites: () => [...get().favoriteIds].reverse(),
     }),
     {
       name: FAVORITES_STORAGE_KEY,
       version: 1,
-      storage: favoritesStorage,
+      storage: createJSONStorage(() => AsyncStorage),
       partialize: (state: FavoritesStore) => ({
         favoriteIds: state.favoriteIds,
       }),
+      migrate: (persistedState: unknown, _version: number) => {
+        const record = persistedState as Partial<FavoritesPersistedState> | null;
+        return {
+          favoriteIds: normalizePersistedFavoriteIds(record?.favoriteIds),
+        } satisfies FavoritesPersistedState;
+      },
     },
   ),
 );
 
 export function getFavorites(): string[] {
-  return useFavoritesStore.getState().getFavorites();
+  return useFavoritesStore.getState().favoriteIds;
 }
 
 /** @deprecated Prefer `getFavorites`. */
@@ -220,9 +177,7 @@ export function useFavorites(): FavoritesStore {
 }
 
 export function useFavoritesSorted(): FavoriteRecord[] {
-  const favoriteIds = useFavoritesStore((state: FavoritesStore) =>
-    state.getFavorites(),
-  );
+  const favoriteIds = useFavoritesStore((state: FavoritesStore) => state.favoriteIds);
   return toFavoriteRecords(favoriteIds);
 }
 

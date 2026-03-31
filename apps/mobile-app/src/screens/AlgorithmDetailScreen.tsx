@@ -17,7 +17,7 @@ import { ScreenContainer } from '@/components/layout';
 import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
 import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
-import { useFavoriteToggle } from '@/state/favoritesStore';
+import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
 import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
@@ -48,50 +48,53 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const algorithm = getAlgorithmById(route.params.algorithmId);
   const tabNavigation =
     navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
-  const { isFavorite, toggleFavorite: toggleFavoriteItem } = useFavoriteToggle(
-    algorithm?.id ?? route.params.algorithmId,
+  const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+  const contentKey = favoriteContentKey(
     'algorithm',
+    algorithm?.id ?? route.params.algorithmId,
   );
+  const isFavorite = favoriteIds.includes(contentKey);
   const headerTitle = algorithm
     ? mapAlgorithmToViewModel(algorithm).label
     : 'Algorithmus';
   const onPressFavorite = useCallback(() => {
-    void toggleFavoriteItem();
-  }, [toggleFavoriteItem]);
+    toggleFavorite(contentKey);
+  }, [toggleFavorite, contentKey]);
+
+  const headerRight = useCallback(() => {
+    if (algorithm == null) return undefined;
+    return (
+      <Pressable
+        onPress={onPressFavorite}
+        hitSlop={10}
+        accessibilityRole="button"
+        accessibilityLabel={
+          isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
+        }
+        style={{
+          marginRight: 4,
+          minWidth: HEADER_HIT,
+          minHeight: HEADER_HIT,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Ionicons
+          name={isFavorite ? 'star' : 'star-outline'}
+          size={HEADER_ICON_SIZE}
+          color="#fbbf24"
+        />
+      </Pressable>
+    );
+  }, [algorithm, isFavorite, onPressFavorite]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: headerTitle,
-      headerRight:
-        algorithm != null
-          ? () => (
-              <Pressable
-                onPress={onPressFavorite}
-                hitSlop={10}
-                accessibilityRole="button"
-                accessibilityLabel={
-                  isFavorite
-                    ? 'Aus Favoriten entfernen'
-                    : 'Zu Favoriten hinzufügen'
-                }
-                style={{
-                  marginRight: 4,
-                  minWidth: HEADER_HIT,
-                  minHeight: HEADER_HIT,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Ionicons
-                  name={isFavorite ? 'star' : 'star-outline'}
-                  size={HEADER_ICON_SIZE}
-                  color="#fbbf24"
-                />
-              </Pressable>
-            )
-          : undefined,
+      headerRight,
     });
-  }, [navigation, headerTitle, algorithm?.id, isFavorite, onPressFavorite]);
+  }, [navigation, headerTitle, headerRight]);
 
   React.useEffect(() => {
     if (algorithm) {
