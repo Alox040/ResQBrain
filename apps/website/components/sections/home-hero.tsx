@@ -1,6 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import heroBackground from "@/../docs/sources/resqbrain-hero.png";
-
 import { SurveyCtaLink } from "@/components/links/survey-cta-link";
 import { Container } from "@/components/ui/container";
 import { FeedbackButton } from "@/components/ui/feedback-button";
@@ -19,23 +18,23 @@ export function HomeHero() {
   return (
     <section
       id="top"
-      className={`${scrollMarginUnderHeader} border-b border-[var(--color-border)]/80 ${sectionPaddingY}`}
+      className={`${scrollMarginUnderHeader} relative overflow-hidden border-b border-[var(--color-border)]/80 ${sectionPaddingY}`}
       style={{
         background: "linear-gradient(to bottom, #F8FAFC, #FFFFFF)",
       }}
     >
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-500/5 to-blue-500/5" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 hidden lg:block w-[42rem] xl:w-[52rem] 2xl:w-[64rem]">
+        <Image
+          src="/images/resqbrain-hero.jpg"
+          alt=""
+          fill
+          priority
+          className="object-contain object-right opacity-[0.08] blur-sm [mask-image:linear-gradient(to_left,black,transparent)]"
+        />
+      </div>
       <Container>
         <div className="relative">
-          <div
-            className="pointer-events-none absolute inset-0 -z-10 hidden lg:block"
-            style={{
-              backgroundImage: `url(${heroBackground.src})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right center",
-              backgroundSize: "contain",
-              opacity: 0.08,
-            }}
-          />
           <p className={eyebrowClass}>ResQBrain · in Arbeit</p>
           <h1
             className="mt-3 max-w-[40rem] text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:mt-3.5 sm:text-[2.125rem] sm:leading-tight"
