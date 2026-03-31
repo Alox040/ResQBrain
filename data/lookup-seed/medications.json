@@ -93,7 +93,7 @@
       "dormicum",
       "benzodiazepine"
     ],
-    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.\n\nRechner-Hinweis (nur Orientierung, verbindlich ist das Handbuch): 0,1 mg/kg i.v.; min. 0,5 mg; max. 5 mg.",
     "relatedAlgorithmIds": [
       "alg-krampfanfall"
     ],
@@ -114,7 +114,7 @@
       "esketamin",
       "ketanest"
     ],
-    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.\n\nRechner-Hinweis (nur Orientierung): 0,5 mg/kg i.v.; min. 10 mg; max. 50 mg.",
     "relatedAlgorithmIds": [],
     "notes": "Lesetext ohne Rechner; Kombination mit Benzodiazepinen nach lokalem Protokoll."
   },
@@ -131,7 +131,7 @@
       "fentanil",
       "opioid"
     ],
-    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.",
+    "dosage": "Dosis und Darreichungsform ausschließlich nach freigegebenem Medikamentenhandbuch der Organisation.\n\nRechner-Hinweis (nur Orientierung): 1 µg/kg i.v. Einzelbolus; min. 25 µg; max. 100 µg.",
     "relatedAlgorithmIds": [],
     "notes": "Lesetext ohne Rechner; Atemdepression möglich — Monitoring und Antagonist (Naloxon) vorhalten."
   },

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SurveyCtaLink } from "@/components/links/survey-cta-link";
 import { SimpleDocument } from "@/components/pages/simple-document";
 import {
+  firstSurveyResultsUrlFromCode,
   hasPublishedSurveyUrl,
   surveyClosedDocumentationUrlFromCode,
 } from "@/lib/public-config";
@@ -71,6 +72,14 @@ export default function MitwirkungPage() {
           Eine frühere Erhebung ist beendet; neue Antworten sind dort nicht mehr möglich. Der Link
           dient zur Transparenz über die verwendete Formulierung (Microsoft Forms).
         </p>
+        <a
+          href={firstSurveyResultsUrlFromCode}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-1 block text-xs text-muted-foreground hover:underline"
+        >
+          Ergebnisse der ersten Umfrage ansehen
+        </a>
         <p>
           <a
             href={surveyClosedDocumentationUrlFromCode}

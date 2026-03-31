@@ -1,6 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
+import { Pressable } from 'react-native';
 import {
   FlatList,
   type ListRenderItemInfo,
@@ -19,7 +21,7 @@ import { medications } from '@/data/contentIndex';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import type { Medication } from '@/types/content';
 import { TAG_CONFIG } from '@/utils/tagConfig';
-import { SPACING } from '@/theme';
+import { COLORS, SPACING } from '@/theme';
 
 type Nav = NativeStackNavigationProp<MedicationStackParamList, 'MedicationList'>;
 
@@ -60,6 +62,22 @@ function MedicationListHeader() {
 
 export function MedicationListScreen() {
   const navigation = useNavigation<Nav>();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable
+          onPress={() => navigation.navigate('DoseCalculator')}
+          hitSlop={12}
+          accessibilityRole="button"
+          accessibilityLabel="Dosisrechner öffnen"
+          style={{ marginRight: 4 }}
+        >
+          <Ionicons name="calculator-outline" size={26} color="#f9fafb" />
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
 
   const handlePress = useCallback(
     (medicationId: string) => {

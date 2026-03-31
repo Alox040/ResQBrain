@@ -15,6 +15,10 @@ export const surveyPublishedUrlFromCode = "https://forms.cloud.microsoft/r/tw508
  */
 export const surveyClosedDocumentationUrlFromCode = "https://forms.cloud.microsoft/r/quaHYEbjAC";
 
+/** Öffentliche Zusammenfassung / Datei zu den Ergebnissen der ersten (abgeschlossenen) Umfrage. */
+export const firstSurveyResultsUrlFromCode =
+  "https://drive.google.com/file/d/1uKMuiNduTUMstE_5W3EmHEzpnGnL5n6_/view?usp=sharing";
+
 function readEnvSurveyUrl(): string {
   if (typeof process === "undefined") return "";
   return (process.env.NEXT_PUBLIC_RESQBRAIN_SURVEY_URL ?? "").trim();

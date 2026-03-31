@@ -1,13 +1,91 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { SectionHeader } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
-import { algorithms, medications } from '@/data/contentIndex';
+import {
+  algorithms,
+  getAlgorithmById,
+  getMedicationById,
+  medications,
+} from '@/data/contentIndex';
+import { useFavoritesSorted } from '@/features/favorites/favoritesStore';
+import { useHistorySorted } from '@/features/history/historyStore';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
+import type { ContentKind } from '@/types/content';
 import { CARD, COLORS, SPACING, TYPOGRAPHY } from '@/theme';
+
+const H_CARD_MIN_WIDTH = 292;
+const H_CARD_MIN_HEIGHT = 124;
+
+function typeLabelDe(kind: ContentKind): string {
+  return kind === 'medication' ? 'Medikament' : 'Algorithmus';
+}
+
+function resolveContentLabel(id: string, kind: ContentKind): string {
+  const entity =
+    kind === 'medication'
+      ? getMedicationById(id)
+      : getAlgorithmById(id);
+  return entity?.label ?? 'Nicht im Bundle';
+}
+
+type HomeCarouselCardProps = {
+  label: string;
+  kind: ContentKind;
+  onPress: () => void;
+};
+
+function HomeCarouselCard({ label, kind, onPress }: HomeCarouselCardProps) {
+  const t = typeLabelDe(kind);
+  const tone =
+    kind === 'medication'
+      ? { pillBg: '#dbeafe', pillFg: '#1e40af', ring: '#93c5fd' }
+      : { pillBg: '#ede9fe', pillFg: '#5b21b6', ring: '#c4b5fd' };
+
+  return (
+    <Pressable
+      onPress={onPress}
+      hitSlop={8}
+      style={({ pressed }) => [
+        styles.hCard,
+        { borderColor: tone.ring },
+        pressed ? styles.hCardPressed : null,
+      ]}
+      accessibilityRole="button"
+      accessibilityLabel={`${label}. ${t}. Detail öffnen.`}
+    >
+      <View
+        style={[styles.hCardTypePill, { backgroundColor: tone.pillBg }]}
+        importantForAccessibility="no"
+      >
+        <Text style={[styles.hCardTypeText, { color: tone.pillFg }]}>
+          {t}
+        </Text>
+      </View>
+      <Text style={styles.hCardLabel} numberOfLines={2}>
+        {label}
+      </Text>
+      <View style={styles.hCardFooter} importantForAccessibility="no">
+        <Text style={styles.hCardCta}>Antippen zum Öffnen</Text>
+        <Ionicons
+          name="chevron-forward"
+          size={24}
+          color={COLORS.primary}
+          accessibilityElementsHidden
+        />
+      </View>
+    </Pressable>
+  );
+}
 
 type QuickItem = {
   key: string;
@@ -22,6 +100,25 @@ type QuickItem = {
 
 export function HomeScreen() {
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const favorites = useFavoritesSorted();
+  const recentHistory = useHistorySorted();
+
+  const openContentDetail = useCallback(
+    (kind: ContentKind, id: string) => {
+      if (kind === 'medication') {
+        navigation.navigate('MedicationList', {
+          screen: 'MedicationDetail',
+          params: { medicationId: id },
+        });
+        return;
+      }
+      navigation.navigate('AlgorithmList', {
+        screen: 'AlgorithmDetail',
+        params: { algorithmId: id },
+      });
+    },
+    [navigation],
+  );
 
   const medCount = medications.length;
   const algoCount = algorithms.length;
@@ -48,6 +145,17 @@ export function HomeScreen() {
       backgroundColor: '#ccfbf1',
       navigate: () =>
         navigation.navigate('MedicationList', { screen: 'MedicationList' }),
+    },
+    {
+      key: 'dose',
+      title: 'Dosisrechner',
+      subtitle:
+        'Gewicht in kg — Orientierung aus mg/kg- oder µg/kg-Zeilen im Dosistext',
+      icon: 'calculator-outline',
+      iconColor: '#6d28d9',
+      backgroundColor: '#ede9fe',
+      navigate: () =>
+        navigation.navigate('MedicationList', { screen: 'DoseCalculator' }),
     },
     {
       key: 'algo',
@@ -103,9 +211,77 @@ export function HomeScreen() {
 
         <View style={styles.sectionBlock}>
           <SectionHeader
-            title="Drei Kurzwege"
+            title="Favoriten"
             size="comfortable"
-            description="Gleiche Ziele wie unten in der Navigation — hier zum schnellen Antippen."
+            description="Schnellzugriff — horizontal wischen, große Kacheln zum Antippen."
+          />
+          {favorites.length === 0 ? (
+            <View style={styles.emptyStrip}>
+              <Text style={styles.emptyStripText}>
+                Noch keine Favoriten. Auf der Detailseite den Stern in der
+                Kopfzeile nutzen.
+              </Text>
+            </View>
+          ) : (
+            <ScrollView
+              horizontal
+              nestedScrollEnabled
+              showsHorizontalScrollIndicator
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={styles.hScrollContent}
+              accessibilityRole="list"
+            >
+              {favorites.map((item) => (
+                <HomeCarouselCard
+                  key={`fav-${item.kind}-${item.id}`}
+                  label={resolveContentLabel(item.id, item.kind)}
+                  kind={item.kind}
+                  onPress={() => openContentDetail(item.kind, item.id)}
+                />
+              ))}
+            </ScrollView>
+          )}
+        </View>
+
+        <View style={styles.sectionBlock}>
+          <SectionHeader
+            title="Zuletzt geöffnet"
+            size="comfortable"
+            description="Letzte Detailseiten — zuerst das Aktuellste."
+          />
+          {recentHistory.length === 0 ? (
+            <View style={styles.emptyStrip}>
+              <Text style={styles.emptyStripText}>
+                Noch kein Verlauf. Öffne ein Medikament oder einen Algorithmus —
+                es erscheint dann hier.
+              </Text>
+            </View>
+          ) : (
+            <ScrollView
+              horizontal
+              nestedScrollEnabled
+              showsHorizontalScrollIndicator
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={styles.hScrollContent}
+              accessibilityRole="list"
+            >
+              {recentHistory.map((item) => (
+                <HomeCarouselCard
+                  key={`hist-${item.kind}-${item.id}`}
+                  label={resolveContentLabel(item.id, item.kind)}
+                  kind={item.kind}
+                  onPress={() => openContentDetail(item.kind, item.id)}
+                />
+              ))}
+            </ScrollView>
+          )}
+        </View>
+
+        <View style={styles.sectionBlock}>
+          <SectionHeader
+            title="Kurzwege"
+            size="comfortable"
+            description="Suche, Listen, Dosisrechner — gleiche Ziele wie in der unteren Navigation."
           />
 
           <View style={styles.quickList}>
@@ -322,5 +498,70 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     color: COLORS.textMuted,
+  },
+  hScrollContent: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    paddingVertical: SPACING.gapSm,
+    paddingRight: SPACING.gapSm,
+    gap: SPACING.gapMd,
+  },
+  hCard: {
+    minWidth: H_CARD_MIN_WIDTH,
+    minHeight: H_CARD_MIN_HEIGHT,
+    padding: SPACING.screenPadding,
+    paddingVertical: 18,
+    borderRadius: SPACING.radius,
+    backgroundColor: COLORS.surface,
+    borderWidth: 2,
+    justifyContent: 'space-between',
+  },
+  hCardPressed: {
+    backgroundColor: COLORS.primaryMutedBg,
+  },
+  hCardTypePill: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+  },
+  hCardTypeText: {
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    textTransform: 'uppercase',
+  },
+  hCardLabel: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: COLORS.text,
+    lineHeight: 26,
+    marginTop: SPACING.gapSm,
+    flexShrink: 1,
+  },
+  hCardFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: SPACING.gapMd,
+  },
+  hCardCta: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.primary,
+  },
+  emptyStrip: {
+    paddingVertical: 20,
+    paddingHorizontal: SPACING.screenPadding,
+    borderRadius: SPACING.radius,
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  emptyStripText: {
+    ...TYPOGRAPHY.body,
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#374151',
   },
 });

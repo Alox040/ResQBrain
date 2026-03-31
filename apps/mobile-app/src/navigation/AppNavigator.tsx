@@ -1,10 +1,14 @@
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { AlgorithmDetailScreen } from '@/screens/AlgorithmDetailScreen';
 import { MedicationDetailScreen } from '@/screens/MedicationDetailScreen';
+import { DoseCalculatorScreen } from '@/screens/DoseCalculatorScreen';
 import { AlgorithmListScreen } from '@/screens/AlgorithmListScreen';
+import { FavoritesScreen } from '@/screens/FavoritesScreen';
+import { HistoryScreen } from '@/screens/HistoryScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { MedicationListScreen } from '@/screens/MedicationListScreen';
 import { SearchScreen } from '@/screens/SearchScreen';
@@ -14,6 +18,7 @@ export type MedicationStackParamList = {
   MedicationDetail: {
     medicationId: string;
   };
+  DoseCalculator: undefined;
 };
 
 export type AlgorithmStackParamList = {
@@ -26,6 +31,8 @@ export type AlgorithmStackParamList = {
 export type RootTabParamList = {
   Home: undefined;
   Search: undefined;
+  Favorites: undefined;
+  History: undefined;
   MedicationList: NavigatorScreenParams<MedicationStackParamList>;
   AlgorithmList: NavigatorScreenParams<AlgorithmStackParamList>;
 };
@@ -60,6 +67,11 @@ function MedicationStackNavigator() {
         name="MedicationDetail"
         component={MedicationDetailScreen}
         options={{ title: 'Medikament' }}
+      />
+      <MedicationStack.Screen
+        name="DoseCalculator"
+        component={DoseCalculatorScreen}
+        options={{ title: 'Dosisrechner' }}
       />
     </MedicationStack.Navigator>
   );
@@ -105,6 +117,26 @@ export function AppNavigator() {
         name="Search"
         component={SearchScreen}
         options={{ title: 'Suche' }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          title: 'Favoriten',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star" size={size ?? 24} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{
+          title: 'Verlauf',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="time-outline" size={size ?? 24} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name="MedicationList"

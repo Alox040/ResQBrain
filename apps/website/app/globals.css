@@ -32,6 +32,7 @@
   --color-background: var(--color-background);
   --color-foreground: var(--color-foreground);
   --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted);
   --color-border: var(--color-border);
   --color-primary: var(--color-primary);
   --color-primary-hover: var(--color-primary-hover);

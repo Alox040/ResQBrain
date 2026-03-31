@@ -1,7 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
   DetailBodyText,
   DetailCrossRefList,
@@ -14,6 +15,8 @@ import {
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
 import { getAlgorithmById, getMedicationById } from '@/data/contentIndex';
+import { useFavoriteToggle } from '@/features/favorites/favoritesStore';
+import { recordHistoryOpen } from '@/features/history/historyStore';
 import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
 
@@ -41,10 +44,44 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const algorithm = getAlgorithmById(route.params.algorithmId);
   const tabNavigation =
     navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
+  const { isFavorite, toggleFavorite: toggleFavoriteItem } = useFavoriteToggle(
+    algorithm?.id ?? route.params.algorithmId,
+    'algorithm',
+  );
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({ title: algorithm?.label ?? 'Algorithmus' });
-  }, [navigation, algorithm?.label]);
+    navigation.setOptions({
+      title: algorithm?.label ?? 'Algorithmus',
+      headerRight:
+        algorithm != null
+          ? () => (
+              <Pressable
+                onPress={() => void toggleFavoriteItem()}
+                hitSlop={12}
+                accessibilityRole="button"
+                accessibilityLabel={
+                  isFavorite
+                    ? 'Aus Favoriten entfernen'
+                    : 'Zu Favoriten hinzufügen'
+                }
+                style={{ marginRight: 4 }}
+              >
+                <Ionicons
+                  name={isFavorite ? 'star' : 'star-outline'}
+                  size={24}
+                  color="#fbbf24"
+                />
+              </Pressable>
+            )
+          : undefined,
+    });
+  }, [navigation, algorithm, isFavorite, toggleFavoriteItem]);
+
+  React.useEffect(() => {
+    if (algorithm) {
+      void recordHistoryOpen(algorithm.id, 'algorithm');
+    }
+  }, [algorithm?.id]);
 
   if (!algorithm) {
     return (
