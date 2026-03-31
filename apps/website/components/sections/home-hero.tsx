@@ -23,6 +23,15 @@ export function HomeHero() {
         background: "linear-gradient(to bottom, #F8FAFC, #FFFFFF)",
       }}
     >
+      <div className="pointer-events-none absolute top-0 left-0 hidden h-[420px] w-[420px] lg:block xl:h-[480px] xl:w-[480px]">
+        <Image
+          src="/svgs/patterns/pattern-07.svg"
+          alt=""
+          fill
+          loading="lazy"
+          className="object-contain object-left-top opacity-[0.035]"
+        />
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-red-500/5 to-blue-500/5" />
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden lg:block w-[42rem] xl:w-[52rem] 2xl:w-[64rem]">
         <Image
@@ -34,7 +43,7 @@ export function HomeHero() {
         />
       </div>
       <Container>
-        <div className="relative">
+        <div className="relative z-10">
           <p className={eyebrowClass}>ResQBrain · in Arbeit</p>
           <h1
             className="mt-3 max-w-[40rem] text-[1.75rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:mt-3.5 sm:text-[2.125rem] sm:leading-tight"

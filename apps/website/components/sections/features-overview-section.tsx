@@ -43,10 +43,10 @@ export function FeaturesOverviewSection() {
       <div className="relative">
         <PatternBackground
           pattern="pattern-07.svg"
-          opacity={0.08}
+          opacity={0.03}
           position="top-right"
-          size="sm"
-          className="translate-x-1/3 -translate-y-1/3"
+          size="md"
+          className="hidden lg:block translate-x-1/3 -translate-y-1/3"
         />
         <ul className="relative z-10 grid list-none gap-4 p-0 sm:grid-cols-2 sm:gap-5">
           {items.map((item) => (

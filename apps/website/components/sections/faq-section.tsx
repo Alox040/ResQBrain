@@ -61,10 +61,10 @@ export function FaqSection() {
       <div className="relative max-w-[42rem]">
         <PatternBackground
           pattern="pattern-07.svg"
-          opacity={0.08}
-          position="top-right"
-          size="sm"
-          className="translate-x-1/3 -translate-y-1/3"
+          opacity={0.02}
+          position="bottom-right"
+          size="md"
+          className="hidden lg:block translate-x-1/3 translate-y-1/3"
         />
         <div className="relative z-10 overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)]/90 bg-[var(--color-surface)] shadow-[var(--shadow-card)]">
           {faqItems.map((item) => (

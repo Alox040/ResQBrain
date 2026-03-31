@@ -86,10 +86,10 @@ export function CollaborationSection() {
       <div className="relative">
         <PatternBackground
           pattern="pattern-07.svg"
-          opacity={0.08}
-          position="top-right"
-          size="sm"
-          className="translate-x-1/3 -translate-y-1/3"
+          opacity={0.025}
+          position="bottom-left"
+          size="md"
+          className="hidden lg:block -translate-x-1/3 translate-y-1/3"
         />
         <div className="relative z-10">
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">

@@ -45,11 +45,11 @@ export default function LinksPage() {
         }}
       >
         <PatternBackground
-          pattern="pattern-08.svg"
-          opacity={0.1}
-          position="top-right"
-          size="lg"
-          className="translate-x-1/4 -translate-y-1/4"
+          pattern="pattern-15.svg"
+          opacity={0.08}
+          position="center-right"
+          size="xl"
+          className="translate-x-1/3"
         />
         <Container className="relative z-10 pt-[60px]">
           <div className="mx-auto w-full max-w-[420px] px-4 sm:px-0">
