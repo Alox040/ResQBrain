@@ -25,6 +25,8 @@ import { SPACING } from '@/theme';
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
 const warnedBrokenRelatedMedicationIds = new Set<string>();
+const HEADER_HIT = 56;
+const HEADER_ICON_SIZE = 28;
 
 function isValidContentId(id: unknown): id is string {
   return typeof id === 'string' && id.trim().length > 0;
@@ -74,15 +76,15 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
                 }
                 style={{
                   marginRight: 4,
-                  minWidth: 56,
-                  minHeight: 56,
+                  minWidth: HEADER_HIT,
+                  minHeight: HEADER_HIT,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
                 <Ionicons
                   name={isFavorite ? 'star' : 'star-outline'}
-                  size={26}
+                  size={HEADER_ICON_SIZE}
                   color="#fbbf24"
                 />
               </Pressable>

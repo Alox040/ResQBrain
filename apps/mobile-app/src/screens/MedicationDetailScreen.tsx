@@ -47,6 +47,7 @@ function warnBrokenRelatedAlgorithmOnce(
 }
 
 const HEADER_HIT = 56;
+const HEADER_ICON_SIZE = 28;
 
 export function MedicationDetailScreen({ navigation, route }: Props) {
   const { colors } = useTheme();
@@ -110,7 +111,7 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
               >
                 <Ionicons
                   name={isFavorite ? 'star' : 'star-outline'}
-                  size={26}
+                  size={HEADER_ICON_SIZE}
                   color="#fbbf24"
                 />
               </Pressable>
