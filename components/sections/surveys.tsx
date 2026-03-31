@@ -30,7 +30,7 @@ const SURVEYS: Survey[] = [
       "Rueckmeldungen aus Stadt- und Landkreisen",
       "Auswertung fliesst direkt in den MVP-Backlog ein",
     ],
-    surveyUrl: "#feedback",
+    surveyUrl: "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
   },
   {
     id: "survey-002",
@@ -61,7 +61,8 @@ const SURVEYS: Survey[] = [
       "Einhand-Bedienung wurde stark nachgefragt",
       "Suche und Schnellzugriff waren die wichtigsten Features",
     ],
-    resultsUrl: "#",
+    resultsUrl:
+      "https://drive.google.com/file/d/1uKMuiNduTUMstE_5W3EmHEzpnGnL5n6_/view?usp=sharing",
   },
 ];
 

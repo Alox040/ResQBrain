@@ -11,7 +11,7 @@ export const links = [
   },
   {
     title: "Aktuelle Umfrage",
-    url: "https://forms.cloud.microsoft/r/tw508dTuDK",
+    url: "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
     description: "Jetzt teilnehmen",
   },
   {

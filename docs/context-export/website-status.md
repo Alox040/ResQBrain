@@ -38,7 +38,7 @@ Reihenfolge laut `components/home/home-page-sections.tsx`:
 
 ## Umfragen-Integration
 
-- **`lib/public-config.ts`:** `surveyPublishedUrlFromCode` → Microsoft Forms (`forms.cloud.microsoft/r/tw508dTuDK`); abgeschlossene Umfrage dokumentiert unter `surveyClosedDocumentationUrlFromCode` (`…/quaHYEbjAC`). `NEXT_PUBLIC_RESQBRAIN_SURVEY_URL` überschreibt die veröffentlichte URL.
+- **`lib/public-config.ts`:** `surveyPublishedUrlFromCode` → Microsoft Forms (`forms.cloud.microsoft/r/ZFVgC0L1BZ`); letzte Umfrageergebnisse sind als externer Link hinterlegt. `NEXT_PUBLIC_RESQBRAIN_SURVEY_URL` überschreibt die veröffentlichte URL.
 - **`lib/routes.ts`:** `resolveSurveyLink()` — externe HTTPS-URL wenn konfiguriert, sonst intern ` /mitwirkung#umfrage`.
 - **`components/sections/survey-invite-section.tsx`:** Primär-CTA über `SurveyCtaLink`; sekundär Link nach `routes.kontakt`.
 - **`app/mitwirkung/page.tsx`:** Erklärtexte und erneuter Umfrage-Zugang; kein eingebettetes Formular auf der Site.

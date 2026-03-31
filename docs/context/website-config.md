@@ -108,7 +108,7 @@ Status: Vorschlag, noch nicht in Komponenten verdrahtet.
           "id": "survey-002",
           "title": "Funktionspriorisierung",
           "phase": "active",
-          "url": "https://forms.cloud.microsoft/r/tw508dTuDK",
+          "url": "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
           "ctaLabel": "An Umfrage teilnehmen",
           "visibility": {
             "showOnHomepage": true,
@@ -122,7 +122,7 @@ Status: Vorschlag, noch nicht in Komponenten verdrahtet.
           "id": "survey-001",
           "title": "Bedarfsanalyse Rettungsdienst App",
           "phase": "completed",
-          "url": "https://forms.cloud.microsoft/r/quaHYEbjAC",
+          "url": "https://drive.google.com/file/d/1uKMuiNduTUMstE_5W3EmHEzpnGnL5n6_/view?usp=sharing",
           "ctaLabel": "Ergebnisse ansehen",
           "visibility": {
             "showOnHomepage": true,
