@@ -12,6 +12,13 @@ export const scrollMarginUnderHeader = "scroll-mt-24 md:scroll-mt-[5.5rem]";
 export const eyebrowClass =
   "text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--ems-accent)]";
 
+/** Accent-Badge: weicher Hintergrund, Akzentfarbe für Text */
+export const badgeAccentClass = "bg-[var(--accent-soft)] text-[var(--accent)]";
+
+/** Wichtiger Hinweis / Callout mit Akzent-Leiste */
+export const importantHintClass =
+  "border-l-4 border-solid border-[var(--accent)] pl-3 text-sm leading-relaxed text-[var(--color-muted)]";
+
 /** Primäre Sektionsüberschrift (H2) */
 export const sectionTitleClass =
   "section-title-accent mt-1 mb-2 max-w-[40rem] text-[1.375rem] font-semibold leading-snug tracking-tight text-[var(--color-foreground)] sm:text-[1.625rem] sm:leading-tight";
@@ -22,9 +29,9 @@ export const sectionLeadClass =
 
 export const sectionChildrenClass = "mt-8 sm:mt-10";
 
-/** Flächen-Karte (Features, Zielgruppen, Pilot) */
+/** Flächen-Karte (Features, Zielgruppen, Pilot) — Hover-Schatten via `.content-card-lift` */
 export const cardClass =
-  "flex h-full flex-col rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-card)] sm:p-6";
+  "flex h-full flex-col rounded-[12px] border border-solid border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6";
 
 /** Sanftes Panel (z. B. Listenblock Problem/Nutzen); `--panel-bg` in globals.css */
 export const panelClass =
@@ -37,11 +44,15 @@ export const cardBodyClass = "mt-2.5 flex-1 text-sm leading-relaxed text-[var(--
 
 /** Primär-Button (CTA) */
 export const buttonPrimaryClass =
-  "btn-primary-lift inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--ems-accent)] px-5 py-2.5 text-sm font-medium text-[var(--color-on-primary)] hover:bg-[color:color-mix(in_srgb,var(--ems-accent)_85%,black)] sm:w-auto";
+  "btn-primary-lift inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--primary)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--primary-hover)] sm:w-auto";
 
 /** Sekundär-Button */
 export const buttonSecondaryClass =
-  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-medium text-[var(--color-foreground)] transition-colors hover:bg-[var(--color-surface-muted)] sm:w-auto";
+  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] border border-solid border-[var(--border)] bg-white px-5 py-2.5 text-sm font-medium text-[var(--text)] sm:w-auto";
+
+/** Sekundär-Button Outline (Primärfarbe Rahmen/Text, z. B. Hero neben Vollflächen-Primary) */
+export const buttonSecondaryOutlineClass =
+  "inline-flex min-h-11 w-full min-w-0 items-center justify-center rounded-[var(--radius-control)] border border-solid border-[var(--primary)] bg-transparent px-5 py-2.5 text-sm font-medium text-[var(--primary)] transition-colors hover:bg-[color:color-mix(in_srgb,var(--primary)_10%,transparent)] sm:w-auto";
 
 /** Text-Link (kartensintern) */
 export const linkTextClass =

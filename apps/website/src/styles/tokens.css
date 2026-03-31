@@ -1,0 +1,17 @@
+/* Zentrale Design-Tokens (Website) */
+
+:root {
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+
+  --accent: #DC2626;
+  --accent-soft: #FEE2E2;
+
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+
+  --text: #0F172A;
+  --text-muted: #64748B;
+
+  --border: #E2E8F0;
+}

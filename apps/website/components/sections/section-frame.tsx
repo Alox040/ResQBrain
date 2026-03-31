@@ -14,7 +14,7 @@ export type SectionFrameProps = {
   id?: string;
   eyebrow?: string;
   title: string;
-  variant?: "surface" | "band";
+  variant?: "surface" | "band" | "survey";
   even?: boolean;
   description?: ReactNode;
   children?: ReactNode;
@@ -29,18 +29,26 @@ export function SectionFrame({
   description,
   children,
 }: SectionFrameProps) {
-  const bg =
-    variant === "surface" ? "bg-[var(--color-surface)]" : "bg-[var(--color-band)]";
-  const evenStyle = even
-    ? {
-        background: `color-mix(in srgb, var(--ems-blue-soft) 25%, transparent)`,
-        borderTop: `1px solid color-mix(in srgb, black 8%, transparent)`,
-      }
-    : undefined;
+  const isSurvey = variant === "survey";
+  const bg = isSurvey
+    ? ""
+    : variant === "surface"
+      ? "bg-[var(--color-surface)]"
+      : "bg-[var(--color-band)]";
+  const evenStyle =
+    !isSurvey && even
+      ? {
+          background: `color-mix(in srgb, var(--ems-blue-soft) 25%, transparent)`,
+          borderTop: `1px solid color-mix(in srgb, black 8%, transparent)`,
+        }
+      : undefined;
+  const frameBorder = isSurvey
+    ? "border border-solid border-[var(--primary)] bg-[#EFF6FF]"
+    : "border-b border-[var(--color-border)]/80";
   return (
     <section
       id={id}
-      className={`${scrollMarginUnderHeader} border-b border-[var(--color-border)]/80 ${bg} ${sectionPaddingY}`}
+      className={`${scrollMarginUnderHeader} ${frameBorder} ${bg} ${sectionPaddingY}`.trim()}
       style={evenStyle}
     >
       <Container>

@@ -66,8 +66,8 @@ export function Navbar() {
                 href={item.href}
                 className={`rounded-[var(--radius-control)] px-3 py-2 text-sm font-medium transition-colors ${
                   active
-                    ? "bg-[var(--color-surface-muted)] text-[var(--color-foreground)]"
-                    : "text-[var(--color-muted)] hover:bg-[var(--color-surface-muted)]/85 hover:text-[var(--color-foreground)]"
+                    ? "text-[var(--primary)]"
+                    : "text-[var(--text-muted)] hover:text-[var(--primary)]"
                 }`}
               >
                 {item.label}
@@ -96,15 +96,22 @@ export function Navbar() {
       >
         <Container className="max-h-[min(70vh,22rem)] overflow-y-auto overscroll-contain py-2">
           <div className="flex flex-col gap-0.5 pb-2">
-            {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-[var(--radius-control)] px-3 py-3.5 text-[0.9375rem] font-medium text-[var(--color-foreground)] active:bg-[var(--color-surface-muted)]"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {mainNav.map((item) => {
+              const active = item.href.split("#")[0] === pathname;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`rounded-[var(--radius-control)] px-3 py-3.5 text-[0.9375rem] font-medium transition-colors active:bg-[var(--color-surface-muted)] ${
+                    active
+                      ? "text-[var(--primary)]"
+                      : "text-[var(--text-muted)] hover:text-[var(--primary)]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </div>
         </Container>
       </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Container } from "@/components/ui/container";
-import { scrollMarginUnderHeader } from "@/components/ui/patterns";
+import { badgeAccentClass, scrollMarginUnderHeader } from "@/components/ui/patterns";
 import { links } from "@/data/links";
 import { siteTitle } from "@/lib/routes";
 
@@ -47,7 +47,7 @@ export default function LinksPage() {
           <div className="mx-auto w-full max-w-[420px] px-4 sm:px-0">
             <header className="mt-10 mb-6 text-center">
               <div
-                className="inline-flex flex-col items-center mx-auto max-w-full rounded-lg px-2.5 py-1 mb-2 bg-[var(--color-surface-muted)] text-[0.625rem] sm:text-[0.6875rem] leading-tight gap-0.5"
+                className={`${badgeAccentClass} inline-flex flex-col items-center mx-auto max-w-full rounded-lg px-2.5 py-1 mb-2 text-[0.625rem] sm:text-[0.6875rem] leading-tight gap-0.5`}
                 role="group"
                 aria-label="Projektstatus"
               >

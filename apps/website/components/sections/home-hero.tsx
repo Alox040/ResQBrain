@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/container";
 import { FeedbackButton } from "@/components/ui/feedback-button";
 import {
   buttonPrimaryClass,
-  buttonSecondaryClass,
+  buttonSecondaryOutlineClass,
   eyebrowClass,
   sectionPaddingY,
   scrollMarginUnderHeader,
@@ -18,9 +18,9 @@ export function HomeHero() {
   return (
     <section
       id="top"
-      className={`${scrollMarginUnderHeader} border-b border-[var(--color-border)]/80 bg-[var(--color-surface)] ${sectionPaddingY}`}
+      className={`${scrollMarginUnderHeader} border-b border-[var(--color-border)]/80 ${sectionPaddingY}`}
       style={{
-        background: `linear-gradient(180deg, color-mix(in srgb, var(--ems-blue-soft) 60%, transparent), transparent 60%)`,
+        background: "linear-gradient(to bottom, #F8FAFC, #FFFFFF)",
       }}
     >
       <Container>
@@ -43,7 +43,7 @@ export function HomeHero() {
           <SurveyCtaLink className={buttonPrimaryClass}>
             {surveyLive ? "Zur Kurzumfrage" : "Kurzumfrage: Zugang & Hinweise"}
           </SurveyCtaLink>
-          <Link href={`${routes.home}#mitmachen`} className={buttonSecondaryClass}>
+          <Link href={`${routes.home}#mitmachen`} className={buttonSecondaryOutlineClass}>
             Mitwirkung &amp; Kontext
           </Link>
           <FeedbackButton />
