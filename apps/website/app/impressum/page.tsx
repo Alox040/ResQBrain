@@ -1,36 +1,36 @@
 import { ContentCard } from "@/components/ui/content-card";
 import { PageHeader } from "@/components/ui/page-header";
 import { Stack } from "@/components/ui/stack";
-import { contact } from "@/lib/site/contact";
+import { impressumContent } from "@/lib/site/legal/impressum";
 
 export default function ImpressumPage() {
   return (
     <Stack gap="lg">
-      <PageHeader title="Impressum" />
+      <PageHeader title={impressumContent.pageTitle} />
       <ContentCard>
         <Stack gap="sm">
-          <h2 className="section-title">Angaben gemäß § 5 TMG</h2>
+          <h2 className="section-title">{impressumContent.sectionTitle}</h2>
           <p className="body-text muted-text">
-            <strong>Projekt:</strong>
+            <strong>{impressumContent.projectLabel}</strong>
             <br />
-            ResQBrain
+            {impressumContent.projectName}
           </p>
           <p className="body-text muted-text">
-            <strong>Verantwortlich:</strong>
+            <strong>{impressumContent.responsibleLabel}</strong>
             <br />
-            {contact.name}
+            {impressumContent.responsibleName}
           </p>
           <p className="body-text muted-text">
-            <strong>Kontakt:</strong>
+            <strong>{impressumContent.contactLabel}</strong>
             <br />
-            E-Mail:
+            {impressumContent.emailLabel}
             <br />
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <a href={`mailto:${impressumContent.email}`}>{impressumContent.email}</a>
           </p>
           <p className="body-text muted-text">
-            <strong>Hinweis:</strong>
+            <strong>{impressumContent.noteLabel}</strong>
             <br />
-            Dies ist ein nicht-kommerzielles Projekt in früher Phase.
+            {impressumContent.noteText}
           </p>
         </Stack>
       </ContentCard>

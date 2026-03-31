@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { FooterNav } from "@/components/layout/footer-nav";
 import { Container } from "@/components/ui/container";
-import { contactInfo } from "@/lib/site/contact";
+import { contactInfo } from "@/lib/site/contact-page";
 import { siteContent } from "@/lib/site/site-content";
 import { routes } from "@/lib/routes";
 

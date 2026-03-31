@@ -4,7 +4,7 @@ import { ContentCard } from "@/components/ui/content-card";
 import { SectionFrame } from "@/components/ui/section-frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Stack } from "@/components/ui/stack";
-import { participationContent, survey } from "@/lib/site";
+import { mitwirkungPageContent } from "@/lib/site/mitwirkung";
 
 export default function MitwirkungPage() {
   return (
@@ -12,8 +12,8 @@ export default function MitwirkungPage() {
       <SectionFrame>
         <Container>
           <Stack gap="md">
-            <p className="eyebrow">{participationContent.hero.subtitle}</p>
-            <h1 className="hero-title">{participationContent.hero.title}</h1>
+            <p className="eyebrow">{mitwirkungPageContent.hero.subtitle}</p>
+            <h1 className="hero-title">{mitwirkungPageContent.hero.title}</h1>
           </Stack>
         </Container>
       </SectionFrame>
@@ -21,7 +21,7 @@ export default function MitwirkungPage() {
       <SectionFrame compact>
         <Container>
           <ContentCard>
-            <p className="body-text muted-text">{participationContent.hero.text}</p>
+            <p className="body-text muted-text">{mitwirkungPageContent.hero.text}</p>
           </ContentCard>
         </Container>
       </SectionFrame>
@@ -30,8 +30,8 @@ export default function MitwirkungPage() {
         <Container>
           <ContentCard>
             <Stack gap="sm">
-              <SectionHeading title={participationContent.why.title} />
-              <p className="body-text muted-text">{participationContent.why.text}</p>
+              <SectionHeading title={mitwirkungPageContent.why.title} />
+              <p className="body-text muted-text">{mitwirkungPageContent.why.text}</p>
             </Stack>
           </ContentCard>
         </Container>
@@ -41,10 +41,10 @@ export default function MitwirkungPage() {
         <Container>
           <ContentCard>
             <Stack gap="sm">
-              <SectionHeading title={participationContent.survey.title} />
-              <p className="body-text muted-text">{participationContent.survey.text}</p>
+              <SectionHeading title={mitwirkungPageContent.survey.title} />
+              <p className="body-text muted-text">{mitwirkungPageContent.survey.text}</p>
               <div>
-                <ButtonLink href={survey.href}>{survey.label}</ButtonLink>
+                <ButtonLink href={mitwirkungPageContent.survey.href}>{mitwirkungPageContent.survey.cta}</ButtonLink>
               </div>
             </Stack>
           </ContentCard>
@@ -55,9 +55,9 @@ export default function MitwirkungPage() {
         <Container>
           <ContentCard>
             <Stack gap="sm">
-              <SectionHeading title={participationContent.additional.title} />
+              <SectionHeading title={mitwirkungPageContent.additional.title} />
               <ul className="stack stack--sm">
-                {participationContent.additional.items.map((item) => (
+                {mitwirkungPageContent.additional.items.map((item) => (
                   <li key={item} className="body-text muted-text">
                     {item}
                   </li>
@@ -71,7 +71,7 @@ export default function MitwirkungPage() {
       <SectionFrame compact>
         <Container>
           <ContentCard>
-            <p className="body-text muted-text">{participationContent.note.text}</p>
+            <p className="body-text muted-text">{mitwirkungPageContent.note.text}</p>
           </ContentCard>
         </Container>
       </SectionFrame>

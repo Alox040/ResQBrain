@@ -1,7 +1,7 @@
 import { ContentCard } from "@/components/ui/content-card";
 import { PageHeader } from "@/components/ui/page-header";
 import { Stack } from "@/components/ui/stack";
-import { datenschutzContent } from "@/lib/site";
+import { datenschutzContent } from "@/lib/site/legal/datenschutz";
 
 export default function DatenschutzPage() {
   return (

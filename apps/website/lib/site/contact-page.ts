@@ -12,3 +12,16 @@ export const contactPageContent = {
   },
   note: "Anfragen werden so zeitnah wie möglich beantwortet.",
 } as const;
+
+export const contactDetails = {
+  projectName: "ResQBrain",
+  responsibleName: "ResQBrain Projekt",
+  email: "kontakt@resqbrain.de",
+} as const;
+
+export const contactInfo = {
+  email: {
+    label: contactDetails.email,
+    href: `mailto:${contactDetails.email}`,
+  },
+} as const;

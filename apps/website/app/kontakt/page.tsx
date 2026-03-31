@@ -4,7 +4,7 @@ import { ContentCard } from "@/components/ui/content-card";
 import { SectionFrame } from "@/components/ui/section-frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Stack } from "@/components/ui/stack";
-import { contactInfo, contactPageContent } from "@/lib/site";
+import { contactInfo, contactPageContent } from "@/lib/site/contact-page";
 
 export default function KontaktPage() {
   return (

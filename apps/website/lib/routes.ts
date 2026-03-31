@@ -1,15 +1,17 @@
 const home = "/";
-const contact = "/kontakt";
+const kontakt = "/kontakt";
+const mitwirkung = "/mitwirkung";
 const links = "/links";
-const survey = "/mitwirkung";
+const impressum = "/impressum";
+const datenschutz = "/datenschutz";
 
 export const routes = {
   home,
-  contact,
+  kontakt,
+  mitwirkung,
   links,
-  survey,
-  kontakt: contact,
-  mitwirkung: survey,
+  impressum,
+  datenschutz,
 } as const;
 
 export const mainNav = [
