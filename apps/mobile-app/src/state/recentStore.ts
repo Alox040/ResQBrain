@@ -18,6 +18,7 @@ export type RecentRecord = {
 };
 
 let records: RecentRecord[] = [];
+let recentSnapshot: RecentRecord[] = [];
 
 let hydratePromise: Promise<void> | null = null;
 
@@ -81,6 +82,10 @@ function notify(): void {
   listeners.forEach((fn) => fn());
 }
 
+function refreshSnapshot(): void {
+  recentSnapshot = normalize(records);
+}
+
 export function subscribeRecent(listener: () => void): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);
@@ -88,11 +93,12 @@ export function subscribeRecent(listener: () => void): () => void {
 
 /** Most recently used first, at most {@link MAX_RECENT} rows. */
 export function getRecent(): RecentRecord[] {
-  return normalize(records);
+  return recentSnapshot;
 }
 
 async function persist(): Promise<void> {
   records = normalize(records);
+  refreshSnapshot();
   await setRecentEntries(recordsToEntries(records));
 }
 

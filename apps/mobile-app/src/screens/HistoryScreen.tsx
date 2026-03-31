@@ -62,13 +62,13 @@ export function HistoryScreen() {
   const openItem = useCallback(
     (item: HistoryRecord) => {
       if (item.kind === 'medication') {
-        navigation.navigate('MedicationList', {
+        navigation.navigate('MedicationTab', {
           screen: 'MedicationDetail',
           params: { medicationId: item.id },
         });
         return;
       }
-      navigation.navigate('AlgorithmList', {
+      navigation.navigate('AlgorithmTab', {
         screen: 'AlgorithmDetail',
         params: { algorithmId: item.id },
       });

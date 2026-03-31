@@ -5,6 +5,7 @@ import { SectionFrame } from "@/components/sections/section-frame";
 import { ContentCard } from "@/components/ui/content-card";
 import { buttonSecondaryClass } from "@/components/ui/patterns";
 import { routes } from "@/lib/routes";
+import { detailedProjectDescriptionUrl } from "@/lib/site-content";
 
 const tintedCardClass =
   "border-[color:color-mix(in_srgb,var(--ems-blue-soft)_45%,var(--color-border))] bg-[color:color-mix(in_srgb,var(--ems-blue-soft)_22%,var(--color-surface))]";
@@ -105,10 +106,25 @@ export function CollaborationSection() {
         </ContentCard>
       </div>
 
-      <div className="mt-6 flex">
+      <div className="mt-6">
         <Link href={routes.kontakt} className={buttonSecondaryClass}>
           Zur Kontaktseite
         </Link>
+        <div className="mt-2 space-y-1">
+          <p className="text-xs leading-relaxed text-[var(--color-muted)]">
+            Für Partner und Interessierte:
+          </p>
+          <p className="text-sm leading-relaxed">
+            <a
+              href={detailedProjectDescriptionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
+            >
+              Ausführliche Projektbeschreibung
+            </a>
+          </p>
+        </div>
       </div>
     </SectionFrame>
   );

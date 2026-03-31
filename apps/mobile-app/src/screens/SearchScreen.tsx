@@ -158,14 +158,14 @@ export function SearchScreen() {
 
   const handlePressResult = (item: ContentListItem) => {
     if (item.kind === 'medication') {
-      navigation.navigate('MedicationList', {
+      navigation.navigate('MedicationTab', {
         screen: 'MedicationDetail',
         params: { medicationId: item.id },
       });
       return;
     }
 
-    navigation.navigate('AlgorithmList', {
+    navigation.navigate('AlgorithmTab', {
       screen: 'AlgorithmDetail',
       params: { algorithmId: item.id },
     });

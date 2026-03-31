@@ -3,7 +3,12 @@ import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { FeedbackButton } from "@/components/ui/feedback-button";
 import { footerNav, siteTitle } from "@/lib/routes";
-import { discordUrl, repositoryUrl, tiktokUrl } from "@/lib/site-content";
+import {
+  detailedProjectDescriptionUrl,
+  discordUrl,
+  repositoryUrl,
+  tiktokUrl,
+} from "@/lib/site-content";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -25,6 +30,16 @@ export function SiteFooter() {
               className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
             >
               Projekt auf GitHub
+            </a>
+          </p>
+          <p className="mt-2 text-sm">
+            <a
+              href={detailedProjectDescriptionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--color-muted)] underline-offset-4 transition-colors hover:text-[var(--color-foreground)] hover:underline"
+            >
+              Projektbeschreibung
             </a>
           </p>
           <p className="mt-2 text-sm">

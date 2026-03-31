@@ -10,6 +10,10 @@ export const repositoryUrl = "https://github.com/Alox040/ResQBrain" as const;
 export const discordUrl = "https://discord.gg/s23FFJnS" as const;
 export const tiktokUrl = "https://www.tiktok.com/@WiWaWunderbar" as const;
 
+/** Öffentliche Projektdokumentation (extern, Google Drive). */
+export const detailedProjectDescriptionUrl =
+  "https://drive.google.com/file/d/1zY8TCeng4vxH53Nm5IKA_fPbtNqnmGg5/view?usp=sharing" as const;
+
 export const feedbackEmail = "triggerhub@outlook.com";
 
 export const feedbackSubject =

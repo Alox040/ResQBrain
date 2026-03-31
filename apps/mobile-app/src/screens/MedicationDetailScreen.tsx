@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
   DetailBodyText,
@@ -58,6 +58,12 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     medication?.id ?? route.params.medicationId,
     'medication',
   );
+  const headerTitle = medication
+    ? mapMedicationToViewModel(medication).label
+    : 'Medikament';
+  const onPressFavorite = useCallback(() => {
+    void toggleFavoriteItem();
+  }, [toggleFavoriteItem]);
 
   const openAlgorithm = (algorithmId: string) => {
     if (!isValidContentId(algorithmId)) {
@@ -73,7 +79,7 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
       console.warn('[MedicationDetail] openAlgorithm: tab navigation unavailable');
       return;
     }
-    tabNavigation.navigate('AlgorithmList', {
+    tabNavigation.navigate('AlgorithmTab', {
       screen: 'AlgorithmDetail',
       params: { algorithmId },
     });
@@ -81,14 +87,12 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: medication
-        ? mapMedicationToViewModel(medication).label
-        : 'Medikament',
+      title: headerTitle,
       headerRight:
         medication != null
           ? () => (
               <Pressable
-                onPress={() => void toggleFavoriteItem()}
+                onPress={onPressFavorite}
                 hitSlop={10}
                 accessibilityRole="button"
                 accessibilityLabel={
@@ -113,7 +117,7 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
             )
           : undefined,
     });
-  }, [navigation, medication, isFavorite, toggleFavoriteItem]);
+  }, [navigation, headerTitle, medication?.id, isFavorite, onPressFavorite]);
 
   React.useEffect(() => {
     if (medication) {

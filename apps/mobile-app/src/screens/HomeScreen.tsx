@@ -421,13 +421,13 @@ export function HomeScreen() {
   const openContentDetail = useCallback(
     (kind: ContentKind, id: string) => {
       if (kind === 'medication') {
-        navigation.navigate('MedicationList', {
+        navigation.navigate('MedicationTab', {
           screen: 'MedicationDetail',
           params: { medicationId: id },
         });
         return;
       }
-      navigation.navigate('AlgorithmList', {
+      navigation.navigate('AlgorithmTab', {
         screen: 'AlgorithmDetail',
         params: { algorithmId: id },
       });
@@ -470,7 +470,7 @@ export function HomeScreen() {
       iconColor: '#0f766e',
       backgroundColor: '#ccfbf1',
       navigate: () =>
-        navigation.navigate('MedicationList', { screen: 'MedicationList' }),
+        navigation.navigate('MedicationTab', { screen: 'MedicationListScreen' }),
     },
     {
       key: 'dose',
@@ -481,7 +481,7 @@ export function HomeScreen() {
       iconColor: '#6d28d9',
       backgroundColor: '#ede9fe',
       navigate: () =>
-        navigation.navigate('MedicationList', { screen: 'DoseCalculator' }),
+        navigation.navigate('MedicationTab', { screen: 'DoseCalculator' }),
     },
     {
       key: 'algo',
@@ -491,7 +491,7 @@ export function HomeScreen() {
       iconColor: '#9a3412',
       backgroundColor: '#ffedd5',
       navigate: () =>
-        navigation.navigate('AlgorithmList', { screen: 'AlgorithmList' }),
+        navigation.navigate('AlgorithmTab', { screen: 'AlgorithmListScreen' }),
     },
     ],
     [colors.primary, colors.primaryMutedBg, navigation],

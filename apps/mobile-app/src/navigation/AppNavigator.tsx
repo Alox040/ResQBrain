@@ -19,7 +19,7 @@ import { TYPOGRAPHY } from '@/theme';
 export type { HomeStackParamList };
 
 export type MedicationStackParamList = {
-  MedicationList: undefined;
+  MedicationListScreen: undefined;
   MedicationDetail: {
     medicationId: string;
   };
@@ -27,7 +27,7 @@ export type MedicationStackParamList = {
 };
 
 export type AlgorithmStackParamList = {
-  AlgorithmList: undefined;
+  AlgorithmListScreen: undefined;
   AlgorithmDetail: {
     algorithmId: string;
   };
@@ -37,8 +37,8 @@ export type RootTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Search: undefined;
   Favorites: undefined;
-  MedicationList: NavigatorScreenParams<MedicationStackParamList>;
-  AlgorithmList: NavigatorScreenParams<AlgorithmStackParamList>;
+  MedicationTab: NavigatorScreenParams<MedicationStackParamList>;
+  AlgorithmTab: NavigatorScreenParams<AlgorithmStackParamList>;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -86,7 +86,7 @@ function MedicationStackNavigator() {
   return (
     <MedicationStack.Navigator screenOptions={screenOptions}>
       <MedicationStack.Screen
-        name="MedicationList"
+        name="MedicationListScreen"
         component={MedicationListScreen}
         options={{ title: 'Medikamente' }}
       />
@@ -109,7 +109,7 @@ function AlgorithmStackNavigator() {
   return (
     <AlgorithmStack.Navigator screenOptions={screenOptions}>
       <AlgorithmStack.Screen
-        name="AlgorithmList"
+        name="AlgorithmListScreen"
         component={AlgorithmListScreen}
         options={{ title: 'Algorithmen' }}
       />
@@ -174,7 +174,7 @@ export function AppNavigator() {
         }}
       />
       <Tab.Screen
-        name="MedicationList"
+        name="MedicationTab"
         component={MedicationStackNavigator}
         options={{
           title: 'Medikamente',
@@ -185,7 +185,7 @@ export function AppNavigator() {
         }}
       />
       <Tab.Screen
-        name="AlgorithmList"
+        name="AlgorithmTab"
         component={AlgorithmStackNavigator}
         options={{
           title: 'Algorithmen',

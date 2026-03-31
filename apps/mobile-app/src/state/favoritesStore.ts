@@ -11,6 +11,7 @@ export type { FavoriteRecord };
 const listeners = new Set<() => void>();
 
 let records: FavoriteRecord[] = [];
+let favoritesSnapshot: FavoriteRecord[] = [];
 
 function favoriteKey(id: string, kind: ContentKind): string {
   return `${kind}:${id}`;
@@ -55,6 +56,10 @@ function notify(): void {
   listeners.forEach((fn) => fn());
 }
 
+function refreshSnapshot(): void {
+  favoritesSnapshot = sortRecentFirst(dedupeFavoriteRecords(records));
+}
+
 export function subscribeFavorites(listener: () => void): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);
@@ -62,7 +67,7 @@ export function subscribeFavorites(listener: () => void): () => void {
 
 /** Sorted by `timestamp` descending (recent first). */
 export function getFavorites(): FavoriteRecord[] {
-  return sortRecentFirst(dedupeFavoriteRecords(records));
+  return favoritesSnapshot;
 }
 
 /** @deprecated Prefer {@link getFavorites}. */
@@ -81,6 +86,7 @@ export function isFavorite(id: string): boolean {
 
 async function persist(): Promise<void> {
   records = dedupeFavoriteRecords(records);
+  refreshSnapshot();
   await setFavoriteRecords(records);
 }
 

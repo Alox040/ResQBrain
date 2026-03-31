@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
   DetailBodyText,
@@ -50,17 +50,21 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     algorithm?.id ?? route.params.algorithmId,
     'algorithm',
   );
+  const headerTitle = algorithm
+    ? mapAlgorithmToViewModel(algorithm).label
+    : 'Algorithmus';
+  const onPressFavorite = useCallback(() => {
+    void toggleFavoriteItem();
+  }, [toggleFavoriteItem]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      title: algorithm
-        ? mapAlgorithmToViewModel(algorithm).label
-        : 'Algorithmus',
+      title: headerTitle,
       headerRight:
         algorithm != null
           ? () => (
               <Pressable
-                onPress={() => void toggleFavoriteItem()}
+                onPress={onPressFavorite}
                 hitSlop={10}
                 accessibilityRole="button"
                 accessibilityLabel={
@@ -85,7 +89,7 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
             )
           : undefined,
     });
-  }, [navigation, algorithm, isFavorite, toggleFavoriteItem]);
+  }, [navigation, headerTitle, algorithm?.id, isFavorite, onPressFavorite]);
 
   React.useEffect(() => {
     if (algorithm) {
@@ -123,7 +127,7 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
       console.warn('[AlgorithmDetail] openMedication: tab navigation unavailable');
       return;
     }
-    tabNavigation.navigate('MedicationList', {
+    tabNavigation.navigate('MedicationTab', {
       screen: 'MedicationDetail',
       params: { medicationId },
     });
