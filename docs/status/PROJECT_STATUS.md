@@ -1,6 +1,6 @@
 # Projektstatus
 
-**Stand:** 31. März 2026
+**Stand:** 31. März 2026 (Arbeitstages-Abschluss)
 
 ## Gesamtstatus
 
@@ -45,6 +45,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Paket `@resqbrain/domain` | Aktiv |
 | `compile:versioning` (tsc) | Erfolgreich |
 | `compile:content` (tsc) | Erfolgreich |
+| `compile:governance` (tsc) | Erfolgreich |
 | Barrel-Export `src/index.ts` | Konsistent mit Content-, Tenant-, Versioning- und Survey-Modulen |
 | Layering | Keine Website-/App-Imports im Domain-Paket (reine Domain-Logik) |
 | Mandantentrennung (Organization) | Modellierung im Domain-Code zentral; Runtime-Enforcement folgt mit API/Auth |

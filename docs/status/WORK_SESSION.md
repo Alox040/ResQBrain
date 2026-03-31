@@ -1,7 +1,68 @@
 # Arbeitssession
 
-**Datum:** 28. März 2026  
-**Art:** Architektur- und Phase-0-Vorbereitung (Kontextdokumente, Mobile-Datenpipeline, Offline-Festlegung)
+**Datum:** 31. März 2026
+**Art:** Arbeitstages-Abschluss — Statusvalidierung, Build-Check, Routing-Prüfung, Dokumentationsabgleich
+
+## Validierungen (31. März 2026)
+
+### Domain-Compile
+
+| Modul | Befehl | Ergebnis |
+|-------|--------|----------|
+| Content | `compile:content` | ✓ erfolgreich |
+| Versioning | `compile:versioning` | ✓ erfolgreich |
+| Governance | `compile:governance` | ✓ erfolgreich |
+
+### Website-Build
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| `pnpm build:website` (Next.js 16 Turbopack) | ✓ erfolgreich |
+| TypeScript-Check | ✓ keine Fehler |
+| Statische Seiten (8/8) | ✓ vollständig generiert |
+
+### Routing
+
+| Route | Status |
+|-------|--------|
+| `/` | ✓ Static |
+| `/impressum` | ✓ Static |
+| `/datenschutz` | ✓ Static |
+| `/kontakt` | ✓ Static |
+| `/links` | ✓ Static |
+| `/mitwirkung` | ✓ Static |
+| `/_not-found` | ✓ Static |
+
+### Codequalität
+
+- Keine TODO/FIXME/WIP-Marker in Produktionscode (`.ts`, `.tsx`)
+- Git-Workingcopy: sauber
+
+## Offene Punkte (unverändert aus Phase-0)
+
+- Lookup-Bundle separat auf Gerät speichern (Download/Sync)
+- Netzwerk-Refresh / Sync-Engine
+- Dosisrechner: nur heuristikbasiert (mg/µg-pro-kg im Freitext)
+- Externe Umfrage-URLs: Platzhalter, vor Go-Live ersetzen
+
+## Nächste sinnvolle Schritte
+
+### Implementierung (Phase 0 Rest)
+1. `lookupSource` erweitern: Bundle-Download und Gerätespeicherung
+2. Sync-Konzept definieren: Trigger, Conflict-Resolution, Manifest-Vergleich
+
+### Architektur
+3. API-Schicht planen: Organization-Kontext, Auth-Boundary, Tenant-Enforcement
+
+### Website
+4. Umfrage-URLs produktiv setzen sobald Survey live
+
+### Validierung
+5. `pnpm mobile:verify` bei nächster Mobile-Änderung ausführen
+
+---
+
+## Session 28. März 2026 (Architektur- und Phase-0-Vorbereitung)
 
 ## Architekturentscheidungen (heute dokumentiert)
 
