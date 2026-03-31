@@ -1,42 +1,31 @@
-export const spacingScale = {
-  xs: "0.25rem",
-  sm: "0.5rem",
-  md: "0.75rem",
-  lg: "1rem",
-  xl: "1.5rem",
-  "2xl": "2rem",
-  "3xl": "3rem",
-  "4xl": "4rem",
-} as const;
-
 export const spacing = {
+  xs: "0.5rem",
+  sm: "1rem",
+  md: "1.5rem",
+  lg: "2rem",
   inline: {
-    tight: spacingScale.sm,
-    default: spacingScale.lg,
-    roomy: spacingScale.xl,
-  },
-  stack: {
-    tight: spacingScale.sm,
-    default: spacingScale.lg,
-    relaxed: spacingScale.xl,
-    spacious: spacingScale["2xl"],
+    tight: "0.375rem",
+    default: "0.75rem",
   },
   inset: {
-    compact: spacingScale.lg,
-    default: spacingScale.xl,
-    roomy: spacingScale["2xl"],
+    compact: "1rem",
+    default: "1.5rem",
+  },
+  stack: {
+    tight: "0.5rem",
+    default: "1rem",
+    relaxed: "1.5rem",
   },
   section: {
-    compact: spacingScale["2xl"],
-    default: spacingScale["3xl"],
-    spacious: spacingScale["4xl"],
+    compact: "2rem",
+    default: "3rem",
   },
   gap: {
-    card: spacingScale.lg,
-    grid: spacingScale.xl,
-    cluster: spacingScale.md,
+    cluster: "0.5rem",
   },
 } as const;
 
-export type SpacingScaleKey = keyof typeof spacingScale;
+export const spacingScale = spacing;
+
 export type Spacing = typeof spacing;
+export type SpacingScaleKey = keyof typeof spacing;

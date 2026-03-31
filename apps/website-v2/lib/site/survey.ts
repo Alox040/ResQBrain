@@ -1,7 +1,6 @@
-export const surveyContent = {
+export const survey = {
+  href: "https://example.com/survey",
   label: "Zur Umfrage",
-  href: "https://example.org/survey",
-  description: "Platzhalter fuer externen Survey-Link.",
 } as const;
 
-export type SurveyContent = typeof surveyContent;
+export const surveyContent = survey;

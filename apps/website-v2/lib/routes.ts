@@ -1,46 +1,25 @@
+const home = "/";
+const contact = "/kontakt";
+const links = "/links";
+const survey = "/mitwirkung";
+
 export const routes = {
-  home: "/",
-  mitwirkung: "/mitwirkung",
-  kontakt: "/kontakt",
-  impressum: "/impressum",
-  datenschutz: "/datenschutz",
-  links: "/links",
+  home,
+  contact,
+  links,
+  survey,
+  kontakt: contact,
+  mitwirkung: survey,
 } as const;
-
-export const sectionAnchors = {
-  hero: "hero",
-  problem: "problem",
-  nutzen: "nutzen",
-  zielgruppen: "zielgruppen",
-  projektstatus: "projektstatus",
-  mitwirkung: "mitwirkung",
-  faq: "faq",
-  kontakt: "kontakt",
-} as const;
-
-export type RouteKey = keyof typeof routes;
-export type RouteHref = (typeof routes)[RouteKey];
-
-export type SectionAnchorKey = keyof typeof sectionAnchors;
-export type SectionAnchor = (typeof sectionAnchors)[SectionAnchorKey];
-export type HomeSectionHref = `/#${SectionAnchor}`;
 
 export const mainNav = [
-  "home",
-  "mitwirkung",
-  "kontakt",
-] as const satisfies readonly RouteKey[];
+  { label: "Start", href: routes.home },
+  { label: "Mitwirkung", href: routes.mitwirkung },
+  { label: "Kontakt", href: routes.kontakt },
+] as const;
 
 export const footerNav = [
-  "impressum",
-  "datenschutz",
-  "links",
-] as const satisfies readonly RouteKey[];
+  { label: "Links", href: routes.links },
+] as const;
 
-export function getRouteHref(route: RouteKey): RouteHref {
-  return routes[route];
-}
-
-export function getHomeSectionHref(section: SectionAnchorKey): HomeSectionHref {
-  return `/#${sectionAnchors[section]}`;
-}
+export type AppRoute = (typeof routes)[keyof typeof routes];

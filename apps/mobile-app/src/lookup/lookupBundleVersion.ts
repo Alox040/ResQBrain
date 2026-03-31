@@ -2,6 +2,15 @@ import type { ValidatedLookupBundle } from './lookupSchema';
 
 type BundleLike = Pick<ValidatedLookupBundle, 'manifest'>;
 
+export const BUNDLE_VERSION_COMPARISON = {
+  UPDATE_AVAILABLE: 'UPDATE_AVAILABLE',
+  UP_TO_DATE: 'UP_TO_DATE',
+  ROLLBACK_REQUIRED: 'ROLLBACK_REQUIRED',
+} as const;
+
+export type BundleVersionComparison =
+  (typeof BUNDLE_VERSION_COMPARISON)[keyof typeof BUNDLE_VERSION_COMPARISON];
+
 function normalizeComparableParts(value: string): string[] {
   return value
     .split(/[^0-9A-Za-z]+/)
@@ -41,6 +50,18 @@ function compareBundleIds(left: string, right: string): number {
   return 0;
 }
 
+function compareVersionStrings(left: string | undefined, right: string | undefined): number | null {
+  if (!left && !right) {
+    return 0;
+  }
+
+  if (!left || !right) {
+    return null;
+  }
+
+  return compareBundleIds(left, right);
+}
+
 function parseGeneratedAt(value: string | undefined): number | null {
   if (!value) {
     return null;
@@ -50,13 +71,49 @@ function parseGeneratedAt(value: string | undefined): number | null {
   return Number.isFinite(timestamp) ? timestamp : null;
 }
 
-export function isNewerBundle(a: BundleLike, b: BundleLike): boolean {
-  const aGeneratedAt = parseGeneratedAt(a.manifest.generatedAt);
-  const bGeneratedAt = parseGeneratedAt(b.manifest.generatedAt);
+function compareManifestAge(
+  localManifest: BundleLike['manifest'],
+  remoteManifest: BundleLike['manifest'],
+): number {
+  const localVersion = localManifest.version;
+  const remoteVersion = remoteManifest.version;
+  const versionComparison = compareVersionStrings(localVersion, remoteVersion);
 
-  if (aGeneratedAt !== null && bGeneratedAt !== null && aGeneratedAt !== bGeneratedAt) {
-    return aGeneratedAt > bGeneratedAt;
+  if (versionComparison !== null && versionComparison !== 0) {
+    return versionComparison;
   }
 
-  return compareBundleIds(a.manifest.bundleId, b.manifest.bundleId) > 0;
+  const localGeneratedAt = parseGeneratedAt(localManifest.generatedAt ?? localManifest.createdAt);
+  const remoteGeneratedAt = parseGeneratedAt(remoteManifest.generatedAt ?? remoteManifest.createdAt);
+
+  if (
+    localGeneratedAt !== null &&
+    remoteGeneratedAt !== null &&
+    localGeneratedAt !== remoteGeneratedAt
+  ) {
+    return localGeneratedAt > remoteGeneratedAt ? 1 : -1;
+  }
+
+  return compareBundleIds(localManifest.bundleId, remoteManifest.bundleId);
+}
+
+export function compareBundleVersion(
+  localManifest: BundleLike['manifest'],
+  remoteManifest: BundleLike['manifest'],
+): BundleVersionComparison {
+  const comparison = compareManifestAge(localManifest, remoteManifest);
+
+  if (comparison < 0) {
+    return BUNDLE_VERSION_COMPARISON.UPDATE_AVAILABLE;
+  }
+
+  if (comparison > 0) {
+    return BUNDLE_VERSION_COMPARISON.ROLLBACK_REQUIRED;
+  }
+
+  return BUNDLE_VERSION_COMPARISON.UP_TO_DATE;
+}
+
+export function isNewerBundle(a: BundleLike, b: BundleLike): boolean {
+  return compareManifestAge(b.manifest, a.manifest) < 0;
 }

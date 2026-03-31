@@ -1,5 +1,1 @@
-import { MitwirkungPage } from "@/components/pages/mitwirkung-page";
-
-export default function Page() {
-  return <MitwirkungPage />;
-}
+export { default } from "@/components/pages/mitwirkung-page";

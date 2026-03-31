@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-import { mainNavigation } from "@/lib/site";
+import { mainNav } from "@/lib/routes";
 
 export function MainNav() {
   return (
-    <nav aria-label="Hauptnavigation">
+    <nav>
       <ul>
-        {mainNavigation.map((item) => (
-          <li key={item.key}>
+        {mainNav.map((item) => (
+          <li key={item.href}>
             <Link href={item.href}>{item.label}</Link>
           </li>
         ))}

@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
+
+import "./globals.css";
 
 import { SiteShell } from "@/components/layout/site-shell";
-import { siteMetadata } from "@/lib/site";
-
-import "../styles/globals.css";
+import { siteContent } from "@/lib/site/site-content";
 
 export const metadata: Metadata = {
-  title: siteMetadata.title,
-  description: siteMetadata.description,
+  title: siteContent.title,
+  description: siteContent.description,
 };
 
-type RootLayoutProps = {
-  children: ReactNode;
-};
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang={siteMetadata.locale}>
+    <html lang="de">
       <body>
         <SiteShell>{children}</SiteShell>
       </body>

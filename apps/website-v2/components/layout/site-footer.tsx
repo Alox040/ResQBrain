@@ -1,9 +1,9 @@
-import { FooterNav } from "@/components/layout/footer-nav";
+import { contact } from "@/lib/site/contact";
 
 export function SiteFooter() {
   return (
     <footer>
-      <FooterNav />
+      <p>{contact.email}</p>
     </footer>
   );
 }

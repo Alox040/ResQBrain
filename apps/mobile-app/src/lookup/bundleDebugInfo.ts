@@ -7,6 +7,7 @@ export type BundleDebugInfo = {
   version: string | null;
   source: LookupSource;
   lastUpdate: string | null;
+  pendingUpdate: boolean;
 };
 
 const LOOKUP_SOURCE_VALUES = new Set<string>(['embedded', 'cached', 'updated', 'fallback']);
@@ -21,11 +22,13 @@ function parseBundleDebugInfo(raw: unknown): BundleDebugInfo | null {
   const version = typeof rec.version === 'string' ? rec.version : null;
   const source = rec.source;
   const lastUpdate = typeof rec.lastUpdate === 'string' ? rec.lastUpdate : null;
+  const pendingUpdate = rec.pendingUpdate === true;
   if (!isLookupSource(source)) return null;
   return {
     version,
     source,
     lastUpdate,
+    pendingUpdate,
   };
 }
 

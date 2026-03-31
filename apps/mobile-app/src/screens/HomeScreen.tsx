@@ -2,8 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -27,6 +28,7 @@ import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
 import type { ContentKind } from '@/types/content';
+import { getBundleDebugInfo } from '@/lookup/bundleDebugInfo';
 
 const MAX_QUICK = 4;
 const REANIMATION_ALGORITHM_ID = 'alg-reanimation-erwachsene';
@@ -163,6 +165,19 @@ function createStyles(colors: AppPalette) {
       ...TYPOGRAPHY.bodyMuted,
       color: colors.textMuted,
       lineHeight: 21,
+    },
+    updateBadge: {
+      borderRadius: SPACING.radius,
+      borderWidth: 1,
+      borderColor: '#f59e0b',
+      backgroundColor: '#fffbeb',
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+    },
+    updateBadgeText: {
+      ...TYPOGRAPHY.body,
+      color: '#92400e',
+      fontWeight: '700',
     },
   });
 }
@@ -314,6 +329,18 @@ export function HomeScreen() {
   const navigation = useNavigation<HomeScreenNav>();
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const recentItems = useRecentStore((state) => state.recentItems);
+  const [showUpdateBadge, setShowUpdateBadge] = useState(false);
+
+  const refreshUpdateBadge = useCallback(async () => {
+    const info = await getBundleDebugInfo();
+    setShowUpdateBadge(info?.pendingUpdate === true);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      void refreshUpdateBadge();
+    }, [refreshUpdateBadge]),
+  );
 
   const favorites = useMemo(() => {
     return favoriteIds
@@ -482,6 +509,12 @@ export function HomeScreen() {
         <View style={styles.sectionBlock}>
           <SearchButton onPress={() => navigation.navigate('Search')} />
         </View>
+
+        {showUpdateBadge ? (
+          <View style={styles.updateBadge}>
+            <Text style={styles.updateBadgeText}>Neue Inhalte verfügbar</Text>
+          </View>
+        ) : null}
 
         <QuickAccessGrid items={quickAccessItems} />
 

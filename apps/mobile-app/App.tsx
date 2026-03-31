@@ -13,6 +13,33 @@ import { resolveLookupBundle } from '@/lookup/sourceResolver';
 import { getBundleDebugInfo, setBundleDebugInfo } from '@/lookup/bundleDebugInfo';
 import { initializeContent } from '@/data/contentIndex';
 
+async function runBackgroundBundleUpdate(
+  bundleUrl: string,
+  currentDebugInfo: {
+    version: string | null;
+    source: 'embedded' | 'cached' | 'updated' | 'fallback';
+    lastUpdate: string | null;
+    pendingUpdate: boolean;
+  },
+): Promise<void> {
+  const updateCheck = await checkForBundleUpdate(bundleUrl);
+  if (updateCheck.status !== 'update-available') {
+    return;
+  }
+
+  console.log('update available');
+
+  const applyResult = await applyBundleUpdate(bundleUrl);
+  if (applyResult.status === 'updated') {
+    console.log('update downloaded');
+    await setBundleDebugInfo({
+      ...currentDebugInfo,
+      lastUpdate: new Date().toISOString(),
+      pendingUpdate: true,
+    });
+  }
+}
+
 function AppNavigation() {
   const { navigationTheme, isDark } = useTheme();
 
@@ -43,28 +70,22 @@ export default function App() {
       const bundleUrl = process.env.EXPO_PUBLIC_LOOKUP_BUNDLE_URL;
       const persistedDebugInfo = await getBundleDebugInfo();
       let lastUpdate = persistedDebugInfo?.lastUpdate ?? null;
+      let pendingUpdate = persistedDebugInfo?.pendingUpdate ?? false;
 
       // 1) Load resolver (updated -> cached -> embedded fallback).
-      let resolved = await resolveLookupBundle();
-
-      // 2) Check update and 3) apply bundle (if newer remote version exists).
-      if (bundleUrl) {
-        const updateCheck = await checkForBundleUpdate(bundleUrl);
-        if (updateCheck.status === 'update-available') {
-          const applyResult = await applyBundleUpdate(bundleUrl);
-          if (applyResult.status === 'updated') {
-            resolved = await resolveLookupBundle();
-            lastUpdate = new Date().toISOString();
-          }
-        }
+      const resolved = await resolveLookupBundle();
+      if (pendingUpdate && resolved.source === 'updated') {
+        console.log('update applied');
+        pendingUpdate = false;
       }
 
-      // 4) Initialize content index with the active bundle.
+      // 2) Initialize content index with the active bundle.
       initializeContent(buildLookupRamStore(resolved.bundle));
       await setBundleDebugInfo({
         version: resolved.version,
         source: resolved.source,
         lastUpdate,
+        pendingUpdate,
       });
 
       // Restliche Stores für den Einsatz hydrieren.
@@ -74,6 +95,16 @@ export default function App() {
         hydrateRecent(),
       ]);
       setReady(true);
+
+      // 3) Start silent update in background; active bundle stays unchanged for this launch.
+      if (bundleUrl) {
+        void runBackgroundBundleUpdate(bundleUrl, {
+          version: resolved.version,
+          source: resolved.source,
+          lastUpdate,
+          pendingUpdate,
+        });
+      }
     })();
   }, []);
 

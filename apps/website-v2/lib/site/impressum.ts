@@ -2,10 +2,8 @@ export const impressumContent = {
   title: "Impressum",
   sections: [
     {
-      heading: "Angaben gemaess gesetzlicher Vorgaben",
-      lines: ["Platzhalter fuer Anbieterangaben."],
+      heading: "Angaben gemäß gesetzlicher Vorgaben",
+      lines: ["Impressumsangaben werden hier bereitgestellt."],
     },
   ],
 } as const;
-
-export type ImpressumContent = typeof impressumContent;

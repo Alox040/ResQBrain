@@ -1,5 +1,1 @@
-import { KontaktPage } from "@/components/pages/kontakt-page";
-
-export default function Page() {
-  return <KontaktPage />;
-}
+export { default } from "@/components/pages/kontakt-page";

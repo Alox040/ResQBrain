@@ -1,5 +1,12 @@
-import { SectionHeading } from "@/components/ui/section-heading";
+import { Container } from "@/components/ui/container";
+import { SectionFrame } from "@/components/ui/section-frame";
 
 export function ProblemSection() {
-  return <SectionHeading title="Problem" />;
+  return (
+    <SectionFrame id="problem">
+      <Container>
+        <h2>Problem</h2>
+      </Container>
+    </SectionFrame>
+  );
 }

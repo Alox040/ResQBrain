@@ -6,11 +6,10 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { ParticipationSection } from "@/components/sections/participation-section";
 import { ProblemSection } from "@/components/sections/problem-section";
 import { ProjectStatusSection } from "@/components/sections/project-status-section";
-import { Stack } from "@/components/ui/stack";
 
 export function HomePageSections() {
   return (
-    <Stack>
+    <>
       <HeroSection />
       <ProblemSection />
       <BenefitsSection />
@@ -19,6 +18,6 @@ export function HomePageSections() {
       <ParticipationSection />
       <FaqSection />
       <ContactCtaSection />
-    </Stack>
+    </>
   );
 }

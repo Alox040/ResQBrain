@@ -1,7 +1,5 @@
 export const kontaktContent = {
   title: "Kontakt",
-  intro: "Fuer allgemeine Anfragen steht ein direkter Kontaktkanal bereit.",
-  availabilityNote: "Antworten erfolgen zeitnah.",
+  intro: "Kontaktmöglichkeiten zum Projekt.",
+  availabilityNote: "Wir beantworten Anfragen so zeitnah wie möglich.",
 } as const;
-
-export type KontaktContent = typeof kontaktContent;

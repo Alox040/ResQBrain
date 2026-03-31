@@ -1,24 +1,6 @@
-import { footerNav, getRouteHref, mainNav } from "@/lib/routes";
-import type { NavigationItem, NavigationKey } from "@/types/navigation";
+import { footerNav, mainNav } from "@/lib/routes";
 
-const labels: Record<NavigationKey, string> = {
-  home: "Start",
-  mitwirkung: "Mitwirkung",
-  kontakt: "Kontakt",
-  impressum: "Impressum",
-  datenschutz: "Datenschutz",
-  links: "Links",
-};
+export const mainNavigation = [...mainNav];
+export const footerNavigation = [...footerNav];
 
-function toNavigationItem(key: NavigationKey): NavigationItem {
-  return {
-    key,
-    label: labels[key],
-    href: getRouteHref(key),
-  };
-}
-
-export const mainNavigation: NavigationItem[] = mainNav.map(toNavigationItem);
-export const footerNavigation: NavigationItem[] = footerNav.map(toNavigationItem);
-
-export type PublicNavigationItem = NavigationItem;
+export type PublicNavigationItem = (typeof mainNavigation)[number];

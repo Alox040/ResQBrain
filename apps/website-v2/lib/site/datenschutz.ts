@@ -1,12 +1,18 @@
 export const datenschutzContent = {
   title: "Datenschutz",
-  updatedAt: "Stand: folgt",
+  updatedAt: "Stand: 31.03.2026",
   sections: [
     {
-      heading: "Verarbeitung personenbezogener Daten",
-      body: ["Platzhalter fuer Datenschutzhinweise."],
+      heading: "Allgemeine Hinweise",
+      body: [
+        "Diese Website verarbeitet personenbezogene Daten nur im erforderlichen Umfang.",
+      ],
+    },
+    {
+      heading: "Kontaktaufnahme",
+      body: [
+        "Bei einer Kontaktaufnahme per E-Mail werden die übermittelten Daten zur Bearbeitung der Anfrage verwendet.",
+      ],
     },
   ],
 } as const;
-
-export type DatenschutzContent = typeof datenschutzContent;

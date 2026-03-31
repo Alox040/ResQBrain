@@ -1,5 +1,12 @@
-import { SectionHeading } from "@/components/ui/section-heading";
+import { Container } from "@/components/ui/container";
+import { SectionFrame } from "@/components/ui/section-frame";
 
 export function AudiencesSection() {
-  return <SectionHeading title="Zielgruppen" />;
+  return (
+    <SectionFrame id="audiences">
+      <Container>
+        <h2>Audiences</h2>
+      </Container>
+    </SectionFrame>
+  );
 }

@@ -1,82 +1,74 @@
-import { getHomeSectionHref, getRouteHref } from "@/lib/routes";
-import type { HomeSectionHref, RouteHref } from "@/lib/routes";
-import type { FaqItem } from "@/types/site-content";
-
-type HomeCta = {
-  label: string;
-  href: RouteHref | HomeSectionHref;
-};
-
-type HomeInfoSection = {
-  title: string;
-  text: string;
-};
-
-type HomeListItem = {
-  title: string;
-  text: string;
-};
-
-type HomeSectionBlock = {
-  title: string;
-  items: HomeListItem[];
-};
+import { routes } from "@/lib/routes";
 
 export const homeContent = {
   hero: {
     title: "ResQBrain",
-    subtitle: "Verlaessliche Inhalte fuer Einsatzorganisationen.",
+    subtitle: "Lernen und Nachbereitung im Rettungsdienst",
     ctaPrimary: {
       label: "Mitwirken",
-      href: getRouteHref("mitwirkung"),
-    } satisfies HomeCta,
+      href: routes.mitwirkung,
+    },
     ctaSecondary: {
       label: "Kontakt",
-      href: getRouteHref("kontakt"),
-    } satisfies HomeCta,
+      href: routes.kontakt,
+    },
   },
   problem: {
     title: "Problem",
-    text: "Einsatzrelevante Informationen liegen oft verteilt vor.",
-  } satisfies HomeInfoSection,
-  nutzen: {
+    text: "Wissen aus Einsätzen geht häufig verloren oder wird nicht strukturiert nachbereitet.",
+  },
+  benefits: {
     title: "Nutzen",
-    items: [{ title: "Zentral", text: "Inhalte werden an einem Ort gebuendelt." }],
-  } satisfies HomeSectionBlock,
+    text: "Strukturierte Nachbereitung verbessert Sicherheit und Routine im Alltag.",
+    items: [
+      { title: "Sicherer handeln", text: "Wichtige Erfahrungen werden dokumentiert und bleiben im Team verfügbar." },
+      { title: "Routine aufbauen", text: "Regelmaessige Nachbereitung unterstuetzt verlässliche Entscheidungen im Einsatz." },
+      { title: "Wissen verankern", text: "Inhalte werden strukturiert wiederholt statt im Alltag verloren zu gehen." },
+    ],
+  },
   zielgruppen: {
     title: "Zielgruppen",
-    items: [{ title: "Organisationen", text: "Teams mit standardisierten Prozessen." }],
-  } satisfies HomeSectionBlock,
-  projektstatus: {
+    items: [
+      { title: "Notfallsanitäter", text: "Für Lernen, Nachbereitung und schnellen Wissenszugriff." },
+      { title: "Rettungsdienst", text: "Für praxisnahe, strukturierte Unterstützung im Alltag." },
+      { title: "Ausbildung", text: "Für Wiederholung, Orientierung und strukturierte Vorbereitung." },
+    ],
+  },
+  projectStatus: {
     title: "Projektstatus",
-    text: "Die Plattform befindet sich im Aufbau.",
-  } satisfies HomeInfoSection,
+    text: "Aktive Entwicklung mit Fokus auf MVP und praxisnahe Weiterentwicklung.",
+  },
   mitwirkung: {
     title: "Mitwirkung",
-    text: "Fachliche Rueckmeldungen helfen bei der Priorisierung.",
+    text: "Wir suchen Personen aus Praxis und Ausbildung fuer Feedback und inhaltliche Rueckmeldungen.",
     cta: {
-      label: "Zur Mitwirkungsseite",
-      href: getRouteHref("mitwirkung"),
-    } satisfies HomeCta,
+      label: "Zur Mitwirkung",
+      href: routes.mitwirkung,
+    },
   },
   faq: {
-    title: "FAQ",
+    title: "Haeufige Fragen",
     items: [
       {
-        question: "Ist die Website bereits final?",
-        answer: "Nein, sie ist als oeffentliche Projektbasis angelegt.",
+        question: "Was ist ResQBrain?",
+        answer: "ResQBrain ist eine Plattform fuer Lernen und strukturierte Nachbereitung im Rettungsdienst.",
       },
-    ] as FaqItem[],
+      {
+        question: "Wer kann mitwirken?",
+        answer: "Fachkraefte aus Rettungsdienst und Ausbildung koennen Feedback und Praxiswissen einbringen.",
+      },
+      {
+        question: "Wie bleibt das Projekt praxisnah?",
+        answer: "Durch kontinuierliche Rueckmeldungen aus dem Einsatzalltag und eine fokussierte MVP-Entwicklung.",
+      },
+    ],
   },
   kontaktCta: {
     title: "Kontakt",
-    text: "Fragen koennen direkt ueber die Kontaktseite gestellt werden.",
+    text: "Du hast Fragen oder willst dich einbringen? Wir freuen uns auf deine Nachricht.",
     cta: {
       label: "Kontakt aufnehmen",
-      href: getRouteHref("kontakt"),
-    } satisfies HomeCta,
-    anchorHref: getHomeSectionHref("kontakt"),
+      href: routes.kontakt,
+    },
   },
-} as const;
-
-export type HomeContent = typeof homeContent;
+} as const

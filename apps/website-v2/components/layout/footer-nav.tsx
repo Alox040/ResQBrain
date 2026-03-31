@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-import { footerNavigation } from "@/lib/site";
+import { footerNav } from "@/lib/routes";
 
 export function FooterNav() {
   return (
-    <nav aria-label="Footer-Navigation">
+    <nav>
       <ul>
-        {footerNavigation.map((item) => (
-          <li key={item.key}>
+        {footerNav.map((item) => (
+          <li key={item.href}>
             <Link href={item.href}>{item.label}</Link>
           </li>
         ))}

@@ -1,12 +1,11 @@
 import { Container } from "@/components/ui/container";
 import { SectionFrame } from "@/components/ui/section-frame";
 
-export function HeroSection() {
+export function ValueSection() {
   return (
-    <SectionFrame id="hero">
+    <SectionFrame id="value">
       <Container>
-        <h1>Hero</h1>
-        <p>Minimaler Einstieg.</p>
+        <h2>Value</h2>
       </Container>
     </SectionFrame>
   );

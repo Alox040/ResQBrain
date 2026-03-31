@@ -1,23 +1,10 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
-import { layout } from "@/lib/design";
-
-type SectionFrameProps = {
-  children: ReactNode;
-  className?: string;
+type SectionFrameProps = PropsWithChildren<{
+  id?: string;
   compact?: boolean;
-};
+}>;
 
-export function SectionFrame({ children, className, compact = false }: SectionFrameProps) {
-  const style: CSSProperties = {
-    display: "grid",
-    gap: layout.section.gap,
-    paddingBlock: compact ? layout.section.paddingBlockCompact : layout.section.paddingBlock,
-  };
-
-  return (
-    <section className={className} style={style}>
-      {children}
-    </section>
-  );
+export function SectionFrame({ children, id }: SectionFrameProps) {
+  return <section id={id}>{children}</section>;
 }

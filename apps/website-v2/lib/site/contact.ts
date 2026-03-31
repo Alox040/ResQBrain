@@ -1,14 +1,11 @@
-export const contactInfo = {
-  email: {
-    label: "E-Mail",
-    href: "mailto:kontakt@example.org",
-  },
-  channels: [
-    {
-      label: "Kontaktseite",
-      href: "https://example.org/contact",
-    },
-  ],
+export const contact = {
+  email: "kontakt@example.com",
+  label: "Kontakt",
 } as const;
 
-export type ContactInfo = typeof contactInfo;
+export const contactInfo = {
+  email: {
+    label: contact.email,
+    href: `mailto:${contact.email}`,
+  },
+} as const;

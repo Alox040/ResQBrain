@@ -1,12 +1,15 @@
 export const mitwirkungContent = {
   title: "Mitwirkung",
-  intro: "Unterstuetzung ist in verschiedenen Formen moeglich.",
+  intro:
+    "Rückmeldungen aus dem Rettungsdienst helfen, ResQBrain praxisnah weiterzuentwickeln.",
   sections: [
     {
-      title: "Rueckmeldung",
-      text: "Fachliche Hinweise helfen bei der inhaltlichen Schaerfung.",
+      title: "Umfrage",
+      text: "Die aktuelle Umfrage hilft bei der Priorisierung der nächsten sinnvollen Schritte.",
+    },
+    {
+      title: "Feedback",
+      text: "Praktische Rückmeldungen aus Ausbildung und Einsatzalltag sind besonders wertvoll.",
     },
   ],
 } as const;
-
-export type MitwirkungContent = typeof mitwirkungContent;
