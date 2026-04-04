@@ -33,3 +33,7 @@ apps/mobile-app/.expo-shared/
 *.log
 apps/mobile-app/dist-validation/
 apps/mobile-app/dist-validation-ios/
+*.fig
+*.sketch
+*.zip
+apps/mobile-app/ui8/_extracted/
