@@ -1,5 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { CompositeNavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
 import {
   FlatList,
@@ -21,7 +23,13 @@ import {
   type HistoryRecord,
 } from '@/features/history/historyStore';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
+import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import { SPACING } from '@/theme';
+
+type HistoryScreenNav = CompositeNavigationProp<
+  NativeStackNavigationProp<HomeStackParamList, 'History'>,
+  BottomTabNavigationProp<RootTabParamList>
+>;
 
 const KIND_BADGE_MEDICATION = {
   label: 'Medikament',
@@ -56,7 +64,7 @@ function HistoryListHeader() {
 }
 
 export function HistoryScreen() {
-  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const navigation = useNavigation<HistoryScreenNav>();
   const history = useHistorySorted();
 
   const openItem = useCallback(

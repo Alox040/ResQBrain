@@ -1,77 +1,58 @@
-import { ButtonLink } from "@/components/ui/button-link";
-import { CardTitle } from "@/components/ui/card-title";
-import { Container } from "@/components/ui/container";
-import { ContentCard } from "@/components/ui/content-card";
-import { SectionFrame } from "@/components/ui/section-frame";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Stack } from "@/components/ui/stack";
-import { linksPageContent } from "@/lib/site";
+import type { Metadata, Viewport } from "next";
+
+import styles from "./links-bio.module.css";
+
+export const metadata: Metadata = {
+  title: "ResQBrain — Links",
+  description:
+    "ResQBrain: Projekt für den Rettungsdienst — Umfrage, Discord und Projektübersicht.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
+const LINKS = [
+  {
+    label: "Aktuelle Umfrage",
+    href: "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
+  },
+  {
+    label: "Discord Community",
+    href: "https://discord.gg/NszaAYAucf",
+  },
+  {
+    label: "Projektübersicht",
+    href: "https://github.com/Alox040/ResQBrain#",
+  },
+] as const;
 
 export default function LinksPage() {
   return (
-    <>
-      <SectionFrame>
-        <Container>
-          <Stack gap="md">
-            <p className="eyebrow">{linksPageContent.hero.subtitle}</p>
-            <h1 className="hero-title">{linksPageContent.hero.title}</h1>
-          </Stack>
-        </Container>
-      </SectionFrame>
+    <main className={styles.main}>
+      <div className={styles.inner}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>ResQBrain</h1>
+          <p className={styles.tagline}>Rettungsdienst · Feedback</p>
+        </header>
 
-      <SectionFrame compact>
-        <Container>
-          <ContentCard>
-            <p className="body-text muted-text">{linksPageContent.description}</p>
-          </ContentCard>
-        </Container>
-      </SectionFrame>
-
-      <SectionFrame compact>
-        <Container>
-          <Stack gap="md">
-            <SectionHeading title={linksPageContent.projectLinks.title} />
-            <Stack gap="md">
-              {linksPageContent.projectLinks.items.map((item) => (
-                <ContentCard key={item.label}>
-                  <Stack gap="sm">
-                    <CardTitle>{item.label}</CardTitle>
-                    <p className="body-text muted-text">{item.description}</p>
-                    <div>
-                      <ButtonLink href={item.href} variant="secondary" external={item.external}>
-                        {item.buttonLabel}
-                      </ButtonLink>
-                    </div>
-                  </Stack>
-                </ContentCard>
-              ))}
-            </Stack>
-          </Stack>
-        </Container>
-      </SectionFrame>
-
-      <SectionFrame compact>
-        <Container>
-          <Stack gap="md">
-            <SectionHeading title={linksPageContent.communityLinks.title} />
-            <Stack gap="md">
-              {linksPageContent.communityLinks.items.map((item) => (
-                <ContentCard key={item.label}>
-                  <Stack gap="sm">
-                    <CardTitle>{item.label}</CardTitle>
-                    <p className="body-text muted-text">{item.description}</p>
-                    <div>
-                      <ButtonLink href={item.href} variant="secondary" external={item.external}>
-                        {item.buttonLabel}
-                      </ButtonLink>
-                    </div>
-                  </Stack>
-                </ContentCard>
-              ))}
-            </Stack>
-          </Stack>
-        </Container>
-      </SectionFrame>
-    </>
+        <ul className={styles.stack}>
+          {LINKS.map((item) => (
+            <li key={item.href} className={styles.stackItem}>
+              <a
+                className={styles.cta}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }

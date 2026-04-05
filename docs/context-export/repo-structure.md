@@ -1,21 +1,24 @@
 # Repository-Struktur (Export)
 
-**Methode:** Verzeichnisscan Repository-Root 31. März 2026; in der Darstellung ausgelassen: `node_modules`, größere Build-Artefakte.
+**Methode:** Verzeichnisscan und `pnpm-workspace.yaml` (Stand Export: 5. April 2026). Ausgelassen in der Darstellung: `node_modules`, `.next`, größere Build-Artefakte.
 
 ```
 ResQBrain/
 ├── apps/
-│   ├── mobile-app/          # Expo + React Native (Lookup MVP)
-│   ├── website/             # Next.js Marketing-Site (@resqbrain/website)
-│   └── website-old/         # Ältere Next.js-Site (eigenes package.json)
+│   ├── mobile-app/              # Expo (resqbrain-mobile) — Workspace
+│   ├── website/                 # Next.js (@resqbrain/website) — Workspace
+│   ├── website-old/             # Ältere Site, nicht im Workspace
+│   ├── website-pre-v2-backup/   # Backup-Kopie, nicht im Workspace
+│   └── Neuer Ordner/            # Leerer Ordner (Stand Scan)
 ├── packages/
-│   ├── domain/              # @resqbrain/domain — einziges Paket mit package.json unter packages/
-│   ├── shared/              # Ordner ohne package.json
-│   └── ui/                  # Ordner ohne package.json
+│   ├── domain/                  # @resqbrain/domain
+│   ├── shared/                  # ohne package.json
+│   └── ui/                      # ohne package.json
 ├── docs/
+│   ├── agents/
 │   ├── architecture/
 │   ├── context/
-│   ├── context-export/      # Dieser Export
+│   ├── context-export/          # Dieser Export
 │   ├── legacy/
 │   ├── planning/
 │   ├── product/
@@ -24,33 +27,37 @@ ResQBrain/
 │   ├── status/
 │   └── surveys/
 ├── data/
-│   ├── lookup-seed/         # Phase-0 JSON (manifest, medications, algorithms)
-│   └── schemas/             # dbrd-normalized.schema.ts, dbrd-normalized.examples.json
+│   ├── lookup-seed/
+│   └── schemas/
 ├── scripts/
-│   ├── dbrd/                # Normalisierung, Lookup-Seed, Validierung
+│   ├── dbrd/
 │   ├── status/
 │   ├── utils/
-│   ├── vercel-ignore.js
-│   ├── validate-routing.ts
+│   ├── check-german-umlauts.ts
+│   ├── cleanup-algorithms.ts
+│   ├── import-dbrd.ts
+│   ├── transform-algorithms.ts
+│   ├── validate-algorithms.ts
 │   ├── validate-content-isolation.ts
-│   └── check-german-umlauts.ts
+│   ├── validate-routing.ts
+│   └── vercel-ignore.js
 ├── prompts/
 ├── configs/
 ├── content/
 ├── tmp/
-├── app/                     # Root: alternative Next-Seiten (nicht an Root-build gekoppelt)
-├── components/              # Root: alternative UI
-├── src/                     # Root: ohne Dateien im flachen Scan
-├── backend/                 # Ohne Dateien im flachen Scan
+├── app/                         # Root: alternative Next-Struktur
+├── components/                  # Root: alternative UI
+├── src/                         # Root
+├── backend/
 ├── .claude/
 ├── .cursor/
-├── .expo/                   # Expo-Artefakte (Workspace)
-├── .gitignore
-├── package.json             # Root-Workspace; build → nur Website
+├── .expo/
+├── .gitignore                   # u. a. *.zip, apps/mobile-app/ui8/_extracted/
+├── package.json
 ├── pnpm-workspace.yaml
 ├── pnpm-lock.yaml
-├── tsconfig.json            # extends expo/tsconfig.base
-├── vercel.json              # Root: rootDirectory apps/website, build/install (siehe deployment.md)
+├── tsconfig.json                # extends expo/tsconfig.base
+├── vercel.json                  # Root → apps/website
 ├── README.md
 ├── CLAUDE.md
 ├── AGENT_RULES.md
@@ -61,17 +68,16 @@ ResQBrain/
 
 | Ordner | Zweck (nachweisbar) |
 |--------|----------------------|
-| **apps/mobile-app** | Expo-App: Navigation, Screens, Lookup in `src/lookup`, `src/data`, einsatznahe Features (Favoriten, Verlauf, Dosisrechner, Vitalwerte) |
-| **apps/website** | Next.js-Website: `app/`, `components/`, `lib/`; Ziel von Root-`pnpm build` |
-| **apps/website-old** | Frühere Website-Variante u. a. mit `phase11:website`, `vercel.json` + `ignoreCommand` |
-| **packages/domain** | Domänenlogik: Content, Governance, Versioning, Release, Lifecycle, Audit, Survey, Lookup-Entities |
-| **data/lookup-seed** | Phase-0-JSON für die Mobile-App |
-| **data/schemas** | DBRD-Normalisierungsschema + Beispiele |
-| **scripts** | DBRD-Pipeline, Validierung, Vercel-Ignore, Status-Rendering, Helfer |
-| **docs** | Architektur-, Kontext-, Status- und Roadmap-Dokumente |
+| **apps/mobile-app** | Expo-App: Navigation, Screens, Lookup (`src/lookup`, Resolver, optional Bundle-Update) |
+| **apps/website** | Next.js: `app/`, `components/`, `lib/site/*`; Root-`pnpm build`; optional `ui8/` für Templates |
+| **apps/website-old** | Frühere Site; `vercel.json` mit `ignoreCommand` |
+| **apps/website-pre-v2-backup** | Backup mit eigenem `package.json` |
+| **packages/domain** | Domänenlogik: Content, Governance, Versioning, Release, … |
+| **data/lookup-seed** | Phase-0-JSON |
+| **data/schemas** | DBRD-Normalisierung |
+| **scripts** | DBRD, Validierung, Vercel-Ignore, Status, weitere Hilfsskripte |
+| **docs** | Architektur, Kontext, Status, Roadmap, **agents/** |
 | **docs/context-export** | Dieser Export |
-| **app/** + **components/** (Root) | Parallele/alte Next-Struktur; nicht Root-`pnpm build` |
-| **src/** (Root) | Leer im Scan |
 
 ## Workspace-Definition
 
@@ -79,13 +85,14 @@ ResQBrain/
 
 ```yaml
 packages:
-  - "apps/*"
+  - "apps/mobile-app"
+  - "apps/website"
   - "packages/*"
 ```
 
-Unter `packages/` existiert nur **`packages/domain/package.json`** als definiertes Paket; `shared/` und `ui/` sind Ordner **ohne** `package.json`.
+Unter `packages/` ist nur **`packages/domain/package.json`** als Paket definiert; `shared/` und `ui/` ohne `package.json`.
 
 ## Hinweis Vercel
 
-- **`vercel.json` am Repository-Root** setzt u. a. `rootDirectory: "apps/website"`.
-- **`apps/website/vercel.json`** existiert zusätzlich mit framework/install/build (ohne `rootDirectory` in dieser Datei im Export-Scan).
+- **`vercel.json` am Repository-Root:** `rootDirectory: "apps/website"`.
+- **`apps/website/vercel.json`:** framework/install/build ohne `rootDirectory`.

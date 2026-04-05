@@ -1,152 +1,135 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-
-type RouteCheck = {
-  route: string;
-  file: string;
-  status: "vorhanden" | "fehlt";
-};
-
-type SectionCheck = {
-  section: string;
-  file: string;
-  status: "vorhanden" | "fehlt";
-  required: boolean;
-};
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..");
 
-function fileExists(relativePath: string) {
+function fileExists(relativePath: string): boolean {
   return existsSync(path.join(repoRoot, relativePath));
 }
 
+function readFile(relativePath: string): string {
+  return readFileSync(path.join(repoRoot, relativePath), "utf-8");
+}
+
+// --- 1. app/page.tsx existiert ---
+
+const PAGE_FILE = "apps/website/app/page.tsx";
+const pageExists = fileExists(PAGE_FILE);
+
+// --- 2. Section-Imports in app/page.tsx ---
+
+const REQUIRED_SECTIONS = [
+  "HeroSection",
+  "ProblemSection",
+  "IdeaSection",
+  "StatusSection",
+  "AudienceSection",
+  "MitwirkungSection",
+  "FaqSection",
+  "ContactCtaSection",
+] as const;
+
+type SectionImportCheck = {
+  section: string;
+  imported: boolean;
+};
+
+let sectionChecks: SectionImportCheck[] = [];
+
+if (pageExists) {
+  const pageContent = readFile(PAGE_FILE);
+  sectionChecks = REQUIRED_SECTIONS.map((section) => ({
+    section,
+    imported: pageContent.includes(`import`) && pageContent.includes(section),
+  }));
+}
+
+// --- 3. Statische Routen ---
+
+type RouteCheck = {
+  route: string;
+  file: string;
+  exists: boolean;
+};
+
 const routeChecks: RouteCheck[] = [
-  {
-    route: "/",
-    file: "apps/website/app/page.tsx",
-    status: fileExists("apps/website/app/page.tsx") ? "vorhanden" : "fehlt",
-  },
+  { route: "/", file: "apps/website/app/page.tsx", exists: pageExists },
   {
     route: "/kontakt",
     file: "apps/website/app/kontakt/page.tsx",
-    status: fileExists("apps/website/app/kontakt/page.tsx") ? "vorhanden" : "fehlt",
+    exists: fileExists("apps/website/app/kontakt/page.tsx"),
   },
   {
     route: "/links",
     file: "apps/website/app/links/page.tsx",
-    status: fileExists("apps/website/app/links/page.tsx") ? "vorhanden" : "fehlt",
+    exists: fileExists("apps/website/app/links/page.tsx"),
   },
   {
     route: "/mitwirkung",
     file: "apps/website/app/mitwirkung/page.tsx",
-    status: fileExists("apps/website/app/mitwirkung/page.tsx") ? "vorhanden" : "fehlt",
+    exists: fileExists("apps/website/app/mitwirkung/page.tsx"),
   },
   {
     route: "/impressum",
     file: "apps/website/app/impressum/page.tsx",
-    status: fileExists("apps/website/app/impressum/page.tsx") ? "vorhanden" : "fehlt",
+    exists: fileExists("apps/website/app/impressum/page.tsx"),
   },
   {
     route: "/datenschutz",
     file: "apps/website/app/datenschutz/page.tsx",
-    status: fileExists("apps/website/app/datenschutz/page.tsx") ? "vorhanden" : "fehlt",
+    exists: fileExists("apps/website/app/datenschutz/page.tsx"),
   },
 ];
 
-const sectionsDir = "apps/website/components/sections";
+// --- Auswertung ---
 
-const sectionChecks: SectionCheck[] = [
-  {
-    section: "HomeHero",
-    file: `${sectionsDir}/home-hero.tsx`,
-    status: fileExists(`${sectionsDir}/home-hero.tsx`) ? "vorhanden" : "fehlt",
-    required: true,
-  },
-  {
-    section: "SurveyInviteSection",
-    file: `${sectionsDir}/survey-invite-section.tsx`,
-    status: fileExists(`${sectionsDir}/survey-invite-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-  {
-    section: "ProblemBenefitsSection",
-    file: `${sectionsDir}/problem-benefits-section.tsx`,
-    status: fileExists(`${sectionsDir}/problem-benefits-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-  {
-    section: "FeaturesOverviewSection",
-    file: `${sectionsDir}/features-overview-section.tsx`,
-    status: fileExists(`${sectionsDir}/features-overview-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-  {
-    section: "AudiencesSection",
-    file: `${sectionsDir}/audiences-section.tsx`,
-    status: fileExists(`${sectionsDir}/audiences-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-  {
-    section: "PilotFeedbackSection",
-    file: `${sectionsDir}/pilot-feedback-section.tsx`,
-    status: fileExists(`${sectionsDir}/pilot-feedback-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-  {
-    section: "CollaborationSection",
-    file: `${sectionsDir}/collaboration-section.tsx`,
-    status: fileExists(`${sectionsDir}/collaboration-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-  {
-    section: "FaqSection",
-    file: `${sectionsDir}/faq-section.tsx`,
-    status: fileExists(`${sectionsDir}/faq-section.tsx`) ? "vorhanden" : "fehlt",
-    required: false,
-  },
-];
+const missingRoutes = routeChecks.filter((c) => !c.exists);
+const missingImports = sectionChecks.filter((c) => !c.imported);
+const errors: string[] = [];
 
-function renderRouteTable(rows: RouteCheck[]) {
-  return [
-    "### Routen-Status",
-    "| Route | Datei | Status |",
-    "|-------|-------|--------|",
-    ...rows.map((row) => `| ${row.route} | ${row.file} | ${row.status} |`),
-  ].join("\n");
+if (!pageExists) {
+  errors.push(`[FEHLT] ${PAGE_FILE}`);
 }
 
-function renderSectionTable(rows: SectionCheck[]) {
-  return [
-    "### Sections-Status",
-    "| Section | Datei | Status | Pflicht |",
-    "|---------|-------|--------|---------|",
-    ...rows.map(
-      (row) =>
-        `| ${row.section} | ${row.file} | ${row.status} | ${row.required ? "ja" : "nein"} |`,
-    ),
-  ].join("\n");
+for (const r of missingRoutes) {
+  if (r.route !== "/") {
+    errors.push(`[FEHLT] Route ${r.route} → ${r.file}`);
+  }
 }
 
-const routeFailures = routeChecks.filter((c) => c.status === "fehlt");
-const requiredSectionFailures = sectionChecks.filter(
-  (c) => c.required && c.status === "fehlt",
-);
-const hasFailures = routeFailures.length > 0 || requiredSectionFailures.length > 0;
-
-const output = [
-  "## Website / Routing",
-  "",
-  renderRouteTable(routeChecks),
-  "",
-  renderSectionTable(sectionChecks),
-  "",
-  `Routing validation: ${hasFailures ? "FAIL" : "PASS"}`,
-].join("\n");
-
-process.stdout.write(`${output}\n`);
-
-if (hasFailures) {
-  process.exitCode = 1;
+for (const s of missingImports) {
+  errors.push(`[FEHLT] Import von ${s.section} in ${PAGE_FILE}`);
 }
+
+// --- Output ---
+
+console.log("## Website / Routing Validation\n");
+
+console.log("### Routen");
+for (const r of routeChecks) {
+  console.log(`  ${r.exists ? "✓" : "✗"} ${r.route.padEnd(14)} ${r.file}`);
+}
+
+console.log("\n### Section-Imports in app/page.tsx");
+if (!pageExists) {
+  console.log("  (übersprungen — page.tsx fehlt)");
+} else {
+  for (const s of sectionChecks) {
+    console.log(`  ${s.imported ? "✓" : "✗"} ${s.section}`);
+  }
+}
+
+console.log();
+
+if (errors.length > 0) {
+  for (const e of errors) {
+    console.error(e);
+  }
+  console.error(`\nRouting validation: FAIL (${errors.length} Fehler)`);
+  process.exit(1);
+}
+
+console.log("Routing validation: PASS");
+process.exit(0);

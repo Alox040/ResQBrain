@@ -1,16 +1,18 @@
 # Datenstrukturen (Export)
 
+**Stand:** Abgleich mit `data/lookup-seed/*`, `apps/mobile-app/src/lookup/lookupSchema.ts` und Domain-Paket (Export 5. April 2026).
+
 Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase-0-App vs. Plattform-Domain vs. Domain-„Lookup“-Submodule vs. DBRD-Normalisierung).
 
 ---
 
 ## 1) Phase-0 Lookup-Bundle (Mobile + `data/lookup-seed/`)
 
-**Manifest** (`manifest.json`) — erlaubte Keys laut `apps/mobile-app/src/lookup/lookupSchema.ts` (`LOOKUP_MANIFEST_KEYS`):
+**Manifest** (`manifest.json`) — erlaubte Keys laut `LOOKUP_MANIFEST_KEYS` in `lookupSchema.ts`:
 
-- `schemaVersion`, `bundleId`, optional: `displayName`, `locale`, `contentCutoffDate`, `generatedAt`
+- `schemaVersion`, `bundleId`, `version`, `createdAt`, `checksum`, `displayName`, `locale`, `contentCutoffDate`, `generatedAt`
 
-**Aktueller Inhalt (Export):** u. a. `schemaVersion: "1"`, `bundleId: "pilot-wache-001"`, `generatedAt` — optionale Felder können fehlen.
+**Aktueller Inhalt (`manifest.json`, Export):** u. a. `schemaVersion: "1"`, `bundleId: "pilot-wache-001"`, `version: "2026.03.29.1"`, `createdAt`, `checksum`, `generatedAt`.
 
 ### Medication (JSON + App-Typ `Medication`)
 
@@ -25,17 +27,21 @@ Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase
 - **Schritt:** nur `text` (`ALGORITHM_STEP_KEYS`)
 - **TypeScript:** `Algorithm` mit `steps: AlgorithmStep[]`, `warnings?`, `relatedMedicationIds`
 
-### Umfang der Seed-Dateien (gezaehlt, Export)
+### Umfang der Seed-Dateien (gezählt, Export)
 
-- `medications.json`: **9** Objekte mit `"id"`.
-- `algorithms.json`: **9** Objekte mit `"id"`.
+- `medications.json`: **10** Einträge (Array-Länge per Node `require`).
+- `algorithms.json`: **9** Einträge (Array-Länge per Node `require`).
 
 ### Pipeline (Repo)
 
 - **`data/schemas/dbrd-normalized.schema.ts`** — internes Normalisierungsmodell (Provenance, `NormalizedAlgorithmStep` mit `order`/`text`, Freigabestatus-Werte parallel zur Domain, ohne Org-/Audit-Objekte).
 - **`data/schemas/dbrd-normalized.examples.json`** — Beispielinstanzen.
 - **`scripts/dbrd/`** — Extraktion/Normalisierung/Validierung und `build-lookup-seed` (Mapping → `data/lookup-seed/`); Root-Scripts `pnpm dbrd:*`.
-- **Dosisrechner-Hinweis:** Einige Medikationseinträge enthalten mg/µg-pro-kg-Hinweise im Freitext (`dosage`), die von `DoseCalculatorScreen` via `parseDosageCalculatorSpec` interpretiert werden; das Lookup-Schema selbst erzwingt jedoch weiterhin nur Freitextfelder, keine strukturierte Dosierungslogik.
+- **Dosisrechner-Hinweis:** Einige Medikationseinträge enthalten mg/µg-pro-kg-Hinweise im Freitext (`dosage`), die von `DoseCalculatorScreen` via `parseDosageCalculatorSpec` interpretiert werden; das Lookup-Schema selbst erzwingt weiterhin nur Freitextfelder, keine strukturierte Dosierungslogik.
+
+### Mobile: Auflösung und Metadaten
+
+- **`resolveLookupBundle()`** (`sourceResolver.ts`) liefert `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, `generatedAt`, `schemaVersion`) — **kein** Top-Level-Feld `version` am Resolved-Typ; Manifest kann `version`/`checksum` enthalten (`LookupManifest`).
 
 ### Versioning-relevante Statuswerte
 

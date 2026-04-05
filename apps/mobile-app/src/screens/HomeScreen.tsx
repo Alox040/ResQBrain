@@ -474,6 +474,15 @@ export function HomeScreen() {
 
   const navigationCards = useMemo((): ActionCardItem[] => [
     {
+      key: 'nav-history',
+      title: 'Verlauf',
+      subtitle: 'Zuletzt geöffnete Medikamente und Algorithmen',
+      icon: 'time-outline',
+      iconColor: '#0f766e',
+      iconBackground: '#ccfbf1',
+      onPress: () => navigation.navigate('History'),
+    },
+    {
       key: 'nav-medications',
       title: 'Medications',
       subtitle: 'Listen, Dosierungen und Hinweise',

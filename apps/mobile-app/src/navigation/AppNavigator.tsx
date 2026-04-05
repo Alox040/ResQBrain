@@ -9,6 +9,7 @@ import { DoseCalculatorScreen } from '@/screens/DoseCalculatorScreen';
 import { AlgorithmListScreen } from '@/screens/AlgorithmListScreen';
 import { FavoritesScreen } from '@/screens/FavoritesScreen';
 import { VitalReferenceScreen } from '@/features/references/VitalReferenceScreen';
+import { HistoryScreen } from '@/screens/HistoryScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { MedicationListScreen } from '@/screens/MedicationListScreen';
 import { SearchScreen } from '@/screens/SearchScreen';
@@ -73,6 +74,11 @@ function HomeStackNavigator() {
         name="HomeMain"
         component={HomeScreen}
         options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="History"
+        component={HistoryScreen}
+        options={{ title: 'Verlauf' }}
       />
       <HomeStack.Screen
         name="VitalReference"

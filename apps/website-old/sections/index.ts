@@ -1,9 +1,0 @@
-export { AppPreviewSection } from "../components/sections/AppPreviewSection";
-export { CTASection } from "../components/sections/CTASection";
-export { FeatureSection } from "../components/sections/FeatureSection";
-export { FooterSection } from "../components/sections/FooterSection";
-export { HeroSection } from "../components/sections/HeroSection";
-export { ProblemSection } from "../components/sections/ProblemSection";
-export { SolutionSection } from "../components/sections/SolutionSection";
-export { TrustSection } from "../components/sections/TrustSection";
-export { UseCasesSection } from "../components/sections/UseCasesSection";

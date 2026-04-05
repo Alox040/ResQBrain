@@ -1,9 +1,0 @@
-export { AudiencesSection } from "./audiences-section";
-export { FaqSection } from "./faq-section";
-export { FeaturesOverviewSection } from "./features-overview-section";
-export { HomeHero } from "./home-hero";
-export { PilotFeedbackSection } from "./pilot-feedback-section";
-export { PlaceholderSection } from "./placeholder-section";
-export { ProblemBenefitsSection } from "./problem-benefits-section";
-export { SectionFrame } from "./section-frame";
-export { SurveyInviteSection } from "./survey-invite-section";

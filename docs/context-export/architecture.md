@@ -2,94 +2,92 @@
 
 ## Ordnerstruktur (relevant für Produkt)
 
-- **`apps/mobile-app/`** — Expo-App: `App.tsx`, `src/navigation`, `src/screens`, `src/data`, `src/lookup`, `src/types`, `src/ui`.
-- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (u. a. `home/`, `sections/`, `layout/`, `links/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `public-config.ts`, `site-content.ts`), `data/links.ts`.
-- **`apps/website-v2/`** — Next.js: `app/`, `components/sections`, `components/pages`, `lib/routes.ts`, `lib/site/*`; eigene Home-Komposition und eigenes Vercel-Setup.
-- **`apps/website-old/`** — ältere Next.js-Website im gleichen Monorepo (eigenes `app/`, `components/`, `lib/site.ts` u. a.); Referenz, nicht das Build-Ziel von Root-`pnpm build`.
+- **`apps/mobile-app/`** — Expo-App: `App.tsx`, `src/navigation`, `src/screens`, `src/data`, `src/lookup` (u. a. `sourceResolver.ts`, `bundleUpdateService.ts`, `lookupCache.ts`, `bundleStorage.ts`, `loadLookupBundle.ts`), `src/types`, `src/ui`, `src/theme`, `src/state`, `src/features`.
+- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (`layout/`, `sections/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `lib/site/*`), `styles/`, `public/`; Ordner `ui8/` (Assets/Vorlagen, u. a. ZIP-basierte Quellen; `*.zip` in Root-`.gitignore`).
+- **`apps/website-pre-v2-backup/`** — Backup einer früheren Website-Variante (nicht in `pnpm-workspace.yaml`).
+- **`apps/website-old/`** — ältere Next.js-Website; `vercel.json` mit `ignoreCommand`.
 - **`packages/domain/src/`** — Domain-Logik, u. a.:
   - `content/entities/` — ApprovalStatus, ScopeTarget, Algorithm, Medication, Protocol, Guideline, ContentPackage, ContentPackageFoundation
   - `versioning/entities/` — u. a. CompositionEntry, ContentPackageVersion, ReleaseVersion, LineageState, …
   - `release/ReleaseEngine.ts`
   - `lifecycle/services/ContentLifecycleEngine.ts`
   - `governance/` — Policies, Entities, `approval/services/ApprovalEngine.ts`, `services/PermissionEngine.ts`
-  - `audit/`, `survey/`, `tenant/`, `lookup/entities/` (eigenes Lookup-Modell im Domain-Paket)
+  - `audit/`, `survey/`, `tenant/`, `lookup/entities/`
 - **`data/lookup-seed/`** — Phase-0-JSON: `manifest.json`, `medications.json`, `algorithms.json`.
-- **`data/schemas/`** — `dbrd-normalized.schema.ts`, `dbrd-normalized.examples.json` (Normalisierungsschicht, kein Ersatz für Domain-Entities).
-- **`scripts/`** — u. a. `dbrd/` (Normalisierung, Lookup-Seed-Build, Validierung), `vercel-ignore.js`, `validate-routing.ts`, `validate-content-isolation.ts`, `status/`, `check-german-umlauts.ts`.
+- **`data/schemas/`** — `dbrd-normalized.schema.ts`, `dbrd-normalized.examples.json`.
+- **`scripts/`** — u. a. `dbrd/`, `status/`, `utils/`, `vercel-ignore.js`, `validate-routing.ts`, `validate-content-isolation.ts`, `check-german-umlauts.ts`, `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts`.
 
-**Zusatz (Root, nicht von Root-Build genutzt):** `app/`, `components/` am Repository-Root — parallele/alte Struktur.
+**Zusatz (Root):** `app/`, `components/` — parallele/alte Struktur; nicht Root-`pnpm build`.
+
+**Hinweis:** Unter `apps/` existiert ein leerer Ordnername `Neuer Ordner` (Stand Scan 5. April 2026).
 
 ## Navigation (Mobile-App)
 
 **Datei:** `apps/mobile-app/src/navigation/AppNavigator.tsx`
 
 - **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `Settings`, `MedicationTab`, `AlgorithmTab`.
-- **Home-Stack (`HomeStackParamList`):** `HomeMain` (Start/Home) und `VitalReference` (Screen für Vitalwerte-Referenzen).
-- **Medikament-Stack (`MedicationStackParamList`):** `MedicationListScreen` → `MedicationDetail` (Param: `medicationId`) → `DoseCalculator`.
-- **Algorithmus-Stack (`AlgorithmStackParamList`):** `AlgorithmListScreen` → `AlgorithmDetail` (Param: `algorithmId`).
+- **Home-Stack (`HomeStackParamList` in `homeStackParamList.ts`):** `HomeMain`, `VitalReference`.
+- **Medikament-Stack:** `MedicationListScreen` → `MedicationDetail` (Param: `medicationId`) → `DoseCalculator`.
+- **Algorithmus-Stack:** `AlgorithmListScreen` → `AlgorithmDetail` (Param: `algorithmId`).
 
-**Einstieg:** `App.tsx` — `NavigationContainer` + `AppNavigator`.
+**Einstieg:** `App.tsx` — Hydration Favoriten/Verlauf/Recent, `resolveLookupBundle()` → `initializeContent(buildLookupRamStore(...))`, danach `NavigationContainer` + `AppNavigator`.
 
 ## Navigation / Routing (aktive Website)
 
 **Datei:** `apps/website/lib/routes.ts`
 
-- Statische Routen: `home` `/`, `kontakt` `/kontakt`, `links` `/links`, `mitwirkung` `/mitwirkung`, `impressum`, `datenschutz`.
-- `mainNav` / `footerNav` verweisen auf Anker auf der Startseite (`#mitmachen`, `#funktionen`, `#zielgruppen`, `#faq`) und auf Kontakt/Links.
-- Umfrage-Ziel: `resolveSurveyLink()` nutzt `getSurveyPublishedUrl()` aus `lib/public-config.ts` (HTTPS) oder Fallback intern `/mitwirkung#umfrage`.
+- Routen-Objekt: `home` `/`, `kontakt`, `mitwirkung`, `links`, `impressum`, `datenschutz`.
+- `mainNav` / `footerNav` wie im Quelltext.
 
-**Layout:** `app/layout.tsx` — `SiteShell` um `children`, Metadaten inkl. `sitePublicUrl` aus `lib/site-content.ts`.
+**Startseite:** `app/page.tsx` — siehe Abschnitt Website-Sections unten.
 
-## Navigation / Routing (Website-v2)
-
-**Datei:** `apps/website-v2/lib/routes.ts`
-
-- Routen: `/`, `/kontakt`, `/links`, `/mitwirkung` (inkl. Alias `kontakt`/`mitwirkung`).
-- Main-Navigation: `Start`, `Mitwirkung`, `Kontakt`.
-- Footer-Navigation: `Links`.
+**Layout:** `app/layout.tsx` — `SiteShell`, Schrift `Instrument_Sans` (`next/font/google`), `lang="de"`, Metadaten aus `lib/site/site-content.ts`.
 
 ## Domain Layer (`@resqbrain/domain`)
 
 - **Exportfassade:** `packages/domain/src/index.ts` re-exportiert Content-Factory-Funktionen, Typen, Governance-Evaluatoren, `Versioning`, `Audit`, `release`, `survey`, `Lookup`.
-- **Keine Abhängigkeit der Mobile-App vom Paket:** `apps/mobile-app/package.json` listet `@resqbrain/domain` **nicht**; Mobile nutzt eigene Typen in `src/types/content.ts` und Validierung in `src/lookup/`.
+- **Mobile-App:** `apps/mobile-app/package.json` listet `@resqbrain/domain` **nicht**; eigene Typen in `src/types/content.ts`, Validierung in `src/lookup/`.
 
 ## Datenmodelle (zwei Ebenen)
 
 ### A) Mobile Phase 0 (`apps/mobile-app/src/types/content.ts`)
 
 - `ContentKind`: `'medication' | 'algorithm'`
-- `ContentTag`: festes Vokabular (kreislauf, atemwege, neurologie, …) — abgestimmt mit `lookupSchema.ts` (`CONTENT_TAG_VALUES`)
-- `Medication`: Basis-Felder + `dosage`, `relatedAlgorithmIds`
-- `Algorithm`: Basis-Felder + `steps: { text }[]`, optional `warnings`, `relatedMedicationIds`
-- `ContentItem` — Union
+- `ContentTag`: festes Vokabular — abgestimmt mit `lookupSchema.ts` (`CONTENT_TAG_VALUES`)
+- `Medication` / `Algorithm` / `ContentItem` — wie Typdefinitionen
 
-Validierung der Keys: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS`, Manifest-Keys).
+Validierung: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS`, Manifest-Keys).
 
 ### B) Plattform-Domain (`packages/domain/src/content/entities/`)
 
-- **Medication:** u. a. `organizationId`, `title`, `genericName`, `brandNames`, `dosageGuidelines[]`, `approvalStatus`, `currentVersionId`, Audit-Trail, …
-- **Algorithm:** u. a. `decisionLogic` (Graph-Knoten), `prerequisites`, Version/Approval — **abweichend** vom linearen Phase-0-`steps[]`-Modell der App.
-- **Guideline, Protocol, ContentPackage:** eigene Entity-Dateien mit Org- und Versionsfeldern.
+- **Medication / Algorithm / Guideline / Protocol / ContentPackage** — org- und versionsbezogene Modelle; Algorithm mit `decisionLogic` (Graph), abweichend vom linearen Phase-0-`steps[]` der App.
+
+## Mobile: Bundle-Auflösung und Quellen
+
+- **`sourceResolver.ts`:** `resolveLookupBundle()` — Reihenfolge updated → cached → embedded → fallback; Rückgabetyp `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, `generatedAt`, `schemaVersion`).
+- **`bundleUpdateService.ts`:** Remote-Check/Apply (Aufruf aus `App.tsx` wenn `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` gesetzt).
+- **`lookupSource.ts`:** dokumentiert `LookupSource` (`embedded` | `cached` | `updated` | `fallback`).
 
 ## Versioning (Domain-Paket)
 
-- **`packages/domain/src/versioning/entities/`:** u. a. `ContentPackageVersion`, `ReleaseVersion`, `CompositionEntry`, `LineageState`, `ContentEntityVersion`, Abhängigkeits-Notizen.
-- **`packages/domain/src/shared/versioning/`:** z. B. `assertExplicitVersionId` für explizite Versions-IDs.
+- **`packages/domain/src/versioning/entities/`:** u. a. `ContentPackageVersion`, `ReleaseVersion`, `CompositionEntry`, `LineageState`, …
+- **`packages/domain/src/shared/versioning/`:** z. B. `assertExplicitVersionId`.
 
 ## Release Engine
 
-- **`packages/domain/src/release/ReleaseEngine.ts`** — Release-Flow mit Policy-/Capability-Bezug (Importe aus Governance, Content, Versioning); dazu Tests `release.engine.test.ts`.
-- **Mobile/Website:** kein direkter Aufruf dieser Engine in den App-Ordnern (innerhalb dieses Exports nicht vollständig durchsucht).
+- **`packages/domain/src/release/ReleaseEngine.ts`** — Release-Flow mit Policy-/Capability-Bezug; Tests `release.engine.test.ts`.
+- **Mobile/Website:** kein direkter Aufruf in den App-Ordnern im Rahmen dieses Exports nachgewiesen.
 
 ## Content-Struktur (App-Laufzeit)
 
-- Nur **Medikamente** und **Algorithmen** aus JSON-Bundle; keine Protokolle/Leitlinien in `data/lookup-seed/`.
+- **Medikamente** und **Algorithmen** aus JSON-Bundle; keine Protokolle/Leitlinien in `data/lookup-seed/`.
 
-## Website-v2 Sections
+## Website-Sections (aktive `apps/website`)
 
-**Datei:** `apps/website-v2/components/pages/home-page-sections.tsx`
+**Datei:** `apps/website/app/page.tsx`
 
-- Reihenfolge: `HeroSection` → `TrustSection` → `ServicesSection` → `ProcessSection` → `RegionSection` → `ContactCtaSection` → `Footer`.
+- Reihenfolge: `HeroSection` → `ProblemSection` → `IdeaSection` → `StatusSection` → `AudienceSection` → `MitwirkungSection` → `FaqSection` → `ContactCtaSection`  
+- Texte/Konfiguration über `content` aus `@/lib/site/content`.
 
 ## Services (Domain-Paket, explizite `*Engine*` / Services)
 
@@ -104,13 +102,8 @@ Validierung der Keys: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM
 
 Export in `policies/index.ts`:
 
-- `OrganizationScopedAccessPolicy` (`evaluateAccess`)
-- `TransitionAuthorizationPolicy` (`evaluateTransition`)
-- `ApprovalResolutionPolicy` (`evaluateQuorum`)
-- `ReleaseAuthorizationPolicy` (`evaluateRelease`)
-- `DeprecationAuthorizationPolicy` (`evaluateDeprecation`)
-- `hasCapability`, `getCapabilityGrantingRoles`
+- `OrganizationScopedAccessPolicy`, `TransitionAuthorizationPolicy`, `ApprovalResolutionPolicy`, `ReleaseAuthorizationPolicy`, `DeprecationAuthorizationPolicy`, `hasCapability`, `getCapabilityGrantingRoles`
 
 ## Entities (Governance, Auszug)
 
-Unter anderem in `governance/entities/`: Capability, Permission, UserRole, ApprovalPolicy, ApprovalDecision, DecisionStatus, ScopeLevel, … (siehe `packages/domain/src/governance/entities/index.ts`).
+Unter anderem in `governance/entities/`: Capability, Permission, UserRole, ApprovalPolicy, … (siehe `packages/domain/src/governance/entities/index.ts`).

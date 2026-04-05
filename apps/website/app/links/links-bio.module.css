@@ -1,0 +1,99 @@
+/* TikTok / in-app browser: stable height + notch home-indicator padding */
+.main {
+  box-sizing: border-box;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: clip;
+  padding-block: max(12px, env(safe-area-inset-top, 0px))
+    max(16px, env(safe-area-inset-bottom, 0px));
+  padding-inline: max(16px, env(safe-area-inset-left, 0px))
+    max(16px, env(safe-area-inset-right, 0px));
+}
+
+.inner {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: clamp(14px, 3.5vw, 20px);
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: clamp(1.45rem, 4.2vw, 1.9rem);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-heading);
+  color: var(--heading);
+}
+
+.tagline {
+  font-size: clamp(0.8125rem, 2.8vw, 0.9375rem);
+  line-height: 1.35;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 3vw, 14px);
+  width: 100%;
+}
+
+.stackItem {
+  margin: 0;
+}
+
+.cta {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--cta-primary-bg);
+  color: var(--cta-primary-text);
+  text-decoration: none;
+  font-weight: var(--font-weight-semibold);
+  font-size: clamp(1rem, 2.8vw, 1.0625rem);
+  line-height: 1.25;
+  text-align: center;
+  border: 1px solid var(--cta-primary-border);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cta:hover {
+  background: var(--accent-secondary);
+  border-color: var(--accent-strong);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.cta:active {
+  filter: brightness(0.96);
+}
+
+.cta:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

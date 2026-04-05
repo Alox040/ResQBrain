@@ -1,40 +1,43 @@
 # Bekannte Themen / Abweichungen (Export, nachweisbar)
 
-Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Systeme.
+Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Systeme. **Verifikation:** 5. April 2026 (siehe `deployment.md`).
 
 ## Dokumentation vs. Code
 
-- **Roadmap/Status/README:** Stand 31. März 2026 sind `PROJECT_ROADMAP.md`, `PROJECT_STATUS.md` und README weitgehend an den Mobile-/Website-Code angepasst (Lookup-Funktionen, Einsatzfeatures, Routen). Restabweichungen können bei künftigen Änderungen entstehen und erfordern erneuten Export/Abgleich.
--- **Umfrage-Doku vs. Code:** README/Risiken erwähnen weiterhin, dass Umfrage-URLs Platzhalter sein können; im Code (`apps/website/lib/public-config.ts`) sind konkrete Microsoft-Forms-Links sowie eine Environment-Override-Strategie hinterlegt.
+- **Roadmap/Status/README:** können hinter schnellen Codeänderungen zurückbleiben; erneuter Export empfohlen nach größeren Änderungen.
+- **Umfrage:** aktive Website nutzt **`apps/website/lib/site/survey.ts`** (Platzhalter `https://example.com/survey`). **`public-config.ts`** / **`resolveSurveyLink()`** unter `apps/website` **nicht** vorhanden (Repo-Suche).
 
 ## Repository-Struktur / Website
 
-- **Zwei aktive Website-Pfade:** Kanonisch für Root-Build ist **`apps/website/`**. Zusätzlich **`apps/website-old/`** vollständige ältere App + Root-`app/`/`components/` — nicht an Root-`pnpm build` gekoppelt.
-- **Root `tsconfig.json`:** `extends: "expo/tsconfig.base"` — weiterhin atypisch für reines Monorepo-Root ohne Expo-Target im Root-`package.json`.
+- **Workspace:** `pnpm-workspace.yaml` listet nur `apps/mobile-app`, `apps/website`, `packages/*` — **`apps/website-old`** und **`apps/website-pre-v2-backup`** sind **keine** Workspace-Mitglieder, besitzen aber jeweils eigenes `package.json` (beide mit Name `@resqbrain/website` in der Backup-/Alt-Kopie).
+- **Root `tsconfig.json`:** `extends: "expo/tsconfig.base"` — atypisch für Root ohne Expo-App im Root-`package.json`.
 
 ## Build / CI / Validierung
 
-- **Keine CI-Konfiguration** unter `.github/` oder `.gitlab-ci*.yml` (Suche 31. März 2026).
-- **`scripts/validate-routing.ts`:** Exit **1** — erwartet u. a. `HeroSection`, `CTASection`, Footer-Muster; aktive `apps/website` nutzt `HomePageSections` / andere Section-Namen.
-- **`scripts/validate-content-isolation.ts`:** Exit **1** — meldet u. a. „unerwartete“ Routen `/kontakt`, `/links`, `/mitwirkung` und Check „Root = apps/website“ als **fail** bei vorhandener **`vercel.json` am Repository-Root** (laut Skriptausgabe: „Repo-Root vercel.json vorhanden“).
+- **Keine CI-Konfiguration** unter `.github/` oder `.gitlab-ci*.yml` (Stand Export).
+- **`scripts/validate-routing.ts`:** Exit **1** — erwartet u. a. `components/sections/home-hero.tsx`, `survey-invite-section.tsx`, …; **Ist-Zustand:** `FaqSection.tsx` u. a. existieren unter anderem Namen; Startseite in `app/page.tsx`.
+- **`scripts/validate-content-isolation.ts`:** Exit **0** im letzten Lauf — „Content isolation: PASS“.
+- **`npx tsc --noEmit` (`apps/mobile-app`):** Exit **2** — `App.tsx`: `resolved.version` existiert nicht auf `ResolvedLookupBundle`; `HomeScreen.tsx`: `colors.onPrimary` fehlt auf `AppPalette`; `SettingsScreen.tsx`: `TYPOGRAPHY.caption` fehlt.
 - **Mobile-App:** nicht Teil von Root-`pnpm build`.
 
 ## Navigation / App
 
-- Keine automatisierten UI-Testläufe für React Navigation in diesem Export; **Typecheck** (`tsc --noEmit`) in `apps/mobile-app` war **ohne Fehler** (Lauf 31. März 2026).
+- **`HistoryScreen.tsx`:** vorhanden, aber **nicht** in `AppNavigator` / `HomeStackParamList` eingetragen.
+- Keine automatisierten UI-E2E-Tests für React Navigation in diesem Export nachgewiesen.
 
 ## Expo / SDK
 
-- **Abhängigkeiten** laut `apps/mobile-app/package.json`: Expo 54, RN 0.81.5, React 19.1.0 — Laufzeit auf Geräten hier nicht verifiziert.
+- **Abhängigkeiten** laut `apps/mobile-app/package.json`: Expo ~54.0.33, RN 0.81.5, React 19.1.0 — Gerätelaufzeit hier nicht verifiziert.
 
 ## Encoding / Website
 
-- **`TemporaryEncodingTest`:** nur unter **`apps/website-old/components/debug/`**, nicht unter **`apps/website`**.
+- **`TemporaryEncodingTest`:** unter `apps/website` nicht gefunden; Legacy ggf. unter `apps/website-old`.
+- **`app/layout.tsx`:** Kommentar zu UTF-8 / einmaligem Charset-Meta durch Next.js.
 
 ## Deployment
 
-- **`apps/website/vercel.json`:** kein `ignoreCommand` — Branch-Builds werden durch diese Datei **nicht** unterdrückt (im Gegensatz zu `apps/website-old/vercel.json`).
-- **`docs/status/PROJECT_STATUS.md`:** Hinweis, dass produktives Deployment nicht aus dem täglichen Build allein folgt.
+- **`apps/website/vercel.json`:** kein `ignoreCommand` — im Gegensatz zu `apps/website-old/vercel.json`.
+- **`docs/status/PROJECT_STATUS.md`:** produktives Deployment nicht aus lokalem Build allein ableitbar.
 
 ## Datenmodell-Drift
 
