@@ -30,9 +30,8 @@ function createStyles(colors: AppPalette) {
       gap: 4,
     },
     label: {
-      ...TYPOGRAPHY.caption,
+      ...TYPOGRAPHY.sectionTitle,
       color: colors.textMuted,
-      textTransform: 'uppercase',
       letterSpacing: 0.5,
     },
     value: {

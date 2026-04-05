@@ -80,9 +80,13 @@ export default function App() {
       }
 
       // 2) Initialize content index with the active bundle.
+      const bundleVersion =
+        resolved.bundle.manifest.version ??
+        resolved.bundle.manifest.bundleId ??
+        null;
       initializeContent(buildLookupRamStore(resolved.bundle));
       await setBundleDebugInfo({
-        version: resolved.version,
+        version: bundleVersion,
         source: resolved.source,
         lastUpdate,
         pendingUpdate,
@@ -99,7 +103,7 @@ export default function App() {
       // 3) Start silent update in background; active bundle stays unchanged for this launch.
       if (bundleUrl) {
         void runBackgroundBundleUpdate(bundleUrl, {
-          version: resolved.version,
+          version: bundleVersion,
           source: resolved.source,
           lastUpdate,
           pendingUpdate,

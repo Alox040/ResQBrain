@@ -6,6 +6,8 @@ export type AppPalette = {
   text: string;
   textMuted: string;
   primary: string;
+  /** Icons/text on solid `primary` (e.g. search chip). */
+  onPrimary: string;
   primaryMutedBg: string;
   link: string;
   /** Warn-/Dosierungs-Karten */
@@ -39,6 +41,7 @@ export const lightPalette: AppPalette = {
   text: '#111827',
   textMuted: '#6b7280',
   primary: '#2563eb',
+  onPrimary: '#ffffff',
   primaryMutedBg: '#eff6ff',
   link: '#2563eb',
   warningBg: '#fffbeb',
@@ -69,6 +72,7 @@ export const darkPalette: AppPalette = {
   text: '#f1f5f9',
   textMuted: '#94a3b8',
   primary: '#60a5fa',
+  onPrimary: '#ffffff',
   primaryMutedBg: '#1e3a5f',
   link: '#93c5fa',
   warningBg: '#422006',
