@@ -1,3 +1,5 @@
+import { siteContent } from "@/lib/site/site-content";
+
 export const contactPageContent = {
   hero: {
     title: "Kontakt",
@@ -16,7 +18,7 @@ export const contactPageContent = {
 export const contactDetails = {
   projectName: "ResQBrain",
   responsibleName: "ResQBrain Projekt",
-  email: "kontakt@resqbrain.de",
+  email: siteContent.contactEmail,
 } as const;
 
 export const contactInfo = {
