@@ -21,7 +21,7 @@ Aktuelle Statusdateien:
 
 ## Current Development State
 
-Kurzstatus (abgeglichen mit dem Repo, **31. März 2026**):
+Kurzstatus (abgeglichen mit dem Repo, **5. April 2026**):
 
 - **Aktuelle Phase:** Phase 0 (Lookup-first MVP) **plus** umgesetzte einsatznahe Erweiterungen; Details und Legende **`[~]` teilweise** in der Roadmap.  
 - **Produktiv sichtbar:** **Mobile App** (Expo): Lookup offline aus eingebettetem Bundle; **Website** (Next.js) statisch.  
@@ -101,32 +101,47 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 
 ## Aktueller Stand
 
-- Domain-Paket mit Content- und Versioning-Teilmengen; TypeScript-Kompilat über `compile:content` und `compile:versioning`.  
-- Website als Next.js-App mit statischen Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`.  
-- Mobile-App: Expo-Projekt mit lokalem Lookup-Bundle, AsyncStorage für Favoriten/Verlauf; siehe `docs/status/PROJECT_STATUS.md`.  
-- Monorepo-Build am Root: `pnpm build` (baut die Website).
+- Domain-Paket (`@resqbrain/domain`): gesamtes `src` per `tsc -p tsconfig.json` (noEmit) sowie `compile:content` / `compile:versioning` — siehe `packages/domain/package.json`.  
+- Website (Next.js 16): statische Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`. Umfrage-Link zentral in `apps/website/lib/site/survey.ts`.  
+- Mobile-App: Expo, Lookup-Bundle eingebettet, AsyncStorage für Favoriten/Verlauf — Details `docs/status/PROJECT_STATUS.md`.  
+- Root-Build: `pnpm build` → nur `@resqbrain/website`.
+
+## Current Status (EN)
+
+Same as above: domain TypeScript clean; website static routes verified; mobile Phase-0+ features per status doc. Working tree at last check: `next-env.d.ts` updated by Next.js typed routes.
 
 ## Nächste Schritte (kurz)
 
-Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und die Roadmap. Inhaltlich vorn: Bundle-Lieferung/-Persistenz über `lookupSource`, Sync-Konzept, Seed/Pilot ausbauen.
+Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Bundle-Persistenz / `lookupSource`, Sync-Konzept, Pilot/Seed.
+
+## Next Steps (EN)
+
+Bundle persistence and sync for mobile; API/auth boundary for tenant enforcement when backend starts; keep website legal copy aligned with live survey and hosting.
 
 ## Bekannte Risiken
 
-- Externe Umfrage-URLs sind noch nicht produktiv hinterlegt; Datenschutz-Hinweise beziehen sich auf künftige Anbieter.  
-- Mandantentrennung ist im Modell angelegt, End-to-End erst mit API und Auth wirksam.  
-- Deployment-Pipeline für Website und Mobile separat zu planen.  
-- Dosisrechner: nur orientierend; abhängig von Dosistext-Heuristik.
+- Umfrage verlinkt auf Microsoft Forms — Datenschutzhinweise und Auftragsverarbeitung bei produktivem Betrieb prüfen.  
+- Mandantentrennung im Domain-Modell; Laufzeitenforcement erst mit API und Auth.  
+- Deployment Website vs. Mobile separat planen.  
+- Dosisrechner: nur orientierend; Dosistext-Heuristik.  
+- `next-env.d.ts` kann Next-generierte Referenzen unter `.next/` enthalten — nach frischem Clone Build oder Dev einmal ausführen.
+
+## Risks (EN)
+
+Survey third-party (Microsoft Forms) DPA/privacy alignment; tenant isolation not runtime-enforced yet; dose calculator heuristic; generated Next types path dependency.
 
 ## Build Status
 
 | Befehl | Zweck |
 |--------|--------|
-| `pnpm --filter @resqbrain/domain run compile:versioning` | Versioning-TS isoliert prüfen |
-| `pnpm --filter @resqbrain/domain run compile:content` | Content-TS isoliert prüfen |
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json` | Gesamtes Domain-`src` (noEmit) |
+| `pnpm --filter @resqbrain/domain run compile:versioning` | Versioning-TS isoliert |
+| `pnpm --filter @resqbrain/domain run compile:content` | Content-TS isoliert |
 | `pnpm build` | Produktionsbuild Website |
-| `pnpm mobile:verify` | Mobile: Typecheck, Nav-Checks, Android-Bundle-Export |
+| `pnpm --filter @resqbrain/website run typecheck` | Website `tsc --noEmit` |
+| `pnpm mobile:verify` | Mobile: Typecheck, Nav, Android-Export |
 
-Letzter vollständiger Website-Build: **erfolgreich** (Next.js 16).
+**Zuletzt verifiziert:** 5. April 2026 — Domain-`tsc`, `compile:content`, `compile:versioning`, `pnpm build`, Website-`typecheck` erfolgreich.
 
 ## Website Status
 
@@ -135,11 +150,15 @@ Letzter vollständiger Website-Build: **erfolgreich** (Next.js 16).
 | `/` | OK (Landing) |
 | `/kontakt` | OK |
 | `/links` | OK |
-| `/mitwirkung` | OK |
+| `/mitwirkung` | OK (Umfrage-CTA) |
 | `/impressum` | OK |
 | `/datenschutz` | OK |
 
-Navigation und Anker: `apps/website/lib/routes.ts`.
+Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/lib/site/navigation.ts`. Homepage-Sektionen ohne feste `id`-Anker (keine internen `#`-Ziele auf `/`).
+
+## Website Status (EN)
+
+All listed routes static; footer and CTAs wired via `navigation.ts`, `content.ts`, and `survey.ts`. No section fragment IDs on the home page.
 
 ## Mitmachen
 

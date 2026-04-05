@@ -1,6 +1,6 @@
 # Projektstatus
 
-**Stand:** 31. März 2026 (Arbeitstages-Abschluss)
+**Stand:** 5. April 2026 (Arbeitstages-Abschluss)
 
 ## Gesamtstatus
 
@@ -43,6 +43,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Aspekt | Status |
 |--------|--------|
 | Paket `@resqbrain/domain` | Aktiv |
+| `tsc -p tsconfig.json` (gesamtes Paket, noEmit) | Erfolgreich (5. Apr. 2026) |
 | `compile:versioning` (tsc) | Erfolgreich |
 | `compile:content` (tsc) | Erfolgreich |
 | `compile:governance` (tsc) | Erfolgreich |
@@ -70,7 +71,13 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `/impressum` | `apps/website/app/impressum/page.tsx` | Static |
 | `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | Static |
 
-Interne Anker: siehe `apps/website/lib/routes.ts` (z. B. `#mitmachen`, `#funktionen`, `#faq`). Validierung: bei Bedarf `pnpm exec tsx scripts/validate-routing.ts` (Stand Skript ggf. veraltet gegenüber aktueller Site).
+**Pfade:** `apps/website/lib/routes.ts` — nur Seitenrouten (keine Fragment-IDs).
+
+**Footer / CTAs:** `lib/site/navigation.ts` (Footer), `lib/site/survey.ts` (Umfrage-URL), `lib/site/content.ts` (Startseite Mitwirkung-CTA), `ContactCtaSection` → Kontakt.
+
+**Homepage-Anker:** Aktuell keine `id` auf den Sektions-Wrappern; deeplinks mit `#…` auf `/` sind daher nicht vorgesehen. (Ältere Doku mit festen Fragment-Namen ist gegenüber Ist-Code veraltet.)
+
+**Letzte Validierung (5. Apr. 2026):** `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, Domain-`tsc` + `compile:content` / `compile:versioning` — erfolgreich.
 
 ## Build
 
@@ -78,12 +85,12 @@ Interne Anker: siehe `apps/website/lib/routes.ts` (z. B. `#mitmachen`, `#funktio
 |--------|-----------|
 | `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
-| Letzter Website-Lauf (lokal) | Erfolgreich, keine fehlenden Module |
+| Letzter Website-Lauf (lokal, 5. Apr. 2026) | Erfolgreich (Next 16.2.1), 8/8 statische Seiten |
 
 ## Risiken
 
 1. **Dosisrechner** basiert auf Heuristiken im Freitext — kein Ersatz für verbindliche Arzneimitteldokumentation; nutzerseitig klar gekennzeichnet in der App.  
-2. **Externe Umfrage-URLs** sind Platzhalter; echte Survey-Links und Datenschutz-Folgen vor Go-Live setzen.  
+2. **Externe Umfrage (Microsoft Forms)** ist im Code verlinkt; datenschutzrechtliche Einordnung und Texte auf `/datenschutz` bei produktiver Nutzung final abstimmen.  
 3. **Produktions-Deployment** der Website und der Mobile-Pipeline separat planen.  
 4. **Mandantentrennung** im Domain-Modell, aber ohne produktive API/Auth noch nicht end-to-end erzwungen.  
 5. **expo-doctor** kann Abweichungen melden (z. B. Icon-Paket-Versionen im Monorepo) — siehe Mobile-Checkliste.

@@ -1,6 +1,6 @@
 # Projekt-Roadmap
 
-**Stand:** 31. März 2026 (abgeglichen mit `apps/mobile-app` und Lookup-Seed)
+**Stand:** 5. April 2026 (abgeglichen mit `apps/mobile-app`, Lookup-Seed und letzter Build-/TS-Validierung)
 
 ## Legende
 
@@ -104,3 +104,5 @@
 4. **Einsatz-UI** und ggf. **expo-doctor**-Abweichungen bei Bedarf bereinigen.
 
 Dokumentation zur lokalen Prüfung: `docs/context/mobile-validation-checklist.md`.
+
+**Letzte Repo-Validierung (5. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json`, `compile:versioning`, `compile:content`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich.

@@ -1,11 +1,75 @@
 # Arbeitssession
 
-**Datum:** 31. März 2026
+**Datum:** 5. April 2026  
+**Art:** Arbeitstages-Abschluss — Workspace-Analyse, Domain-/Website-Validierung, `pnpm build`, Status- und README-Abgleich, Git-Sync
+
+## Validierungen (5. April 2026)
+
+### Workspace / Git
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Geänderte Dateien | `apps/website/next-env.d.ts` (Next.js-Typreferenz, u. a. `./.next/dev/types/routes.d.ts`) |
+| TODO / FIXME / WIP in `.ts` / `.tsx` unter Repo (ohne `docs/`) | Keine Treffer in Produktionscode |
+
+### Domain
+
+| Modul | Befehl | Ergebnis |
+|-------|--------|----------|
+| Gesamtpaket | `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json` | ✓ erfolgreich |
+| Content | `compile:content` | ✓ erfolgreich |
+| Versioning | `compile:versioning` | ✓ erfolgreich |
+
+**Exports:** `packages/domain/src/index.ts` — Barrel zu Shared, Common, Tenant, Content, Lifecycle, Governance, Versioning, Audit, Release, Survey, Lookup (strukturell konsistent; kein `build`-Script im Paket — Prüfung über `tsc`).
+
+**Layering:** Keine Imports aus `apps/*` im Domain-Paket (Quercheck per Suche).
+
+### Website / Routing
+
+| Route | Datei | Status |
+|-------|-------|--------|
+| `/` | `apps/website/app/page.tsx` | ✓ Static |
+| `/impressum` | `apps/website/app/impressum/page.tsx` | ✓ Static |
+| `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | ✓ Static |
+| `/kontakt` | `apps/website/app/kontakt/page.tsx` | ✓ Static |
+| `/links` | `apps/website/app/links/page.tsx` | ✓ Static |
+| `/mitwirkung` | `apps/website/app/mitwirkung/page.tsx` | ✓ Static |
+| `/_not-found` | — | ✓ Static |
+
+**Navigation:** `lib/site/navigation.ts` — Footer: Mitwirkung, Kontakt, Impressum, Datenschutz, Links (alle `routes.*` aus `lib/routes.ts`).
+
+**Umfrage / CTAs:** Zentrale URL in `lib/site/survey.ts` (`forms.cloud.microsoft`); Verwendung u. a. `lib/site/content.ts` (Mitwirkung-CTA), `app/mitwirkung/page.tsx`, `lib/site/links-page.ts`. Keine separate `SurveysSection`-Komponente — Inhalte über Sektionen + `survey`-Modul.
+
+**Anker:** Homepage-Sektionen setzen derzeit **keine** `id`-Attribute auf `Section`; interne `#…`-Sprünge sind im aktuellen UI nicht genutzt. (Hinweis: ältere Doku mit `#mitmachen` / `#faq` ist gegenüber Ist-Code veraltet.)
+
+### Build
+
+| Befehl | Ergebnis |
+|--------|----------|
+| `pnpm build` (Root → `@resqbrain/website`) | ✓ Next.js 16.2.1, 8 statische Seiten |
+| `pnpm --filter @resqbrain/website run typecheck` | ✓ |
+
+## Risiken / Hinweise (kurz)
+
+- `next-env.d.ts` verweist auf generierte Typen unter `.next/` — nach frischem Clone ggf. einmal `next dev` / `next build` ausführen, damit Typpfade vorhanden sind.  
+- Mandantentrennung und produktive API/Auth weiterhin nicht End-to-End in der App abgesichert (Modell vs. Runtime).
+
+## Nächste sinnvolle Schritte (Priorität)
+
+1. **Implementierung:** `lookupSource` / Bundle-Persistenz (Mobile) — siehe Roadmap Phase 0.  
+2. **Architektur:** API- und Auth-Grenze für Organization-Kontext skizzieren.  
+3. **Website:** Fragment-IDs nur ergänzen, wenn echte In-Page-Sprünge gebraucht werden; Doku bereinigen.  
+4. **Validierung:** Bei Mobile-Änderungen `pnpm mobile:verify`.
+
+---
+
+## Session 31. März 2026 (Archiv)
+
 **Art:** Arbeitstages-Abschluss — Statusvalidierung, Build-Check, Routing-Prüfung, Dokumentationsabgleich
 
-## Validierungen (31. März 2026)
+### Validierungen (31. März 2026)
 
-### Domain-Compile
+#### Domain-Compile
 
 | Modul | Befehl | Ergebnis |
 |-------|--------|----------|
@@ -13,7 +77,7 @@
 | Versioning | `compile:versioning` | ✓ erfolgreich |
 | Governance | `compile:governance` | ✓ erfolgreich |
 
-### Website-Build
+#### Website-Build
 
 | Prüfung | Ergebnis |
 |---------|----------|
@@ -21,7 +85,7 @@
 | TypeScript-Check | ✓ keine Fehler |
 | Statische Seiten (8/8) | ✓ vollständig generiert |
 
-### Routing
+#### Routing
 
 | Route | Status |
 |-------|--------|
@@ -33,107 +97,47 @@
 | `/mitwirkung` | ✓ Static |
 | `/_not-found` | ✓ Static |
 
-### Codequalität
+#### Codequalität
 
 - Keine TODO/FIXME/WIP-Marker in Produktionscode (`.ts`, `.tsx`)
 - Git-Workingcopy: sauber
 
-## Offene Punkte (unverändert aus Phase-0)
+### Offene Punkte (unverändert aus Phase-0)
 
 - Lookup-Bundle separat auf Gerät speichern (Download/Sync)
 - Netzwerk-Refresh / Sync-Engine
 - Dosisrechner: nur heuristikbasiert (mg/µg-pro-kg im Freitext)
-- Externe Umfrage-URLs: Platzhalter, vor Go-Live ersetzen
+- Externe Umfrage-URLs: vor Go-Live inhaltlich und datenschutzrechtlich finalisieren
 
-## Nächste sinnvolle Schritte
+### Nächste sinnvolle Schritte (historisch)
 
-### Implementierung (Phase 0 Rest)
+#### Implementierung (Phase 0 Rest)
 1. `lookupSource` erweitern: Bundle-Download und Gerätespeicherung
 2. Sync-Konzept definieren: Trigger, Conflict-Resolution, Manifest-Vergleich
 
-### Architektur
+#### Architektur
 3. API-Schicht planen: Organization-Kontext, Auth-Boundary, Tenant-Enforcement
 
-### Website
+#### Website
 4. Umfrage-URLs produktiv setzen sobald Survey live
 
-### Validierung
+#### Validierung
 5. `pnpm mobile:verify` bei nächster Mobile-Änderung ausführen
 
 ---
 
-## Session 28. März 2026 (Architektur- und Phase-0-Vorbereitung)
+## Session 28. März 2026 (Archiv)
 
-## Architekturentscheidungen (heute dokumentiert)
+Website: Routing/Anker in Umfrage-bezogenen Sektionen und `FeatureVotingSection`; `scripts/validate-routing.ts`; README-Konfliktmarken bereinigt. Prüfungen damals: Domain-Compile, `validate:routing`, `pnpm build` — erfolgreich.
 
-- **Lookup-Datenform Phase 0:** Pflicht-/optional-Felder für Medikament und Algorithmus; Abgrenzung zu `@resqbrain/domain` (keine Lifecycle-/Governance-Pflichtfelder im Seed).
-- **Seed & Bundle:** Kanonische Quelle **JSON** unter `data/lookup-seed/` inkl. `manifest.json` (`schemaVersion`, `bundleId`); TS-Mocks nur Übergang.
-- **Mobile Screens:** Fachliche Spec für vier Lookup-Screens (Listen/Details), lokale Lesepfade, Querverweise, bewusste UI-Ausschlüsse (kein Rechner, keine Verzweigungslogik, keine Freigabe-/Versions-UI).
-- **Offline Phase 0:** Mitgeliefertes Bundle → Start: laden/validieren → **RAM-Store** + **In-Memory-Suchindex**; kein Netz für Lookup; keine Sync-Engine; Updates zunächst über App-Release (oder später schlanker Bundle-Download).
-- **Lesepfad:** Unverändert Ausrichtung auf `lookup-first-architecture.md`; Phase 0 ohne Pflicht-SQLite/persistente DB.
+## Session 25. März 2026 (Kurz, Archiv)
 
-## Neue Kontextdateien
+Siehe frühere Einträge in Git-Historie / Roadmap.
 
-- `docs/context/lookup-data-shape.md` — Datenform, Konsistenzregeln, Verwandtes.
-- `docs/context/content-seed-plan.md` — Ablage, Manifest, JSON vs. TS, Arbeitsablauf.
-- `docs/context/mobile-phase0-screens.md` — Screen-Spezifikation und MVP-Checkliste.
-- `docs/context/offline-phase0-decision.md` — Offline-Strategie, Risiken, technische Schritte.
-- `docs/context/next-steps-laptop-to-pc.md` — Übergabe Haupt-PC, Reihenfolge, DoD erster Block.
+## Offene Langfristpunkte (Plattform)
 
-## Phase-0 Scope-Festlegung
+- Domain-Lifecycle-Services, Organization-Kontext in APIs, Content-Sourcing über MVP hinaus — siehe Architektur-Docs.
 
-- **In:** Lookup-first MVP — finden und lesen unter Zeitdruck, offlinefähig, statischer Text (Dosierung Freitext), lineare Algorithmus-Schritte, lokale Suche, ein Pilot-Bundle.
-- **Aus:** Dosierungsrechner, KI, Governance-/Freigabe-Workflows in der App, Versionierungs-UI, Multi-Tenant-Laufzeit, Sync-Engine, serverseitige Suche für diese Inhalte.
+## Nächster dokumentierter Schritt (fortlaufend)
 
-## Nächste PC-Implementierung
-
-1. `data/lookup-seed/` anlegen (Manifest + `medications.json` / `algorithms.json` oder `content.json`).  
-2. Validierung (Zod o. Ä.) abgleichen mit `apps/mobile-app/src/types/content.ts` und `lookup-data-shape.md`.  
-3. Loader; `contentIndex.ts` nur noch über Bundle — **eine** Wahrheit.  
-4. Danach: List-Screens, `SearchScreen` / Suchindex vereinheitlichen, Querverweise laut `mobile-phase0-screens.md`; TS-Mocks entfernen oder auf Fixtures reduzieren.  
-5. Kein paralleler Aufbau von SQLite/Sync „für später“ ohne Phase-0-Mehrwert.
-
-Details und Reihenfolge: `docs/context/next-steps-laptop-to-pc.md`, Abschnitte 3 und 7–8.
-
-## Risiken
-
-- Mehrere Datenquellen (Mocks vs. JSON vs. `contentIndex` / Suche) — Zusammenführung zwingend.  
-- Abweichung JSON ↔ `content.ts` / Spec — Schema zuerst.  
-- `SearchScreen` und ggf. hardcodierte Quellen — nicht mit Alt-Pattern perpetuieren (vgl. Übergabedokument).  
-- Inhaltliche Aktualität nur über Release, solange kein Bundle-Update-Kanal — Pilot kurz halten, `contentCutoffDate` nutzen.
-
-## Definition of Done — Vorbereitung (erster PC-Block)
-
-- `data/lookup-seed/` im Repo inkl. konsistentem `manifest.json`.  
-- Validierung schlägt bei ungültigem JSON fehl (nachweisbar).  
-- `contentIndex` bezieht Daten **nur** über den Loader aus dem JSON-Bundle.  
-- App startet; Medikamenten- und Algorithmus-**Detail** wie bisher erreichbar.  
-- Alte TS-Module nicht mehr von `contentIndex` genutzt oder eindeutig nur Dünnschicht — SSoT klar.
-
-Nächster inhaltlicher Block danach: Listen, Suche, Querverweise ohne neue Datengrundlagen-Risiken.
-
-## Phase-0 Re-Validierung
-
-- Phase-0-Kontextdateien konsolidiert (untereinander und mit Architektur abgestimmt).
-- `docs/architecture/lookup-first-architecture.md` angepasst: Phase-0-Subset vs. Zielarchitektur klar getrennt.
-- **JSON-Bundle** unter `data/lookup-seed/` als kanonische Quelle bestätigt; TypeScript-Daten nur Übergang bis Loader.
-- Phase 0 dokumentarisch abgesichert: **keine Sync-Engine**, **keine Dosierungslogik**, **keine Verzweigungslogik** in der App.
-- **Ergebnis:** Re-Validierung **PASS** (Kriterien: Scope, Sync, Dosierung, Branching, JSON-Quelle, keine Governance-UI).
-
-## Nächster Schritt
-
-**Implementierung Block 1:** `data/lookup-seed/` (Manifest + JSON) + Validierung + Loader + `contentIndex.ts` nur über das Bundle — siehe `docs/context/next-steps-laptop-to-pc.md` (Abschnitte 7–8, DoD Abschnitt 8).
-
----
-
-## Frühere Session (25. März 2026, Kurz)
-
-Website: Routing/Anker in `SurveysSection` und `FeatureVotingSection`; `scripts/validate-routing.ts`; README-Konfliktmarken bereinigt. Prüfungen damals: Domain-Compile, `validate:routing`, `pnpm build` — erfolgreich.
-
-## Offene Langfristpunkte (Plattform, außerhalb Phase-0-Mobile-Block)
-
-- Domain-Lifecycle-Services, Organization-Kontext in APIs, Content-Sourcing über MVP hinaus — siehe Architektur-Docs; nicht Gegenstand der aktuellen Phase-0-Dokumentationsschwerpunkte.
-
-## Nächster dokumentierter Schritt
-
-Nach Abschluss von Block 1: `PROJECT_STATUS.md` / `PROJECT_ROADMAP.md` bei Meilensteinen nachziehen; diese Datei in der folgenden Session aktualisieren.
+Bei Meilensteinen `PROJECT_STATUS.md` / `PROJECT_ROADMAP.md` nachziehen; diese Datei bei jeder Abschlusssession aktualisieren.
