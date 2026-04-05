@@ -4,9 +4,9 @@ import { survey } from "@/lib/site/survey";
 export const content = {
   hero: {
     badge: "MVP-Phase | in Entwicklung",
-    headline: "ResQBrain ordnet Einsatzwissen für den Rettungsdienst.",
+    headline: "ResQBrain strukturiert Einsatzwissen für den Rettungsdienst.",
     subline:
-      "Ein ruhiges Projekt für Lernen und strukturierte Nachbereitung - nachvollziehbar, praxisnah und schrittweise aufgebaut.",
+      "Das Projekt unterstützt einheitliche Nachbereitung mit nachvollziehbaren Inhalten. Der Funktionsumfang wächst schrittweise in der MVP-Phase.",
     ctaPrimary: {
       label: "Mitwirken",
       href: routes.mitwirkung,
@@ -19,19 +19,19 @@ export const content = {
   problem: {
     title: "Warum das Projekt existiert",
     intro:
-      "Im Einsatz zählen wenige Klicks und verlässliche Inhalte. Gleichzeitig bleibt Wissen oft in Teams und Schichten verteilt.",
+      "Einsatz und Nachbereitung brauchen belastbare Informationen. Wissen verteilt sich dennoch häufig auf Teams und Schichten.",
     cards: [
       {
         headline: "Wissen bleibt lokal",
-        text: "Erfahrungen sind häufig an einzelne Personen oder Gruppen gebunden.",
+        text: "Erfahrung und Routinen hängen stark an einzelnen Personen und Gruppen.",
       },
       {
         headline: "Nachbereitung ist uneinheitlich",
-        text: "Reflexion findet statt, aber selten in einer stabilen, gemeinsamen Struktur.",
+        text: "Reflexion findet ohne gemeinsame, feste Struktur statt.",
       },
       {
         headline: "Zeitdruck bleibt hoch",
-        text: "Ohne klare Ordnung wird relevantes Wissen im Alltag immer wieder neu gesucht.",
+        text: "Ohne klare Ablage wird Wissen im Alltag wiederholt gesucht.",
       },
     ],
   },
@@ -39,47 +39,48 @@ export const content = {
     title: "Projektidee",
     cards: [
       {
-        headline: "Struktur statt Zufall",
-        text: "Inhalte werden klar geordnet, damit sie schnell auffindbar bleiben.",
+        headline: "Geordnete Inhalte",
+        text: "Inhalte liegen übersichtlich ab. Der Zugriff wird dadurch schneller.",
       },
       {
         headline: "Nachvollziehbarkeit",
-        text: "Inhalte sollen von Quelle bis Anwendung fachlich nachvollziehbar sein.",
+        text: "Herkunft und fachliche Einordnung bleiben für Inhalte erkennbar.",
       },
       {
         headline: "Praxisnähe",
-        text: "Rückmeldungen aus Einsatz und Ausbildung steuern die Prioritäten.",
+        text: "Prioritäten richten sich nach Rückmeldungen aus Einsatz und Ausbildung.",
       },
     ],
   },
   status: {
     title: "Aktueller Stand",
-    intro: "ResQBrain ist in der MVP-Phase und entwickelt sich schrittweise.",
-    cards: ["MVP Phase", "Feedback aktiv", "Schrittweise Entwicklung"],
+    intro: "Das Projekt befindet sich in der MVP-Phase. Der Umfang wächst schrittweise.",
+    cards: ["MVP-Phase", "Aktives Feedback", "Schrittweise Erweiterung"],
   },
   audience: {
-    title: "Für wen",
-    intro: "ResQBrain richtet sich an Praxis, Organisation und Ausbildung im Rettungsdienst.",
+    title: "Zielgruppen",
+    intro:
+      "Das Projekt richtet sich an Einsatzkräfte, Organisationen und Ausbildung im Rettungsdienst.",
     cards: [
       {
         title: "Notfallsanitäter",
-        text: "Klarere Orientierung für Lernen und Nachbereitung im Einsatzalltag.",
+        text: "Die Orientierung bei Lernen und Nachbereitung im Einsatzalltag verbessert sich.",
       },
       {
         title: "Rettungsdienste",
-        text: "Gemeinsame Struktur für verlässliche Inhalte im Team.",
+        text: "Teams erhalten eine gemeinsame Struktur für Inhalte.",
       },
       {
         title: "Ausbildung",
-        text: "Praxisnahe Basis für Wiederholung und strukturierte Vermittlung.",
+        text: "Strukturierte Vermittlung und Wiederholung erhalten eine praxisnahe Grundlage.",
       },
     ],
   },
   mitwirkung: {
     title: "Mitwirkung",
-    text: "Perspektiven aus Praxis und Ausbildung helfen, das Projekt frühzeitig an reale Bedarfe anzupassen.",
+    text: "Rückmeldungen aus Praxis und Ausbildung fließen in die Priorisierung des Projekts ein.",
     cta: {
-      label: "Zur Umfrage",
+      label: "Umfrage",
       href: survey.href,
     },
   },
@@ -88,27 +89,31 @@ export const content = {
     items: [
       {
         question: "Was ist ResQBrain?",
-        answer: "Ein Projekt für Lernen und strukturierte Nachbereitung im Rettungsdienst.",
+        answer:
+          "ResQBrain ist ein Projekt zur strukturierten Nachbereitung im Rettungsdienst. Nachvollziehbare Inhalte stehen im Vordergrund.",
       },
       {
-        question: "Ist das Projekt schon fertig?",
-        answer: "Nein, ResQBrain befindet sich bewusst in der MVP-Phase.",
+        question: "In welcher Phase befindet sich das Projekt?",
+        answer:
+          "Das Projekt liegt in der MVP-Phase. Der Funktionsumfang wächst schrittweise.",
       },
       {
         question: "Wer kann mitwirken?",
-        answer: "Praxis, Organisation und Ausbildung können Feedback einbringen.",
+        answer:
+          "Mitwirkende kommen aus Praxis, Organisation und Ausbildung. Feedback ist über die Mitwirkungsseite möglich.",
       },
       {
-        question: "Wie kann ich starten?",
-        answer: "Am besten über die Mitwirkungsseite und die aktuelle Umfrage.",
+        question: "Wie erfolgt der Einstieg?",
+        answer:
+          "Der Einstieg führt über die Mitwirkungsseite. Die aktuelle Umfrage ist dort verlinkt.",
       },
     ],
   },
   cta: {
-    title: "Nächster Schritt",
-    text: "Bei Fragen oder Kooperationsinteresse freuen wir uns auf eine direkte Nachricht.",
+    title: "Kontakt",
+    text: "Rückfragen und Anregungen zum Projekt sind über die Kontaktaufnahme möglich.",
     button: {
-      label: "Kontakt aufnehmen",
+      label: "Kontakt",
       href: routes.kontakt,
     },
   },

@@ -14,24 +14,24 @@ export default function ImpressumPage() {
           <ContentCard>
             <Stack gap="sm">
               <h2 className="section-title">{impressumContent.sectionTitle}</h2>
-              <p className="body-text muted-text">
+              <p className="body-text muted-text prose">
                 <strong>{impressumContent.projectLabel}</strong>
                 <br />
                 {impressumContent.projectName}
               </p>
-              <p className="body-text muted-text">
+              <p className="body-text muted-text prose">
                 <strong>{impressumContent.responsibleLabel}</strong>
                 <br />
                 {impressumContent.responsibleName}
               </p>
-              <p className="body-text muted-text">
+              <p className="body-text muted-text prose">
                 <strong>{impressumContent.contactLabel}</strong>
                 <br />
                 {impressumContent.emailLabel}
                 <br />
                 <a href={`mailto:${impressumContent.email}`}>{impressumContent.email}</a>
               </p>
-              <p className="body-text muted-text">
+              <p className="body-text muted-text prose">
                 <strong>{impressumContent.noteLabel}</strong>
                 <br />
                 {impressumContent.noteText}

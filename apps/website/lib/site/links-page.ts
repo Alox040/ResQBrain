@@ -12,12 +12,14 @@ export const linksPageContent = {
     items: [
       {
         label: "Aktuelle Umfrage",
+        buttonLabel: "Umfrage",
         href: survey.url,
         external: true,
         description: "Rückmeldungen aus der Praxis in strukturierter Form teilen.",
       },
       {
         label: "Projektbeschreibung",
+        buttonLabel: "Projekt ansehen",
         href: publicLinks.projectDoc,
         external: true,
         description: "Überblick über Zielbild, Kontext und aktuellen Projektstand.",
@@ -29,6 +31,7 @@ export const linksPageContent = {
     items: [
       {
         label: "Discord",
+        buttonLabel: "Discord",
         href: publicLinks.discord,
         external: true,
         description: "Austausch zur Weiterentwicklung im Community-Kanal.",

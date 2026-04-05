@@ -8,7 +8,7 @@ export const contactPageContent = {
   contact: {
     title: "Kontakt aufnehmen",
     text: "Nutze den vorgesehenen Kontaktweg, um dein Anliegen zu teilen.",
-    cta: "Kontaktanfrage senden",
+    cta: "E-Mail",
   },
   note: "Anfragen werden so zeitnah wie möglich beantwortet.",
 } as const;

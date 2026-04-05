@@ -208,6 +208,9 @@ select {
   margin-inline: auto;
   font-size: clamp(1rem, 0.35vw + 0.92rem, 1.0625rem);
   line-height: 1.58;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .site-header {
@@ -249,11 +252,13 @@ select {
 .footer-nav-link {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   min-height: 2.25rem;
   padding-inline: var(--space-3);
   border-radius: var(--radius-control);
   color: var(--text-muted);
   font-size: var(--font-small);
+  text-align: start;
   text-decoration: none;
   transition: background-color 120ms ease, color 120ms ease;
 }
@@ -332,6 +337,7 @@ select {
   background: linear-gradient(165deg, var(--surface-elevated) 0%, var(--surface) 100%);
   box-shadow: var(--shadow-card);
   transition: border-color 180ms ease, box-shadow 180ms ease;
+  text-align: left;
 }
 
 .card--interactive:hover {
@@ -344,7 +350,6 @@ select {
   border-radius: var(--radius-card-inner);
   background: color-mix(in srgb, var(--surface-subtle) 88%, var(--accent-subtle));
   box-shadow: none;
-  text-align: center;
 }
 
 .card--nested:hover {
@@ -375,12 +380,17 @@ select {
 }
 
 .hero-centered {
-  align-items: center;
-  text-align: center;
+  align-items: stretch;
+  width: 100%;
+}
+
+.hero-centered .badge,
+.hero-centered .badge--hero {
+  align-self: center;
 }
 
 .hero-actions-centered {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .card-heading {
@@ -423,10 +433,11 @@ select {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+  justify-content: flex-start;
 }
 
 .contact-cta-content .cta-actions {
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
 }
 
@@ -445,13 +456,19 @@ select {
   list-style: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: var(--space-4);
   padding: var(--space-5) var(--space-5);
   color: var(--heading);
   font-size: var(--font-body);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-small);
+}
+
+.faq-question-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
 }
 
 .faq-question::-webkit-details-marker {
@@ -464,6 +481,7 @@ select {
   width: 0.55rem;
   height: 0.55rem;
   margin-top: 0.15rem;
+  margin-left: auto;
   border-right: 2px solid var(--text-muted);
   border-bottom: 2px solid var(--text-muted);
   transform: rotate(45deg);
@@ -487,18 +505,17 @@ select {
 }
 
 .contact-cta-content {
-  align-items: center;
-  text-align: center;
+  align-items: stretch;
 }
 
 .contact-cta-content .section-intro {
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .button-link {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-2);
   min-height: var(--button-height);
   padding-inline: var(--button-padding-inline);
@@ -596,10 +613,30 @@ select {
 .small-text {
   font-size: var(--font-small);
   line-height: var(--line-height-small);
+  text-align: left;
+}
+
+.faq-answer.small-text {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .muted-text {
   color: var(--text-muted);
+}
+
+/* Blocksatz nur für Prosa-Spalten (nicht Kartenraster, nicht UI-Labels) */
+.prose {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.section-intro {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .stack {

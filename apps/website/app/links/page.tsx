@@ -39,7 +39,7 @@ export default function LinksPage() {
                     <p className="body-text muted-text">{item.description}</p>
                     <div>
                       <ButtonLink href={item.href} variant="secondary" external={item.external}>
-                        {item.label}
+                        {item.buttonLabel}
                       </ButtonLink>
                     </div>
                   </Stack>
@@ -62,7 +62,7 @@ export default function LinksPage() {
                     <p className="body-text muted-text">{item.description}</p>
                     <div>
                       <ButtonLink href={item.href} variant="secondary" external={item.external}>
-                        {item.label}
+                        {item.buttonLabel}
                       </ButtonLink>
                     </div>
                   </Stack>

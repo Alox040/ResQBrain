@@ -16,7 +16,7 @@ export default function DatenschutzPage() {
               <Stack gap="sm">
                 <h2 className="section-title">{section.heading}</h2>
                 {section.body.map((entry) => (
-                  <p key={entry} className="body-text muted-text">
+                  <p key={entry} className="body-text muted-text prose">
                     {entry}
                   </p>
                 ))}
