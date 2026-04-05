@@ -18,15 +18,15 @@ export function MitwirkungSection({
 }: MitwirkungSectionProps) {
   return (
     <Section>
-      <article className="mitwirkung-card">
-        <Stack gap="var(--space-5)">
-          <Stack gap="var(--space-3)">
+      <article className="mitwirkung-card mitwirkung-card--accent">
+        <Stack gap="var(--space-6)">
+          <Stack gap="var(--space-4)" className="section-lead">
             <h2 className="section-title">{title}</h2>
-            <p className="body-text muted-text">{text}</p>
+            <p className="body-text muted-text section-intro section-intro--compact">{text}</p>
           </Stack>
 
-          <div>
-            <Link className="button-link" href={href}>
+          <div className="mitwirkung-actions">
+            <Link className="button-link button-link--lg" href={href}>
               {buttonLabel}
             </Link>
           </div>

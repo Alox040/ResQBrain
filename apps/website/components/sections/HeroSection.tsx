@@ -24,19 +24,26 @@ export function HeroSection({
   secondaryHref = routes.home,
 }: HeroSectionProps) {
   return (
-    <Section background="none" containerMaxWidth={760}>
-      <Stack gap="var(--space-6)">
-        <Stack gap="var(--space-4)" className="hero-centered">
-          {statusBadge ? <span className="badge">{statusBadge}</span> : null}
+    <Section
+      background="none"
+      className="site-section--hero"
+      containerMaxWidth={720}
+    >
+      <Stack gap="var(--space-7)">
+        <Stack gap="var(--space-5)" className="hero-centered">
+          {statusBadge ? <span className="badge badge--hero">{statusBadge}</span> : null}
           <h1 className="hero-title">{headline}</h1>
-          <p className="body-text muted-text">{subline}</p>
+          <p className="body-text muted-text hero-subline">{subline}</p>
         </Stack>
 
         <div className="ui8-action-row hero-actions-centered">
-          <Link className="button-link" href={primaryHref}>
+          <Link className="button-link button-link--lg" href={primaryHref}>
             {primaryLabel}
           </Link>
-          <Link className="button-link button-link--secondary" href={secondaryHref}>
+          <Link
+            className="button-link button-link--secondary button-link--lg"
+            href={secondaryHref}
+          >
             {secondaryLabel}
           </Link>
         </div>

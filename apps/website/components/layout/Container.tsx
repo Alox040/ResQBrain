@@ -5,12 +5,17 @@ type ContainerProps = PropsWithChildren<{
   maxWidth?: number;
 }>;
 
-export function Container({ children, className, maxWidth = 1100 }: ContainerProps) {
-  const style: CSSProperties = {
-    width: "min(100% - 2rem, 100%)",
-    maxWidth: `${maxWidth}px`,
-    marginInline: "auto",
-  };
+export function Container({ children, className, maxWidth }: ContainerProps) {
+  const style: CSSProperties =
+    maxWidth != null
+      ? {
+          width: `min(100% - (var(--container-padding) * 2), ${maxWidth}px)`,
+          marginInline: "auto",
+        }
+      : {
+          width: "min(100% - (var(--container-padding) * 2), var(--container-content))",
+          marginInline: "auto",
+        };
 
   return (
     <div className={className} style={style}>

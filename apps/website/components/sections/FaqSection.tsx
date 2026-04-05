@@ -16,8 +16,10 @@ export function FaqSection({ title, items }: FaqSectionProps) {
 
   return (
     <Section>
-      <Stack gap="var(--space-6)">
-        <h2 className="section-title">{title}</h2>
+      <Stack gap="var(--space-7)">
+        <div className="section-lead">
+          <h2 className="section-title">{title}</h2>
+        </div>
 
         <div className="faq-accordion">
           {limitedItems.map((item) => (

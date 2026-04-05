@@ -24,15 +24,18 @@ export function Section({
   className,
   background = "none",
   containerClassName,
-  containerMaxWidth = 1100,
+  containerMaxWidth,
 }: SectionProps) {
   const style: CSSProperties = {
-    paddingBlock: "var(--space-8)",
     backgroundColor: backgroundMap[background],
   };
 
   return (
-    <section id={id} className={className} style={style}>
+    <section
+      id={id}
+      className={["site-section", className].filter(Boolean).join(" ")}
+      style={style}
+    >
       <Container className={containerClassName} maxWidth={containerMaxWidth}>
         {children}
       </Container>

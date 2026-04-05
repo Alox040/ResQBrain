@@ -18,15 +18,15 @@ export function ContactCtaSection({
 }: ContactCtaSectionProps) {
   return (
     <Section>
-      <article className="contact-cta-card">
-        <Stack gap="var(--space-5)" className="contact-cta-content">
-          <Stack gap="var(--space-3)">
+      <article className="contact-cta-card contact-cta-card--emphasis">
+        <Stack gap="var(--space-6)" className="contact-cta-content">
+          <Stack gap="var(--space-4)">
             <h2 className="section-title">{title}</h2>
-            <p className="body-text muted-text">{text}</p>
+            <p className="body-text muted-text section-intro">{text}</p>
           </Stack>
 
           <div>
-            <Link className="button-link" href={href}>
+            <Link className="button-link button-link--lg" href={href}>
               {buttonLabel}
             </Link>
           </div>
