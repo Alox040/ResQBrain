@@ -6,6 +6,7 @@ type ButtonLinkProps = {
   children: ReactNode;
   className?: string;
   variant?: "primary" | "secondary";
+  size?: "default" | "lg";
   external?: boolean;
 };
 
@@ -14,11 +15,13 @@ export function ButtonLink({
   children,
   className,
   variant = "primary",
+  size = "default",
   external = false,
 }: ButtonLinkProps) {
   const buttonClassName = [
     "button-link",
     variant === "secondary" ? "button-link--secondary" : "",
+    size === "lg" ? "button-link--lg" : "",
     className,
   ]
     .filter(Boolean)

@@ -1,25 +1,14 @@
-import type { CSSProperties, PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+
+export type ContainerWidth = "narrow" | "content" | "wide" | "hero";
 
 type ContainerProps = PropsWithChildren<{
   className?: string;
-  maxWidth?: number;
+  maxWidth?: ContainerWidth;
 }>;
 
-export function Container({ children, className, maxWidth }: ContainerProps) {
-  const style: CSSProperties =
-    maxWidth != null
-      ? {
-          width: `min(100% - (var(--container-padding) * 2), ${maxWidth}px)`,
-          marginInline: "auto",
-        }
-      : {
-          width: "min(100% - (var(--container-padding) * 2), var(--container-content))",
-          marginInline: "auto",
-        };
+export function Container({ children, className, maxWidth = "content" }: ContainerProps) {
+  const widthClass = maxWidth === "content" ? "container" : `container container--${maxWidth}`;
 
-  return (
-    <div className={className} style={style}>
-      {children}
-    </div>
-  );
+  return <div className={[widthClass, className].filter(Boolean).join(" ")}>{children}</div>;
 }

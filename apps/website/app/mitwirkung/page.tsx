@@ -44,7 +44,9 @@ export default function MitwirkungPage() {
               <SectionHeading title={mitwirkungPageContent.survey.title} />
               <p className="body-text muted-text">{mitwirkungPageContent.survey.text}</p>
               <div>
-                <ButtonLink href={mitwirkungPageContent.survey.href}>{mitwirkungPageContent.survey.cta}</ButtonLink>
+                <ButtonLink href={mitwirkungPageContent.survey.href} size="lg">
+                  {mitwirkungPageContent.survey.cta}
+                </ButtonLink>
               </div>
             </Stack>
           </ContentCard>

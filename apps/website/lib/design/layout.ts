@@ -3,6 +3,7 @@ export const layout = {
     narrow: "var(--container-narrow)",
     content: "var(--container-content)",
     wide: "var(--container-wide)",
+    hero: "var(--container-hero)",
   },
   container: {
     paddingInline: "var(--container-padding)",

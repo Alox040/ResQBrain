@@ -1,7 +1,6 @@
-import Link from "next/link";
-
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
+import { ButtonLink } from "@/components/ui/button-link";
 
 type ContactCtaSectionProps = {
   title: string;
@@ -18,17 +17,17 @@ export function ContactCtaSection({
 }: ContactCtaSectionProps) {
   return (
     <Section>
-      <article className="contact-cta-card contact-cta-card--emphasis">
+      <article className="card card--cta-accent">
         <Stack gap="var(--space-6)" className="contact-cta-content">
           <Stack gap="var(--space-4)">
             <h2 className="section-title">{title}</h2>
             <p className="body-text muted-text section-intro">{text}</p>
           </Stack>
 
-          <div>
-            <Link className="button-link button-link--lg" href={href}>
+          <div className="cta-actions">
+            <ButtonLink href={href} size="lg">
               {buttonLabel}
-            </Link>
+            </ButtonLink>
           </div>
         </Stack>
       </article>

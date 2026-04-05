@@ -33,7 +33,9 @@ export default function KontaktPage() {
               <SectionHeading title={contactPageContent.contact.title} />
               <p className="body-text muted-text">{contactPageContent.contact.text}</p>
               <div>
-                <ButtonLink href={contactInfo.email.href}>{contactInfo.email.label}</ButtonLink>
+                <ButtonLink href={contactInfo.email.href} size="lg">
+                  {contactInfo.email.label}
+                </ButtonLink>
               </div>
             </Stack>
           </ContentCard>

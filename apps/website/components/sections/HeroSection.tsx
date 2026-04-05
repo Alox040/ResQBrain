@@ -1,7 +1,6 @@
-import Link from "next/link";
-
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
+import { ButtonLink } from "@/components/ui/button-link";
 import { routes } from "@/lib/routes";
 
 type HeroSectionProps = {
@@ -26,8 +25,8 @@ export function HeroSection({
   return (
     <Section
       background="none"
-      className="site-section--hero"
-      containerMaxWidth={720}
+      className="section-frame--hero"
+      containerWidth="hero"
     >
       <Stack gap="var(--space-7)">
         <Stack gap="var(--space-5)" className="hero-centered">
@@ -37,15 +36,12 @@ export function HeroSection({
         </Stack>
 
         <div className="ui8-action-row hero-actions-centered">
-          <Link className="button-link button-link--lg" href={primaryHref}>
+          <ButtonLink href={primaryHref} size="lg">
             {primaryLabel}
-          </Link>
-          <Link
-            className="button-link button-link--secondary button-link--lg"
-            href={secondaryHref}
-          >
+          </ButtonLink>
+          <ButtonLink href={secondaryHref} variant="secondary" size="lg">
             {secondaryLabel}
-          </Link>
+          </ButtonLink>
         </div>
       </Stack>
     </Section>

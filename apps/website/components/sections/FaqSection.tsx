@@ -23,7 +23,7 @@ export function FaqSection({ title, items }: FaqSectionProps) {
 
         <div className="faq-accordion">
           {limitedItems.map((item) => (
-            <details className="faq-item" key={item.question}>
+            <details className="card card--accordion faq-item" key={item.question}>
               <summary className="faq-question">{item.question}</summary>
               <p className="small-text muted-text faq-answer">{item.answer}</p>
             </details>

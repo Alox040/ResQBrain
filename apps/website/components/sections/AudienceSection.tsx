@@ -21,9 +21,9 @@ export function AudienceSection({ title, intro, items }: AudienceSectionProps) {
           <p className="body-text muted-text section-intro">{intro}</p>
         </Stack>
 
-        <div className="audience-cards-grid">
+        <div className="cards-grid">
           {items.map((item) => (
-            <article className="audience-card" key={item.title}>
+            <article className="card card--interactive" key={item.title}>
               <Stack gap="var(--space-3)">
                 <h3 className="card-heading">{item.title}</h3>
                 <p className="small-text muted-text">{item.text}</p>

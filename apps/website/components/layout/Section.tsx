@@ -1,6 +1,6 @@
 import type { CSSProperties, PropsWithChildren } from "react";
 
-import { Container } from "@/components/layout/Container";
+import { Container, type ContainerWidth } from "@/components/layout/Container";
 
 type SectionBackground = "none" | "surface" | "subtle";
 
@@ -9,7 +9,7 @@ type SectionProps = PropsWithChildren<{
   className?: string;
   background?: SectionBackground;
   containerClassName?: string;
-  containerMaxWidth?: number;
+  containerWidth?: ContainerWidth;
 }>;
 
 const backgroundMap: Record<SectionBackground, string> = {
@@ -24,7 +24,7 @@ export function Section({
   className,
   background = "none",
   containerClassName,
-  containerMaxWidth,
+  containerWidth = "content",
 }: SectionProps) {
   const style: CSSProperties = {
     backgroundColor: backgroundMap[background],
@@ -33,10 +33,10 @@ export function Section({
   return (
     <section
       id={id}
-      className={["site-section", className].filter(Boolean).join(" ")}
+      className={["section-frame", className].filter(Boolean).join(" ")}
       style={style}
     >
-      <Container className={containerClassName} maxWidth={containerMaxWidth}>
+      <Container className={containerClassName} maxWidth={containerWidth}>
         {children}
       </Container>
     </section>

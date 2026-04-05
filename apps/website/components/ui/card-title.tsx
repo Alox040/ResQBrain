@@ -5,5 +5,5 @@ type CardTitleProps = {
 };
 
 export function CardTitle({ children }: CardTitleProps) {
-  return <h3 className="text-base font-medium text-foreground">{children}</h3>;
+  return <h3 className="card-heading">{children}</h3>;
 }

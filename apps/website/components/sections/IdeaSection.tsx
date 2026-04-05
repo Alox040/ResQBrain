@@ -19,9 +19,9 @@ export function IdeaSection({ title, items }: IdeaSectionProps) {
           <h2 className="section-title">{title}</h2>
         </div>
 
-        <div className="idea-cards-grid">
+        <div className="cards-grid">
           {items.map((item) => (
-            <article className="idea-card" key={item.headline}>
+            <article className="card card--interactive" key={item.headline}>
               <Stack gap="var(--space-3)">
                 <h3 className="card-heading">{item.headline}</h3>
                 <p className="small-text muted-text">{item.sentence}</p>

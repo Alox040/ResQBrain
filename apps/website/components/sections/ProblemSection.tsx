@@ -21,9 +21,9 @@ export function ProblemSection({ title, intro, cards }: ProblemSectionProps) {
           <p className="body-text muted-text section-intro">{intro}</p>
         </Stack>
 
-        <div className="problem-cards-grid">
+        <div className="cards-grid">
           {cards.map((card) => (
-            <article className="problem-card" key={card.title}>
+            <article className="card card--interactive" key={card.title}>
               <Stack gap="var(--space-3)">
                 <h3 className="card-heading">{card.title}</h3>
                 <p className="small-text muted-text">{card.text}</p>
