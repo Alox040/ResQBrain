@@ -16,7 +16,7 @@ export function SiteFooter() {
               {siteContent.name}
             </Link>
             <p className="small-text muted-text">
-              Digitale Lern- und Nachbereitungsstruktur fuer den Rettungsdienst.
+              Digitale Lern- und Nachbereitungsstruktur für den Rettungsdienst.
             </p>
           </div>
           <FooterNav />

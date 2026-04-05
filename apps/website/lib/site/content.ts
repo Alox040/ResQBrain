@@ -4,9 +4,9 @@ import { survey } from "@/lib/site/survey";
 export const content = {
   hero: {
     badge: "MVP-Phase | in Entwicklung",
-    headline: "ResQBrain ordnet Einsatzwissen fuer den Rettungsdienst.",
+    headline: "ResQBrain ordnet Einsatzwissen für den Rettungsdienst.",
     subline:
-      "Ein ruhiges Projekt fuer Lernen und strukturierte Nachbereitung - nachvollziehbar, praxisnah und schrittweise aufgebaut.",
+      "Ein ruhiges Projekt für Lernen und strukturierte Nachbereitung - nachvollziehbar, praxisnah und schrittweise aufgebaut.",
     ctaPrimary: {
       label: "Mitwirken",
       href: routes.mitwirkung,
@@ -19,11 +19,11 @@ export const content = {
   problem: {
     title: "Warum das Projekt existiert",
     intro:
-      "Im Einsatz zaehlen wenige Klicks und verlaessliche Inhalte. Gleichzeitig bleibt Wissen oft in Teams und Schichten verteilt.",
+      "Im Einsatz zählen wenige Klicks und verlässliche Inhalte. Gleichzeitig bleibt Wissen oft in Teams und Schichten verteilt.",
     cards: [
       {
         headline: "Wissen bleibt lokal",
-        text: "Erfahrungen sind haeufig an einzelne Personen oder Gruppen gebunden.",
+        text: "Erfahrungen sind häufig an einzelne Personen oder Gruppen gebunden.",
       },
       {
         headline: "Nachbereitung ist uneinheitlich",
@@ -47,8 +47,8 @@ export const content = {
         text: "Inhalte sollen von Quelle bis Anwendung fachlich nachvollziehbar sein.",
       },
       {
-        headline: "Praxisnaehe",
-        text: "Rueckmeldungen aus Einsatz und Ausbildung steuern die Prioritaeten.",
+        headline: "Praxisnähe",
+        text: "Rückmeldungen aus Einsatz und Ausbildung steuern die Prioritäten.",
       },
     ],
   },
@@ -58,26 +58,26 @@ export const content = {
     cards: ["MVP Phase", "Feedback aktiv", "Schrittweise Entwicklung"],
   },
   audience: {
-    title: "Fuer wen",
+    title: "Für wen",
     intro: "ResQBrain richtet sich an Praxis, Organisation und Ausbildung im Rettungsdienst.",
     cards: [
       {
-        title: "Notfallsanitaeter",
-        text: "Klarere Orientierung fuer Lernen und Nachbereitung im Einsatzalltag.",
+        title: "Notfallsanitäter",
+        text: "Klarere Orientierung für Lernen und Nachbereitung im Einsatzalltag.",
       },
       {
         title: "Rettungsdienste",
-        text: "Gemeinsame Struktur fuer verlaessliche Inhalte im Team.",
+        text: "Gemeinsame Struktur für verlässliche Inhalte im Team.",
       },
       {
         title: "Ausbildung",
-        text: "Praxisnahe Basis fuer Wiederholung und strukturierte Vermittlung.",
+        text: "Praxisnahe Basis für Wiederholung und strukturierte Vermittlung.",
       },
     ],
   },
   mitwirkung: {
     title: "Mitwirkung",
-    text: "Perspektiven aus Praxis und Ausbildung helfen, das Projekt fruehzeitig an reale Bedarfe anzupassen.",
+    text: "Perspektiven aus Praxis und Ausbildung helfen, das Projekt frühzeitig an reale Bedarfe anzupassen.",
     cta: {
       label: "Zur Umfrage",
       href: survey.href,
@@ -88,7 +88,7 @@ export const content = {
     items: [
       {
         question: "Was ist ResQBrain?",
-        answer: "Ein Projekt fuer Lernen und strukturierte Nachbereitung im Rettungsdienst.",
+        answer: "Ein Projekt für Lernen und strukturierte Nachbereitung im Rettungsdienst.",
       },
       {
         question: "Ist das Projekt schon fertig?",
@@ -96,16 +96,16 @@ export const content = {
       },
       {
         question: "Wer kann mitwirken?",
-        answer: "Praxis, Organisation und Ausbildung koennen Feedback einbringen.",
+        answer: "Praxis, Organisation und Ausbildung können Feedback einbringen.",
       },
       {
         question: "Wie kann ich starten?",
-        answer: "Am besten ueber die Mitwirkungsseite und die aktuelle Umfrage.",
+        answer: "Am besten über die Mitwirkungsseite und die aktuelle Umfrage.",
       },
     ],
   },
   cta: {
-    title: "Naechster Schritt",
+    title: "Nächster Schritt",
     text: "Bei Fragen oder Kooperationsinteresse freuen wir uns auf eine direkte Nachricht.",
     button: {
       label: "Kontakt aufnehmen",

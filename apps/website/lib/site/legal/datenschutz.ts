@@ -8,7 +8,7 @@ export const datenschutzContent = {
     },
     {
       heading: "Kontaktaufnahme",
-      body: ["Bei einer Kontaktaufnahme per E-Mail werden die uebermittelten Daten zur Bearbeitung der Anfrage verwendet."],
+      body: ["Bei einer Kontaktaufnahme per E-Mail werden die übermittelten Daten zur Bearbeitung der Anfrage verwendet."],
     },
   ],
 } as const;
