@@ -19,6 +19,7 @@
 | Gesamtpaket | `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json` | ✓ erfolgreich |
 | Content | `compile:content` | ✓ erfolgreich |
 | Versioning | `compile:versioning` | ✓ erfolgreich |
+| Governance | `compile:governance` | ✓ erfolgreich |
 
 **Exports:** `packages/domain/src/index.ts` — Barrel zu Shared, Common, Tenant, Content, Lifecycle, Governance, Versioning, Audit, Release, Survey, Lookup (strukturell konsistent; kein `build`-Script im Paket — Prüfung über `tsc`).
 

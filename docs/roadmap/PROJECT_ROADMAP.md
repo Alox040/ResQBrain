@@ -105,4 +105,4 @@
 
 Dokumentation zur lokalen Prüfung: `docs/context/mobile-validation-checklist.md`.
 
-**Letzte Repo-Validierung (5. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json`, `compile:versioning`, `compile:content`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich.
+**Letzte Repo-Validierung (5. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich.
