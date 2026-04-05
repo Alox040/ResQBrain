@@ -7,6 +7,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "ass",
       "aspirin",
@@ -27,6 +28,7 @@
       "kreislauf",
       "atemwege"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "epinephrin",
       "suprarenin",
@@ -49,6 +51,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "amiodaron",
       "cordarex",
@@ -69,6 +72,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "atropin",
       "atropinsulfat"
@@ -88,6 +92,7 @@
       "neurologie",
       "analgesie"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "midazolam",
       "dormicum",
@@ -108,6 +113,7 @@
       "analgesie",
       "neurologie"
     ],
+    "category": "trauma",
     "searchTerms": [
       "ketamin",
       "s-ketamin",
@@ -126,6 +132,7 @@
     "tags": [
       "analgesie"
     ],
+    "category": "trauma",
     "searchTerms": [
       "fentanyl",
       "fentanil",
@@ -143,6 +150,7 @@
     "tags": [
       "atemwege"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "salbutamol",
       "ventolin",
@@ -163,6 +171,7 @@
     "tags": [
       "stoffwechsel"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "glukose",
       "glucose",
@@ -184,6 +193,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "heparin",
       "unfraktioniertes heparin"

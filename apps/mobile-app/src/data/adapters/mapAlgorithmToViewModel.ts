@@ -9,6 +9,7 @@ export function mapAlgorithmToViewModel(a: Algorithm): AlgorithmViewModel {
     indication: a.indication,
     listSubtitle: a.indication,
     tags: a.tags,
+    category: a.category,
     searchTerms: a.searchTerms,
     notes: a.notes,
     warnings: a.warnings,

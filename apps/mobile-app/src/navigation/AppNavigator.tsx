@@ -17,6 +17,7 @@ import { SettingsScreen } from '@/screens/SettingsScreen';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import { useTheme } from '@/theme/ThemeContext';
 import { TYPOGRAPHY } from '@/theme';
+import type { ContentCategory } from '@/types/content';
 
 export type { HomeStackParamList };
 
@@ -29,7 +30,11 @@ export type MedicationStackParamList = {
 };
 
 export type AlgorithmStackParamList = {
-  AlgorithmListScreen: undefined;
+  AlgorithmListScreen:
+    | {
+        category?: ContentCategory;
+      }
+    | undefined;
   AlgorithmDetail: {
     algorithmId: string;
   };

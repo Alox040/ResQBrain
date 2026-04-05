@@ -19,6 +19,8 @@ export type LookupListRowProps = {
   onPress: () => void;
   accessibilityLabel: string;
   leading?: React.ReactNode;
+  /** Rendered between the text block and the chevron (e.g. favorite star). */
+  favoriteSlot?: React.ReactNode;
   minHeight?: number;
   style?: ViewStyle;
 };
@@ -32,6 +34,7 @@ export function LookupListRow({
   onPress,
   accessibilityLabel,
   leading,
+  favoriteSlot,
   minHeight = DEFAULT_MIN_HEIGHT,
   style,
 }: LookupListRowProps) {
@@ -60,6 +63,9 @@ export function LookupListRow({
           </Text>
         </View>
       </View>
+      {favoriteSlot ? (
+        <View style={styles.favoriteWrap}>{favoriteSlot}</View>
+      ) : null}
       <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
     </Pressable>
   );
@@ -84,6 +90,9 @@ function createStyles(colors: AppPalette) {
       minWidth: 0,
     },
     leading: {
+      flexShrink: 0,
+    },
+    favoriteWrap: {
       flexShrink: 0,
     },
     textCol: {

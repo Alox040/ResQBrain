@@ -11,7 +11,7 @@ export type QuickAccessGridItem = {
   kind: ContentKind;
   label: string;
   onPress: () => void;
-  source: 'favorite' | 'recent';
+  source: 'favorite' | 'recent' | 'shortcut';
 };
 
 export type QuickAccessGridProps = {
@@ -70,8 +70,14 @@ function QuickAccessCell({ item }: { item: QuickAccessGridItem }) {
   );
 
   const t = typeLabelDe(item.kind);
-  const cornerIcon = item.source === 'favorite' ? 'star' : 'time-outline';
-  const cornerColor = item.source === 'favorite' ? '#ca8a04' : colors.textMuted;
+  const cornerIcon =
+    item.source === 'favorite'
+      ? 'star'
+      : item.source === 'recent'
+        ? 'time-outline'
+        : 'flash';
+  const cornerColor =
+    item.source === 'favorite' ? '#ca8a04' : colors.textMuted;
 
   return (
     <Pressable

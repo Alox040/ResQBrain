@@ -1,4 +1,4 @@
-import type { AlgorithmStep, ContentTag } from '@/types/content';
+import type { AlgorithmStep, ContentCategory, ContentTag } from '@/types/content';
 
 /**
  * UI-facing medication shape — decoupled from bundle/entity types for future migration.
@@ -12,6 +12,7 @@ export type MedicationViewModel = {
   /** Line under title in lists (Phase 0: mirrors indication). */
   listSubtitle: string;
   tags: ContentTag[];
+  category?: ContentCategory;
   searchTerms: string[];
   notes?: string;
   dosage: string;
@@ -29,6 +30,7 @@ export type AlgorithmViewModel = {
   indication: string;
   listSubtitle: string;
   tags: ContentTag[];
+  category?: ContentCategory;
   searchTerms: string[];
   notes?: string;
   warnings?: string;

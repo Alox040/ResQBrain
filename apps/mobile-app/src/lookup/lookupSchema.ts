@@ -1,4 +1,9 @@
-import type { ContentTag, Medication, Algorithm } from '../types/content';
+import type {
+  ContentCategory,
+  ContentTag,
+  Medication,
+  Algorithm,
+} from '../types/content';
 
 /**
  * Controlled vocabulary — must match `ContentTag` in `types/content.ts`.
@@ -16,6 +21,19 @@ const contentTagSet = new Set<string>(CONTENT_TAG_VALUES);
 
 export function isContentTag(value: unknown): value is ContentTag {
   return typeof value === 'string' && contentTagSet.has(value);
+}
+
+export const CONTENT_CATEGORY_VALUES = [
+  'pediatrics',
+  'trauma',
+  'sepsis',
+  'resuscitation',
+] as const satisfies readonly ContentCategory[];
+
+const contentCategorySet = new Set<string>(CONTENT_CATEGORY_VALUES);
+
+export function isContentCategory(value: unknown): value is ContentCategory {
+  return typeof value === 'string' && contentCategorySet.has(value);
 }
 
 /**
@@ -57,6 +75,7 @@ export const MEDICATION_ITEM_KEYS = new Set([
   'label',
   'indication',
   'tags',
+  'category',
   'searchTerms',
   'notes',
   'dosage',
@@ -73,6 +92,7 @@ export const ALGORITHM_ITEM_KEYS = new Set([
   'label',
   'indication',
   'tags',
+  'category',
   'searchTerms',
   'notes',
   'steps',

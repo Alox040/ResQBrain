@@ -1,17 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useMemo, useState } from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SectionHeader } from '@/components/common';
 import {
   QuickAccessGrid as QuickAccessGridView,
@@ -19,7 +12,6 @@ import {
 } from '@/components/QuickAccessGrid';
 import { ScreenContainer } from '@/components/layout';
 import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
-import { getAlgorithmById } from '@/data/contentIndex';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import { parseFavoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
@@ -27,11 +19,8 @@ import { useRecentStore } from '@/state/recentStore';
 import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
-import type { ContentKind } from '@/types/content';
+import type { ContentCategory, ContentKind } from '@/types/content';
 import { getBundleDebugInfo } from '@/lookup/bundleDebugInfo';
-
-const MAX_QUICK = 4;
-const REANIMATION_ALGORITHM_ID = 'alg-reanimation-erwachsene';
 
 type HomeScreenNav = CompositeNavigationProp<
   NativeStackNavigationProp<HomeStackParamList, 'HomeMain'>,
@@ -222,7 +211,7 @@ function SearchButton({ onPress }: { onPress: () => void }) {
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel="Search öffnen. Stichwortsuche im lokalen Bundle."
+      accessibilityLabel="Search oeffnen. Stichwortsuche im lokalen Bundle."
       onPress={onPress}
       style={({ pressed }) => [
         styles.searchButton,
@@ -254,15 +243,7 @@ function QuickAccessGrid({
   return (
     <View style={styles.sectionBlock}>
       <SectionHeader title="Quick Access" size="comfortable" />
-      {items.length === 0 ? (
-        <View style={styles.emptyStrip}>
-          <Text style={styles.emptyStripText}>
-            Noch keine Einträge. Favoriten und zuletzt geöffnete Inhalte erscheinen hier automatisch.
-          </Text>
-        </View>
-      ) : (
-        <QuickAccessGridView items={items} />
-      )}
+      <QuickAccessGridView items={items} />
     </View>
   );
 }
@@ -277,7 +258,10 @@ function RecentSection({
       items.slice(0, 4).map<ActionCardItem>((item) => ({
         key: `recent-${item.kind}:${item.id}`,
         title: item.label,
-        subtitle: item.kind === 'medication' ? 'Zuletzt geöffnetes Medikament' : 'Zuletzt geöffneter Algorithmus',
+        subtitle:
+          item.kind === 'medication'
+            ? 'Zuletzt geoeffnetes Medikament'
+            : 'Zuletzt geoeffneter Algorithmus',
         icon: item.kind === 'medication' ? 'time' : 'time-outline',
         iconColor: '#0f766e',
         iconBackground: '#ccfbf1',
@@ -305,7 +289,10 @@ function FavoritesSection({
       items.slice(0, 4).map<ActionCardItem>((item) => ({
         key: `favorite-${item.kind}:${item.id}`,
         title: item.label,
-        subtitle: item.kind === 'medication' ? 'Favorisiertes Medikament' : 'Favorisierter Algorithmus',
+        subtitle:
+          item.kind === 'medication'
+            ? 'Favorisiertes Medikament'
+            : 'Favorisierter Algorithmus',
         icon: 'star',
         iconColor: '#a16207',
         iconBackground: '#fef9c3',
@@ -396,117 +383,88 @@ export function HomeScreen() {
     }));
   }, [recentItems, openContentDetail]);
 
-  const quickAccessItems = useMemo((): QuickAccessGridItem[] => {
-    const seen = new Set<string>();
-    const out: QuickAccessGridItem[] = [];
-
-    for (const favorite of favoriteShortcuts) {
-      if (out.length >= MAX_QUICK) break;
-      const key = `${favorite.kind}:${favorite.id}`;
-      seen.add(key);
-      out.push({
-        reactKey: `qa-fav-${key}`,
-        kind: favorite.kind,
-        label: favorite.label,
-        onPress: favorite.onPress,
-        source: 'favorite',
+  const openAlgorithmCategory = useCallback(
+    (category: ContentCategory) => {
+      navigation.navigate('AlgorithmTab', {
+        screen: 'AlgorithmListScreen',
+        params: { category },
       });
-    }
+    },
+    [navigation],
+  );
 
-    for (const recent of recentShortcuts) {
-      if (out.length >= MAX_QUICK) break;
-      const key = `${recent.kind}:${recent.id}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      out.push({
-        reactKey: `qa-rec-${key}`,
-        kind: recent.kind,
-        label: recent.label,
-        onPress: recent.onPress,
-        source: 'recent',
-      });
-    }
-
-    return out;
-  }, [favoriteShortcuts, recentShortcuts]);
-
-  const modeCards = useMemo((): ActionCardItem[] => {
-    const hasReanimation = getAlgorithmById(REANIMATION_ALGORITHM_ID) != null;
-
-    return [
+  const quickAccessItems = useMemo(
+    (): QuickAccessGridItem[] => [
       {
-        key: 'mode-reanimation',
-        title: 'Reanimation',
-        subtitle: hasReanimation
-          ? 'ALS Überblick direkt öffnen'
-          : 'Zu den Algorithmen wechseln',
-        icon: 'heart',
-        iconColor: '#991b1b',
-        iconBackground: '#fee2e2',
-        onPress: () => {
-          if (hasReanimation) {
-            navigation.navigate('AlgorithmTab', {
-              screen: 'AlgorithmDetail',
-              params: { algorithmId: REANIMATION_ALGORITHM_ID },
-            });
-            return;
-          }
-
-          navigation.navigate('AlgorithmTab', {
-            screen: 'AlgorithmListScreen',
-          });
-        },
+        reactKey: 'qa-pediatrics',
+        kind: 'algorithm',
+        label: 'Pediatrics',
+        onPress: () => openAlgorithmCategory('pediatrics'),
+        source: 'shortcut',
       },
       {
-        key: 'mode-trauma',
-        title: 'Trauma',
-        subtitle: 'Algorithmenliste für traumabezogene Abläufe',
-        icon: 'bandage',
-        iconColor: '#9a3412',
-        iconBackground: '#ffedd5',
+        reactKey: 'qa-trauma',
+        kind: 'algorithm',
+        label: 'Trauma',
+        onPress: () => openAlgorithmCategory('trauma'),
+        source: 'shortcut',
+      },
+      {
+        reactKey: 'qa-sepsis',
+        kind: 'algorithm',
+        label: 'Sepsis',
+        onPress: () => openAlgorithmCategory('sepsis'),
+        source: 'shortcut',
+      },
+      {
+        reactKey: 'qa-resuscitation',
+        kind: 'algorithm',
+        label: 'Reanimation',
+        onPress: () => openAlgorithmCategory('resuscitation'),
+        source: 'shortcut',
+      },
+    ],
+    [openAlgorithmCategory],
+  );
+
+  const navigationCards = useMemo(
+    (): ActionCardItem[] => [
+      {
+        key: 'nav-history',
+        title: 'Verlauf',
+        subtitle: 'Zuletzt geoeffnete Medikamente und Algorithmen',
+        icon: 'time-outline',
+        iconColor: '#0f766e',
+        iconBackground: '#ccfbf1',
+        onPress: () => navigation.navigate('History'),
+      },
+      {
+        key: 'nav-medications',
+        title: 'Medications',
+        subtitle: 'Listen, Dosierungen und Hinweise',
+        icon: 'medkit',
+        iconColor: '#0f766e',
+        iconBackground: '#ccfbf1',
+        onPress: () =>
+          navigation.navigate('MedicationTab', {
+            screen: 'MedicationListScreen',
+          }),
+      },
+      {
+        key: 'nav-algorithms',
+        title: 'Algorithms',
+        subtitle: 'Ablaeufe und Warnhinweise oeffnen',
+        icon: 'git-branch',
+        iconColor: '#5b21b6',
+        iconBackground: '#ede9fe',
         onPress: () =>
           navigation.navigate('AlgorithmTab', {
             screen: 'AlgorithmListScreen',
           }),
       },
-    ];
-  }, [navigation]);
-
-  const navigationCards = useMemo((): ActionCardItem[] => [
-    {
-      key: 'nav-history',
-      title: 'Verlauf',
-      subtitle: 'Zuletzt geöffnete Medikamente und Algorithmen',
-      icon: 'time-outline',
-      iconColor: '#0f766e',
-      iconBackground: '#ccfbf1',
-      onPress: () => navigation.navigate('History'),
-    },
-    {
-      key: 'nav-medications',
-      title: 'Medications',
-      subtitle: 'Listen, Dosierungen und Hinweise',
-      icon: 'medkit',
-      iconColor: '#0f766e',
-      iconBackground: '#ccfbf1',
-      onPress: () =>
-        navigation.navigate('MedicationTab', {
-          screen: 'MedicationListScreen',
-        }),
-    },
-    {
-      key: 'nav-algorithms',
-      title: 'Algorithms',
-      subtitle: 'Abläufe und Warnhinweise öffnen',
-      icon: 'git-branch',
-      iconColor: '#5b21b6',
-      iconBackground: '#ede9fe',
-      onPress: () =>
-        navigation.navigate('AlgorithmTab', {
-          screen: 'AlgorithmListScreen',
-        }),
-    },
-  ], [navigation]);
+    ],
+    [navigation],
+  );
 
   return (
     <ScreenContainer>
@@ -519,13 +477,13 @@ export function HomeScreen() {
           <SearchButton onPress={() => navigation.navigate('Search')} />
         </View>
 
+        <QuickAccessGrid items={quickAccessItems} />
+
         {showUpdateBadge ? (
           <View style={styles.updateBadge}>
-            <Text style={styles.updateBadgeText}>Neue Inhalte verfügbar</Text>
+            <Text style={styles.updateBadgeText}>Neue Inhalte verfuegbar</Text>
           </View>
         ) : null}
-
-        <QuickAccessGrid items={quickAccessItems} />
 
         <View style={styles.sectionBlock}>
           <SectionHeader title="Favoriten" size="comfortable" />
@@ -545,21 +503,12 @@ export function HomeScreen() {
           {recentShortcuts.length === 0 ? (
             <View style={styles.emptyStrip}>
               <Text style={styles.emptyStripText}>
-                Noch keine zuletzt verwendeten Inhalte. Geöffnete Inhalte werden automatisch gelistet.
+                Noch keine zuletzt verwendeten Inhalte. Geoeffnete Inhalte werden automatisch gelistet.
               </Text>
             </View>
           ) : (
             <RecentSection items={recentShortcuts} />
           )}
-        </View>
-
-        <View style={styles.sectionBlock}>
-          <SectionHeader title="Einsatzmodus" size="comfortable" />
-          <View style={styles.cardList}>
-            {modeCards.map((item) => (
-              <ActionCard key={item.key} item={item} />
-            ))}
-          </View>
         </View>
 
         <View style={styles.sectionBlock}>

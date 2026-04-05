@@ -25,6 +25,9 @@ export type { ButtonSecondaryProps } from './ButtonSecondary';
 export { CheckboxField } from './CheckboxField';
 export type { CheckboxFieldProps } from './CheckboxField';
 
+export { CategoryFilterChips } from './CategoryFilterChips';
+export type { CategoryFilterChipsProps } from './CategoryFilterChips';
+
 export { ContentBadge } from './ContentBadge';
 export type { ContentBadgeProps } from './ContentBadge';
 
@@ -33,6 +36,9 @@ export type { ContentListCardProps } from './ContentListCard';
 
 export { DetailBodyText } from './DetailBodyText';
 export type { DetailBodyTextProps } from './DetailBodyText';
+
+export { DetailContentHero } from './DetailContentHero';
+export type { DetailContentHeroProps } from './DetailContentHero';
 
 export { DetailCrossRefList } from './DetailCrossRefList';
 export type { DetailCrossRefListProps } from './DetailCrossRefList';
@@ -66,6 +72,9 @@ export type { LabelProps } from './Label';
 
 export { ListScreenEmptyPlaceholder } from './ListScreenEmptyPlaceholder';
 export type { ListScreenEmptyPlaceholderProps } from './ListScreenEmptyPlaceholder';
+
+export { ListRowFavoriteStar } from './ListRowFavoriteStar';
+export type { ListRowFavoriteStarProps } from './ListRowFavoriteStar';
 
 export { LookupListRow } from './LookupListRow';
 export type { LookupListRowProps } from './LookupListRow';

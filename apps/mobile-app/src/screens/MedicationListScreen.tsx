@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useLayoutEffect, useMemo } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
 import {
   FlatList,
@@ -10,8 +10,10 @@ import {
   View,
 } from 'react-native';
 import {
+  CategoryFilterChips,
   ContentBadge,
   FlatListSeparator,
+  ListRowFavoriteStar,
   ListScreenEmptyPlaceholder,
   LookupListRow,
   SectionHeader,
@@ -24,6 +26,10 @@ import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
 import { useTheme } from '@/theme/ThemeContext';
+import {
+  filterByListCategory,
+  type ListCategoryFilter,
+} from '@/utils/listCategoryFilter';
 
 type Nav = NativeStackNavigationProp<
   MedicationStackParamList,
@@ -54,26 +60,45 @@ const styles = StyleSheet.create({
   },
 });
 
-function MedicationListHeader() {
-  return (
-    <View style={styles.listHeader}>
-      <SectionHeader
-        title="Medikamentenliste"
-        description="Antippen für Dosierung, Hinweise und Algorithmen."
-        size="comfortable"
-      />
-    </View>
-  );
-}
-
 export function MedicationListScreen() {
   const { colors } = useTheme();
   const navigation = useNavigation<Nav>();
+  const [categoryFilter, setCategoryFilter] =
+    useState<ListCategoryFilter>('all');
 
   const medicationRows = useMemo(
     () => medications.map(mapMedicationToViewModel),
     [medications],
   );
+
+  const filteredMedicationRows = useMemo(
+    () => filterByListCategory(medicationRows, categoryFilter),
+    [medicationRows, categoryFilter],
+  );
+
+  const listHeader = useMemo(
+    () => (
+      <View>
+        <View style={styles.listHeader}>
+          <SectionHeader
+            title="Medikamentenliste"
+            description="Antippen für Dosierung, Hinweise und Algorithmen."
+            size="comfortable"
+          />
+        </View>
+        <CategoryFilterChips
+          selected={categoryFilter}
+          onChange={setCategoryFilter}
+        />
+      </View>
+    ),
+    [categoryFilter],
+  );
+
+  const emptyMessage =
+    medicationRows.length === 0
+      ? 'Keine Medikamente im Bundle vorhanden.'
+      : 'Für diese Kategorie sind keine Medikamente im Bundle vorhanden.';
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -127,6 +152,9 @@ export function MedicationListScreen() {
           onPress={() => handlePress(item.id)}
           accessibilityLabel={`${item.label}. ${item.listSubtitle}`}
           leading={leading}
+          favoriteSlot={
+            <ListRowFavoriteStar kind="medication" id={item.id} />
+          }
         />
       );
     },
@@ -138,20 +166,20 @@ export function MedicationListScreen() {
       <View style={styles.wrap}>
         <FlatList
           style={styles.list}
-          data={medicationRows}
+          data={filteredMedicationRows}
           keyExtractor={medicationListKeyExtractor}
           renderItem={renderItem}
           initialNumToRender={FLAT_LIST_INITIAL_NUM_TO_RENDER}
           windowSize={FLAT_LIST_WINDOW_SIZE}
           removeClippedSubviews
-          ListHeaderComponent={MedicationListHeader}
+          ListHeaderComponent={listHeader}
           ListEmptyComponent={
-            <ListScreenEmptyPlaceholder message="Keine Medikamente im Bundle vorhanden." />
+            <ListScreenEmptyPlaceholder message={emptyMessage} />
           }
           ItemSeparatorComponent={FlatListSeparator}
           contentContainerStyle={[
             styles.content,
-            medicationRows.length === 0 ? styles.contentEmpty : null,
+            filteredMedicationRows.length === 0 ? styles.contentEmpty : null,
           ]}
           showsVerticalScrollIndicator={false}
         />

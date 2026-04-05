@@ -27,6 +27,15 @@ export type ContentTag =
   | 'intoxikation'
   | 'stoffwechsel';
 
+/**
+ * Clinical list grouping for Phase-0 lookup bundles; matches seed `category` values.
+ */
+export type ContentCategory =
+  | 'pediatrics'
+  | 'trauma'
+  | 'sepsis'
+  | 'resuscitation';
+
 // ─── Shared base ─────────────────────────────────────────────────────────────
 
 /**
@@ -44,6 +53,7 @@ type ContentBase = {
   label: string;
   indication: string;
   tags: ContentTag[];
+  category?: ContentCategory;
   searchTerms: string[];
   notes?: string;
 };

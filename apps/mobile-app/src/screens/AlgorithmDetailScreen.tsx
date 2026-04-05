@@ -1,13 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
+  AccordionPanel,
   DetailBodyText,
+  DetailContentHero,
   DetailCrossRefList,
   DetailLinkRow,
-  DetailSectionCard,
   DetailStepList,
   DetailUnavailableRow,
   EmptyState,
@@ -21,6 +22,8 @@ import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
 import type { AlgorithmStackParamList, RootTabParamList } from '@/navigation/AppNavigator';
 import { SPACING } from '@/theme';
+import { useTheme } from '@/theme/ThemeContext';
+import { labelForContentCategory } from '@/utils/listCategoryFilter';
 
 type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
 
@@ -45,6 +48,7 @@ function warnBrokenRelatedMedicationOnce(
 }
 
 export function AlgorithmDetailScreen({ navigation, route }: Props) {
+  const { colors } = useTheme();
   const algorithm = getAlgorithmById(route.params.algorithmId);
   const tabNavigation =
     navigation.getParent<BottomTabNavigationProp<RootTabParamList>>();
@@ -102,6 +106,29 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     }
   }, [algorithm?.id]);
 
+  const openMedication = useCallback(
+    (medicationId: string) => {
+      if (!isValidContentId(medicationId)) {
+        console.warn('[AlgorithmDetail] openMedication: invalid or empty id', medicationId);
+        return;
+      }
+      const target = getMedicationById(medicationId);
+      if (!target) {
+        console.warn('[AlgorithmDetail] openMedication: no item for id', medicationId);
+        return;
+      }
+      if (!tabNavigation) {
+        console.warn('[AlgorithmDetail] openMedication: tab navigation unavailable');
+        return;
+      }
+      tabNavigation.navigate('MedicationTab', {
+        screen: 'MedicationDetail',
+        params: { medicationId },
+      });
+    },
+    [tabNavigation],
+  );
+
   if (!algorithm) {
     return (
       <ScreenContainer>
@@ -117,26 +144,49 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   }
 
   const algorithmVm = mapAlgorithmToViewModel(algorithm);
+  const categoryLabel = labelForContentCategory(algorithmVm.category);
 
-  const openMedication = (medicationId: string) => {
-    if (!isValidContentId(medicationId)) {
-      console.warn('[AlgorithmDetail] openMedication: invalid or empty id', medicationId);
-      return;
-    }
-    const target = getMedicationById(medicationId);
-    if (!target) {
-      console.warn('[AlgorithmDetail] openMedication: no item for id', medicationId);
-      return;
-    }
-    if (!tabNavigation) {
-      console.warn('[AlgorithmDetail] openMedication: tab navigation unavailable');
-      return;
-    }
-    tabNavigation.navigate('MedicationTab', {
-      screen: 'MedicationDetail',
-      params: { medicationId },
-    });
-  };
+  const relatedMedicationRows = useMemo(
+    () =>
+      algorithmVm.relatedMedicationIds.map((medicationId, index) => {
+        const idOk = isValidContentId(medicationId);
+        const med = idOk ? getMedicationById(medicationId) : undefined;
+        if (!idOk) {
+          warnBrokenRelatedMedicationOnce(
+            `#${index}:${String(medicationId)}`,
+            'invalid_id',
+          );
+          return (
+            <DetailUnavailableRow
+              key={`related-med-unavailable-${index}`}
+              message="Eintrag nicht verfügbar"
+              detailLine="Ungültige Referenz"
+            />
+          );
+        }
+        if (!med) {
+          warnBrokenRelatedMedicationOnce(medicationId, 'missing_item');
+          return (
+            <DetailUnavailableRow
+              key={`related-med-missing-${index}-${medicationId}`}
+              message="Eintrag nicht verfügbar"
+              detailLine={medicationId}
+            />
+          );
+        }
+        const medVm = mapMedicationToViewModel(med);
+        return (
+          <DetailLinkRow
+            key={medicationId}
+            contextLabel="Medikament"
+            label={medVm.label}
+            onPress={() => openMedication(medicationId)}
+            accessibilityLabel={`Medikament ${medVm.label} öffnen`}
+          />
+        );
+      }),
+    [algorithmVm.relatedMedicationIds, openMedication],
+  );
 
   return (
     <ScreenContainer>
@@ -145,83 +195,49 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        {algorithmVm.warnings ? (
-          <WarningCard
-            title="Warnhinweis"
-            body={algorithmVm.warnings}
-            prominent
-          />
-        ) : null}
+        <DetailContentHero
+          title={algorithmVm.label}
+          categoryLabel={categoryLabel}
+          indication={algorithmVm.indication}
+        />
 
-        <DetailSectionCard title="Indikation">
-          <DetailBodyText variant="relaxed">
-            {algorithmVm.indication}
-          </DetailBodyText>
-        </DetailSectionCard>
-
-        <DetailSectionCard
-          title="Schritte"
-          hint="Reihenfolge einhalten — jeder Block ist ein Arbeitsschritt."
-        >
+        <AccordionPanel title="Schritte" defaultExpanded={false}>
           <DetailStepList steps={algorithmVm.steps} />
-        </DetailSectionCard>
+        </AccordionPanel>
 
-        {algorithmVm.notes ? (
-          <DetailSectionCard
-            title="Notizen"
-            hint="Zusatz zum Ablauf — unterhalb der Schritte einordnen."
-            tone="soft"
-          >
+        <AccordionPanel title="Warnungen" defaultExpanded={false}>
+          {algorithmVm.warnings ? (
+            <WarningCard
+              title="Warnhinweis"
+              body={algorithmVm.warnings}
+              prominent
+            />
+          ) : (
+            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+              Keine Warnhinweise hinterlegt.
+            </DetailBodyText>
+          )}
+        </AccordionPanel>
+
+        <AccordionPanel title="Notizen" defaultExpanded={false}>
+          {algorithmVm.notes ? (
             <DetailBodyText variant="relaxed">{algorithmVm.notes}</DetailBodyText>
-          </DetailSectionCard>
-        ) : null}
+          ) : (
+            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+              Keine Notizen hinterlegt.
+            </DetailBodyText>
+          )}
+        </AccordionPanel>
 
-        {algorithmVm.relatedMedicationIds.length > 0 ? (
-          <DetailSectionCard
-            title="Verwandte Medikamente"
-            hint="Öffnet Dosierung und Hinweise im gleichen Bundle."
-          >
-            <DetailCrossRefList>
-              {algorithmVm.relatedMedicationIds.map((medicationId, index) => {
-                const idOk = isValidContentId(medicationId);
-                const med = idOk ? getMedicationById(medicationId) : undefined;
-                if (!idOk) {
-                  warnBrokenRelatedMedicationOnce(
-                    `#${index}:${String(medicationId)}`,
-                    'invalid_id',
-                  );
-                  return (
-                    <DetailUnavailableRow
-                      key={`related-med-unavailable-${index}`}
-                      message="Eintrag nicht verfügbar"
-                      detailLine="Ungültige Referenz"
-                    />
-                  );
-                }
-                if (!med) {
-                  warnBrokenRelatedMedicationOnce(medicationId, 'missing_item');
-                  return (
-                    <DetailUnavailableRow
-                      key={`related-med-missing-${index}-${medicationId}`}
-                      message="Eintrag nicht verfügbar"
-                      detailLine={medicationId}
-                    />
-                  );
-                }
-                const medVm = mapMedicationToViewModel(med);
-                return (
-                  <DetailLinkRow
-                    key={medicationId}
-                    contextLabel="Medikament"
-                    label={medVm.label}
-                    onPress={() => openMedication(medicationId)}
-                    accessibilityLabel={`Medikament ${medVm.label} öffnen`}
-                  />
-                );
-              })}
-            </DetailCrossRefList>
-          </DetailSectionCard>
-        ) : null}
+        <AccordionPanel title="Verwandte Medikamente" defaultExpanded={false}>
+          {algorithmVm.relatedMedicationIds.length > 0 ? (
+            <DetailCrossRefList>{relatedMedicationRows}</DetailCrossRefList>
+          ) : (
+            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+              Keine verknüpften Medikamente im Bundle.
+            </DetailBodyText>
+          )}
+        </AccordionPanel>
       </ScrollView>
     </ScreenContainer>
   );

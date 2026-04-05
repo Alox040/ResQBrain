@@ -4,10 +4,11 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback, useMemo } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import {
+  AccordionPanel,
   DetailBodyText,
+  DetailContentHero,
   DetailCrossRefList,
   DetailLinkRow,
-  DetailSectionCard,
   DetailUnavailableRow,
   EmptyState,
   WarningCard,
@@ -22,6 +23,7 @@ import type { MedicationStackParamList, RootTabParamList } from '@/navigation/Ap
 import { SPACING } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
+import { labelForContentCategory } from '@/utils/listCategoryFilter';
 
 type Props = NativeStackScreenProps<
   MedicationStackParamList,
@@ -96,25 +98,28 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     );
   }, [medication, isFavorite, onPressFavorite]);
 
-  const openAlgorithm = (algorithmId: string) => {
-    if (!isValidContentId(algorithmId)) {
-      console.warn('[MedicationDetail] openAlgorithm: invalid or empty id', algorithmId);
-      return;
-    }
-    const target = getAlgorithmById(algorithmId);
-    if (!target) {
-      console.warn('[MedicationDetail] openAlgorithm: no item for id', algorithmId);
-      return;
-    }
-    if (!tabNavigation) {
-      console.warn('[MedicationDetail] openAlgorithm: tab navigation unavailable');
-      return;
-    }
-    tabNavigation.navigate('AlgorithmTab', {
-      screen: 'AlgorithmDetail',
-      params: { algorithmId },
-    });
-  };
+  const openAlgorithm = useCallback(
+    (algorithmId: string) => {
+      if (!isValidContentId(algorithmId)) {
+        console.warn('[MedicationDetail] openAlgorithm: invalid or empty id', algorithmId);
+        return;
+      }
+      const target = getAlgorithmById(algorithmId);
+      if (!target) {
+        console.warn('[MedicationDetail] openAlgorithm: no item for id', algorithmId);
+        return;
+      }
+      if (!tabNavigation) {
+        console.warn('[MedicationDetail] openAlgorithm: tab navigation unavailable');
+        return;
+      }
+      tabNavigation.navigate('AlgorithmTab', {
+        screen: 'AlgorithmDetail',
+        params: { algorithmId },
+      });
+    },
+    [tabNavigation],
+  );
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -144,6 +149,49 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
   }
 
   const medicationVm = mapMedicationToViewModel(medication);
+  const categoryLabel = labelForContentCategory(medicationVm.category);
+
+  const relatedAlgorithmRows = useMemo(
+    () =>
+      medicationVm.relatedAlgorithmIds.map((algorithmId, index) => {
+        const idOk = isValidContentId(algorithmId);
+        const alg = idOk ? getAlgorithmById(algorithmId) : undefined;
+        if (!idOk) {
+          warnBrokenRelatedAlgorithmOnce(
+            `#${index}:${String(algorithmId)}`,
+            'invalid_id',
+          );
+          return (
+            <DetailUnavailableRow
+              key={`related-alg-unavailable-${index}`}
+              message="Eintrag nicht verfügbar"
+              detailLine="Ungültige Referenz"
+            />
+          );
+        }
+        if (!alg) {
+          warnBrokenRelatedAlgorithmOnce(algorithmId, 'missing_item');
+          return (
+            <DetailUnavailableRow
+              key={`related-alg-missing-${index}-${algorithmId}`}
+              message="Eintrag nicht verfügbar"
+              detailLine={algorithmId}
+            />
+          );
+        }
+        const algVm = mapAlgorithmToViewModel(alg);
+        return (
+          <DetailLinkRow
+            key={algorithmId}
+            contextLabel="Algorithmus"
+            label={algVm.label}
+            onPress={() => openAlgorithm(algorithmId)}
+            accessibilityLabel={`Algorithmus ${algVm.label} öffnen`}
+          />
+        );
+      }),
+    [medicationVm.relatedAlgorithmIds, openAlgorithm],
+  );
 
   return (
     <ScreenContainer>
@@ -152,13 +200,13 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <DetailSectionCard title="Indikation">
-          <DetailBodyText variant="relaxed">
-            {medicationVm.indication}
-          </DetailBodyText>
-        </DetailSectionCard>
+        <DetailContentHero
+          title={medicationVm.label}
+          categoryLabel={categoryLabel}
+          indication={medicationVm.indication}
+        />
 
-        <DetailSectionCard title="Dosierung" style={themed.dosageSection}>
+        <AccordionPanel title="Dosierung" defaultExpanded={false} style={themed.dosageAccordion}>
           <WarningCard
             title="Anwendung & Dosis"
             body={medicationVm.dosage}
@@ -166,64 +214,34 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
             tone="dosage"
             accessibilityRole="text"
           />
-        </DetailSectionCard>
+        </AccordionPanel>
 
-        {medicationVm.notes ? (
-          <DetailSectionCard
-            title="Notizen"
-            hint="Ergänzende Hinweise — nach Dosierung und Indikation einordnen."
-            tone="soft"
-          >
+        <AccordionPanel title="Warnungen" defaultExpanded={false}>
+          <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+            Für dieses Medikament sind keine gesonderten Warnhinweise im Bundle
+            hinterlegt.
+          </DetailBodyText>
+        </AccordionPanel>
+
+        <AccordionPanel title="Notizen" defaultExpanded={false}>
+          {medicationVm.notes ? (
             <DetailBodyText variant="relaxed">{medicationVm.notes}</DetailBodyText>
-          </DetailSectionCard>
-        ) : null}
+          ) : (
+            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+              Keine Notizen hinterlegt.
+            </DetailBodyText>
+          )}
+        </AccordionPanel>
 
-        {medicationVm.relatedAlgorithmIds.length > 0 ? (
-          <DetailSectionCard
-            title="Verwandte Algorithmen"
-            hint="Öffnet die Schrittfolge im gleichen Bundle."
-          >
-            <DetailCrossRefList>
-              {medicationVm.relatedAlgorithmIds.map((algorithmId, index) => {
-                const idOk = isValidContentId(algorithmId);
-                const alg = idOk ? getAlgorithmById(algorithmId) : undefined;
-                if (!idOk) {
-                  warnBrokenRelatedAlgorithmOnce(
-                    `#${index}:${String(algorithmId)}`,
-                    'invalid_id',
-                  );
-                  return (
-                    <DetailUnavailableRow
-                      key={`related-alg-unavailable-${index}`}
-                      message="Eintrag nicht verfügbar"
-                      detailLine="Ungültige Referenz"
-                    />
-                  );
-                }
-                if (!alg) {
-                  warnBrokenRelatedAlgorithmOnce(algorithmId, 'missing_item');
-                  return (
-                    <DetailUnavailableRow
-                      key={`related-alg-missing-${index}-${algorithmId}`}
-                      message="Eintrag nicht verfügbar"
-                      detailLine={algorithmId}
-                    />
-                  );
-                }
-                const algVm = mapAlgorithmToViewModel(alg);
-                return (
-                  <DetailLinkRow
-                    key={algorithmId}
-                    contextLabel="Algorithmus"
-                    label={algVm.label}
-                    onPress={() => openAlgorithm(algorithmId)}
-                    accessibilityLabel={`Algorithmus ${algVm.label} öffnen`}
-                  />
-                );
-              })}
-            </DetailCrossRefList>
-          </DetailSectionCard>
-        ) : null}
+        <AccordionPanel title="Verwandte Algorithmen" defaultExpanded={false}>
+          {medicationVm.relatedAlgorithmIds.length > 0 ? (
+            <DetailCrossRefList>{relatedAlgorithmRows}</DetailCrossRefList>
+          ) : (
+            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+              Keine verknüpften Algorithmen im Bundle.
+            </DetailBodyText>
+          )}
+        </AccordionPanel>
       </ScrollView>
     </ScreenContainer>
   );
@@ -247,7 +265,7 @@ const styles = StyleSheet.create({
 
 function createThemedDetailStyles(colors: AppPalette) {
   return StyleSheet.create({
-    dosageSection: {
+    dosageAccordion: {
       borderWidth: 3,
       borderColor: colors.dosagePanelBorder,
       backgroundColor: colors.dosagePanelBg,

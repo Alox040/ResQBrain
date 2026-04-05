@@ -3,11 +3,18 @@ import type { ContentItem, ContentListItem } from '@/types/content';
 /** Larger = better match. Gaps between bands leave room for tie-breakers. */
 const SCORE_EXACT_LABEL = 1_000_000;
 const SCORE_LABEL_STARTS_WITH = 800_000;
+const SCORE_LABEL_INCLUDES = 760_000;
 const SCORE_TERM_EXACT = 720_000;
 const SCORE_TERM_STARTS_WITH = 680_000;
 const SCORE_TERM_INCLUDES = 640_000;
-const SCORE_INDICATION = 400_000;
-const SCORE_SECONDARY = 200_000;
+const SCORE_CATEGORY_EXACT = 600_000;
+const SCORE_CATEGORY_STARTS_WITH = 560_000;
+const SCORE_CATEGORY_INCLUDES = 520_000;
+const SCORE_TAG_EXACT = 480_000;
+const SCORE_TAG_STARTS_WITH = 440_000;
+const SCORE_TAG_INCLUDES = 400_000;
+const SCORE_INDICATION = 320_000;
+const SCORE_SECONDARY = 160_000;
 
 function normalizeQ(q: string): string {
   return q.trim().toLowerCase();
@@ -30,8 +37,7 @@ function collectSecondaryFields(item: ContentItem): string[] {
 
 /**
  * Single score for an item vs query, or `null` if nothing matches.
- * Bands: exact label → label startsWith → searchTerms (exact/start/includes)
- * → indication includes → secondary text includes (notes, warnings, steps, dosage).
+ * Bands: label → searchTerms → category → tags → indication → secondary text.
  */
 export function searchScoreForItem(
   item: ContentItem,
@@ -54,6 +60,11 @@ export function searchScoreForItem(
     );
   }
 
+  if (label.includes(q)) {
+    const pos = label.indexOf(q);
+    return SCORE_LABEL_INCLUDES - Math.min(pos, 200);
+  }
+
   for (let i = 0; i < item.searchTerms.length; i++) {
     const t = item.searchTerms[i].toLowerCase();
     if (t === q) {
@@ -65,6 +76,34 @@ export function searchScoreForItem(
     if (t.includes(q)) {
       const pos = t.indexOf(q);
       return SCORE_TERM_INCLUDES - i * 10 - Math.min(pos, 200);
+    }
+  }
+
+  if (item.category) {
+    const category = item.category.toLowerCase();
+    if (category === q) {
+      return SCORE_CATEGORY_EXACT;
+    }
+    if (category.startsWith(q)) {
+      return SCORE_CATEGORY_STARTS_WITH - Math.min(category.length, 100);
+    }
+    if (category.includes(q)) {
+      const pos = category.indexOf(q);
+      return SCORE_CATEGORY_INCLUDES - Math.min(pos, 200);
+    }
+  }
+
+  for (let i = 0; i < item.tags.length; i++) {
+    const tag = item.tags[i].toLowerCase();
+    if (tag === q) {
+      return SCORE_TAG_EXACT - i;
+    }
+    if (tag.startsWith(q)) {
+      return SCORE_TAG_STARTS_WITH - i * 10 - Math.min(tag.length, 100);
+    }
+    if (tag.includes(q)) {
+      const pos = tag.indexOf(q);
+      return SCORE_TAG_INCLUDES - i * 10 - Math.min(pos, 200);
     }
   }
 

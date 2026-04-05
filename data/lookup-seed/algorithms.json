@@ -8,6 +8,7 @@
       "atemwege",
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "anaphylaxie",
       "allergie",
@@ -36,6 +37,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "cpr",
       "kre",
@@ -78,6 +80,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "bradykardie",
       "bradykardes",
@@ -112,6 +115,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "tachykardie",
       "schneller puls",
@@ -149,6 +153,7 @@
     "tags": [
       "atemwege"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "asthma",
       "bronchospasmus",
@@ -186,6 +191,7 @@
     "tags": [
       "stoffwechsel"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "hypoglykämie",
       "unterzucker",
@@ -222,6 +228,7 @@
     "tags": [
       "neurologie"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "krampfanfall",
       "epilepsie",
@@ -258,6 +265,7 @@
     "tags": [
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "acs",
       "herzinfarkt",
@@ -298,6 +306,7 @@
       "neurologie",
       "kreislauf"
     ],
+    "category": "resuscitation",
     "searchTerms": [
       "stroke",
       "schlaganfall",

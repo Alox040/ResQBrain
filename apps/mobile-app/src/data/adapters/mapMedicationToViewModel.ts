@@ -9,6 +9,7 @@ export function mapMedicationToViewModel(m: Medication): MedicationViewModel {
     indication: m.indication,
     listSubtitle: m.indication,
     tags: m.tags,
+    category: m.category,
     searchTerms: m.searchTerms,
     notes: m.notes,
     dosage: m.dosage,

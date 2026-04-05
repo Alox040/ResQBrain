@@ -139,13 +139,14 @@ export function SearchScreen() {
 
   const normalizedQuery = query.trim().toLowerCase();
 
-  const results = useMemo(
-    () =>
-      normalizedQuery
-        ? rankContentItemsForSearch(contentItems, query, kindFilter)
-        : [],
-    [normalizedQuery, query, kindFilter],
-  );
+  const results = useMemo(() => {
+    if (!normalizedQuery) return [];
+    return rankContentItemsForSearch(
+      contentItems,
+      normalizedQuery,
+      kindFilter,
+    );
+  }, [normalizedQuery, kindFilter]);
 
   const resultRows = useMemo(
     () =>

@@ -5,6 +5,7 @@ import {
   MEDICATION_ITEM_KEYS,
   ALGORITHM_ITEM_KEYS,
   ALGORITHM_STEP_KEYS,
+  isContentCategory,
   isContentTag,
   type ValidatedLookupBundle,
 } from './lookupSchema';
@@ -137,6 +138,10 @@ function validateMedicationItem(
     });
   }
 
+  if (raw.category !== undefined && !isContentCategory(raw.category)) {
+    errors.push(`${prefix}.category: expected one of pediatrics, trauma, sepsis, resuscitation`);
+  }
+
   if (!Array.isArray(raw.searchTerms)) {
     errors.push(`${prefix}.searchTerms: expected array`);
   } else {
@@ -173,6 +178,7 @@ function validateMedicationItem(
     label: raw.label as string,
     indication: raw.indication as string,
     tags: raw.tags as Medication['tags'],
+    category: raw.category as Medication['category'],
     searchTerms: raw.searchTerms as string[],
     dosage: raw.dosage as string,
     relatedAlgorithmIds: raw.relatedAlgorithmIds as string[],
@@ -240,6 +246,10 @@ function validateAlgorithmItem(
     });
   }
 
+  if (raw.category !== undefined && !isContentCategory(raw.category)) {
+    errors.push(`${prefix}.category: expected one of pediatrics, trauma, sepsis, resuscitation`);
+  }
+
   if (!Array.isArray(raw.searchTerms)) {
     errors.push(`${prefix}.searchTerms: expected array`);
   } else {
@@ -297,6 +307,7 @@ function validateAlgorithmItem(
     label: raw.label as string,
     indication: raw.indication as string,
     tags: raw.tags as Algorithm['tags'],
+    category: raw.category as Algorithm['category'],
     searchTerms: raw.searchTerms as string[],
     steps,
     relatedMedicationIds: raw.relatedMedicationIds as string[],
