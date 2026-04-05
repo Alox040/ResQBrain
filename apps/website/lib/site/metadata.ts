@@ -1,8 +1,10 @@
 import type { SiteMetadata } from "@/types/site-content";
 
+import { siteContent } from "@/lib/site/site-content";
+
 export const siteMetadata: SiteMetadata = {
-  title: "ResQBrain",
-  description: "Oeffentliche Projektwebsite von ResQBrain.",
+  title: siteContent.title,
+  description: siteContent.description,
   locale: "de-DE",
 };
 

@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 :root {
   color-scheme: dark;
 
@@ -30,7 +32,8 @@
   --badge-border: var(--border);
   --badge-text: #a8b8c4;
 
-  /* Typography — primary face from next/font (see app/layout.tsx, --font-instrument-sans) */
+  /* Typography — primary face from next/font (see app/layout.tsx, --font-instrument-sans).
+     Stack: webfont (subset unicode-ranges) → Next metric fallback → OS UI sans (full DE glyphs). */
   --font-family-sans: var(--font-instrument-sans), "Segoe UI", system-ui, sans-serif;
   --font-hero: clamp(2.35rem, 5.2vw + 0.5rem, 3.65rem);
   --font-section: clamp(1.4rem, 2.2vw + 0.35rem, 2rem);
