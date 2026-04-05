@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(python3:*)",
-      "Bash(grep -r \"lookup-seed\\\\|medications\\\\|algorithms\" E:/Programmierung/ResQBrain/scripts/ E:/Programmierung/ResQBrain/apps/mobile-app/src/ --include=*.ts -l)"
+      "Bash(grep -r \"lookup-seed\\\\|medications\\\\|algorithms\" E:/Programmierung/ResQBrain/scripts/ E:/Programmierung/ResQBrain/apps/mobile-app/src/ --include=*.ts -l)",
+      "Bash(ls -la /e/Programmierung/ResQBrain/*.json)",
+      "Bash(find:*)",
+      "Bash(xargs ls:*)",
+      "Bash(wc -l /e/Programmierung/ResQBrain/apps/mobile-app/src/**/*.tsx)"
     ]
   }
 }

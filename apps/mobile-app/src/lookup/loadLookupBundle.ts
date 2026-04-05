@@ -4,10 +4,10 @@ import { isNewerBundle } from './lookupBundleVersion';
 import { loadStoredBundle } from './lookupStorage';
 import { validateLookupBundle } from './validateLookupBundle';
 
-/** Kanonische Phase-0-Quelle: `data/lookup-seed/` (Repo-Root). */
-import manifestJson from '../../../../data/lookup-seed/manifest.json';
-import medicationsJson from '../../../../data/lookup-seed/medications.json';
-import algorithmsJson from '../../../../data/lookup-seed/algorithms.json';
+/** Kanonische Phase-0-Quelle: `apps/mobile-app/data/lookup-seed/`. */
+import manifestJson from '../../data/lookup-seed/manifest.json';
+import medicationsJson from '../../data/lookup-seed/medications.json';
+import algorithmsJson from '../../data/lookup-seed/algorithms.json';
 
 /** Stable key for map lookup â€” matches `contentIndex` convention. */
 export type LookupContentKey = `${ContentKind}:${string}`;

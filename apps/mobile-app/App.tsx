@@ -81,7 +81,7 @@ export default function App() {
 
       // 2) Initialize content index with the active bundle.
       const bundleVersion =
-        resolved.bundle.manifest.version ??
+        resolved.meta.version ??
         resolved.bundle.manifest.bundleId ??
         null;
       initializeContent(buildLookupRamStore(resolved.bundle));

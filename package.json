@@ -11,6 +11,7 @@
     "packages/*"
   ],
   "scripts": {
+    "seed:update": "node scripts/seed-update.mjs",
     "render:website-status": "tsx scripts/status/render-website-status.ts",
     "dbrd:normalize": "tsx scripts/dbrd/index.ts",
     "dbrd:normalize:medications": "tsx scripts/dbrd/index.ts medications",
@@ -18,6 +19,7 @@
     "dbrd:validate-normalized": "tsx scripts/dbrd/validate-normalized.ts",
     "dbrd:build-lookup-seed": "tsx scripts/dbrd/build-lookup-seed.ts",
     "dbrd:build": "pnpm dbrd:validate-normalized && pnpm dbrd:build-lookup-seed",
+    "verify": "tsx scripts/verify.ts",
     "build": "pnpm --filter @resqbrain/website build",
     "build:website": "pnpm --filter @resqbrain/website build",
     "mobile:verify": "pnpm --filter resqbrain-mobile run verify:local",

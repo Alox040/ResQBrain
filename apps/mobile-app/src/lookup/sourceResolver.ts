@@ -51,6 +51,7 @@ function validateSnapshot(
 function extractMeta(manifest: LookupBundleSnapshot['manifest']): BundleMeta {
   return {
     bundleId: manifest.bundleId,
+    version: manifest.version ?? null,
     generatedAt: manifest.generatedAt ?? manifest.createdAt ?? null,
     schemaVersion: manifest.schemaVersion,
   };

@@ -1,8 +1,9 @@
-const SURVEY_URL = "https://forms.cloud.microsoft/r/ZFVgC0L1BZ" as const;
+export const surveyUrl =
+  process.env.NEXT_PUBLIC_SURVEY_URL?.trim() || "#";
 
 export const survey = {
-  href: SURVEY_URL,
-  url: SURVEY_URL,
+  href: surveyUrl,
+  url: surveyUrl,
   label: "Umfrage",
 } as const;
 

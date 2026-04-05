@@ -1,5 +1,5 @@
 import { routes } from "@/lib/routes";
-import { survey } from "@/lib/site/survey";
+import { surveyUrl } from "@/lib/site/survey";
 
 export const content = {
   hero: {
@@ -81,7 +81,7 @@ export const content = {
     text: "Rückmeldungen aus Praxis und Ausbildung fließen in die Priorisierung des Projekts ein.",
     cta: {
       label: "Umfrage",
-      href: survey.href,
+      href: surveyUrl,
     },
   },
   faq: {

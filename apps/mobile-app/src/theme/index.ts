@@ -41,6 +41,7 @@ export const TYPOGRAPHY = {
   },
   body: { fontSize: 16, lineHeight: 24 },
   bodyMuted: { fontSize: 16, lineHeight: 22 },
+  caption: { fontSize: 12, lineHeight: 18 },
 } as const;
 
 /** Rahmen ohne Farben — mit `colors.surface` / `colors.border` kombinieren */

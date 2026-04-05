@@ -29,6 +29,7 @@ export type LookupProvisionSource = LookupSource;
  */
 export type BundleMeta = {
   bundleId: string;
+  version: string | null;
   generatedAt: string | null;
   schemaVersion: string;
 };
