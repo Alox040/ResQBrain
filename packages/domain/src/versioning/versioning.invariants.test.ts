@@ -235,8 +235,7 @@ test('INV-C-06/11: package and release snapshots are copied, frozen, and detache
 
   const packageVersion = createContentPackageVersion({
     id: 'pkg-ver-1' as VersionId,
-    organizationId: orgA,
-    packageId,
+    contentPackage: { id: packageId, organizationId: orgA, regionId: null },
     createdAt: new Date('2026-03-25T09:00:00.000Z'),
     createdBy: authorRoleId,
     composition: compositionSource,

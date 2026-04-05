@@ -20,6 +20,7 @@ export interface ReleaseAuditEvent extends AuditEvent {
   readonly releaseVersionId: VersionId;
   readonly packageVersionId: VersionId;
   readonly packageId: ContentPackageId;
+  readonly regionId: string | null;
   readonly releasedBy: UserRoleId;
   readonly releasedAt: string;
   readonly targetScope: Readonly<Record<string, unknown>>;

@@ -12,6 +12,12 @@ export type ResolvedLookupBundle = {
   meta: BundleMeta;
 };
 
+export type ResolveLookupBundleOptions = {
+  organizationId?: string | null;
+  regionId?: string | null;
+  baseUrl?: string;
+};
+
 const SAFE_FALLBACK_MANIFEST = {
   schemaVersion: '1',
   bundleId: 'safe-fallback',
@@ -92,6 +98,89 @@ async function tryLoadCachedBundle(): Promise<LookupBundleSnapshot | null> {
   }
 }
 
+function normalizeScopeSegment(value: string | null | undefined): string | null {
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim();
+  return normalized.length > 0 ? normalized : null;
+}
+
+function buildBundleLookupRoots(
+  options: ResolveLookupBundleOptions,
+): string[] {
+  const organizationId = normalizeScopeSegment(options.organizationId);
+  const regionId = normalizeScopeSegment(options.regionId);
+  const roots: string[] = [];
+
+  if (organizationId && regionId) {
+    roots.push(`/bundles/${organizationId}/${regionId}`);
+  }
+
+  if (organizationId) {
+    roots.push(`/bundles/${organizationId}`);
+  }
+
+  roots.push('/bundles/global');
+  return roots;
+}
+
+function buildScopedBundleFileUrl(
+  root: string,
+  fileName: 'manifest.json' | 'medications.json' | 'algorithms.json',
+  baseUrl?: string,
+): string {
+  const relativePath = `${root}/${fileName}`.replace(/\/{2,}/g, '/');
+  if (!baseUrl) {
+    return relativePath;
+  }
+
+  return new URL(relativePath.replace(/^\//, ''), baseUrl).toString();
+}
+
+async function fetchJson(url: string): Promise<unknown> {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  return (await response.json()) as unknown;
+}
+
+async function tryLoadScopedBundle(
+  options: ResolveLookupBundleOptions,
+): Promise<LookupBundleSnapshot | null> {
+  const roots = buildBundleLookupRoots(options);
+
+  for (const root of roots) {
+    try {
+      const [manifest, medications, algorithms] = await Promise.all([
+        fetchJson(buildScopedBundleFileUrl(root, 'manifest.json', options.baseUrl)),
+        fetchJson(buildScopedBundleFileUrl(root, 'medications.json', options.baseUrl)),
+        fetchJson(buildScopedBundleFileUrl(root, 'algorithms.json', options.baseUrl)),
+      ]);
+
+      const snapshot = validateSnapshot({
+        manifest: manifest as LookupBundleSnapshot['manifest'],
+        medications: medications as LookupBundleSnapshot['medications'],
+        algorithms: algorithms as LookupBundleSnapshot['algorithms'],
+      });
+
+      if (snapshot) {
+        return snapshot;
+      }
+    } catch {
+      // Try next root in the lookup chain.
+    }
+  }
+
+  return null;
+}
+
 function tryLoadEmbeddedBundle(): LookupBundleSnapshot | null {
   try {
     const embeddedStore = loadEmbeddedLookupBundle();
@@ -105,7 +194,14 @@ function tryLoadEmbeddedBundle(): LookupBundleSnapshot | null {
   }
 }
 
-export async function resolveLookupBundle(): Promise<ResolvedLookupBundle> {
+export async function resolveLookupBundle(
+  options: ResolveLookupBundleOptions = {},
+): Promise<ResolvedLookupBundle> {
+  const resolvedBundle = await tryLoadScopedBundle(options);
+  if (resolvedBundle) {
+    return buildResolvedBundle(resolvedBundle, 'resolved');
+  }
+
   const updatedBundle = await tryLoadUpdatedBundle();
   if (updatedBundle) {
     return buildResolvedBundle(updatedBundle, 'updated');

@@ -22,6 +22,7 @@ export interface ReleaseVersion {
   readonly kind: 'ReleaseVersion';
   readonly id: ReleaseVersionRecordId;
   readonly organizationId: OrgId;
+  readonly regionId: string | null;
   readonly packageVersionId: VersionId;
   readonly packageId: ContentPackageId;
   readonly releasedAt: Date;
@@ -37,6 +38,7 @@ export interface ReleaseVersion {
 export interface CreateReleaseVersionInput {
   readonly id: ReleaseVersionRecordId;
   readonly organizationId: OrgId;
+  readonly regionId?: string | null;
   readonly packageVersionId: VersionId;
   readonly packageId: ContentPackageId;
   readonly releasedAt: Date;
@@ -58,6 +60,7 @@ export function createReleaseVersion(
   assertNonEmptyId(input.packageId, 'packageId');
   const releasedAt = cloneDate(input.releasedAt, 'releasedAt');
   assertNonEmptyId(input.releasedBy, 'releasedBy');
+  const regionId = normalizeRegionId(input.regionId);
   const targetScope = freezeTargetScope(input.targetScope);
   const compositionSnapshot = Object.freeze(
     input.compositionSnapshot.map((entry) => createCompositionEntry(entry)),
@@ -75,6 +78,7 @@ export function createReleaseVersion(
     kind: 'ReleaseVersion',
     id: input.id,
     organizationId: input.organizationId,
+    regionId,
     packageVersionId: input.packageVersionId,
     packageId: input.packageId,
     releasedAt,
@@ -165,6 +169,14 @@ function validateReleaseLinks(
       'Update releases must not define rollbackSourceVersionId.',
     );
   }
+}
+
+function normalizeRegionId(value: string | null | undefined): string | null {
+  if (typeof value === 'string' && value.trim().length > 0) {
+    return value.trim();
+  }
+
+  return null;
 }
 
 function assertOrgId(value: OrgId): OrgId {

@@ -43,11 +43,16 @@ export interface EvaluatedContentPackageDependency {
   readonly message?: string;
 }
 
+export interface ResolvedContentPackageRegion {
+  readonly organizationId: OrgId | null;
+}
+
 export interface ValidateContentPackageAssemblyInput {
   readonly contentPackage: ContentPackage;
   readonly packageVersion: ContentPackageVersion;
   readonly resolvedEntries?: ReadonlyArray<ResolvedContentPackageEntry>;
   readonly resolvedScopes?: ReadonlyArray<ResolvedContentPackageScope>;
+  readonly resolvedRegion?: ResolvedContentPackageRegion | null;
 }
 
 export interface ValidateContentPackageReleaseInput
@@ -74,6 +79,15 @@ export function validateContentPackageAssembly(
       error(
         'PACKAGE_VERSION_PARENT_MISMATCH',
         'ContentPackageVersion.packageId must match the parent ContentPackage id.',
+      ),
+    );
+  }
+
+  if ((input.contentPackage.regionId ?? null) !== (input.packageVersion.regionId ?? null)) {
+    issues.push(
+      error(
+        'PACKAGE_VERSION_REGION_MISMATCH',
+        'ContentPackageVersion.regionId must match ContentPackage.regionId.',
       ),
     );
   }
@@ -130,6 +144,25 @@ export function validateContentPackageAssembly(
         ),
       );
     }
+  }
+
+  if (
+    input.contentPackage.regionId !== null &&
+    input.resolvedRegion !== undefined &&
+    input.resolvedRegion !== null &&
+    input.resolvedRegion.organizationId !== input.contentPackage.organizationId
+  ) {
+    issues.push(
+      error(
+        'CROSS_TENANT_REGION_REFERENCE',
+        'ContentPackage.regionId must reference a Region within the same organization.',
+        {
+          regionId: input.contentPackage.regionId,
+          regionOrganizationId: input.resolvedRegion.organizationId,
+          packageOrganizationId: input.contentPackage.organizationId,
+        },
+      ),
+    );
   }
 
   return finalizeValidation(issues);

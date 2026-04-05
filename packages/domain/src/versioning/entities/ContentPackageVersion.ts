@@ -7,6 +7,7 @@ import type {
   UserRoleId,
   VersionId,
 } from '../../shared/types';
+import type { ContentPackage } from '../../content/entities';
 
 import { DomainError } from '../../shared/errors';
 import { ScopeLevel } from '../../tenant/entities';
@@ -33,6 +34,7 @@ export interface ContentPackageVersionPredecessor {
   readonly id: VersionId;
   readonly organizationId: OrgId;
   readonly packageId: ContentPackageId;
+  readonly regionId?: string | null;
   readonly versionNumber: number;
   readonly hasSuccessor?: boolean;
 }
@@ -42,6 +44,7 @@ export interface ContentPackageVersion {
   readonly id: VersionId;
   readonly organizationId: OrgId;
   readonly packageId: ContentPackageId;
+  readonly regionId?: string;
   readonly versionNumber: number;
   readonly predecessorVersionId: VersionId | null;
   readonly lineageState: ImmutableLineageStateSet;
@@ -59,8 +62,7 @@ export interface ContentPackageVersion {
 
 export interface CreateContentPackageVersionInput {
   readonly id: VersionId;
-  readonly organizationId: OrgId;
-  readonly packageId: ContentPackageId;
+  readonly contentPackage: Pick<ContentPackage, 'id' | 'organizationId' | 'regionId'>;
   readonly createdAt: Date;
   readonly createdBy: UserRoleId;
   readonly composition: ReadonlyArray<CompositionEntry>;
@@ -78,8 +80,7 @@ export function createContentPackageVersion(
   input: CreateContentPackageVersionInput,
 ): ContentPackageVersion {
   assertNonEmptyId(input.id, 'id');
-  assertOrgId(input.organizationId);
-  assertNonEmptyId(input.packageId, 'packageId');
+  const contentPackage = freezeContentPackageIdentity(input.contentPackage);
   const createdAt = cloneDate(input.createdAt, 'createdAt');
   assertNonEmptyId(input.createdBy, 'createdBy');
   const targetScope = freezeTargetScope(input.targetScope);
@@ -115,8 +116,9 @@ export function createContentPackageVersion(
   return Object.freeze({
     kind: 'ContentPackageVersion',
     id: input.id,
-    organizationId: input.organizationId,
-    packageId: input.packageId,
+    organizationId: contentPackage.organizationId,
+    packageId: contentPackage.id,
+    ...(contentPackage.regionId != null ? { regionId: contentPackage.regionId } : {}),
     versionNumber,
     predecessorVersionId,
     lineageState: createLineageStateSet([LineageState.ACTIVE]),
@@ -147,17 +149,24 @@ function validateContentPackagePredecessor(
   input: CreateContentPackageVersionInput,
   predecessor: ContentPackageVersionPredecessor,
 ): void {
-  if (predecessor.organizationId !== input.organizationId) {
+  if (predecessor.organizationId !== input.contentPackage.organizationId) {
     throw new DomainError(
       'CROSS_TENANT_ACCESS_DENIED',
       'predecessorVersionId must stay within the same organization.',
     );
   }
 
-  if (predecessor.packageId !== input.packageId) {
+  if (predecessor.packageId !== input.contentPackage.id) {
     throw new DomainError(
       'DATA_INTEGRITY_VIOLATION',
       'predecessorVersionId must reference the same package lineage.',
+    );
+  }
+
+  if ((predecessor.regionId ?? null) !== (input.contentPackage.regionId ?? null)) {
+    throw new DomainError(
+      'DATA_INTEGRITY_VIOLATION',
+      'predecessorVersionId must preserve the inherited package region.',
     );
   }
 
@@ -167,6 +176,30 @@ function validateContentPackagePredecessor(
       'Branching is prohibited in Phase 0.',
     );
   }
+}
+
+function freezeContentPackageIdentity(
+  input: Pick<ContentPackage, 'id' | 'organizationId' | 'regionId'>,
+): Pick<ContentPackage, 'id' | 'organizationId' | 'regionId'> {
+  if (input == null || typeof input !== 'object') {
+    throw new DomainError(
+      'DATA_INTEGRITY_VIOLATION',
+      'contentPackage is required.',
+    );
+  }
+
+  const id = assertNonEmptyId(input.id, 'contentPackage.id');
+  const organizationId = assertOrgId(input.organizationId);
+  const regionId =
+    typeof input.regionId === 'string' && input.regionId.trim().length > 0
+      ? (input.regionId.trim() as RegionId)
+      : null;
+
+  return Object.freeze({
+    id,
+    organizationId,
+    regionId,
+  });
 }
 
 export function freezeTargetScope(input: VersionTargetScope): VersionTargetScope {

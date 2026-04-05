@@ -41,6 +41,7 @@ export interface ReleaseEntryState {
 export interface ReleaseContentPackageInput {
   readonly actor: ActorContext;
   readonly organizationId: OrgId | null | undefined;
+  readonly regionId?: string | null;
   readonly releaseVersionId: ReleaseVersion['id'];
   readonly auditEventId: string;
   readonly releasedAt: Date;
@@ -49,6 +50,7 @@ export interface ReleaseContentPackageInput {
     ContentPackage,
     | 'id'
     | 'organizationId'
+    | 'regionId'
     | 'approvalStatus'
     | 'currentVersionId'
     | 'targetScope'
@@ -225,11 +227,13 @@ export function releaseContentPackage(
   }
 
   const actorRoleId = resolveActorRoleId(capabilityDecision.context.grantingRoleIds);
+  const regionId = resolveRegionId(input.regionId, input.contentPackage.regionId);
   const supersededRelease =
     input.activeRelease == null ? null : markReleaseVersionSuperseded(input.activeRelease);
   const releaseVersion = createReleaseVersion({
     id: input.releaseVersionId,
     organizationId,
+    regionId,
     packageVersionId: explicitVersionId,
     packageId: input.contentPackage.id,
     releasedAt: input.releasedAt,
@@ -306,6 +310,7 @@ function createReleaseAuditRecord(
     releaseVersionId: releaseVersion.id as unknown as VersionId,
     packageVersionId: releaseVersion.packageVersionId,
     packageId: releaseVersion.packageId,
+    regionId: releaseVersion.regionId,
     releasedBy: actorRoleId,
     releasedAt: releaseVersion.releasedAt.toISOString(),
     targetScope: Object.freeze({ ...releaseVersion.targetScope }),
@@ -373,6 +378,21 @@ function normalizeExplicitVersionId(
   }
 
   return normalized as VersionId;
+}
+
+function resolveRegionId(
+  inputRegionId: string | null | undefined,
+  packageRegionId: string | null,
+): string | null {
+  if (inputRegionId === undefined) {
+    return packageRegionId;
+  }
+
+  if (typeof inputRegionId === 'string' && inputRegionId.trim().length > 0) {
+    return inputRegionId.trim();
+  }
+
+  return null;
 }
 
 function createDeniedResult(decision: DeniedPolicyDecision): ReleaseDeniedResult {

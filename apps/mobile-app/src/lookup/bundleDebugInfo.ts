@@ -10,7 +10,13 @@ export type BundleDebugInfo = {
   pendingUpdate: boolean;
 };
 
-const LOOKUP_SOURCE_VALUES = new Set<string>(['embedded', 'cached', 'updated', 'fallback']);
+const LOOKUP_SOURCE_VALUES = new Set<string>([
+  'resolved',
+  'embedded',
+  'cached',
+  'updated',
+  'fallback',
+]);
 
 function isLookupSource(value: unknown): value is LookupSource {
   return typeof value === 'string' && LOOKUP_SOURCE_VALUES.has(value);

@@ -275,8 +275,7 @@ test('T-CON-12/INV-F-03: package assembly blocks cross-tenant composition entrie
 
   const packageVersion = createContentPackageVersion({
     id: 'pkg-ver-cross-tenant' as VersionId,
-    organizationId: orgA,
-    packageId: contentPackage.id,
+    contentPackage,
     createdAt: new Date('2026-03-25T10:05:00.000Z'),
     createdBy: actorRoleId,
     composition: [
@@ -304,6 +303,50 @@ test('T-CON-12/INV-F-03: package assembly blocks cross-tenant composition entrie
   assert.equal(result.ok, false);
   assert.equal(
     result.errors.some((issue) => issue.code === 'CROSS_TENANT_COMPOSITION_ENTRY'),
+    true,
+  );
+});
+
+test('package assembly rejects package version region drift', () => {
+  const contentPackage = createContentPackage({
+    id: 'pkg-region' as ContentPackageId,
+    organizationId: orgA,
+    regionId: 'region-1',
+    title: 'Regional package',
+    targetScope: { scopeLevel: ScopeLevel.REGION, scopeTargetId: 'region-1' as never },
+    approvalStatus: ApprovalStatus.Draft,
+    currentVersionId: 'pkg-ver-region' as VersionId,
+    createdAt: new Date('2026-03-25T10:00:00.000Z'),
+    createdBy: actorRoleId,
+  });
+
+  const packageVersion = createContentPackageVersion({
+    id: 'pkg-ver-region' as VersionId,
+    contentPackage: {
+      id: contentPackage.id,
+      organizationId: contentPackage.organizationId,
+      regionId: 'region-2' as never,
+    },
+    createdAt: new Date('2026-03-25T10:05:00.000Z'),
+    createdBy: actorRoleId,
+    composition: [
+      {
+        entityId: 'alg-region' as AlgorithmId,
+        versionId: 'alg-ver-1' as VersionId,
+        entityType: 'Algorithm',
+      },
+    ],
+    targetScope: { scopeLevel: ScopeLevel.REGION, scopeTargetId: 'region-1' as never },
+  });
+
+  const result = validateContentPackageAssembly({
+    contentPackage,
+    packageVersion,
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(
+    result.errors.some((issue) => issue.code === 'PACKAGE_VERSION_REGION_MISMATCH'),
     true,
   );
 });
@@ -338,8 +381,7 @@ test('INV-F-09: HardBlock dependencies block release, Warning dependencies do no
 
   const packageVersion = createContentPackageVersion({
     id: 'pkg-ver-dependencies' as VersionId,
-    organizationId: orgA,
-    packageId: contentPackage.id,
+    contentPackage,
     createdAt: new Date('2026-03-25T10:05:00.000Z'),
     createdBy: actorRoleId,
     composition: [
@@ -391,8 +433,7 @@ test('INV-F-09: HardBlock dependencies block release, Warning dependencies do no
 
   const warningOnlyVersion = createContentPackageVersion({
     id: 'pkg-ver-warning-only' as VersionId,
-    organizationId: orgA,
-    packageId: contentPackage.id,
+    contentPackage,
     createdAt: new Date('2026-03-25T10:06:00.000Z'),
     createdBy: actorRoleId,
     composition: packageVersion.composition,
@@ -450,8 +491,7 @@ test('INV-F-10: Deprecated content is not releasable under the foundation Approv
 
   const packageVersion = createContentPackageVersion({
     id: 'pkg-ver-deprecated' as VersionId,
-    organizationId: orgA,
-    packageId: contentPackage.id,
+    contentPackage,
     createdAt: new Date('2026-03-25T10:05:00.000Z'),
     createdBy: actorRoleId,
     composition: [
@@ -499,8 +539,7 @@ test('INV-F-05: versionId mismatch is reported as stale at release time', () => 
 
   const packageVersion = createContentPackageVersion({
     id: 'pkg-ver-stale' as VersionId,
-    organizationId: orgA,
-    packageId: contentPackage.id,
+    contentPackage,
     createdAt: new Date('2026-03-25T10:05:00.000Z'),
     createdBy: actorRoleId,
     composition: [

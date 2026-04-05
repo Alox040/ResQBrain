@@ -82,10 +82,14 @@ function createPackageVersion(
   versionId: VersionId = 'pkg-ver-2' as VersionId,
   organizationId: OrgId = orgA,
 ) {
+  const contentPackage = createPackage(
+    ApprovalStatus.Approved,
+    versionId,
+    organizationId,
+  );
   return createContentPackageVersion({
     id: versionId,
-    organizationId,
-    packageId,
+    contentPackage,
     createdAt: new Date('2026-03-25T08:15:00.000Z'),
     createdBy: releaserRoleId,
     composition: [

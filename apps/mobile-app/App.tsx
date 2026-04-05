@@ -17,7 +17,7 @@ async function runBackgroundBundleUpdate(
   bundleUrl: string,
   currentDebugInfo: {
     version: string | null;
-    source: 'embedded' | 'cached' | 'updated' | 'fallback';
+    source: 'resolved' | 'embedded' | 'cached' | 'updated' | 'fallback';
     lastUpdate: string | null;
     pendingUpdate: boolean;
   },
@@ -68,12 +68,19 @@ export default function App() {
   React.useEffect(() => {
     void (async () => {
       const bundleUrl = process.env.EXPO_PUBLIC_LOOKUP_BUNDLE_URL;
+      const bundleBaseUrl = process.env.EXPO_PUBLIC_LOOKUP_BUNDLE_BASE_URL;
+      const organizationId = process.env.EXPO_PUBLIC_ORGANIZATION_ID;
+      const regionId = process.env.EXPO_PUBLIC_REGION_ID;
       const persistedDebugInfo = await getBundleDebugInfo();
       let lastUpdate = persistedDebugInfo?.lastUpdate ?? null;
       let pendingUpdate = persistedDebugInfo?.pendingUpdate ?? false;
 
       // 1) Load resolver (updated -> cached -> embedded fallback).
-      const resolved = await resolveLookupBundle();
+      const resolved = await resolveLookupBundle({
+        organizationId,
+        regionId,
+        baseUrl: bundleBaseUrl,
+      });
       if (pendingUpdate && resolved.source === 'updated') {
         console.log('update applied');
         pendingUpdate = false;

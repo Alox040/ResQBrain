@@ -20,6 +20,7 @@ test('tenant entities keep immutable organization-scoped identity', () => {
     id: orgA,
     name: 'Org A',
     slug: 'org-a',
+    type: 'public',
     status: OrganizationStatus.ACTIVE,
     createdAt: new Date('2026-03-25T00:00:00.000Z'),
     auditTrail: [
@@ -50,6 +51,8 @@ test('sub-scope entities require an organization parent', () => {
         organization: { id: '' as OrgId },
         name: 'North',
         code: 'N',
+        country: 'DE',
+        versioningEnabled: false,
         status: SubScopeStatus.ACTIVE,
       }),
     (error) =>
@@ -64,6 +67,8 @@ test('county rejects a cross-organization region parent', () => {
     organization: { id: orgB },
     name: 'West',
     code: 'W',
+    country: 'DE',
+    versioningEnabled: false,
     status: SubScopeStatus.ACTIVE,
   });
 
@@ -89,6 +94,8 @@ test('station rejects cross-organization region references', () => {
     organization: { id: orgB },
     name: 'South',
     code: 'S',
+    country: 'DE',
+    versioningEnabled: false,
     status: SubScopeStatus.ACTIVE,
   });
 
@@ -114,6 +121,8 @@ test('inactive same-org region remains a valid structural parent', () => {
     organization: { id: orgA },
     name: 'Legacy Region',
     code: 'LR',
+    country: 'DE',
+    versioningEnabled: false,
     status: SubScopeStatus.INACTIVE,
   });
 

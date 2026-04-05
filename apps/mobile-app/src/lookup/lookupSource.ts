@@ -15,6 +15,7 @@ import type { LookupManifest } from './lookupSchema';
  * - **fallback** — minimal emergency bundle when all other layers are missing or corrupt.
  */
 export type LookupSource =
+  | 'resolved'
   | 'embedded'
   | 'cached'
   | 'updated'

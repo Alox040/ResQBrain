@@ -32,6 +32,7 @@ test('assertOrgActive allows only active organizations for writes', () => {
     id: orgA,
     name: 'Org A',
     slug: 'org-a',
+    type: 'public',
     status: OrganizationStatus.ACTIVE,
     createdAt: new Date('2026-03-25T00:00:00.000Z'),
   });
@@ -42,6 +43,7 @@ test('assertOrgActive allows only active organizations for writes', () => {
     id: orgB,
     name: 'Org B',
     slug: 'org-b',
+    type: 'private',
     status: OrganizationStatus.SUSPENDED,
     createdAt: new Date('2026-03-25T00:00:00.000Z'),
   });
@@ -57,6 +59,7 @@ test('assertOrgActive allows only active organizations for writes', () => {
     id: 'org-C' as OrgId,
     name: 'Org C',
     slug: 'org-c',
+    type: 'public',
     status: OrganizationStatus.DECOMMISSIONED,
     createdAt: new Date('2026-03-25T00:00:00.000Z'),
   });

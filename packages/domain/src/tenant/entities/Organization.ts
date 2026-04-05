@@ -3,6 +3,8 @@ import type { OrgId } from '../../shared/types';
 import { DomainError } from '../../shared/errors';
 import { OrganizationStatus } from './OrganizationStatus';
 
+export type OrganizationType = 'public' | 'private';
+
 export interface OrganizationAuditEntry {
   readonly changedAt: Date;
   readonly changeType: string;
@@ -13,6 +15,9 @@ export interface Organization {
   readonly id: OrgId;
   readonly name: string;
   readonly slug: string;
+  readonly type: OrganizationType;
+  readonly regionIds: ReadonlyArray<string>;
+  readonly defaultRegionId?: string;
   readonly status: OrganizationStatus;
   readonly createdAt: Date;
   readonly auditTrail: ReadonlyArray<OrganizationAuditEntry>;
@@ -22,6 +27,9 @@ export interface CreateOrganizationInput {
   readonly id: OrgId;
   readonly name: string;
   readonly slug: string;
+  readonly type: OrganizationType;
+  readonly regionIds?: ReadonlyArray<string>;
+  readonly defaultRegionId?: string;
   readonly status: OrganizationStatus;
   readonly createdAt: Date;
   readonly auditTrail?: ReadonlyArray<OrganizationAuditEntry>;
@@ -34,6 +42,16 @@ export function createOrganization(
   assertNonEmptyString(input.name, 'name');
   assertNonEmptyString(input.slug, 'slug');
   assertDate(input.createdAt, 'createdAt');
+
+  const regionIds = Object.freeze([...(input.regionIds ?? [])]);
+
+  if (input.defaultRegionId !== undefined && !regionIds.includes(input.defaultRegionId)) {
+    throw new DomainError(
+      'DATA_INTEGRITY_VIOLATION',
+      'Organization.defaultRegionId must be present in regionIds.',
+      { defaultRegionId: input.defaultRegionId },
+    );
+  }
 
   const auditTrail = Object.freeze(
     (input.auditTrail ?? []).map((entry) =>
@@ -49,6 +67,9 @@ export function createOrganization(
     id: input.id,
     name: input.name.trim(),
     slug: input.slug.trim(),
+    type: input.type,
+    regionIds,
+    ...(input.defaultRegionId !== undefined && { defaultRegionId: input.defaultRegionId }),
     status: input.status,
     createdAt: cloneDate(input.createdAt, 'createdAt'),
     auditTrail,

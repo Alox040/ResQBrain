@@ -21,10 +21,14 @@ import {
   type ScopeTarget,
 } from './ScopeTarget';
 
+export type ContentPackageScopeType = 'global' | 'organization' | 'region';
+
 export interface ContentPackage {
   readonly kind: 'ContentPackage';
   readonly id: ContentPackageId;
   readonly organizationId: OrgId;
+  readonly regionId: string | null;
+  readonly scopeType: ContentPackageScopeType;
   readonly entityType: 'ContentPackage';
   readonly title: string;
   readonly label: string | null;
@@ -45,6 +49,8 @@ export interface ContentPackage {
 export interface CreateContentPackageInput {
   readonly id: ContentPackageId;
   readonly organizationId: OrgId;
+  readonly regionId?: string | null;
+  readonly scopeType?: ContentPackageScopeType;
   readonly title: string;
   readonly label?: string | null;
   readonly description?: string | null;
@@ -64,10 +70,14 @@ export interface CreateContentPackageInput {
 export function createContentPackage(
   input: CreateContentPackageInput,
 ): ContentPackage {
+  const { regionId, scopeType } = resolveRegionScope(input.regionId, input.scopeType);
+
   return Object.freeze({
     kind: 'ContentPackage',
     id: assertNonEmptyId(input.id, 'id'),
     organizationId: assertOrgId(input.organizationId),
+    regionId,
+    scopeType,
     entityType: 'ContentPackage',
     title: assertNonEmptyText(input.title, 'title'),
     label: normalizeOptionalText(input.label, 'label'),
@@ -83,6 +93,37 @@ export function createContentPackage(
     ...normalizeDeprecation(input.deprecationDate, input.deprecationReason),
     auditTrail: freezeAuditTrail(input.auditTrail),
   });
+}
+
+function resolveRegionScope(
+  rawRegionId: string | null | undefined,
+  rawScopeType: ContentPackageScopeType | undefined,
+): { readonly regionId: string | null; readonly scopeType: ContentPackageScopeType } {
+  const regionId =
+    typeof rawRegionId === 'string' && rawRegionId.trim().length > 0
+      ? rawRegionId.trim()
+      : null;
+
+  if (regionId !== null) {
+    if (rawScopeType !== undefined && rawScopeType !== 'region') {
+      throw new DomainError(
+        'DATA_INTEGRITY_VIOLATION',
+        'ContentPackage.scopeType must be "region" when regionId is set.',
+        { scopeType: rawScopeType },
+      );
+    }
+
+    return { regionId, scopeType: 'region' };
+  }
+
+  if (rawScopeType === 'region') {
+    throw new DomainError(
+      'DATA_INTEGRITY_VIOLATION',
+      'ContentPackage.regionId is required when scopeType is "region".',
+    );
+  }
+
+  return { regionId: null, scopeType: rawScopeType ?? 'global' };
 }
 
 export function isContentPackageEditable(

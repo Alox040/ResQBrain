@@ -32,6 +32,8 @@ test('tenant isolation blocks cross-org sub-scope references', () => {
     organization: { id: orgB },
     name: 'Foreign',
     code: 'F',
+    country: 'DE',
+    versioningEnabled: false,
     status: SubScopeStatus.ACTIVE,
   });
 

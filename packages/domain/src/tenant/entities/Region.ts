@@ -9,6 +9,9 @@ export interface Region {
   readonly organizationId: OrgId;
   readonly name: string;
   readonly code: string;
+  readonly country: string;
+  readonly state?: string;
+  readonly versioningEnabled: boolean;
   readonly status: HierarchicalSubScopeStatus;
 }
 
@@ -17,6 +20,9 @@ export interface CreateRegionInput {
   readonly organization: Pick<Organization, 'id'>;
   readonly name: string;
   readonly code: string;
+  readonly country: string;
+  readonly state?: string;
+  readonly versioningEnabled: boolean;
   readonly status: HierarchicalSubScopeStatus;
 }
 
@@ -28,6 +34,9 @@ export function createRegion(input: CreateRegionInput): Region {
     organizationId,
     name: assertNonEmptyString(input.name, 'Region.name'),
     code: assertNonEmptyString(input.code, 'Region.code'),
+    country: assertNonEmptyString(input.country, 'Region.country'),
+    ...(input.state !== undefined && { state: input.state.trim() }),
+    versioningEnabled: input.versioningEnabled,
     status: input.status,
   });
 }

@@ -22,6 +22,7 @@ import {
   createContentPackageVersion,
   createReleaseVersion,
   markReleaseVersionSuperseded,
+  withAdditionalContentPackageLineageStates,
   withAdditionalContentEntityLineageStates,
 } from './entities';
 
@@ -100,8 +101,7 @@ test('G1-10/T-VER-10: ContentPackageVersion freezes composition after write', ()
 
   const version = createContentPackageVersion({
     id: 'pkg-ver-1' as VersionId,
-    organizationId: orgA,
-    packageId,
+    contentPackage: { id: packageId, organizationId: orgA, regionId: null },
     createdAt: new Date('2026-03-25T08:00:00.000Z'),
     createdBy: authorRoleId,
     composition: compositionSource,
@@ -132,8 +132,7 @@ test('T-CON-10: ContentPackageVersion rejects duplicate entityIds across version
   assert.throws(() => {
     createContentPackageVersion({
       id: 'pkg-ver-dup' as VersionId,
-      organizationId: orgA,
-      packageId,
+      contentPackage: { id: packageId, organizationId: orgA, regionId: null },
       createdAt: new Date('2026-03-25T08:30:00.000Z'),
       createdBy: authorRoleId,
       composition: [
@@ -165,8 +164,7 @@ test('ContentPackageVersion snapshots dependency notes and scope applicability i
 
   const version = createContentPackageVersion({
     id: 'pkg-ver-dependency' as VersionId,
-    organizationId: orgA,
-    packageId,
+    contentPackage: { id: packageId, organizationId: orgA, regionId: null },
     createdAt: new Date('2026-03-25T08:45:00.000Z'),
     createdBy: authorRoleId,
     composition: [
@@ -207,8 +205,7 @@ test('ContentPackageVersion rejects contradictory dependency notes for the same 
   assert.throws(() => {
     createContentPackageVersion({
       id: 'pkg-ver-conflict' as VersionId,
-      organizationId: orgA,
-      packageId,
+      contentPackage: { id: packageId, organizationId: orgA, regionId: null },
       createdAt: new Date('2026-03-25T08:50:00.000Z'),
       createdBy: authorRoleId,
       composition: [
@@ -238,6 +235,39 @@ test('ContentPackageVersion rejects contradictory dependency notes for the same 
         }),
       ],
     });
+  });
+});
+
+test('ContentPackageVersion inherits region from ContentPackage and preserves it after release', () => {
+  const version = createContentPackageVersion({
+    id: 'pkg-ver-region' as VersionId,
+    contentPackage: {
+      id: packageId,
+      organizationId: orgA,
+      regionId: 'region-1' as never,
+    },
+    createdAt: new Date('2026-03-25T08:55:00.000Z'),
+    createdBy: authorRoleId,
+    composition: [
+      createCompositionEntry({
+        entityId,
+        versionId: 'ver-1' as VersionId,
+        entityType: 'Algorithm',
+      }),
+    ],
+    targetScope: { scopeLevel: ScopeLevel.REGION, scopeTargetId: 'region-1' as never },
+  });
+
+  const released = withAdditionalContentPackageLineageStates(version, [
+    LineageState.RELEASED,
+  ]);
+
+  assert.equal(version.organizationId, orgA);
+  assert.equal(version.regionId, 'region-1');
+  assert.equal(released.organizationId, orgA);
+  assert.equal(released.regionId, 'region-1');
+  assert.throws(() => {
+    (version as { regionId?: string }).regionId = 'region-2';
   });
 });
 
