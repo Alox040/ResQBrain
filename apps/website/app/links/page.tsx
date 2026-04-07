@@ -36,6 +36,10 @@ const LINKS: LinkItem[] = [
     href: "https://discord.gg/NszaAYAucf",
   },
   {
+    label: "Nachricht schreiben",
+    href: "mailto:triggerhub@outlook.com?subject=ResQBrain%20Feedback",
+  },
+  {
     label: "Projektübersicht",
     href: "https://github.com/Alox040/ResQBrain#",
   },
