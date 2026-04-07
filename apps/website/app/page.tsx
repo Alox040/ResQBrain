@@ -3,6 +3,7 @@ import { ContactCtaSection } from "@/components/sections/ContactCtaSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { IdeaSection } from "@/components/sections/IdeaSection";
+import { ProjectGoalSection } from "@/components/sections/ProjectGoalSection";
 import { MitwirkungSection } from "@/components/sections/MitwirkungSection";
 import { ProblemSection } from "@/components/sections/ProblemSection";
 import { StatusSection } from "@/components/sections/StatusSection";
@@ -57,6 +58,23 @@ export default function HomePage() {
           {
             headline: content.idea.cards[2].headline,
             sentence: content.idea.cards[2].text,
+          },
+        ]}
+      />
+      <ProjectGoalSection
+        title="Projektziel"
+        items={[
+          {
+            headline: "Zentrale Wissensplattform",
+            sentence: "Algorithmen, Medikamente und SOPs an einem Ort gebündelt.",
+          },
+          {
+            headline: "Organisationsspezifische Inhalte",
+            sentence: "Jeder Rettungsdienst verwaltet eigene versionierte Inhalte.",
+          },
+          {
+            headline: "Einsatz & Nachbereitung",
+            sentence: "Schneller Zugriff im Einsatz und strukturiertes Lernen danach.",
           },
         ]}
       />
