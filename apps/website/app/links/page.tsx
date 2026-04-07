@@ -88,9 +88,9 @@ export default function LinksPage() {
               return [
                 row,
                 <li key="zur-startseite" className={styles.stackItem}>
-                  <ButtonLink href="/" className="primary">
+                  <a className={styles.cta} href="/">
                     Zur Startseite
-                  </ButtonLink>
+                  </a>
                 </li>,
               ];
             }
