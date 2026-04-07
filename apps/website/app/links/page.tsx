@@ -77,9 +77,13 @@ export default function LinksPage() {
               return [
                 row,
                 <li key="nachricht-schreiben" className={styles.stackItem}>
-                  <ButtonLink href="mailto:triggerhub@outlook.com?subject=ResQBrain%20Feedback">
-                    Nachricht schreiben
-                  </ButtonLink>
+                  <div className="flex justify-center">
+                    <ButtonLink
+                      href="mailto:triggerhub@outlook.com?subject=ResQBrain%20Feedback"
+                    >
+                      Nachricht schreiben
+                    </ButtonLink>
+                  </div>
                 </li>,
               ];
             }
