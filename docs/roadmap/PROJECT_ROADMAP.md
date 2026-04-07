@@ -1,6 +1,6 @@
 # Projekt-Roadmap
 
-**Stand:** 5. April 2026 (abgeglichen mit `apps/mobile-app`, Lookup-Seed und letzter Build-/TS-Validierung)
+**Stand:** 7. April 2026 (abgeglichen mit `apps/mobile-app`, Lookup-Seed und letzter Build-/TS-Validierung)
 
 ## Legende
 
@@ -105,4 +105,4 @@
 
 Dokumentation zur lokalen Prüfung: `docs/context/mobile-validation-checklist.md`.
 
-**Letzte Repo-Validierung (5. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich.
+**Letzte Repo-Validierung (7. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`; Audit-Foundation-Tests nach `regionId`-Ergänzung im Release-Fixture — erfolgreich.

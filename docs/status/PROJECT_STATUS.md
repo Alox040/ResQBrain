@@ -1,6 +1,6 @@
 # Projektstatus
 
-**Stand:** 5. April 2026 (Arbeitstages-Abschluss)
+**Stand:** 7. April 2026 (Arbeitstages-Abschluss)
 
 ## Gesamtstatus
 
@@ -43,7 +43,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Aspekt | Status |
 |--------|--------|
 | Paket `@resqbrain/domain` | Aktiv |
-| `tsc -p tsconfig.json` (gesamtes Paket, noEmit) | Erfolgreich (5. Apr. 2026) |
+| `tsc -p tsconfig.json` (gesamtes Paket, noEmit) | Erfolgreich (7. Apr. 2026); Release-Audit-Testfixture um `regionId: null` ergänzt (Typangleich an `ReleaseAuditEvent`) |
 | `compile:versioning` (tsc) | Erfolgreich |
 | `compile:content` (tsc) | Erfolgreich |
 | `compile:governance` (tsc) | Erfolgreich |
@@ -58,7 +58,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Framework | Next.js 16 (App Router) |
 | Startseite `/` | Vorhanden |
 | Rechtstexte | `/impressum`, `/datenschutz` mit dedizierten `page.tsx` |
-| Sektionen | Hero, Features, Umfragen, CTA, Footer u. a. |
+| Sektionen | Hero, Mitwirkung/Umfrage-Metadaten, CTA, Footer u. a. |
 
 ## Routing
 
@@ -73,11 +73,11 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 
 **Pfade:** `apps/website/lib/routes.ts` — nur Seitenrouten (keine Fragment-IDs).
 
-**Footer / CTAs:** `lib/site/navigation.ts` (Footer), `lib/site/survey.ts` (Umfrage-URL), `lib/site/content.ts` (Startseite Mitwirkung-CTA), `ContactCtaSection` → Kontakt.
+**Footer / CTAs:** `lib/site/navigation.ts` (Footer: Mitwirkung, Kontakt, Impressum, Datenschutz, Links), `lib/site/survey.ts` (aktive Umfrage-URL, derzeit `forms.office.com`), `lib/site/content.ts` (Hero → `/mitwirkung`, Mitwirkung-CTA → externe Umfrage), `ContactCtaSection` → `/kontakt`.
 
-**Homepage-Anker:** Aktuell keine `id` auf den Sektions-Wrappern; deeplinks mit `#…` auf `/` sind daher nicht vorgesehen. (Ältere Doku mit festen Fragment-Namen ist gegenüber Ist-Code veraltet.)
+**Homepage-Anker:** Keine `id` auf Sektions-Wrappern; keine internen `#…`-Ziele auf `/`.
 
-**Letzte Validierung (5. Apr. 2026):** `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, Domain-`tsc` + `compile:content` / `compile:versioning` — erfolgreich.
+**Letzte Validierung (7. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `tsx --test src/audit/audit.foundation.test.ts` — erfolgreich.
 
 ## Build
 
@@ -85,12 +85,12 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 |--------|-----------|
 | `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
-| Letzter Website-Lauf (lokal, 5. Apr. 2026) | Erfolgreich (Next 16.2.1), 8/8 statische Seiten |
+| Letzter Website-Lauf (lokal, 7. Apr. 2026) | Erfolgreich (Next 16.2.1), 8/8 statische Seiten |
 
 ## Risiken
 
 1. **Dosisrechner** basiert auf Heuristiken im Freitext — kein Ersatz für verbindliche Arzneimitteldokumentation; nutzerseitig klar gekennzeichnet in der App.  
-2. **Externe Umfrage (Microsoft Forms)** ist im Code verlinkt; datenschutzrechtliche Einordnung und Texte auf `/datenschutz` bei produktiver Nutzung final abstimmen.  
+2. **Externe Umfrage (Microsoft Forms / Office Forms)** ist im Code verlinkt; datenschutzrechtliche Einordnung und Texte auf `/datenschutz` bei produktiver Nutzung final abstimmen.  
 3. **Produktions-Deployment** der Website und der Mobile-Pipeline separat planen.  
 4. **Mandantentrennung** im Domain-Modell, aber ohne produktive API/Auth noch nicht end-to-end erzwungen.  
 5. **expo-doctor** kann Abweichungen melden (z. B. Icon-Paket-Versionen im Monorepo) — siehe Mobile-Checkliste.

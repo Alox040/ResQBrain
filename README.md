@@ -21,7 +21,7 @@ Aktuelle Statusdateien:
 
 ## Current Development State
 
-Kurzstatus (abgeglichen mit dem Repo, **5. April 2026**):
+Kurzstatus (abgeglichen mit dem Repo, **7. April 2026**):
 
 - **Aktuelle Phase:** Phase 0 (Lookup-first MVP) **plus** umgesetzte einsatznahe Erweiterungen; Details und Legende **`[~]` teilweise** in der Roadmap.  
 - **Produktiv sichtbar:** **Mobile App** (Expo): Lookup offline aus eingebettetem Bundle; **Website** (Next.js) statisch.  
@@ -101,26 +101,26 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 
 ## Aktueller Stand
 
-- Domain-Paket (`@resqbrain/domain`): gesamtes `src` per `tsc -p tsconfig.json` (noEmit) sowie `compile:content` / `compile:versioning` — siehe `packages/domain/package.json`.  
-- Website (Next.js 16): statische Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`. Umfrage-Link zentral in `apps/website/lib/site/survey.ts`.  
+- Domain-Paket (`@resqbrain/domain`): gesamtes `src` per `tsc -p tsconfig.json --noEmit` sowie `compile:content` / `compile:versioning` / `compile:governance` — siehe `packages/domain/package.json`. Release-Audit-Testfixture in `audit.foundation.test.ts` enthält `regionId` (Stand 7. Apr. 2026).  
+- Website (Next.js 16): statische Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`. Umfrage-Link zentral in `apps/website/lib/site/survey.ts` (aktuell `forms.office.com`).  
 - Mobile-App: Expo, Lookup-Bundle eingebettet, AsyncStorage für Favoriten/Verlauf — Details `docs/status/PROJECT_STATUS.md`.  
 - Root-Build: `pnpm build` → nur `@resqbrain/website`.
 
 ## Current Status (EN)
 
-Same as above: domain TypeScript clean; website static routes verified; mobile Phase-0+ features per status doc. Working tree at last check: `next-env.d.ts` updated by Next.js typed routes.
+Domain `tsc --noEmit` clean; website static routes and typecheck OK; mobile Phase-0+ per status doc. After `next build`, `next-env.d.ts` references `./.next/types/routes.d.ts` (production typed routes).
 
 ## Nächste Schritte (kurz)
 
-Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Bundle-Persistenz / `lookupSource`, Sync-Konzept, Pilot/Seed.
+Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Bundle-Persistenz / `lookupSource`, Sync-Konzept, Pilot/Seed; nach Mobile-Änderungen `pnpm mobile:verify`.
 
 ## Next Steps (EN)
 
-Bundle persistence and sync for mobile; API/auth boundary for tenant enforcement when backend starts; keep website legal copy aligned with live survey and hosting.
+Bundle persistence and `lookupSource` non-embedded layers; sync concept; API/auth boundary for tenant enforcement; align `/datenschutz` with live Office Forms survey; run `pnpm mobile:verify` when mobile code changes.
 
 ## Bekannte Risiken
 
-- Umfrage verlinkt auf Microsoft Forms — Datenschutzhinweise und Auftragsverarbeitung bei produktivem Betrieb prüfen.  
+- Umfrage verlinkt auf Microsoft Office Forms (`forms.office.com` in `survey.ts`) — Datenschutzhinweise und Auftragsverarbeitung bei produktivem Betrieb prüfen.  
 - Mandantentrennung im Domain-Modell; Laufzeitenforcement erst mit API und Auth.  
 - Deployment Website vs. Mobile separat planen.  
 - Dosisrechner: nur orientierend; Dosistext-Heuristik.  
@@ -128,20 +128,20 @@ Bundle persistence and sync for mobile; API/auth boundary for tenant enforcement
 
 ## Risks (EN)
 
-Survey third-party (Microsoft Forms) DPA/privacy alignment; tenant isolation not runtime-enforced yet; dose calculator heuristic; generated Next types path dependency.
+Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isolation not runtime-enforced yet; dose calculator heuristic; `next-env.d.ts` path flips between dev and production Next outputs.
 
 ## Build Status
 
 | Befehl | Zweck |
 |--------|--------|
-| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json` | Gesamtes Domain-`src` (noEmit) |
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | Gesamtes Domain-`src` (noEmit) |
 | `pnpm --filter @resqbrain/domain run compile:versioning` | Versioning-TS isoliert |
 | `pnpm --filter @resqbrain/domain run compile:content` | Content-TS isoliert |
 | `pnpm build` | Produktionsbuild Website |
 | `pnpm --filter @resqbrain/website run typecheck` | Website `tsc --noEmit` |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav, Android-Export |
 
-**Zuletzt verifiziert:** 5. April 2026 — Domain-`tsc`, `compile:content`, `compile:versioning`, `pnpm build`, Website-`typecheck` erfolgreich.
+**Zuletzt verifiziert:** 7. April 2026 — Domain-`tsc --noEmit`, `compile:content`, `compile:versioning`, `compile:governance`, `pnpm build`, Website-`typecheck`, Audit-Foundation-Tests erfolgreich.
 
 ## Website Status
 
@@ -154,7 +154,7 @@ Survey third-party (Microsoft Forms) DPA/privacy alignment; tenant isolation not
 | `/impressum` | OK |
 | `/datenschutz` | OK |
 
-Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/lib/site/navigation.ts`. Homepage-Sektionen ohne feste `id`-Anker (keine internen `#`-Ziele auf `/`).
+Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/lib/site/navigation.ts` → `FooterNav`. Umfrage-URLs: `apps/website/lib/site/survey.ts`. Homepage-Sektionen ohne feste `id`-Anker (keine internen `#`-Ziele auf `/`).
 
 ## Website Status (EN)
 

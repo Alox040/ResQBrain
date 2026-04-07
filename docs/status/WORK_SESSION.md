@@ -1,5 +1,79 @@
 # Arbeitssession
 
+**Datum:** 7. April 2026  
+**Art:** Arbeitstages-Abschluss — Workspace-Analyse, Domain-/Website-Validierung, `pnpm build`, Status- und README-Abgleich, Git-Sync
+
+## Validierungen (7. April 2026)
+
+### Workspace / Git
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Geänderte Dateien (vor Commit) | `packages/domain/src/audit/audit.foundation.test.ts` (`regionId: null` im Release-Audit-Fixture); `apps/website/next-env.d.ts` (Next: `./.next/types/routes.d.ts` nach Produktionsbuild); `apps/website/tsconfig.tsbuildinfo` |
+| TODO / FIXME / WIP in `.ts` / `.tsx` unter `apps/`, `packages/` | Keine Treffer |
+
+### Domain
+
+| Modul | Befehl | Ergebnis |
+|-------|--------|----------|
+| Gesamtpaket | `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | ✓ erfolgreich |
+| Content | `compile:content` | ✓ erfolgreich |
+| Versioning | `compile:versioning` | ✓ erfolgreich |
+| Governance | `compile:governance` | ✓ erfolgreich |
+
+**Hinweis:** Vollpaket-`tsc` war zuvor an fehlendem `regionId` im Release-`AuditRecordEvent`-Fixture in `audit.foundation.test.ts` gescheitert — behoben.
+
+**Exports:** `packages/domain/src/index.ts` — unverändert strukturell konsistent.
+
+**Layering:** Keine Imports aus `apps/*` im Domain-Paket (manuelle Erwartung; nicht erneut per Skript belegt).
+
+### Website / Routing
+
+| Route | Datei | Status |
+|-------|-------|--------|
+| `/` | `apps/website/app/page.tsx` | ✓ Static |
+| `/impressum` | `apps/website/app/impressum/page.tsx` | ✓ Static |
+| `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | ✓ Static |
+| `/kontakt` | `apps/website/app/kontakt/page.tsx` | ✓ Static |
+| `/links` | `apps/website/app/links/page.tsx` | ✓ Static |
+| `/mitwirkung` | `apps/website/app/mitwirkung/page.tsx` | ✓ Static |
+| `/_not-found` | — | ✓ Static |
+
+**Navigation:** `lib/site/navigation.ts` — Footer verweist auf `routes.*` (Mitwirkung, Kontakt, Impressum, Datenschutz, Links).
+
+**Umfrage / CTAs:** `lib/site/survey.ts` — aktive URL `forms.office.com`; Verwendung in `content.ts` (Mitwirkung-CTA), `HeroSection`/`MitwirkungSection`-Metadaten, `/mitwirkung`, `/links`. Keine dedizierte `SurveysSection`-Komponente.
+
+**Anker:** Homepage ohne Sektions-`id`; keine defekten internen `#`-Anker im geprüften Pfad.
+
+### Build
+
+| Befehl | Ergebnis |
+|--------|----------|
+| `pnpm build` (Root → `@resqbrain/website`) | ✓ Next.js 16.2.1, 8 statische Seiten |
+| `pnpm --filter @resqbrain/website run typecheck` | ✓ |
+
+### Spot-Check Tests
+
+| Befehl | Ergebnis |
+|--------|----------|
+| `pnpm exec tsx --test src/audit/audit.foundation.test.ts` (in `packages/domain`) | ✓ 7/7 |
+
+## Risiken / Hinweise (kurz)
+
+- `next-env.d.ts` zeigt nach `next build` auf `./.next/types/routes.d.ts` (nicht `dev/types`) — bei reinem `next dev` kann Next die Referenz erneut anpassen.  
+- Externe Umfrage: DPA/Privacy vor Go-Live mit `/datenschutz` abstimmen.
+
+## Nächste sinnvolle Schritte (Priorität)
+
+1. **Implementierung:** Bundle-Persistenz / `lookupSource` (Mobile) — Roadmap Phase 0.  
+2. **Architektur:** API- und Auth-Grenze für Organization-Kontext.  
+3. **Website:** Fragment-IDs nur bei Bedarf; veraltete Anker-Doku bereinigen.  
+4. **Validierung:** Bei Mobile-Änderungen `pnpm mobile:verify`.
+
+---
+
+## Session 5. April 2026 (Archiv)
+
 **Datum:** 5. April 2026  
 **Art:** Arbeitstages-Abschluss — Workspace-Analyse, Domain-/Website-Validierung, `pnpm build`, Status- und README-Abgleich, Git-Sync
 

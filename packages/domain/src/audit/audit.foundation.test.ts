@@ -97,6 +97,7 @@ test('audit log projections preserve release and policy payloads as frozen metad
     releaseVersionId: 'rel-1' as VersionId,
     packageVersionId: versionId,
     packageId,
+    regionId: null,
     releasedBy: actorRoleId,
     releasedAt: '2026-03-27T09:10:00.000Z',
     targetScope: { scopeLevel: 'Organization' },
