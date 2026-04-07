@@ -80,6 +80,7 @@ export default function LinksPage() {
                   <div className="flex justify-center">
                     <ButtonLink
                       href="mailto:triggerhub@outlook.com?subject=ResQBrain%20Feedback"
+                      className="px-6"
                     >
                       Nachricht schreiben
                     </ButtonLink>
