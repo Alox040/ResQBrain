@@ -59,6 +59,64 @@
   margin: 0;
 }
 
+.linkMeta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.previousSection {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2.5vw, 14px);
+  width: 100%;
+}
+
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.ctaSecondary {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: clamp(0.9375rem, 2.6vw, 1rem);
+  line-height: 1.25;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ctaSecondary:hover {
+  background: var(--accent-subtle);
+  border-color: var(--border);
+}
+
+.ctaSecondary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 .cta {
   box-sizing: border-box;
   display: flex;

@@ -19,6 +19,10 @@ export default function HomePage() {
         secondaryLabel={content.hero.ctaSecondary.label}
         primaryHref={content.hero.ctaPrimary.href}
         secondaryHref={content.hero.ctaSecondary.href}
+        surveyBadge={content.mitwirkung.cta.badge}
+        surveyDescription={content.mitwirkung.cta.description}
+        surveyDate={content.mitwirkung.cta.date}
+        hints={content.hero.hints}
       />
       <ProblemSection
         title={content.problem.title}
@@ -62,6 +66,9 @@ export default function HomePage() {
         text={content.mitwirkung.text}
         href={content.mitwirkung.cta.href}
         buttonLabel={content.mitwirkung.cta.label}
+        surveyBadge={content.mitwirkung.cta.badge}
+        surveyDescription={content.mitwirkung.cta.description}
+        surveyDate={content.mitwirkung.cta.date}
       />
       <FaqSection title={content.faq.title} items={content.faq.items} />
       <ContactCtaSection

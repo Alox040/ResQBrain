@@ -1,5 +1,5 @@
 import { routes } from "@/lib/routes";
-import { surveyUrl } from "@/lib/site/survey";
+import { surveys } from "@/lib/site/survey";
 
 export const content = {
   hero: {
@@ -15,6 +15,10 @@ export const content = {
       label: "Projekt ansehen",
       href: routes.home,
     },
+    hints: [
+      "Kurzumfrage (2 Minuten)",
+      "Community entwickelt die App mit",
+    ],
   },
   problem: {
     title: "Warum das Projekt existiert",
@@ -80,8 +84,11 @@ export const content = {
     title: "Mitwirkung",
     text: "Rückmeldungen aus Praxis und Ausbildung fließen in die Priorisierung des Projekts ein.",
     cta: {
-      label: "Umfrage",
-      href: surveyUrl,
+      label: "UI & UX mitgestalten",
+      href: surveys.active.href,
+      badge: surveys.active.label,
+      description: surveys.active.description,
+      date: surveys.active.date,
     },
   },
   faq: {

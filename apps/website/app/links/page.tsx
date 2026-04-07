@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 import styles from "./links-bio.module.css";
+import { surveys } from "@/lib/site/survey";
 
 export const metadata: Metadata = {
   title: "ResQBrain — Links",
@@ -14,10 +15,21 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-const LINKS = [
+type LinkItem = {
+  label: string;
+  href: string;
+  badge?: string;
+  description?: string;
+  date?: string;
+};
+
+const LINKS: LinkItem[] = [
   {
-    label: "Aktuelle Umfrage",
-    href: "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
+    label: "2 Minuten Feedback",
+    href: surveys.active.href,
+    badge: surveys.active.label,
+    description: surveys.active.description,
+    date: surveys.active.date,
   },
   {
     label: "Discord Community",
@@ -27,7 +39,7 @@ const LINKS = [
     label: "Projektübersicht",
     href: "https://github.com/Alox040/ResQBrain#",
   },
-] as const;
+];
 
 export default function LinksPage() {
   return (
@@ -49,9 +61,40 @@ export default function LinksPage() {
               >
                 {item.label}
               </a>
+              {(item.badge || item.description || item.date) && (
+                <div className={styles.linkMeta}>
+                  {item.badge && <span className="badge">{item.badge}</span>}
+                  {item.description && <span className="eyebrow muted-text">{item.description}</span>}
+                  {item.date && <span className="eyebrow muted-text">Stand: {item.date}</span>}
+                </div>
+              )}
             </li>
           ))}
         </ul>
+
+        {surveys.previous.length > 0 && (
+          <section className={styles.previousSection}>
+            <p className={styles.sectionLabel}>Vorherige Umfragen</p>
+            <ul className={styles.stack}>
+              {surveys.previous.map((item) => (
+                <li key={item.href} className={styles.stackItem}>
+                  <a
+                    className={styles.ctaSecondary}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.label}
+                  </a>
+                  <div className={styles.linkMeta}>
+                    <span className="eyebrow muted-text">{item.description}</span>
+                    <span className="eyebrow muted-text">Stand: {item.date}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </main>
   );

@@ -1,4 +1,4 @@
-import { survey, surveyUrl } from "@/lib/site/survey";
+import { surveys } from "@/lib/site/survey";
 
 export const mitwirkungPageContent = {
   hero: {
@@ -13,8 +13,15 @@ export const mitwirkungPageContent = {
   survey: {
     title: "Umfrage",
     text: "Die aktuelle Umfrage sammelt strukturierte Hinweise zu Bedarf, Herausforderungen und relevanten Anwendungsfällen.",
-    cta: survey.label,
-    href: surveyUrl,
+    cta: "Zur aktuellen Umfrage",
+    href: surveys.active.href,
+    badge: surveys.active.label,
+    description: surveys.active.description,
+    date: surveys.active.date,
+  },
+  previousSurveys: {
+    title: "Vorherige Umfragen",
+    items: surveys.previous,
   },
   additional: {
     title: "Weitere Möglichkeiten",

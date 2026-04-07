@@ -11,6 +11,10 @@ type HeroSectionProps = {
   statusBadge?: string;
   primaryHref?: string;
   secondaryHref?: string;
+  surveyBadge?: string;
+  surveyDescription?: string;
+  surveyDate?: string;
+  hints?: readonly string[];
 };
 
 export function HeroSection({
@@ -21,7 +25,13 @@ export function HeroSection({
   statusBadge,
   primaryHref = routes.mitwirkung,
   secondaryHref = routes.home,
+  surveyBadge,
+  surveyDescription,
+  surveyDate,
+  hints,
 }: HeroSectionProps) {
+  const hasSurveyMeta = surveyBadge || surveyDescription || surveyDate;
+
   return (
     <Section
       background="none"
@@ -43,6 +53,20 @@ export function HeroSection({
             {secondaryLabel}
           </ButtonLink>
         </div>
+
+        {hints && hints.length > 0 && (
+          <p className="eyebrow muted-text" style={{ textAlign: "center", margin: 0 }}>
+            {hints.join(" · ")}
+          </p>
+        )}
+
+        {hasSurveyMeta && (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
+            {surveyBadge && <span className="badge">{surveyBadge}</span>}
+            {surveyDescription && <span className="eyebrow muted-text">{surveyDescription}</span>}
+            {surveyDate && <span className="eyebrow muted-text">Stand: {surveyDate}</span>}
+          </div>
+        )}
       </Stack>
     </Section>
   );

@@ -1,5 +1,5 @@
 import { publicLinks } from "@/lib/site/public-links";
-import { surveyUrl } from "@/lib/site/survey";
+import { surveys } from "@/lib/site/survey";
 
 export const linksPageContent = {
   hero: {
@@ -12,8 +12,8 @@ export const linksPageContent = {
     items: [
       {
         label: "Aktuelle Umfrage",
-        buttonLabel: "Umfrage",
-        href: surveyUrl,
+        buttonLabel: "2 Minuten Feedback",
+        href: surveys.active.href,
         external: true,
         description: "Rückmeldungen aus der Praxis in strukturierter Form teilen.",
       },

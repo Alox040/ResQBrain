@@ -42,6 +42,11 @@ export default function MitwirkungPage() {
           <ContentCard>
             <Stack gap="sm">
               <SectionHeading title={mitwirkungPageContent.survey.title} />
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
+                <span className="badge">{mitwirkungPageContent.survey.badge}</span>
+                <span className="eyebrow muted-text">{mitwirkungPageContent.survey.description}</span>
+                <span className="eyebrow muted-text">Stand: {mitwirkungPageContent.survey.date}</span>
+              </div>
               <p className="body-text muted-text">{mitwirkungPageContent.survey.text}</p>
               <div>
                 <ButtonLink href={mitwirkungPageContent.survey.href} size="lg">
@@ -69,6 +74,29 @@ export default function MitwirkungPage() {
           </ContentCard>
         </Container>
       </SectionFrame>
+
+      {mitwirkungPageContent.previousSurveys.items.length > 0 && (
+        <SectionFrame compact>
+          <Container>
+            <ContentCard>
+              <Stack gap="sm">
+                <SectionHeading title={mitwirkungPageContent.previousSurveys.title} />
+                <ul className="stack stack--sm">
+                  {mitwirkungPageContent.previousSurveys.items.map((item) => (
+                    <li key={item.href} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
+                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="body-text muted-text">
+                        {item.label}
+                      </a>
+                      <span className="eyebrow muted-text">{item.description}</span>
+                      <span className="eyebrow muted-text">Stand: {item.date}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Stack>
+            </ContentCard>
+          </Container>
+        </SectionFrame>
+      )}
 
       <SectionFrame compact>
         <Container>
