@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 import styles from "./links-bio.module.css";
+import { ButtonLink } from "@/components/ui/button-link";
 import { surveys } from "@/lib/site/survey";
 
 export const metadata: Metadata = {
@@ -36,10 +37,6 @@ const LINKS: LinkItem[] = [
     href: "https://discord.gg/NszaAYAucf",
   },
   {
-    label: "Nachricht schreiben",
-    href: "mailto:triggerhub@outlook.com?subject=ResQBrain%20Feedback",
-  },
-  {
     label: "Projektübersicht",
     href: "https://github.com/Alox040/ResQBrain#",
   },
@@ -55,25 +52,51 @@ export default function LinksPage() {
         </header>
 
         <ul className={styles.stack}>
-          {LINKS.map((item) => (
-            <li key={item.href} className={styles.stackItem}>
-              <a
-                className={styles.cta}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.label}
-              </a>
-              {(item.badge || item.description || item.date) && (
-                <div className={styles.linkMeta}>
-                  {item.badge && <span className="badge">{item.badge}</span>}
-                  {item.description && <span className="eyebrow muted-text">{item.description}</span>}
-                  {item.date && <span className="eyebrow muted-text">Stand: {item.date}</span>}
-                </div>
-              )}
-            </li>
-          ))}
+          {LINKS.flatMap((item) => {
+            const row = (
+              <li key={item.href} className={styles.stackItem}>
+                <a
+                  className={styles.cta}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.label}
+                </a>
+                {(item.badge || item.description || item.date) && (
+                  <div className={styles.linkMeta}>
+                    {item.badge && <span className="badge">{item.badge}</span>}
+                    {item.description && <span className="eyebrow muted-text">{item.description}</span>}
+                    {item.date && <span className="eyebrow muted-text">Stand: {item.date}</span>}
+                  </div>
+                )}
+              </li>
+            );
+
+            if (item.label === "Discord Community") {
+              return [
+                row,
+                <li key="nachricht-schreiben" className={styles.stackItem}>
+                  <ButtonLink href="mailto:triggerhub@outlook.com?subject=ResQBrain%20Feedback">
+                    Nachricht schreiben
+                  </ButtonLink>
+                </li>,
+              ];
+            }
+
+            if (item.label === "Projektübersicht") {
+              return [
+                row,
+                <li key="zur-startseite" className={styles.stackItem}>
+                  <ButtonLink href="/" className="primary">
+                    Zur Startseite
+                  </ButtonLink>
+                </li>,
+              ];
+            }
+
+            return [row];
+          })}
         </ul>
 
         {surveys.previous.length > 0 && (
