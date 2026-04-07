@@ -12,8 +12,9 @@ export const content = {
       href: routes.mitwirkung,
     },
     ctaSecondary: {
-      label: "Projekt ansehen",
-      href: routes.home,
+      label: "Projekt auf GitHub",
+      href: "https://github.com/Alox040/ResQBrain",
+      external: true,
     },
     hints: [
       "Kurzumfrage (2 Minuten)",

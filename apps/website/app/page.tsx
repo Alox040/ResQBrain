@@ -19,6 +19,7 @@ export default function HomePage() {
         secondaryLabel={content.hero.ctaSecondary.label}
         primaryHref={content.hero.ctaPrimary.href}
         secondaryHref={content.hero.ctaSecondary.href}
+        secondaryExternal={content.hero.ctaSecondary.external}
         surveyBadge={content.mitwirkung.cta.badge}
         surveyDescription={content.mitwirkung.cta.description}
         surveyDate={content.mitwirkung.cta.date}

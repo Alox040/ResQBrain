@@ -11,6 +11,7 @@ type HeroSectionProps = {
   statusBadge?: string;
   primaryHref?: string;
   secondaryHref?: string;
+  secondaryExternal?: boolean;
   surveyBadge?: string;
   surveyDescription?: string;
   surveyDate?: string;
@@ -25,6 +26,7 @@ export function HeroSection({
   statusBadge,
   primaryHref = routes.mitwirkung,
   secondaryHref = routes.home,
+  secondaryExternal = false,
   surveyBadge,
   surveyDescription,
   surveyDate,
@@ -49,7 +51,7 @@ export function HeroSection({
           <ButtonLink href={primaryHref} size="lg">
             {primaryLabel}
           </ButtonLink>
-          <ButtonLink href={secondaryHref} variant="secondary" size="lg">
+          <ButtonLink href={secondaryHref} variant="secondary" size="lg" external={secondaryExternal}>
             {secondaryLabel}
           </ButtonLink>
         </div>
