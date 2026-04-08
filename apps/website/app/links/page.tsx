@@ -1,73 +1,70 @@
-import { ButtonLink } from "@/components/ui/button-link";
-import { Container } from "@/components/ui/container";
-import { ContentCard } from "@/components/ui/content-card";
-import { SectionFrame } from "@/components/ui/section-frame";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Stack } from "@/components/ui/stack";
-import { linksPageContent } from "@/lib/site/links-page";
+import Link from "next/link";
+
+import styles from "./links-bio.module.css";
+import { routes } from "@/lib/routes";
+import { publicLinks } from "@/lib/site/public-links";
+import { surveys } from "@/lib/site/survey";
+
+type LinkItem = {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
+const primaryLinks: readonly LinkItem[] = [
+  { label: "Mitwirken", href: routes.mitwirkung },
+  { label: "UI Umfrage", href: surveys.active.href, external: true },
+  { label: "Community", href: publicLinks.github, external: true },
+  { label: "Discord", href: publicLinks.discord, external: true },
+] as const;
+
+const secondaryLinks: readonly LinkItem[] = [
+  { label: "Reddit", href: "https://www.reddit.com/search/?q=ResQBrain", external: true },
+  { label: "TikTok", href: "https://www.tiktok.com/@resqbrain", external: true },
+  { label: "Website", href: publicLinks.website, external: true },
+] as const;
+
+function LinkButton({ href, label, external = false, secondary = false }: LinkItem & { secondary?: boolean }) {
+  const className = secondary ? styles.ctaSecondary : styles.cta;
+
+  if (external) {
+    return (
+      <a className={className} href={href} rel="noreferrer" target="_blank">
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link className={className} href={href}>
+      {label}
+    </Link>
+  );
+}
 
 export default function LinksPage() {
   return (
-    <>
-      <SectionFrame>
-        <Container>
-          <Stack gap="md">
-            <p className="eyebrow">{linksPageContent.hero.subtitle}</p>
-            <h1 className="hero-title">{linksPageContent.hero.title}</h1>
-            <p className="body-text muted-text section-lead">{linksPageContent.description}</p>
-          </Stack>
-        </Container>
-      </SectionFrame>
+    <main className={styles.main}>
+      <div className={styles.inner}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>ResQBrain Links</h1>
+        </header>
 
-      <SectionFrame compact>
-        <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-5)",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
-            }}
-          >
-            {linksPageContent.links.map((item) => (
-              <ContentCard key={item.title}>
-                <Stack gap="sm">
-                  <SectionHeading title={item.title} />
-                  <p className="body-text muted-text">{item.text}</p>
-                  {item.date ? <p className="eyebrow muted-text">Stand: {item.date}</p> : null}
-                  <div className="cta-actions">
-                    <ButtonLink href={item.href} external={item.external}>
-                      {item.label}
-                    </ButtonLink>
-                  </div>
-                </Stack>
-              </ContentCard>
+        <div className={styles.stack}>
+          {primaryLinks.map((item) => (
+            <LinkButton key={item.label} {...item} />
+          ))}
+        </div>
+
+        <section className={styles.previousSection}>
+          <h2 className={styles.sectionLabel}>Mehr</h2>
+          <div className={styles.secondaryStack}>
+            {secondaryLinks.map((item) => (
+              <LinkButton key={item.label} {...item} secondary />
             ))}
           </div>
-        </Container>
-      </SectionFrame>
-
-      <SectionFrame compact>
-        <Container>
-          <ContentCard>
-            <div
-              style={{
-                display: "grid",
-                gap: "var(--space-5)",
-                alignItems: "end",
-                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-              }}
-            >
-              <Stack gap="sm">
-                <SectionHeading title={linksPageContent.cta.title} />
-                <p className="body-text muted-text section-intro">{linksPageContent.cta.text}</p>
-              </Stack>
-              <div className="cta-actions" style={{ alignSelf: "end" }}>
-                <ButtonLink href={linksPageContent.cta.href}>{linksPageContent.cta.label}</ButtonLink>
-              </div>
-            </div>
-          </ContentCard>
-        </Container>
-      </SectionFrame>
-    </>
+        </section>
+      </div>
+    </main>
   );
 }
