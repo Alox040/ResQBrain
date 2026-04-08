@@ -1,4 +1,5 @@
 export const publicLinks = {
-  projectDoc: "https://example.com/project-doc",
-  discord: "https://discord.gg/example",
+  website: "https://resqbrain.de",
+  github: "https://github.com/Alox040/ResQBrain",
+  discord: "https://discord.gg/NszaAYAucf",
 } as const;

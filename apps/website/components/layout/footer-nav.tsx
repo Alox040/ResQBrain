@@ -8,9 +8,15 @@ export function FooterNav() {
       <ul className="footer-nav-list">
         {footerNavigation.map((item) => (
           <li key={item.href}>
-            <Link className="footer-nav-link" href={item.href}>
-              {item.label}
-            </Link>
+            {item.external ? (
+              <a className="footer-nav-link" href={item.href} target="_blank" rel="noopener noreferrer">
+                {item.label}
+              </a>
+            ) : (
+              <Link className="footer-nav-link" href={item.href}>
+                {item.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>
