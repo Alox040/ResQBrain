@@ -1,5 +1,5 @@
 type SectionHeaderProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   subtitle?: string;
 };
@@ -11,9 +11,11 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
-        {eyebrow}
-      </p>
+      {eyebrow ? (
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent)]">
+          {eyebrow}
+        </p>
+      ) : null}
       <h2 className="text-4xl font-bold tracking-[-0.03em] text-[var(--color-text-primary)] md:text-5xl">
         {title}
       </h2>

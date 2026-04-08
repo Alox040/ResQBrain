@@ -6,6 +6,7 @@ import type { MouseEventHandler, ReactNode } from "react";
 type ButtonSecondaryProps = {
   children: ReactNode;
   href?: string;
+  external?: boolean;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 };
 
@@ -15,8 +16,23 @@ const baseClassName =
 export function ButtonSecondary({
   children,
   href,
+  external,
   onClick,
 }: ButtonSecondaryProps) {
+  if (href && external) {
+    return (
+      <a
+        href={href}
+        onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
+        className={baseClassName}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {children}
+      </a>
+    );
+  }
+
   if (href) {
     return (
       <Link href={href} onClick={onClick} className={baseClassName}>

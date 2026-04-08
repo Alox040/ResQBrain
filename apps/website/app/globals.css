@@ -291,6 +291,11 @@ select {
 }
 
 @media (max-width: 720px) {
+  .site-header-inner {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+  }
+
   .section-frame {
     padding-block: clamp(2.5rem, 6vw, 3.5rem);
   }
@@ -660,5 +665,46 @@ select {
 
 .stack--lg {
   gap: var(--space-5);
+}
+
+/* Mitwirken MVP-Formular */
+.mitwirken-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.mitwirken-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mitwirken-form-field label,
+.mitwirken-form-field legend {
+  font-size: var(--font-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--text);
+}
+
+.mitwirken-form-control {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-control);
+  border: var(--border-width) solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.mitwirken-form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.mitwirken-form-check input {
+  margin-top: 0.2rem;
 }
 

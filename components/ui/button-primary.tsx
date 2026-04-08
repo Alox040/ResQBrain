@@ -6,6 +6,8 @@ import type { MouseEventHandler, ReactNode } from "react";
 type ButtonPrimaryProps = {
   children: ReactNode;
   href?: string;
+  external?: boolean;
+  type?: "button" | "submit";
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
 };
 
@@ -15,8 +17,24 @@ const baseClassName =
 export function ButtonPrimary({
   children,
   href,
+  external,
+  type = "button",
   onClick,
 }: ButtonPrimaryProps) {
+  if (href && external) {
+    return (
+      <a
+        href={href}
+        onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
+        className={baseClassName}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {children}
+      </a>
+    );
+  }
+
   if (href) {
     return (
       <Link href={href} onClick={onClick} className={baseClassName}>
@@ -26,7 +44,7 @@ export function ButtonPrimary({
   }
 
   return (
-    <button type="button" onClick={onClick} className={baseClassName}>
+    <button type={type} onClick={onClick} className={baseClassName}>
       {children}
     </button>
   );

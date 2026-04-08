@@ -5,6 +5,7 @@ import { SectionFrame } from "@/components/ui/section-frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Stack } from "@/components/ui/stack";
 import { mitwirkungPageContent } from "@/lib/site/mitwirkung";
+import { routes } from "@/lib/routes";
 
 export default function MitwirkungPage() {
   return (
@@ -113,6 +114,23 @@ export default function MitwirkungPage() {
         <Container>
           <ContentCard>
             <p className="body-text muted-text section-intro">{mitwirkungPageContent.note.text}</p>
+          </ContentCard>
+        </Container>
+      </SectionFrame>
+
+      <SectionFrame compact>
+        <Container>
+          <ContentCard>
+            <Stack gap="sm">
+              <SectionHeading title="Projekt mitmachen" />
+              <p className="body-text muted-text section-intro">
+                Interesse an Tests, Pilot oder Projekt-Updates kannst du über das kurze Formular
+                melden — freiwillig und ohne Verpflichtung.
+              </p>
+              <ButtonLink href={routes.mitwirken} size="lg">
+                Zum Formular
+              </ButtonLink>
+            </Stack>
           </ContentCard>
         </Container>
       </SectionFrame>

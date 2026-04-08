@@ -3,8 +3,9 @@ import { Container } from "@/components/layout/container";
 
 const projectLinks = [
   { label: "Start", href: "/" },
-  { label: "Mitwirkung", href: "#contribution" },
+  { label: "Mitwirkung", href: "/mitwirkung" },
   { label: "Links", href: "/links" },
+  { label: "Kontakt", href: "/kontakt" },
 ];
 
 const legalLinks = [

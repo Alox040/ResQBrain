@@ -8,7 +8,7 @@ type FaqAccordionItem = {
 };
 
 type FaqAccordionProps = {
-  items: FaqAccordionItem[];
+  items: readonly FaqAccordionItem[];
 };
 
 export function FaqAccordion({ items }: FaqAccordionProps) {
