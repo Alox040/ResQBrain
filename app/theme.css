@@ -1,0 +1,45 @@
+:root {
+  /* Colors */
+  --color-bg: #0d1117;
+  --color-surface: #141c28;
+  --color-surface-highlight: #1a2535;
+  --color-accent: #00c9d4;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-border: #1e2d3d;
+
+  /* Spacing */
+  --section-padding: 96px;
+  --card-padding: 24px;
+  --container-max: 1200px;
+  --grid-gap: 24px;
+
+  /* Typography */
+  --font-family-base: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --font-size-h1: 4rem;
+  --line-height-h1: 1.05;
+  --font-weight-h1: 700;
+  --letter-spacing-h1: -0.04em;
+
+  --font-size-h2: 3rem;
+  --line-height-h2: 1.1;
+  --font-weight-h2: 700;
+  --letter-spacing-h2: -0.03em;
+
+  --font-size-h3: 1.5rem;
+  --line-height-h3: 1.2;
+  --font-weight-h3: 600;
+  --letter-spacing-h3: -0.02em;
+
+  --font-size-body: 1rem;
+  --line-height-body: 1.7;
+  --font-weight-body: 400;
+  --letter-spacing-body: 0;
+
+  --font-size-eyebrow: 0.75rem;
+  --line-height-eyebrow: 1.2;
+  --font-weight-eyebrow: 600;
+  --letter-spacing-eyebrow: 0.16em;
+  --text-transform-eyebrow: uppercase;
+}

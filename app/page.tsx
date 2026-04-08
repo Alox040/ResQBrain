@@ -1,25 +1,21 @@
-import { HeroSection } from "@/components/sections/hero";
-import { ProblemSection } from "@/components/sections/problem";
-import { SolutionSection } from "@/components/sections/solution";
-import { FeaturesSection } from "@/components/sections/features";
-import { UseCasesSection } from "@/components/sections/usecases";
-import { StatusSection } from "@/components/sections/status";
-import { SurveysSection } from "@/components/sections/SurveysSection";
-import { CtaSection } from "@/components/sections/cta";
-import { FooterSection } from "@/components/sections/footer";
+import { AudienceSection } from "@/components/sections/home/audience-section";
+import { ContributionSection } from "@/components/sections/home/contribution-section";
+import { FaqSection } from "@/components/sections/home/faq-section";
+import { FeatureSection } from "@/components/sections/home/feature-section";
+import { HeroSection } from "@/components/sections/home/hero-section";
+import { PrefooterCtaSection } from "@/components/sections/home/prefooter-cta-section";
+import { ProblemSection } from "@/components/sections/home/problem-section";
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
+    <main className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text-primary)]">
       <HeroSection />
       <ProblemSection />
-      <SolutionSection />
-      <FeaturesSection />
-      <SurveysSection />
-      <UseCasesSection />
-      <StatusSection />
-      <CtaSection />
-      <FooterSection />
+      <FeatureSection />
+      <AudienceSection />
+      <ContributionSection />
+      <FaqSection />
+      <PrefooterCtaSection />
     </main>
   );
 }

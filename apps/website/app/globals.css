@@ -237,6 +237,13 @@ select {
   text-decoration: none;
 }
 
+.site-header-cta {
+  font-size: 0.875rem;
+  min-height: 2.25rem;
+  padding-inline: 1rem;
+  white-space: nowrap;
+}
+
 .site-nav-list,
 .footer-nav-list {
   display: flex;

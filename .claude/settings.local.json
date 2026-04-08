@@ -6,7 +6,8 @@
       "Bash(ls -la /e/Programmierung/ResQBrain/*.json)",
       "Bash(find:*)",
       "Bash(xargs ls:*)",
-      "Bash(wc -l /e/Programmierung/ResQBrain/apps/mobile-app/src/**/*.tsx)"
+      "Bash(wc -l /e/Programmierung/ResQBrain/apps/mobile-app/src/**/*.tsx)",
+      "WebFetch(domain:www.figma.com)"
     ]
   }
 }
