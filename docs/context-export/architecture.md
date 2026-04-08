@@ -3,7 +3,7 @@
 ## Ordnerstruktur (relevant für Produkt)
 
 - **`apps/mobile-app/`** — Expo-App: `App.tsx`, `src/navigation`, `src/screens`, `src/data`, `src/lookup` (u. a. `sourceResolver.ts`, `bundleUpdateService.ts`, `lookupCache.ts`, `bundleStorage.ts`, `loadLookupBundle.ts`), `src/types`, `src/ui`, `src/theme`, `src/state`, `src/features`.
-- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (`layout/`, `sections/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `lib/site/*`), `styles/`, `public/`; Ordner `ui8/` (Assets/Vorlagen, u. a. ZIP-basierte Quellen; `*.zip` in Root-`.gitignore`).
+- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (`layout/`, `sections/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `lib/site/*` inkl. `updates-page.ts`, `updates-form.ts`, `survey.ts`), `styles/`, `public/`; Ordner `ui8/` (Assets/Vorlagen, u. a. ZIP-basierte Quellen; `*.zip` in Root-`.gitignore`).
 - **`apps/website-pre-v2-backup/`** — Backup einer früheren Website-Variante (nicht in `pnpm-workspace.yaml`).
 - **`apps/website-old/`** — ältere Next.js-Website; `vercel.json` mit `ignoreCommand`.
 - **`packages/domain/src/`** — Domain-Logik, u. a.:
@@ -15,18 +15,18 @@
   - `audit/`, `survey/`, `tenant/`, `lookup/entities/`
 - **`data/lookup-seed/`** — Phase-0-JSON: `manifest.json`, `medications.json`, `algorithms.json`.
 - **`data/schemas/`** — `dbrd-normalized.schema.ts`, `dbrd-normalized.examples.json`.
-- **`scripts/`** — u. a. `dbrd/`, `status/`, `utils/`, `vercel-ignore.js`, `validate-routing.ts`, `validate-content-isolation.ts`, `check-german-umlauts.ts`, `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts`.
+- **`scripts/`** — u. a. `dbrd/`, `status/`, `utils/`, `verify.ts`, `vercel-ignore.js`, `validate-routing.ts`, `validate-content-isolation.ts`, `check-german-umlauts.ts`, `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts`, `seed-update.mjs`.
 
 **Zusatz (Root):** `app/`, `components/` — parallele/alte Struktur; nicht Root-`pnpm build`.
 
-**Hinweis:** Unter `apps/` existiert ein leerer Ordnername `Neuer Ordner` (Stand Scan 5. April 2026).
+**Hinweis:** Unter `apps/` kann ein leerer Ordnername `Neuer Ordner` vorkommen (nicht in jedem Checkout relevant).
 
 ## Navigation (Mobile-App)
 
 **Datei:** `apps/mobile-app/src/navigation/AppNavigator.tsx`
 
 - **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `Settings`, `MedicationTab`, `AlgorithmTab`.
-- **Home-Stack (`HomeStackParamList` in `homeStackParamList.ts`):** `HomeMain`, `VitalReference`.
+- **Home-Stack (`HomeStackParamList` in `homeStackParamList.ts`):** `HomeMain`, `History` (`HistoryScreen`), `VitalReference`.
 - **Medikament-Stack:** `MedicationListScreen` → `MedicationDetail` (Param: `medicationId`) → `DoseCalculator`.
 - **Algorithmus-Stack:** `AlgorithmListScreen` → `AlgorithmDetail` (Param: `algorithmId`).
 
@@ -36,10 +36,10 @@
 
 **Datei:** `apps/website/lib/routes.ts`
 
-- Routen-Objekt: `home` `/`, `kontakt`, `mitwirkung`, `links`, `impressum`, `datenschutz`.
-- `mainNav` / `footerNav` wie im Quelltext.
+- Routen-Objekt: `home` `/`, `kontakt`, `mitwirkung`, `mitwirken`, `links`, `impressum`, `datenschutz`, `updates`.
+- `mainNav` / `footerNav` wie im Quelltext (u. a. Einträge für Mitwirkung, Mitwirken, Updates, Links, Kontakt).
 
-**Startseite:** `app/page.tsx` — siehe Abschnitt Website-Sections unten.
+**Startseite:** `app/page.tsx` — Abschnitte als `SectionFrame`/`Container`-Komposition mit Daten aus `content` (`@/lib/site/content`); keine direkten Imports der `components/sections/*Section.tsx`-Dateien.
 
 **Layout:** `app/layout.tsx` — `SiteShell`, Schrift `Instrument_Sans` (`next/font/google`), `lang="de"`, Metadaten aus `lib/site/site-content.ts`.
 
@@ -54,9 +54,10 @@
 
 - `ContentKind`: `'medication' | 'algorithm'`
 - `ContentTag`: festes Vokabular — abgestimmt mit `lookupSchema.ts` (`CONTENT_TAG_VALUES`)
+- `ContentCategory`: u. a. `pediatrics`, `trauma`, `sepsis`, `resuscitation` — optional auf `Medication`/`Algorithm` (`category?`)
 - `Medication` / `Algorithm` / `ContentItem` — wie Typdefinitionen
 
-Validierung: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS`, Manifest-Keys).
+Validierung: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS` inkl. `category`, `ALGORITHM_ITEM_KEYS`, Manifest-Keys).
 
 ### B) Plattform-Domain (`packages/domain/src/content/entities/`)
 
@@ -64,9 +65,9 @@ Validierung: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS`, M
 
 ## Mobile: Bundle-Auflösung und Quellen
 
-- **`sourceResolver.ts`:** `resolveLookupBundle()` — Reihenfolge updated → cached → embedded → fallback; Rückgabetyp `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, `generatedAt`, `schemaVersion`).
+- **`sourceResolver.ts`:** `resolveLookupBundle()` — Reihenfolge updated → cached → embedded → fallback; Rückgabetyp `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, `version`, `generatedAt`, `schemaVersion` — `version` aus Manifest, siehe `extractMeta`).
 - **`bundleUpdateService.ts`:** Remote-Check/Apply (Aufruf aus `App.tsx` wenn `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` gesetzt).
-- **`lookupSource.ts`:** dokumentiert `LookupSource` (`embedded` | `cached` | `updated` | `fallback`).
+- **`lookupSource.ts`:** dokumentiert `LookupSource` (`embedded` | `cached` | `updated` | `fallback` | `resolved`).
 
 ## Versioning (Domain-Paket)
 
@@ -82,12 +83,12 @@ Validierung: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS`, M
 
 - **Medikamente** und **Algorithmen** aus JSON-Bundle; keine Protokolle/Leitlinien in `data/lookup-seed/`.
 
-## Website-Sections (aktive `apps/website`)
+## Website-Startseite (aktive `apps/website`)
 
 **Datei:** `apps/website/app/page.tsx`
 
-- Reihenfolge: `HeroSection` → `ProblemSection` → `IdeaSection` → `StatusSection` → `AudienceSection` → `MitwirkungSection` → `FaqSection` → `ContactCtaSection`  
-- Texte/Konfiguration über `content` aus `@/lib/site/content`.
+- Struktur: mehrere `SectionFrame`-Blöcke mit `SectionHeading`, `ContentCard`, `ButtonLink` usw.; Inhaltsfelder aus `content` (`hero`, `problem`, `idea`, `projectGoal`, `status`, `audience`, `mitwirkung`, `faq`, `cta`).
+- Die älteren Section-Komponenten (`HeroSection.tsx`, …) liegen unter `components/sections/` und werden von dieser Seite aktuell nicht eingebunden.
 
 ## Services (Domain-Paket, explizite `*Engine*` / Services)
 

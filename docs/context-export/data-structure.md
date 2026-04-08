@@ -1,6 +1,6 @@
 # Datenstrukturen (Export)
 
-**Stand:** Abgleich mit `data/lookup-seed/*`, `apps/mobile-app/src/lookup/lookupSchema.ts` und Domain-Paket (Export 5. April 2026).
+**Stand:** Abgleich mit `data/lookup-seed/*`, `apps/mobile-app/src/lookup/lookupSchema.ts`, `apps/mobile-app/src/types/content.ts` und Domain-Paket (Export 8. April 2026).
 
 Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase-0-App vs. Plattform-Domain vs. Domain-„Lookup“-Submodule vs. DBRD-Normalisierung).
 
@@ -17,15 +17,15 @@ Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase
 ### Medication (JSON + App-Typ `Medication`)
 
 - **Keys im JSON** (Whitelist `MEDICATION_ITEM_KEYS`):  
-  `id`, `kind` (`"medication"`), `label`, `indication`, `tags`, `searchTerms`, `notes`, `dosage`, `relatedAlgorithmIds`
-- **TypeScript-Shape:** `apps/mobile-app/src/types/content.ts` — `Medication` erweitert gemeinsame Basis um `dosage`, `relatedAlgorithmIds`.
+  `id`, `kind` (`"medication"`), `label`, `indication`, `tags`, **`category`**, `searchTerms`, `notes`, `dosage`, `relatedAlgorithmIds`
+- **TypeScript-Shape:** `apps/mobile-app/src/types/content.ts` — `Medication` erweitert gemeinsame Basis (`ContentBase`) um `dosage`, `relatedAlgorithmIds`; optional `category?: ContentCategory`.
 
 ### Algorithm (JSON + App-Typ `Algorithm`)
 
 - **Keys** (`ALGORITHM_ITEM_KEYS`):  
-  `id`, `kind` (`"algorithm"`), `label`, `indication`, `tags`, `searchTerms`, `notes`, `steps`, `warnings`, `relatedMedicationIds`
+  `id`, `kind` (`"algorithm"`), `label`, `indication`, `tags`, **`category`**, `searchTerms`, `notes`, `steps`, `warnings`, `relatedMedicationIds`
 - **Schritt:** nur `text` (`ALGORITHM_STEP_KEYS`)
-- **TypeScript:** `Algorithm` mit `steps: AlgorithmStep[]`, `warnings?`, `relatedMedicationIds`
+- **TypeScript:** `Algorithm` mit `steps: AlgorithmStep[]`, `warnings?`, `relatedMedicationIds`; optional `category?`.
 
 ### Umfang der Seed-Dateien (gezählt, Export)
 
@@ -41,7 +41,7 @@ Es existieren **mehrere parallele Modelle** im Repo (absichtlich getrennt: Phase
 
 ### Mobile: Auflösung und Metadaten
 
-- **`resolveLookupBundle()`** (`sourceResolver.ts`) liefert `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, `generatedAt`, `schemaVersion`) — **kein** Top-Level-Feld `version` am Resolved-Typ; Manifest kann `version`/`checksum` enthalten (`LookupManifest`).
+- **`resolveLookupBundle()`** (`sourceResolver.ts`) liefert `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, **`version`** (aus Manifest, nullable), `generatedAt`, `schemaVersion`). `App.tsx` nutzt u. a. `resolved.meta.version` für Debug-Info.
 
 ### Versioning-relevante Statuswerte
 

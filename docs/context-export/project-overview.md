@@ -1,13 +1,13 @@
 # Projekt-Überblick (Export)
 
-**Quelle:** Analyse des Repositories `ResQBrain` (Stand Export: 5. April 2026, aktueller Workspace-Zustand).  
-**Hinweis:** Nur Code-/Datei-basierte Fakten; keine Live-Deployment-Verifikation.
+**Quelle:** Analyse des Repositories `ResQBrain` (Stand Export: 8. April 2026, aktueller Workspace-Zustand).  
+**Hinweis:** Nur Code-/Datei-basierte Fakten; keine Live-Deployment-Verifikation per Dashboard/API in diesem Lauf.
 
-**Verifikation (frischer Lauf, lokal):** Root `pnpm build` → Exit **0** (Next.js **16.2.1**); `apps/mobile-app` `npx tsc --noEmit` → Exit **2** (vier TypeScript-Fehler, siehe `known-issues.md`); `pnpm exec tsx scripts/validate-content-isolation.ts` → Exit **0**; `pnpm exec tsx scripts/validate-routing.ts` → Exit **1** (erwartet veraltete Section-Dateinamen).
+**Verifikation (frischer Lauf, lokal):** Root `pnpm build` → Exit **0** (Next.js **16.2.1**, **10** statische Seiten); `apps/mobile-app` `npx tsc --noEmit` → Exit **0**; `pnpm mobile:verify` → Exit **0** (Typecheck, Nav-Checks, `expo export` Android); `pnpm exec tsx scripts/validate-content-isolation.ts` → Exit **1** (`allowedRoutes` ohne `/mitwirken`, `/updates`); `pnpm exec tsx scripts/validate-routing.ts` → Exit **1** (Skript erwartet noch `*Section`-Imports in `app/page.tsx`); `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` → Exit **0**.
 
 ## Projektname
 
-**ResQBrain** (`package.json` Root: `resqbrain`; Workspace-Apps: `@resqbrain/website`, `resqbrain-mobile`). Zusätzlich im Dateibaum, **ohne** Eintrag in `pnpm-workspace.yaml`: `apps/website-old`, `apps/website-pre-v2-backup`.
+**ResQBrain** (`package.json` Root: `resqbrain`; Workspace-Apps: `@resqbrain/website`, `resqbrain-mobile`). Zusätzlich im Dateibaum, **ohne** Eintrag in `pnpm-workspace.yaml`: `apps/website-old`, `apps/website-pre-v2-backup`, `apps/website-lab`, `apps/mobile-app-lab`.
 
 ## Ziel des Projekts
 
@@ -17,16 +17,16 @@
 ## Aktuelle Phase
 
 - `docs/context/current-phase.md` (letzte Aktualisierung 2026-03-27): **Phase 0 (Lookup App)** — statische/mock-basierte Datenquellen in der App, keine produktive API-/Auth-/Multi-Tenant-Runtime.
-- Codebasiert: Lookup-Bundle weiterhin aus eingebettetem Seed (`data/lookup-seed`); zusätzlich **`resolveLookupBundle()`** mit Priorität updated → cached → embedded → fallback sowie Hintergrund-Check über `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` (`App.tsx`, `bundleUpdateService.ts`, `sourceResolver.ts`).
+- Codebasiert: Lookup-Bundle weiterhin aus eingebettetem Seed (`data/lookup-seed`); **`resolveLookupBundle()`** mit Priorität updated → cached → embedded → fallback sowie Hintergrund-Check über `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` (`App.tsx`, `bundleUpdateService.ts`, `sourceResolver.ts`).
 
 ## Kurzer Status
 
 | Bereich | Beleg |
 |--------|--------|
 | **Website (Root-Buildziel)** | Root-`build` nutzt `pnpm --filter @resqbrain/website build`; Root-`vercel.json` setzt `rootDirectory: "apps/website"`. |
-| **Website (App)** | Next.js 16.2.1; Startseite komponiert Sections direkt in `app/page.tsx` (`HeroSection`, `ProblemSection`, `IdeaSection`, `StatusSection`, `AudienceSection`, `MitwirkungSection`, `FaqSection`, `ContactCtaSection`). |
-| **Mobile** | Expo ~54.0.33; `App.tsx` lädt Bundle über `resolveLookupBundle`, optional Hintergrund-Update; Verify-Skripte im Paket; **`pnpm mobile:verify` bricht aktuell an `tsc --noEmit` ab** (siehe `known-issues.md`). |
-| **Domain + Datenpipeline** | `packages/domain` im Workspace; DBRD-/Seed-Skripte `dbrd:*` im Root; weitere Root-Hilfsskripte in `scripts/` (u. a. `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts` — ohne Root-`package.json`-Scripts). |
+| **Website (App)** | Next.js 16.2.1; Startseite in `app/page.tsx` als zusammenhängendes Layout mit `SectionFrame`/`Container` und UI-Primitives; Copy aus `@/lib/site/content.ts` (die Dateien unter `components/sections/*Section.tsx` sind weiter im Repo, werden von der Startseite derzeit **nicht** importiert). |
+| **Mobile** | Expo ~54.0.33; `App.tsx` lädt Bundle über `resolveLookupBundle`, optional Hintergrund-Update; **`pnpm mobile:verify`** läuft im Export-Lauf **grün** (Typecheck + Nav-Verifikation + `expo export`). |
+| **Domain + Datenpipeline** | `packages/domain` im Workspace; DBRD-/Seed-Skripte `dbrd:*` im Root; Root zusätzlich `pnpm verify` (Orchestrierung: Build → `validate-routing` → `validate-content-isolation` → `mobile:verify`; bricht aktuell an `validate-routing` ab), `pnpm seed:update` (`scripts/seed-update.mjs`). |
 
 ## Architekturüberblick (kurz)
 
@@ -57,8 +57,8 @@
 
 ## Wichtigste Features (im Code vorhanden)
 
-- Website (`apps/website`): statische Routen inkl. Rechtstexte; Copy in `lib/site/content.ts`; Umfrage-Links aus `lib/site/survey.ts`.
-- Mobile: Suche, Favoriten, Verlauf (Stores + Hydration in `App.tsx`), Medikamente/Algorithmen (Liste + Detail), Dosisrechner, Vitalwerte, Settings; Bundle-Resolver und optionaler Remote-Update-Pfad.
+- Website (`apps/website`): statische Routen inkl. Rechtstexte; Copy in `lib/site/content.ts`; Umfrage-Metadaten in `lib/site/survey.ts` (`surveys.active` mit Microsoft-Forms-Link); Seite `/updates` mit Inhalten aus `lib/site/updates-page.ts` und Formular-URL aus `lib/site/updates-form.ts` (optional `NEXT_PUBLIC_UPDATES_FORM_URL`).
+- Mobile: Suche, Favoriten, Verlauf (Stores + Hydration in `App.tsx`), **Verlauf-Screen im Home-Stack** (`History` → `HistoryScreen`), Medikamente/Algorithmen (Liste + Detail), Dosisrechner, Vitalwerte, Settings; Bundle-Resolver und optionaler Remote-Update-Pfad.
 - Seed-Daten: `data/lookup-seed` mit manifest + medication/algorithm JSON.
 
 ## Geplante bzw. offene Themen (Doku)
@@ -69,5 +69,4 @@
 ## Bekannte Inkonsistenzen (faktenbasiert)
 
 - Zwei Website-Ordner mit `@resqbrain/website` im `package.json`, aber nur `apps/website` ist Workspace-Mitglied.
-- `scripts/validate-routing.ts` erwartet noch die frühere Section-Dateistruktur der Website (Lauf 5. April 2026: Exit 1).
-- `HistoryScreen.tsx` ist im Repo vorhanden, aber **nicht** in `AppNavigator` / `HomeStackParamList` registriert.
+- `scripts/validate-routing.ts` und `scripts/validate-content-isolation.ts` sind **nicht** mit dem aktuellen Routing bzw. der Startseiten-Struktur synchron (siehe `known-issues.md`).

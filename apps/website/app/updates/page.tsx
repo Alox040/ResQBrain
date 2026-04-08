@@ -33,8 +33,11 @@ export default function UpdatesPage() {
                 <SectionHeading title={updatesPageContent.cta.title} />
                 <p className="body-text muted-text">{updatesPageContent.cta.text}</p>
                 <div className="cta-actions">
-                  <ButtonLink href={updatesPageContent.cta.href} size="lg" external>
-                    {updatesPageContent.cta.label}
+                  <ButtonLink href={updatesPageContent.cta.formHref} size="lg" external>
+                    {updatesPageContent.cta.primaryLabel}
+                  </ButtonLink>
+                  <ButtonLink href={updatesPageContent.cta.secondaryHref} variant="secondary" size="lg">
+                    {updatesPageContent.cta.secondaryLabel}
                   </ButtonLink>
                 </div>
               </Stack>

@@ -26,7 +26,7 @@
     "test:lifecycle": "tsx --test src/lifecycle/lifecycle.engine.test.ts src/lifecycle/lifecycle.transitions.test.ts src/lifecycle/lifecycle.invariants.test.ts",
     "test:approval": "tsx --test src/governance/approval/approval.engine.test.ts",
     "test:governance:permission": "tsx --test src/governance/services/permission-engine.test.ts",
-    "test:release": "tsx --test src/release/release.engine.test.ts"
+    "test:release": "tsx --test src/legacy/release/release.engine.test.ts"
   },
   "devDependencies": {
     "tsx": "^4.21.0",

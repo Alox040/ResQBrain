@@ -2,19 +2,19 @@
 
 **Vorhanden:** `apps/website/` (Next.js App Router). Zusätzlich im Baum, nicht Workspace-Mitglied: `apps/website-old/`, `apps/website-pre-v2-backup/`, `apps/website-lab/` (Figma-Playground). **`apps/website-v2/`** im aktuellen Repo **nicht** vorhanden.
 
-**Letzte Verifikation (Export):** `pnpm build` (Root) Exit 0, Next.js 16.2.1 (7. April 2026). Website deployed auf Vercel (8. April 2026, `b9a4093`).
+**Letzte Verifikation (Export):** `pnpm build` (Root) Exit 0, Next.js 16.2.1, **10** statische Seiten (8. April 2026). Live-Vercel-Status in diesem Lauf nicht per API/Dashboard geprüft.
 
-**Design-Stand:** Figma-Migration Phase 1 **abgeschlossen** (8. Apr. 2026) — neues CSS-System, neue Komponentenstruktur, zwei neue Routen.
+**Design-Stand:** Figma-basiertes CSS-System und Komponentenbibliothek unter `components/`; Startseite nutzt komponierte Layout-Primitives statt direkter Section-Imports (siehe unten).
 
 ## Next.js-Struktur
 
 - **`apps/website/app/layout.tsx`** — `SiteShell`, Schrift `Instrument_Sans` (`next/font/google`, Subsets `latin`, `latin-ext`), `lang="de"`.
-- **`apps/website/app/globals.css`** — Vollständig überarbeitetes CSS-System auf Figma-Basis (8. Apr. 2026).
-- **`apps/website/app/page.tsx`** — Startseite: importiert und rendert die Section-Komponenten in fester Reihenfolge (siehe unten).
-- **`apps/website/components/`** — Neue Komponentenstruktur durch Figma-Migration: `layout/`, `sections/`, `ui/`.
+- **`apps/website/app/globals.css`** — CSS-System (Figma-orientiert).
+- **`apps/website/app/page.tsx`** — Startseite: `SectionFrame`/`Container`/`Stack`/`ContentCard`/`SectionHeading`/`ButtonLink`; Inhalte aus `content` (`@/lib/site/content`).
+- **`apps/website/components/`** — `layout/`, `sections/` (Komponenten z. B. `HeroSection.tsx` existieren, werden von `app/page.tsx` aktuell nicht importiert), `ui/`.
 - **`package.json`:** `next ^16.2.1` (Build: Next.js **16.2.1** mit Turbopack).
 
-## Komponentenstruktur (nach Figma-Migration)
+## Komponentenstruktur (Auszug)
 
 ### `apps/website/components/layout/`
 `site-shell.tsx`, `site-header.tsx`, `site-footer.tsx`, `footer-nav.tsx`, `main-nav.tsx`, `Section.tsx`, `Container.tsx`, `Stack.tsx`
@@ -25,32 +25,20 @@
 ### `apps/website/components/ui/`
 `badge.tsx`, `button-link.tsx`, `card-title.tsx`, `container.tsx`, `content-card.tsx`, `page-header.tsx`, `section-frame.tsx`, `section-heading.tsx`, `stack.tsx`, `text-link.tsx`
 
-## Sections (Startseite)
+## Startseite (inhaltliche Blöcke)
 
-Reihenfolge laut `apps/website/app/page.tsx`:
-
-1. `HeroSection`  
-2. `ProblemSection`  
-3. `IdeaSection`  
-4. `StatusSection`  
-5. `AudienceSection`  
-6. `MitwirkungSection`  
-7. `FaqSection`  
-8. `ContactCtaSection`  
-9. `ProjectGoalSection`  
-
-Inhalte primär aus `apps/website/lib/site/content.ts`.
+Reihenfolge und Texte aus `apps/website/lib/site/content.ts`, gerendert in `app/page.tsx` als aufeinanderfolgende `SectionFrame`-Abschnitte u. a. für: Hero (+ eingebetteter Mitwirkungs-/Status-Kartenbereich), Problem, Idea + Projektziel (Split), Status, Audience, Mitwirkung, FAQ, Abschluss-CTA.
 
 ## Routing
 
 | Route | Datei | Build-Modus | Hinweis |
 |-------|--------|-------------|---------|
-| `/` | `app/page.tsx` | Static | 9 Sections |
+| `/` | `app/page.tsx` | Static | Layout-Komposition, kein `*Section`-Import |
 | `/kontakt` | `app/kontakt/page.tsx` | Static | |
 | `/links` | `app/links/page.tsx` | Static | TikTok-optimiert |
 | `/mitwirkung` | `app/mitwirkung/page.tsx` | Static | Umfrage-CTA |
-| `/mitwirken` | `app/mitwirken/page.tsx` | Static | Neu (8. Apr. 2026) |
-| `/updates` | `app/updates/page.tsx` | Static | Neu (8. Apr. 2026) |
+| `/mitwirken` | `app/mitwirken/page.tsx` | Static | |
+| `/updates` | `app/updates/page.tsx` | Static | Copy `updates-page.ts`, Formular-Link `updates-form.ts` |
 | `/impressum` | `app/impressum/page.tsx` | Static | |
 | `/datenschutz` | `app/datenschutz/page.tsx` | Static | |
 | `/_not-found` | Framework | Static | |
@@ -59,28 +47,32 @@ Navigation: `apps/website/lib/routes.ts` — `routes`, `mainNav`, `footerNav`.
 
 ## Umfragen-Integration
 
-- **`lib/site/survey.ts`:** `href` und `url` zeigen auf **`https://example.com/survey`**, Label `"Umfrage"` (Platzhalter).
-- **`lib/site/content.ts`** / **`lib/site/mitwirkung.ts`** / **`lib/site/links-page.ts`** beziehen sich auf `survey` (Import aus `./survey`).
-- **`app/mitwirkung/page.tsx`:** Umfrage-Abschnitt mit `ButtonLink` auf konfigurierte `href` aus Seiteninhalt.
-- Kein Survey-Backend im Repository — nur statische/externe URLs.
+- **`lib/site/survey.ts`:** Export `surveys` mit `active: { label, href, description, date }`; `href` zeigt auf **`https://forms.office.com/r/vzHuUdFBRy`** (Microsoft Forms), nicht auf einen generischen Platzhalter-Domain-Namen.
+- **`lib/site/content.ts`** / **`lib/site/mitwirkung.ts`** / **`lib/site/links-page.ts`** beziehen sich auf Umfrage-Daten aus `./survey` bzw. `surveys`.
+- **`app/mitwirkung/page.tsx`:** Umfrage-Abschnitt mit `ButtonLink` auf konfigurierte URLs aus Seiteninhalt.
+- Kein Survey-Backend im Repository — externe Formular-URLs und statische Copy.
+
+## Updates-Seite / zweites Formular
+
+- **`lib/site/updates-form.ts`:** `updatesInterestFormHref` aus `NEXT_PUBLIC_UPDATES_FORM_URL` (wenn gesetzt und `http…`) sonst derselbe Microsoft-Forms-Link wie oben.
+- **`lib/site/updates-page.ts`:** Texte und CTA für `/updates` (Hinweis: keine Registrierungslogik auf der Website).
 
 ## CTA / Buttons
 
-- Hero: primär `Mitwirkung` (`routes.mitwirkung`), sekundär `Projekt ansehen` (`routes.home`) laut `content.hero`.
-- `MitwirkungSection`: CTA „Umfrage“ → `survey.href`.
-- `ContactCtaSection`: konfigurierbar über `content.cta` (Button + `href`).
+- Hero (laut `content.hero`): primär **Mitwirken** (`routes.mitwirken`), sekundär **Projekt auf GitHub** (`https://github.com/Alox040/ResQBrain`, `external: true`).
+- Mitwirkungsbereich auf der Startseite: Button mit `content.mitwirkung.cta` (u. a. `external`).
+- Abschluss-CTA: `content.cta` mit `ButtonLink`.
 
 ## Deployment (Vercel, dateibasiert)
 
 - **Repository-Root `vercel.json`:** `rootDirectory: "apps/website"`, `buildCommand` / `outputDirectory` auf diese App.
 - **`apps/website/vercel.json`:** `framework`, `installCommand`, `buildCommand` — **ohne** `ignoreCommand`.
 - **`apps/website-old/vercel.json`:** `ignoreCommand` → `node ../../scripts/vercel-ignore.js`.
-- Live-Deployment: in diesem Export nicht per API/Dashboard verifiziert.
 
 ## Encoding / Copy
 
-- Layout dokumentiert bewusst ein Charset-Meta (siehe oben).
-- Sichtbare deutsche Texte in `content.ts` und Sections mit Umlauten (z. B. „ständig“, „Übersicht“) — keine `TemporaryEncodingTest`-Komponente unter `apps/website` (Repo-Suche).
+- Layout-Kommentar zu UTF-8 / Charset-Meta (Next.js) in `app/layout.tsx`.
+- Sichtbare deutsche Texte in `content.ts` und Seiten mit Umlauten — keine `TemporaryEncodingTest`-Komponente unter `apps/website` (Repo-Suche im Rahmen dieses Exports).
 
 ## Assets
 
@@ -90,5 +82,5 @@ Navigation: `apps/website/lib/routes.ts` — `routes`, `mainNav`, `footerNav`.
 
 - **`apps/website-old/`** — ältere Marketing-Site.
 - **`apps/website-pre-v2-backup/`** — Backup mit eigenem `package.json` (`@resqbrain/website`), nicht in `pnpm-workspace.yaml`.
-- **`apps/website-lab/`** — Isolierter Figma-Architektur-Playground (kein Workspace-Mitglied); enthält `apps/website-lab/figma/` als Figma-Export-Referenz.
-- **Root-Level-Struktur (`app/`, `components/`, `lib/`)** — Parallele Next.js-ähnliche Struktur am Repo-Root; Zweck unklar (v2-Vorbereitung oder Artefakt). Kein Einfluss auf produktives Deployment (`vercel.json` zeigt auf `apps/website`).
+- **`apps/website-lab/`** — Isolierter Figma-Architektur-Playground (kein Workspace-Mitglied).
+- **Root-Level-Struktur (`app/`, `components/`, `lib/`)** — Parallele Next.js-ähnliche Struktur am Repo-Root; kein Einfluss auf produktives Deployment (`vercel.json` zeigt auf `apps/website`).

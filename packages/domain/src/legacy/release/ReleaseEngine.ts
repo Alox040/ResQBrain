@@ -2,7 +2,7 @@ import {
   AuditOperation,
   AuditReleaseType,
   type ReleaseAuditEvent,
-} from '../shared/audit';
+} from '../../shared/audit';
 import {
   allow,
   deny,
@@ -13,11 +13,11 @@ import {
   type OrgId,
   type UserRoleId,
   type VersionId,
-} from '../shared/types';
-import { ApprovalStatus, type ContentPackage, isContentPackageImmutable } from '../content/entities';
-import { Capability } from '../governance';
-import { evaluateCapability } from '../governance/services';
-import type { ActorContext } from '../governance/policies/PolicyContext';
+} from '../../shared/types';
+import { ApprovalStatus, type ContentPackage, isContentPackageImmutable } from '../../content/entities';
+import { Capability } from '../../governance';
+import { evaluateCapability } from '../../governance/services';
+import type { ActorContext } from '../../governance/policies/PolicyContext';
 import {
   createReleaseVersion,
   markReleaseVersionSuperseded,
@@ -26,8 +26,8 @@ import {
   type ContentPackageVersion,
   type ReleaseType as ReleaseTypeValue,
   type ReleaseVersion,
-} from '../versioning/entities';
-import { assertExplicitVersionId } from '../shared/versioning';
+} from '../../versioning/entities';
+import { assertExplicitVersionId } from '../../shared/versioning';
 
 export interface ReleaseEntryState {
   readonly entityId: string;

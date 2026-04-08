@@ -826,6 +826,49 @@ textarea.mitwirken-form-control {
   cursor: pointer;
 }
 
+.mitwirken-form-error {
+  margin: 0;
+  color: #a11d2f;
+  font-size: var(--font-small);
+  line-height: var(--line-height-small);
+}
+
+.mitwirken-form-status {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-control);
+  font-size: var(--font-small);
+  line-height: var(--line-height-small);
+}
+
+.mitwirken-form-status--success {
+  display: grid;
+  gap: var(--space-3);
+  background: rgba(35, 122, 87, 0.12);
+  border: var(--border-width) solid rgba(35, 122, 87, 0.24);
+}
+
+.mitwirken-form-status--success .card-title {
+  margin: 0;
+}
+
+.mitwirken-form-status--success .body-text {
+  margin: 0;
+}
+
+.mitwirken-form-status--error {
+  color: #7b1825;
+  background: rgba(161, 29, 47, 0.08);
+  border: var(--border-width) solid rgba(161, 29, 47, 0.2);
+}
+
+.mitwirken-form-trap {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .mitwirken-form-actions {
   display: flex;
   flex-direction: column;
@@ -836,15 +879,6 @@ textarea.mitwirken-form-control {
 .mitwirken-form-actions .button-link {
   width: 100%;
   justify-content: center;
-}
-
-.mitwirken-form-privacy {
-  margin: 0;
-  line-height: var(--line-height-small);
-}
-
-.mitwirken-form-privacy a {
-  text-underline-offset: 0.2em;
 }
 
 @media (min-width: 480px) {

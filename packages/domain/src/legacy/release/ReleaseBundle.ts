@@ -1,14 +1,14 @@
 import type {
   ApprovalStatus,
   ReleaseSourceApprovalStatus,
-} from '../common/ApprovalStatus';
-import { isReleaseSourceApprovalStatus } from '../common/ApprovalStatus';
-import type { ContentPackageItem } from '../common/contentPackageItem';
+} from '../../common/ApprovalStatus';
+import { isReleaseSourceApprovalStatus } from '../../common/ApprovalStatus';
+import type { ContentPackageItem } from '../../common/contentPackageItem';
 import type {
   ContentPackageId,
-  OrganizationId,
+  OrgId as OrganizationId,
   VersionId,
-} from '../common/ids';
+} from '../../shared/types';
 
 export type ReleaseBundleApprovalStatus = ReleaseSourceApprovalStatus;
 

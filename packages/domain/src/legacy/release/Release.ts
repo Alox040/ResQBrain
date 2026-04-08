@@ -1,12 +1,12 @@
 import type {
   ContentPackageId,
-  OrganizationId,
-  ReleaseId,
+  OrgId as OrganizationId,
+  ReleaseVersionRecordId as ReleaseId,
   UserId,
   VersionId,
-} from '../common/ids';
-import type { ApprovalStatus } from '../common/ApprovalStatus';
-import { isReleaseSourceApprovalStatus } from '../common/ApprovalStatus';
+} from '../../shared/types';
+import type { ApprovalStatus } from '../../common/ApprovalStatus';
+import { isReleaseSourceApprovalStatus } from '../../common/ApprovalStatus';
 
 export type ReleaseTimestamp = string;
 

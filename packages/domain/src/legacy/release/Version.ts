@@ -1,5 +1,5 @@
-import type { AuditStamp } from '../common/audit';
-import type { OrganizationId, VersionId } from '../common/ids';
+import type { AuditStamp } from '../../common/audit';
+import type { OrgId as OrganizationId, VersionId } from '../../shared/types';
 
 export interface Version {
   readonly id: VersionId;

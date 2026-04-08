@@ -7,7 +7,7 @@
     "src/content/**/*.ts",
     "src/governance/**/*.ts",
     "src/audit/**/*.ts",
-    "src/release/**/*.ts"
+    "src/legacy/release/**/*.ts"
   ],
   "exclude": ["src/**/*.test.ts"]
 }

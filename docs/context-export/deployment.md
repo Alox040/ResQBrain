@@ -1,20 +1,21 @@
 # Deployment & Build (Export)
 
 **Letzte Verifikation (Export):** 8. April 2026.  
-- **Domain `tsc --noEmit`:** 7. Apr. 2026 — Exit 0 (alle Module).  
-- **`pnpm build` (Root):** 7. Apr. 2026 — Exit 0, Next.js 16.2.1, 8 statische Seiten.  
-- **Website deployed auf Vercel:** 8. Apr. 2026 — Figma-Migration Phase 1 (`b9a4093 final figma website deploy`).  
-- **`pnpm mobile:verify`:** Nicht grün — Mobile `tsc --noEmit` Exit 2 (unverändert seit 5. Apr.).
+- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1, **10** statische Seiten.  
+- **`pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`:** Exit 0.  
+- **`pnpm mobile:verify`:** Exit 0 (Typecheck, Nav-Skripte, `expo export` Android).  
+- **`pnpm exec tsx scripts/validate-routing.ts`:** Exit 1 (Erwartung alter Section-Imports).  
+- **`pnpm exec tsx scripts/validate-content-isolation.ts`:** Exit 1 (`/mitwirken`, `/updates` nicht in `allowedRoutes`).  
+- **`pnpm verify`:** bricht nach erfolgreichem Build an `validate-routing` ab (Orchestrierung in `scripts/verify.ts`).
 
-## Aktueller Deploy-Status (8. April 2026)
+## Aktueller Deploy-Status (lokal verifizierbar, 8. April 2026)
 
 | Komponente | Status |
 |-----------|--------|
-| Website (Vercel, Produktion) | ✓ Deployed — Figma-Migration Phase 1 |
-| Letzter Commit deployed | `b9a4093 final figma website deploy` |
-| Neue Routen live | `/mitwirken`, `/updates` (zusätzlich zu bisherigen 6 Routen) |
-| Mobile App | Nicht deployed — separater Expo-Build-Prozess |
-| Domain-Paket | Nicht deployed — Library, kein eigenständiger Build |
+| Website (Next Production Build) | ✓ `pnpm build` grün, 10 statische Routen |
+| Mobile App | Build/Verify lokal grün (`pnpm mobile:verify`); kein App-Store-Deploy in diesem Export nachgewiesen |
+| Domain-Paket | Library; `tsc --noEmit` grün |
+| Validierungsskripte `validate-routing` / `validate-content-isolation` | Rot — Anpassung an aktuelle Routen/Startseite ausstehend |
 
 ## Vercel (aktive Website)
 
@@ -39,8 +40,10 @@
 |-----|--------|---------|
 | Repo-Root | `pnpm build` | `pnpm --filter @resqbrain/website build` → `next build` |
 | Repo-Root | `pnpm build:website` | identisch zu `build` |
+| Repo-Root | `pnpm verify` | `tsx scripts/verify.ts` → `build`, dann `validate-routing`, `validate-content-isolation`, `mobile:verify` (sequentiell, Abbruch bei erstem Fehler) |
+| Repo-Root | `pnpm seed:update` | `node scripts/seed-update.mjs` |
 | Repo-Root | `pnpm render:website-status` | `tsx scripts/status/render-website-status.ts` |
-| Repo-Root | `pnpm mobile:verify` | `pnpm --filter resqbrain-mobile run verify:local` — bricht aktuell an `tsc --noEmit` ab (Exit 2) |
+| Repo-Root | `pnpm mobile:verify` | `pnpm --filter resqbrain-mobile run verify:local` |
 | Repo-Root | `pnpm mobile:verify:doctor` | `pnpm --filter resqbrain-mobile run verify:expo-doctor` |
 | Repo-Root | `pnpm dbrd:normalize` / `dbrd:normalize:medications` / `dbrd:normalize:algorithms` | `tsx scripts/dbrd/index.ts` (Teilmengen) |
 | Repo-Root | `pnpm dbrd:validate-normalized` | DBRD-Normalisierung validieren |
@@ -55,54 +58,45 @@
 ## Scripts (Auswahl, `scripts/`)
 
 - `dbrd/` — Normalisierung, Seed-Build, Validierung (siehe `scripts/dbrd/README.md`).
+- `verify.ts` — Gesamt-Orchestrierung (s. oben).
 - `vercel-ignore.js` — primär relevant für `website-old` (siehe oben).
-- `validate-routing.ts`, `validate-content-isolation.ts` — **nicht** in `apps/website/package.json` verdrahtet; Aufruf per `pnpm exec tsx` vom Repo-Root.
-- Zusätzliche Hilfsskripte (ohne Root-`package.json`-Eintrag): u. a. `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts`.
+- `validate-routing.ts`, `validate-content-isolation.ts` — **nicht** allein grün gegen aktuellen Stand; Aufruf auch über `pnpm verify`.
+- Zusätzliche Hilfsskripte (ohne alle in Root-`package.json`): u. a. `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts`.
 - `status/` — Render- und Sammelskripte für Statusdokumente.
 - `check-german-umlauts.ts`.
 
 ## CI / Pipeline (Repo)
 
-- Keine Workflow-Dateien unter `.github/workflows/` und keine `.gitlab-ci*.yml` (Suche Stand Export).
+- Keine Workflow-Dateien unter `.github/workflows/` und keine `.gitlab-ci*.yml` (Suche Stand Export 8. April 2026).
 
 ## Ignore Steps (Zusammenfassung)
 
 - **Vercel:** Branch-Whitelist nur wenn `ignoreCommand` gesetzt — für **`apps/website`** in-repo **nicht** gesetzt; für **`apps/website-old`** gesetzt.
 
-## Verifizierte lokale Läufe
+## Verifizierte lokale Läufe (8. April 2026)
 
-### 7. April 2026
-
-- **`pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`:** Exit **0** — Domain-Gesamtpaket sauber.
-- **`compile:content`, `compile:versioning`, `compile:governance`:** alle Exit **0**.
-- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1 (Turbopack).
-- **`pnpm --filter @resqbrain/website run typecheck`:** Exit **0**.
-- **`tsx --test src/audit/audit.foundation.test.ts`** (in `packages/domain`): 7/7 Tests bestanden.
-
-### 5. April 2026 (Archiv)
-
-- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1 (Turbopack), 8 statische Seiten.
-- **`npx tsc --noEmit` (`apps/mobile-app`):** Exit **2** — `ResolvedLookupBundle` ohne Property `version` in `App.tsx`; `AppPalette` ohne `onPrimary` in `HomeScreen.tsx`; `TYPOGRAPHY` ohne `caption` in `SettingsScreen.tsx`.
-- **`pnpm exec tsx scripts/validate-routing.ts`:** Exit **1** — Skript erwartet alte Section-Dateinamen (`home-hero.tsx`, `survey-invite-section.tsx` …); aktuelle Struktur nutzt `HeroSection.tsx` u. a.
-- **`pnpm exec tsx scripts/validate-content-isolation.ts`:** Exit **0** — „Content isolation: PASS”.
+- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1 (Turbopack), 10 statische Seiten.
+- **`npx tsc --noEmit` (`apps/mobile-app`):** Exit **0**.
+- **`pnpm mobile:verify`:** Exit **0**.
+- **`pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`:** Exit **0**.
+- **`pnpm exec tsx scripts/validate-routing.ts`:** Exit **1** — erwartet Importe von `HeroSection`, … in `app/page.tsx`.
+- **`pnpm exec tsx scripts/validate-content-isolation.ts`:** Exit **1** — `allowedRoutes` ohne `/mitwirken`, `/updates`.
 
 ## Bekannte Deploy-/Struktur-Risiken (faktenbasiert)
 
 | # | Thema | Status |
 |---|-------|--------|
 | D1 | **Root `pnpm build` baut nicht die Mobile-App** — nur `@resqbrain/website` | bekannt, kein Handlungsbedarf |
-| D2 | **Mobile `tsc --noEmit`:** Exit 2 — `pnpm mobile:verify` blockiert | offen |
-| D3 | **`validate-routing.ts`:** Exit 1 — Erwartungen veraltet gegenüber neuer Komponentenstruktur | offen |
-| D4 | **Root-Level `app/`/`components/`/`lib/`:** Parallele Next.js-Struktur am Repo-Root; kein Vercel-Ziel, Zweck ungeklärt | offen |
-| D5 | **`/mitwirken` vs. `/mitwirkung`:** Zwei ähnliche Routen in `apps/website`; inhaltliche Abgrenzung nicht dokumentiert | offen |
-| D6 | **`/updates`-Route:** Datenpfad und Inhalt nicht spezifiziert | offen |
-| D7 | **Umfrage-URL** in `lib/site/survey.ts`: vor produktivem Betrieb DPA/Privacy prüfen | bekannt |
-| D8 | **`next-env.d.ts`** verweist nach Build auf `.next/types/routes.d.ts` — nach Clone ohne Build ggf. fehlerhafte TS-Pfade | bekannt |
+| D2 | **`pnpm verify` / Isolation / Routing-Skripte** — nicht konsistent mit neuen Routen und Startseiten-Aufbau | offen |
+| D3 | **`validate-routing.ts`:** Exit 1 — Erwartungen an `*Section`-Imports in `app/page.tsx` | offen |
+| D4 | **`validate-content-isolation.ts`:** Exit 1 — `allowedRoutes` muss `/mitwirken`, `/updates` enthalten oder Prüflogik ändern | offen |
+| D5 | **Root-Level `app/`/`components/`/`lib/`:** Parallele Next.js-Struktur am Repo-Root; kein Vercel-Ziel | offen |
+| D6 | **`next-env.d.ts`** verweist nach Build auf `.next/types/routes.d.ts` — nach Clone ohne Build ggf. fehlerhafte TS-Pfade | bekannt |
+| D7 | **Externe Formular-URLs** (Umfrage, Updates): DPA/Privacy vor produktivem Betrieb prüfen | bekannt |
 
 ## Nächste Deployment-Schritte
 
-1. **Bundle-Persistenz-Konzept** abschließen — Voraussetzung für Mobile-Updates
-2. **Root-Level-Struktur bereinigen** — entweder löschen oder als `apps/website-v2/` formalisieren
-3. **Mobile `tsc` grün** — dann `pnpm mobile:verify` und anschließend Expo-Build
-4. **`validate-routing.ts`** an aktuelle Section-Dateinamen anpassen oder außer Betrieb nehmen
-5. **`/mitwirken` und `/updates`** inhaltlich spezifizieren und vollständig befüllen
+1. **Validierungsskripte** — `allowedRoutes` und Section-Checks an aktuellen Stand anpassen, damit `pnpm verify` wieder durchläuft.
+2. **Bundle-Persistenz-Konzept** abschließen — Voraussetzung für Mobile-Updates im Feld.
+3. **Root-Level-Struktur bereinigen** — entweder löschen oder als formales Experiment auslagern.
+4. **Expo-Produktionsbuild** — nach Wunsch Release-Kanal wählen (lokal bereits `expo export` in `mobile:verify`).

@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { ApprovalStatus, createContentPackage, createScopeTarget } from '../content/entities';
+import { ApprovalStatus, createContentPackage, createScopeTarget } from '../../content/entities';
 import {
   Capability,
   RoleType,
   createPermission,
   createUserRole,
-} from '../governance';
+} from '../../governance';
 import type {
   ContentPackageId,
   OrgId,
@@ -16,15 +16,15 @@ import type {
   UserId,
   UserRoleId,
   VersionId,
-} from '../shared/types';
-import { DenyReason } from '../shared/types';
-import { ScopeLevel } from '../tenant/entities';
+} from '../../shared/types';
+import { DenyReason } from '../../shared/types';
+import { ScopeLevel } from '../../tenant/entities';
 import {
   ReleaseType,
   createCompositionEntry,
   createContentPackageVersion,
   createReleaseVersion,
-} from '../versioning/entities';
+} from '../../versioning/entities';
 import { releaseContentPackage } from './ReleaseEngine';
 
 const orgA = 'org-A' as OrgId;
