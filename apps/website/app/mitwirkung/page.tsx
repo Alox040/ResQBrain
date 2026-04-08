@@ -11,67 +11,76 @@ export default function MitwirkungPage() {
     <>
       <SectionFrame>
         <Container>
-          <Stack gap="md">
-            <p className="eyebrow">{mitwirkungPageContent.hero.subtitle}</p>
-            <h1 className="hero-title">{mitwirkungPageContent.hero.title}</h1>
-          </Stack>
-        </Container>
-      </SectionFrame>
-
-      <SectionFrame compact>
-        <Container>
-          <ContentCard>
-            <p className="body-text muted-text">{mitwirkungPageContent.hero.text}</p>
-          </ContentCard>
-        </Container>
-      </SectionFrame>
-
-      <SectionFrame compact>
-        <Container>
-          <ContentCard>
-            <Stack gap="sm">
-              <SectionHeading title={mitwirkungPageContent.why.title} />
-              <p className="body-text muted-text">{mitwirkungPageContent.why.text}</p>
+          <div
+            style={{
+              display: "grid",
+              gap: "var(--space-6)",
+              alignItems: "start",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
+            }}
+          >
+            <Stack gap="md">
+              <p className="eyebrow">{mitwirkungPageContent.hero.subtitle}</p>
+              <h1 className="hero-title">{mitwirkungPageContent.hero.title}</h1>
+              <p className="body-text muted-text section-lead">{mitwirkungPageContent.hero.text}</p>
             </Stack>
-          </ContentCard>
-        </Container>
-      </SectionFrame>
 
-      <SectionFrame compact>
-        <Container>
-          <ContentCard>
-            <Stack gap="sm">
-              <SectionHeading title={mitwirkungPageContent.survey.title} />
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
-                <span className="badge">{mitwirkungPageContent.survey.badge}</span>
-                <span className="eyebrow muted-text">{mitwirkungPageContent.survey.description}</span>
-                <span className="eyebrow muted-text">Stand: {mitwirkungPageContent.survey.date}</span>
-              </div>
-              <p className="body-text muted-text">{mitwirkungPageContent.survey.text}</p>
-              <div>
-                <ButtonLink href={mitwirkungPageContent.survey.href} size="lg">
+            <ContentCard>
+              <Stack gap="md">
+                <SectionHeading title={mitwirkungPageContent.survey.title} />
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)", alignItems: "center" }}>
+                  <span className="badge">{mitwirkungPageContent.survey.badge}</span>
+                  <span className="eyebrow muted-text">{mitwirkungPageContent.survey.description}</span>
+                  <span className="eyebrow muted-text">Stand: {mitwirkungPageContent.survey.date}</span>
+                </div>
+                <ButtonLink href={mitwirkungPageContent.survey.href} size="lg" external>
                   {mitwirkungPageContent.survey.cta}
                 </ButtonLink>
-              </div>
-            </Stack>
-          </ContentCard>
+              </Stack>
+            </ContentCard>
+          </div>
         </Container>
       </SectionFrame>
 
       <SectionFrame compact>
         <Container>
-          <ContentCard>
-            <Stack gap="sm">
-              <SectionHeading title={mitwirkungPageContent.additional.title} />
-              <ul className="stack stack--sm">
-                {mitwirkungPageContent.additional.items.map((item) => (
-                  <li key={item} className="body-text muted-text">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Stack>
-          </ContentCard>
+          <div
+            style={{
+              display: "grid",
+              gap: "var(--space-5)",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+            }}
+          >
+            <ContentCard>
+              <Stack gap="sm">
+                <SectionHeading title={mitwirkungPageContent.why.title} />
+                <p className="body-text muted-text">{mitwirkungPageContent.why.text}</p>
+              </Stack>
+            </ContentCard>
+
+            <ContentCard>
+              <Stack gap="sm">
+                <SectionHeading title={mitwirkungPageContent.survey.title} />
+                <p className="body-text muted-text">{mitwirkungPageContent.survey.text}</p>
+                <ButtonLink href={mitwirkungPageContent.survey.href} size="lg" external>
+                  {mitwirkungPageContent.survey.cta}
+                </ButtonLink>
+              </Stack>
+            </ContentCard>
+
+            <ContentCard>
+              <Stack gap="sm">
+                <SectionHeading title={mitwirkungPageContent.additional.title} />
+                <ul style={{ margin: 0, paddingLeft: "1.25rem" }}>
+                  {mitwirkungPageContent.additional.items.map((item) => (
+                    <li key={item} className="body-text muted-text">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Stack>
+            </ContentCard>
+          </div>
         </Container>
       </SectionFrame>
 
@@ -81,14 +90,16 @@ export default function MitwirkungPage() {
             <ContentCard>
               <Stack gap="sm">
                 <SectionHeading title={mitwirkungPageContent.previousSurveys.title} />
-                <ul className="stack stack--sm">
+                <ul style={{ margin: 0, paddingLeft: "1.25rem" }}>
                   {mitwirkungPageContent.previousSurveys.items.map((item) => (
-                    <li key={item.href} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
-                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="body-text muted-text">
-                        {item.label}
-                      </a>
-                      <span className="eyebrow muted-text">{item.description}</span>
-                      <span className="eyebrow muted-text">Stand: {item.date}</span>
+                    <li key={item.href} className="body-text muted-text">
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)", alignItems: "center" }}>
+                        <a href={item.href} target="_blank" rel="noopener noreferrer" className="body-text">
+                          {item.label}
+                        </a>
+                        <span className="eyebrow muted-text">{item.description}</span>
+                        <span className="eyebrow muted-text">Stand: {item.date}</span>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -101,7 +112,7 @@ export default function MitwirkungPage() {
       <SectionFrame compact>
         <Container>
           <ContentCard>
-            <p className="body-text muted-text">{mitwirkungPageContent.note.text}</p>
+            <p className="body-text muted-text section-intro">{mitwirkungPageContent.note.text}</p>
           </ContentCard>
         </Container>
       </SectionFrame>
