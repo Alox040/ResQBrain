@@ -292,8 +292,28 @@ select {
 
 @media (max-width: 720px) {
   .site-header-inner {
-    flex-wrap: wrap;
-    row-gap: var(--space-2);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-4);
+    row-gap: var(--space-3);
+    align-items: center;
+  }
+
+  .site-header-inner .site-brand {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  .site-header-inner > nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .site-header-inner .site-header-cta {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
   }
 
   .section-frame {
@@ -446,6 +466,73 @@ select {
   flex-wrap: wrap;
   gap: var(--space-3);
   justify-content: flex-start;
+}
+
+/* Einheitliche Content-Grids (Home, Mitwirkung, Kontakt) */
+.layout-split {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.layout-split--compact {
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.75rem), 1fr));
+}
+
+.layout-split--cta {
+  gap: var(--space-5);
+  align-items: end;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+}
+
+/* Zwei Spalten: Text oben links, CTA unten rechts in der zweiten Spalte */
+.layout-split--row-start {
+  gap: var(--space-5);
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+}
+
+@media (min-width: 541px) {
+  .layout-split--row-start .cta-actions {
+    align-self: end;
+  }
+}
+
+@media (max-width: 540px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-split,
+  .layout-split--compact,
+  .layout-split--cta,
+  .layout-split--row-start {
+    grid-template-columns: 1fr;
+  }
+
+  .layout-split--cta {
+    align-items: stretch;
+  }
+
+  .layout-split--cta .cta-actions {
+    align-self: stretch;
+  }
+
+  .layout-split--cta .cta-actions .button-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .layout-split--row-start .cta-actions {
+    align-self: stretch;
+  }
+
+  .layout-split--row-start .cta-actions .button-link {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .contact-cta-content .cta-actions {
@@ -695,6 +782,34 @@ select {
   border: var(--border-width) solid var(--border);
   background: var(--surface);
   color: var(--text);
+  min-height: var(--button-height);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.mitwirken-form-control:focus-visible {
+  border-color: var(--border-strong);
+  box-shadow: var(--focus-ring);
+}
+
+select.mitwirken-form-control {
+  cursor: pointer;
+}
+
+textarea.mitwirken-form-control {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.mitwirken-form-fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mitwirken-form-fieldset legend {
+  padding-bottom: var(--space-2);
 }
 
 .mitwirken-form-check {
@@ -706,5 +821,36 @@ select {
 
 .mitwirken-form-check input {
   margin-top: 0.2rem;
+  min-width: 1.125rem;
+  min-height: 1.125rem;
+  cursor: pointer;
+}
+
+.mitwirken-form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
+
+.mitwirken-form-actions .button-link {
+  width: 100%;
+  justify-content: center;
+}
+
+.mitwirken-form-privacy {
+  margin: 0;
+  line-height: var(--line-height-small);
+}
+
+.mitwirken-form-privacy a {
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 480px) {
+  .mitwirken-form-actions .button-link {
+    width: auto;
+    align-self: flex-start;
+  }
 }
 

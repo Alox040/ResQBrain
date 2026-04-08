@@ -11,14 +11,7 @@ export default function HomePage() {
     <>
       <SectionFrame>
         <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-6)",
-              alignItems: "start",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
-            }}
-          >
+          <div className="layout-split">
             <Stack gap="md">
               <span className="badge badge--hero">{content.hero.badge}</span>
               <h1 className="hero-title">{content.hero.headline}</h1>
@@ -36,7 +29,7 @@ export default function HomePage() {
                   {content.hero.ctaSecondary.label}
                 </ButtonLink>
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)" }}>
+              <div className="ui8-action-row">
                 {content.hero.hints.map((hint) => (
                   <span key={hint} className="badge">
                     {hint}
@@ -47,7 +40,7 @@ export default function HomePage() {
 
             <ContentCard>
               <Stack gap="md">
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)", alignItems: "center" }}>
+                <div className="ui8-action-row">
                   <span className="badge">{content.mitwirkung.cta.badge}</span>
                   <span className="eyebrow muted-text">Stand: {content.mitwirkung.cta.date}</span>
                 </div>
@@ -88,13 +81,7 @@ export default function HomePage() {
 
       <SectionFrame compact>
         <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-5)",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-            }}
-          >
+          <div className="layout-split layout-split--compact">
             <ContentCard>
               <Stack gap="md">
                 <SectionHeading title={content.idea.title} />
@@ -177,26 +164,19 @@ export default function HomePage() {
       <SectionFrame compact>
         <Container>
           <ContentCard>
-            <div
-              style={{
-                display: "grid",
-                gap: "var(--space-5)",
-                alignItems: "start",
-                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-              }}
-            >
+            <div className="layout-split layout-split--row-start">
               <Stack gap="md">
                 <Stack gap="sm">
                   <SectionHeading title={content.mitwirkung.title} />
                   <p className="body-text muted-text section-intro">{content.mitwirkung.text}</p>
                 </Stack>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)", alignItems: "center" }}>
+                <div className="ui8-action-row">
                   <span className="badge">{content.mitwirkung.cta.badge}</span>
                   <span className="eyebrow muted-text">{content.mitwirkung.cta.description}</span>
                   <span className="eyebrow muted-text">Stand: {content.mitwirkung.cta.date}</span>
                 </div>
               </Stack>
-              <div className="cta-actions" style={{ alignSelf: "end" }}>
+              <div className="cta-actions">
                 <ButtonLink href={content.mitwirkung.cta.href} size="lg" external>
                   {content.mitwirkung.cta.label}
                 </ButtonLink>
@@ -227,19 +207,12 @@ export default function HomePage() {
       <SectionFrame compact>
         <Container>
           <ContentCard>
-            <div
-              style={{
-                display: "grid",
-                gap: "var(--space-5)",
-                alignItems: "end",
-                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-              }}
-            >
+            <div className="layout-split layout-split--cta">
               <Stack gap="sm">
                 <SectionHeading title={content.cta.title} />
                 <p className="body-text muted-text section-intro">{content.cta.text}</p>
               </Stack>
-              <div className="cta-actions" style={{ alignSelf: "end" }}>
+              <div className="cta-actions">
                 <ButtonLink href={content.cta.button.href} size="lg">
                   {content.cta.button.label}
                 </ButtonLink>

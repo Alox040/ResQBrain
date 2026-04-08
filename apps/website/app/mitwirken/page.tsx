@@ -91,7 +91,7 @@ export default function MitwirkenPage() {
                 </select>
               </div>
 
-              <fieldset className="mitwirken-form-field" style={{ border: "none", margin: 0, padding: 0 }}>
+              <fieldset className="mitwirken-form-field mitwirken-form-fieldset">
                 <legend>Interessen</legend>
                 {interestOptions.map((item) => (
                   <label key={item.value} className="mitwirken-form-check">
@@ -111,16 +111,18 @@ export default function MitwirkenPage() {
                 />
               </div>
 
-              <button type="submit" className="button-link button-link--lg">
-                Absenden
-              </button>
+              <div className="mitwirken-form-actions">
+                <button type="submit" className="button-link button-link--lg">
+                  Absenden
+                </button>
 
-              <p className="small-text muted-text">
-                Hinweise zum Datenschutz:{" "}
-                <Link className="footer-nav-link" href={routes.datenschutz}>
-                  Datenschutz
-                </Link>
-              </p>
+                <p className="small-text muted-text mitwirken-form-privacy">
+                  Hinweise zum Datenschutz:{" "}
+                  <Link className="footer-nav-link" href={routes.datenschutz}>
+                    Datenschutz
+                  </Link>
+                </p>
+              </div>
             </form>
           </ContentCard>
         </Container>

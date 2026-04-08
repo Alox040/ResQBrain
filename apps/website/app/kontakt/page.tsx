@@ -12,14 +12,7 @@ export default function KontaktPage() {
     <>
       <SectionFrame>
         <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-6)",
-              alignItems: "start",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
-            }}
-          >
+          <div className="layout-split">
             <Stack gap="md">
               <p className="eyebrow">{contactPageContent.hero.subtitle}</p>
               <h1 className="hero-title">{contactPageContent.hero.title}</h1>
@@ -41,13 +34,7 @@ export default function KontaktPage() {
 
       <SectionFrame compact>
         <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-5)",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-            }}
-          >
+          <div className="layout-split layout-split--compact">
             <ContentCard>
               <Stack gap="sm">
                 <p className="body-text muted-text">{contactInfo.email.label}</p>

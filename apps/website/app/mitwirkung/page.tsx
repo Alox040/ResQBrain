@@ -12,14 +12,7 @@ export default function MitwirkungPage() {
     <>
       <SectionFrame>
         <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-6)",
-              alignItems: "start",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
-            }}
-          >
+          <div className="layout-split">
             <Stack gap="md">
               <p className="eyebrow">{mitwirkungPageContent.hero.subtitle}</p>
               <h1 className="hero-title">{mitwirkungPageContent.hero.title}</h1>
@@ -29,7 +22,7 @@ export default function MitwirkungPage() {
             <ContentCard>
               <Stack gap="md">
                 <SectionHeading title={mitwirkungPageContent.survey.title} />
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-3)", alignItems: "center" }}>
+                <div className="ui8-action-row">
                   <span className="badge">{mitwirkungPageContent.survey.badge}</span>
                   <span className="eyebrow muted-text">{mitwirkungPageContent.survey.description}</span>
                   <span className="eyebrow muted-text">Stand: {mitwirkungPageContent.survey.date}</span>
@@ -45,27 +38,11 @@ export default function MitwirkungPage() {
 
       <SectionFrame compact>
         <Container>
-          <div
-            style={{
-              display: "grid",
-              gap: "var(--space-5)",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-            }}
-          >
+          <div className="layout-split layout-split--compact">
             <ContentCard>
               <Stack gap="sm">
                 <SectionHeading title={mitwirkungPageContent.why.title} />
                 <p className="body-text muted-text">{mitwirkungPageContent.why.text}</p>
-              </Stack>
-            </ContentCard>
-
-            <ContentCard>
-              <Stack gap="sm">
-                <SectionHeading title={mitwirkungPageContent.survey.title} />
-                <p className="body-text muted-text">{mitwirkungPageContent.survey.text}</p>
-                <ButtonLink href={mitwirkungPageContent.survey.href} size="lg" external>
-                  {mitwirkungPageContent.survey.cta}
-                </ButtonLink>
               </Stack>
             </ContentCard>
 
