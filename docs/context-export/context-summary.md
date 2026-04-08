@@ -1,6 +1,6 @@
 # Kontext-Zusammenfassung (Export)
 
-**Letzte Verifikation:** 5. April 2026 (`pnpm build` Root, `tsc` Mobile, `validate-routing`, `validate-content-isolation` — siehe `deployment.md`).
+**Letzte Verifikation:** 7. April 2026 (`pnpm build` Root, Domain-`tsc --noEmit`, `compile:content/versioning/governance`, Website-Typecheck). Website deployed auf Vercel (8. April 2026, Figma-Migration Phase 1 abgeschlossen).
 
 ## Aktueller Stand
 
@@ -12,10 +12,12 @@
 
 ## Was funktioniert (im Repo nachweisbar)
 
-- **Website-Produktionsbuild:** `pnpm build` am Root → Exit 0; statische Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`.
+- **Website-Produktionsbuild:** `pnpm build` am Root → Exit 0; statische Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`, `/impressum`, `/datenschutz`.
+- **Website-Deployment:** Auf Vercel deployed (8. Apr. 2026) — Figma-Migration Phase 1 abgeschlossen.
+- **Website-Komponentenstruktur:** Neues `apps/website/components/` mit `layout/`, `sections/` (9 Sections), `ui/`.
 - **`validate-content-isolation.ts`:** letzter Lauf Exit 0 (PASS).
 - **Mobile UX (laut Navigation):** Tabs + Stacks für Home (inkl. Vitalwerte), Suche, Favoriten, Settings, Medikamente, Algorithmen; Favoriten/Verlauf/Recent über Stores + Hydration in `App.tsx`.
-- **Website-Copy:** zentral u. a. `lib/site/content.ts`; Umfrage-Links aus `lib/site/survey.ts` (derzeit Platzhalter-URL).
+- **Website-Copy:** zentral u. a. `apps/website/lib/site/content.ts`; Umfrage-Links aus `lib/site/survey.ts`.
 
 ## Was fehlt oder nur teilweise ist
 
@@ -28,10 +30,11 @@
 
 ## Höchste Priorität
 
-1. **Mobile `tsc` grün** — blockiert `verify:local` und damit Nav-/Export-Schritte der Kette.
-2. **`validate-routing.ts`** an `app/page.tsx` und tatsächliche Section-Dateien anpassen oder Scope dokumentieren.
-3. **Offline/Sync-Zielbild** mit Bundle-URL, Cache-Speicher und Release-Prozess verbinden.
-4. **Produktive Umfrage-URL** statt `example.com` in `lib/site/survey.ts` (und README-Risiko anpassen).
+1. **Bundle-Persistenz — Konzept:** `lookupSource`-Erweiterung für `cached`/`updated`/`fallback` dokumentieren und implementieren (Roadmap Phase 0).
+2. **Root-Level-Struktur klären:** `app/`, `components/`, `lib/` am Repo-Root — v2-Vorbereitung oder Artefakt; bereinigen oder formalisieren.
+3. **Mobile `tsc` grün** — blockiert `pnpm mobile:verify` (`App.tsx`/`HomeScreen`/`SettingsScreen` Typfehler).
+4. **`validate-routing.ts`** an aktuelle `apps/website`-Struktur anpassen oder als Legacy dokumentieren.
+5. **Sync-Konzept** (inhaltlich, als Dokument).
 
 ## Empfohlene nächste Schritte (neutral)
 

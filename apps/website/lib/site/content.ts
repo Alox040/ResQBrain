@@ -9,7 +9,7 @@ export const content = {
       "Das Projekt arbeitet an einer gemeinsamen, nachvollziehbaren Wissensgrundlage für Einsatz, Ausbildung und Nachbereitung. Der Funktionsumfang wächst schrittweise in der MVP-Phase.",
     ctaPrimary: {
       label: "Mitwirken",
-      href: routes.mitwirkung,
+      href: routes.mitwirken,
     },
     ctaSecondary: {
       label: "Projekt auf GitHub",

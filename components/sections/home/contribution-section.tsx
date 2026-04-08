@@ -21,7 +21,7 @@ export function ContributionSection() {
     {
       title: mitwirkung.title,
       description: mitwirkung.text,
-      href: routes.mitwirkung,
+      href: routes.mitwirken,
       linkLabel: content.hero.ctaPrimary.label,
       external: false as const,
     },

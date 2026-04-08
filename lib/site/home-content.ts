@@ -19,7 +19,7 @@ export const homeContent = {
     },
     primaryCta: {
       label: "Mitwirken",
-      href: routes.mitwirkung,
+      href: routes.mitwirken,
     },
     secondaryCta: {
       label: "Projekt auf GitHub",
@@ -117,7 +117,7 @@ export const homeContent = {
         title: "Mitwirkung",
         description:
           "Rückmeldungen aus Praxis und Ausbildung fließen direkt in die Priorisierung des Projekts ein.",
-        href: routes.mitwirkung,
+        href: routes.mitwirken,
         linkLabel: "Mitwirken",
         external: false as const,
       },

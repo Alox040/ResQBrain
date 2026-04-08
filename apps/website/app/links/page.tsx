@@ -12,7 +12,7 @@ type LinkItem = {
 };
 
 const primaryLinks: readonly LinkItem[] = [
-  { label: "Mitwirken", href: routes.mitwirkung },
+  { label: "Mitwirken", href: routes.mitwirken },
   { label: "UI Umfrage", href: surveys.active.href, external: true },
   { label: "Community", href: publicLinks.github, external: true },
   { label: "Discord", href: publicLinks.discord, external: true },

@@ -1,6 +1,6 @@
 # Bekannte Themen / Abweichungen (Export, nachweisbar)
 
-Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Systeme. **Verifikation:** 5. April 2026 (siehe `deployment.md`).
+Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Systeme. **Letzte Aktualisierung:** 8. April 2026.
 
 ## Dokumentation vs. Code
 
@@ -38,6 +38,13 @@ Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Syst
 
 - **`apps/website/vercel.json`:** kein `ignoreCommand` — im Gegensatz zu `apps/website-old/vercel.json`.
 - **`docs/status/PROJECT_STATUS.md`:** produktives Deployment nicht aus lokalem Build allein ableitbar.
+
+## Website-Struktur (neu, 8. April 2026)
+
+- **Root-Level `app/`, `components/`, `lib/`:** Am Repo-Root existiert eine parallele Next.js-ähnliche Struktur mit identischen Routen wie `apps/website/`. Zweck unklar — möglicherweise v2-Vorbereitung oder Artefakt aus fehlerhaftem Arbeitsverzeichnis. **Kein Einfluss auf Produktion** (`vercel.json` zeigt auf `apps/website`), aber Klärung erforderlich.
+- **`/mitwirken` vs. `/mitwirkung`:** Zwei separate Routen mit ähnlichem Zweck jetzt in `apps/website/app/`; inhaltliche Abgrenzung noch nicht dokumentiert.
+- **`/updates`-Route:** Vorhanden, aber Datenquelle und Inhaltspfad nicht spezifiziert.
+- **`apps/website/figma/`:** Figma-Export als Referenz im Repo — keine produktive Nutzung, aber erhöht Repo-Größe.
 
 ## Datenmodell-Drift
 

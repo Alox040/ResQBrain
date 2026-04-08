@@ -1,12 +1,26 @@
 # Deployment & Build (Export)
 
-**Letzte Verifikation (Export):** 5. April 2026 — `pnpm build` (Root) Exit 0 (Next.js 16.2.1); `pnpm exec tsx scripts/validate-content-isolation.ts` Exit 0; `pnpm exec tsx scripts/validate-routing.ts` Exit 1; `npx tsc --noEmit` in `apps/mobile-app` Exit 2.
+**Letzte Verifikation (Export):** 8. April 2026.  
+- **Domain `tsc --noEmit`:** 7. Apr. 2026 — Exit 0 (alle Module).  
+- **`pnpm build` (Root):** 7. Apr. 2026 — Exit 0, Next.js 16.2.1, 8 statische Seiten.  
+- **Website deployed auf Vercel:** 8. Apr. 2026 — Figma-Migration Phase 1 (`b9a4093 final figma website deploy`).  
+- **`pnpm mobile:verify`:** Nicht grün — Mobile `tsc --noEmit` Exit 2 (unverändert seit 5. Apr.).
+
+## Aktueller Deploy-Status (8. April 2026)
+
+| Komponente | Status |
+|-----------|--------|
+| Website (Vercel, Produktion) | ✓ Deployed — Figma-Migration Phase 1 |
+| Letzter Commit deployed | `b9a4093 final figma website deploy` |
+| Neue Routen live | `/mitwirken`, `/updates` (zusätzlich zu bisherigen 6 Routen) |
+| Mobile App | Nicht deployed — separater Expo-Build-Prozess |
+| Domain-Paket | Nicht deployed — Library, kein eigenständiger Build |
 
 ## Vercel (aktive Website)
 
 - **Repository-Root:** `vercel.json` — `framework: "nextjs"`, `rootDirectory: "apps/website"`, `installCommand: "pnpm install"`, `buildCommand: "pnpm --filter @resqbrain/website build"`, `outputDirectory: "apps/website/.next"`.
-- **App-Ordner:** `apps/website/vercel.json` — `framework`, `installCommand`, `buildCommand` (kein `rootDirectory`, kein `ignoreCommand` in dieser Datei).
-- **`apps/website-v2/`:** im aktuellen Repository **nicht** vorhanden (kein separates `vercel.json` dafür).
+- **App-Ordner:** `apps/website/vercel.json` — `framework`, `installCommand`, `buildCommand` (kein `rootDirectory`, kein `ignoreCommand`).
+- **`apps/website-v2/`:** im aktuellen Repository **nicht** vorhanden; Root-Level `app/`/`components/`/`lib/` ist kein eigenständiges Vercel-Projekt.
 
 ## Vercel (Legacy-Kopie)
 
@@ -55,14 +69,40 @@
 
 - **Vercel:** Branch-Whitelist nur wenn `ignoreCommand` gesetzt — für **`apps/website`** in-repo **nicht** gesetzt; für **`apps/website-old`** gesetzt.
 
-## Verifizierte lokale Läufe (5. April 2026)
+## Verifizierte lokale Läufe
 
-- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1 (Turbopack), statische Routen wie in CLI-Ausgabe.
-- **`npx tsc --noEmit` (`apps/mobile-app`):** Exit **2** — u. a. `ResolvedLookupBundle` ohne Property `version` in `App.tsx`; `AppPalette` ohne `onPrimary` in `HomeScreen.tsx`; `TYPOGRAPHY` ohne `caption` in `SettingsScreen.tsx`.
-- **`pnpm exec tsx scripts/validate-routing.ts`:** Exit **1** — Skript erwartet u. a. Dateien `home-hero.tsx`, `survey-invite-section.tsx`, … unter `apps/website/components/sections/`; aktuelle Startseite nutzt andere Komponentennamen und `app/page.tsx`.
-- **`pnpm exec tsx scripts/validate-content-isolation.ts`:** Exit **0** — „Content isolation: PASS“.
+### 7. April 2026
 
-## Bekannte Deploy-/Struktur-Themen (faktenbasiert)
+- **`pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`:** Exit **0** — Domain-Gesamtpaket sauber.
+- **`compile:content`, `compile:versioning`, `compile:governance`:** alle Exit **0**.
+- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1 (Turbopack).
+- **`pnpm --filter @resqbrain/website run typecheck`:** Exit **0**.
+- **`tsx --test src/audit/audit.foundation.test.ts`** (in `packages/domain`): 7/7 Tests bestanden.
 
-- **Root `pnpm build` baut nicht die Mobile-App** — nur `@resqbrain/website`.
-- Kanonisches Website-Ziel: **`apps/website`**; zusätzlich **`apps/website-old`**, **`apps/website-pre-v2-backup`** (nicht im `pnpm-workspace.yaml`) sowie Root-`app/` / `components/`.
+### 5. April 2026 (Archiv)
+
+- **`pnpm build` (Root):** Exit 0, Next.js 16.2.1 (Turbopack), 8 statische Seiten.
+- **`npx tsc --noEmit` (`apps/mobile-app`):** Exit **2** — `ResolvedLookupBundle` ohne Property `version` in `App.tsx`; `AppPalette` ohne `onPrimary` in `HomeScreen.tsx`; `TYPOGRAPHY` ohne `caption` in `SettingsScreen.tsx`.
+- **`pnpm exec tsx scripts/validate-routing.ts`:** Exit **1** — Skript erwartet alte Section-Dateinamen (`home-hero.tsx`, `survey-invite-section.tsx` …); aktuelle Struktur nutzt `HeroSection.tsx` u. a.
+- **`pnpm exec tsx scripts/validate-content-isolation.ts`:** Exit **0** — „Content isolation: PASS”.
+
+## Bekannte Deploy-/Struktur-Risiken (faktenbasiert)
+
+| # | Thema | Status |
+|---|-------|--------|
+| D1 | **Root `pnpm build` baut nicht die Mobile-App** — nur `@resqbrain/website` | bekannt, kein Handlungsbedarf |
+| D2 | **Mobile `tsc --noEmit`:** Exit 2 — `pnpm mobile:verify` blockiert | offen |
+| D3 | **`validate-routing.ts`:** Exit 1 — Erwartungen veraltet gegenüber neuer Komponentenstruktur | offen |
+| D4 | **Root-Level `app/`/`components/`/`lib/`:** Parallele Next.js-Struktur am Repo-Root; kein Vercel-Ziel, Zweck ungeklärt | offen |
+| D5 | **`/mitwirken` vs. `/mitwirkung`:** Zwei ähnliche Routen in `apps/website`; inhaltliche Abgrenzung nicht dokumentiert | offen |
+| D6 | **`/updates`-Route:** Datenpfad und Inhalt nicht spezifiziert | offen |
+| D7 | **Umfrage-URL** in `lib/site/survey.ts`: vor produktivem Betrieb DPA/Privacy prüfen | bekannt |
+| D8 | **`next-env.d.ts`** verweist nach Build auf `.next/types/routes.d.ts` — nach Clone ohne Build ggf. fehlerhafte TS-Pfade | bekannt |
+
+## Nächste Deployment-Schritte
+
+1. **Bundle-Persistenz-Konzept** abschließen — Voraussetzung für Mobile-Updates
+2. **Root-Level-Struktur bereinigen** — entweder löschen oder als `apps/website-v2/` formalisieren
+3. **Mobile `tsc` grün** — dann `pnpm mobile:verify` und anschließend Expo-Build
+4. **`validate-routing.ts`** an aktuelle Section-Dateinamen anpassen oder außer Betrieb nehmen
+5. **`/mitwirken` und `/updates`** inhaltlich spezifizieren und vollständig befüllen

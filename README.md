@@ -21,10 +21,10 @@ Aktuelle Statusdateien:
 
 ## Current Development State
 
-Kurzstatus (abgeglichen mit dem Repo, **7. April 2026**):
+Kurzstatus (abgeglichen mit dem Repo, **8. April 2026**):
 
 - **Aktuelle Phase:** Phase 0 (Lookup-first MVP) **plus** umgesetzte einsatznahe Erweiterungen; Details und Legende **`[~]` teilweise** in der Roadmap.  
-- **Produktiv sichtbar:** **Mobile App** (Expo): Lookup offline aus eingebettetem Bundle; **Website** (Next.js) statisch.  
+- **Produktiv sichtbar:** **Mobile App** (Expo): Lookup offline aus eingebettetem Bundle; **Website** (Next.js) — Figma-Migration Phase 1 deployed (8. Apr. 2026).  
 - **Mobile — implementiert:** Listen/Details Medikamente & Algorithmen; **Suche** mit Ranking und Inhalts-Filter; **Start/Home**; **Favoriten** und **Verlauf** (persistiert über **AsyncStorage**); **Dosisrechner** (nur bei erkanntem mg/µg-pro-kg im Dosistext); **Vitalwerte-Referenz** (statischer Screen); UI-**Adapter/View Models** für Bundle vs. Darstellung.  
 - **Mobile — vorbereitet, nicht aktiv:** `lookupSource` für künftige Bundle-Schichten (cached/updated/fallback) — **ohne** Sync/Backend.  
 - **Mobile — offen:** Lookup-Bundle separat auf dem Gerät aus Download/Sync; Netzwerk-Updates.  
@@ -112,11 +112,11 @@ Domain `tsc --noEmit` clean; website static routes and typecheck OK; mobile Phas
 
 ## Nächste Schritte (kurz)
 
-Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Bundle-Persistenz / `lookupSource`, Sync-Konzept, Pilot/Seed; nach Mobile-Änderungen `pnpm mobile:verify`.
+Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Bundle-Persistenz / `lookupSource` (Konzept), Root-Level-Struktur klären, Mobile-`tsc` grün; nach Mobile-Änderungen `pnpm mobile:verify`.
 
 ## Next Steps (EN)
 
-Bundle persistence and `lookupSource` non-embedded layers; sync concept; API/auth boundary for tenant enforcement; align `/datenschutz` with live Office Forms survey; run `pnpm mobile:verify` when mobile code changes.
+Bundle persistence concept (`lookupSource` non-embedded layers); clarify root-level `app/`/`components/`/`lib/` structure; fix mobile TypeScript errors; sync concept; API/auth boundary for tenant enforcement.
 
 ## Bekannte Risiken
 
@@ -141,20 +141,25 @@ Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isol
 | `pnpm --filter @resqbrain/website run typecheck` | Website `tsc --noEmit` |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav, Android-Export |
 
-**Zuletzt verifiziert:** 7. April 2026 — Domain-`tsc --noEmit`, `compile:content`, `compile:versioning`, `compile:governance`, `pnpm build`, Website-`typecheck`, Audit-Foundation-Tests erfolgreich.
+**Zuletzt verifiziert:** 7. April 2026 — Domain-`tsc --noEmit`, `compile:content`, `compile:versioning`, `compile:governance`, `pnpm build`, Website-`typecheck`, Audit-Foundation-Tests erfolgreich.  
+**Website deployed:** 8. April 2026 — Figma-Migration Phase 1 (`b9a4093`).
 
 ## Website Status
 
+**Design:** Figma-Migration Phase 1 deployed (8. Apr. 2026). Neue Komponentenstruktur: `apps/website/components/layout/`, `sections/`, `ui/`.
+
 | Route | Status |
 |-------|--------|
-| `/` | OK (Landing) |
+| `/` | OK (Landing — 9 Sections, Figma-Design) |
 | `/kontakt` | OK |
-| `/links` | OK |
+| `/links` | OK (TikTok-optimiert) |
 | `/mitwirkung` | OK (Umfrage-CTA) |
+| `/mitwirken` | OK — neu (8. Apr. 2026) |
+| `/updates` | OK — neu (8. Apr. 2026) |
 | `/impressum` | OK |
 | `/datenschutz` | OK |
 
-Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/lib/site/navigation.ts` → `FooterNav`. Umfrage-URLs: `apps/website/lib/site/survey.ts`. Homepage-Sektionen ohne feste `id`-Anker (keine internen `#`-Ziele auf `/`).
+Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/components/layout/footer-nav.tsx`. Umfrage-URLs: `apps/website/lib/site/survey.ts`. Homepage-Sektionen ohne feste `id`-Anker.
 
 ## Website Status (EN)
 

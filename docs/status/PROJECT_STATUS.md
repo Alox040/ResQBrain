@@ -1,6 +1,6 @@
 # Projektstatus
 
-**Stand:** 7. April 2026 (Arbeitstages-Abschluss)
+**Stand:** 8. April 2026 (Arbeitstages-Abschluss)
 
 ## Gesamtstatus
 
@@ -56,9 +56,12 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Aspekt | Status |
 |--------|--------|
 | Framework | Next.js 16 (App Router) |
-| Startseite `/` | Vorhanden |
+| Design | Figma-Migration Phase 1 abgeschlossen (8. Apr. 2026) |
+| Startseite `/` | Vorhanden — 9 Sections (Figma-basiert) |
 | Rechtstexte | `/impressum`, `/datenschutz` mit dedizierten `page.tsx` |
-| Sektionen | Hero, Mitwirkung/Umfrage-Metadaten, CTA, Footer u. a. |
+| Sektionen | HeroSection, ProblemSection, IdeaSection, StatusSection, AudienceSection, MitwirkungSection, FaqSection, ContactCtaSection, ProjectGoalSection |
+| Komponentenstruktur | `apps/website/components/layout/`, `sections/`, `ui/` — neu durch Figma-Migration |
+| Deployment | Vercel (`rootDirectory: "apps/website"`) — Stand 8. Apr. 2026 deployed |
 
 ## Routing
 
@@ -68,16 +71,19 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `/kontakt` | `apps/website/app/kontakt/page.tsx` | Static |
 | `/links` | `apps/website/app/links/page.tsx` | Static |
 | `/mitwirkung` | `apps/website/app/mitwirkung/page.tsx` | Static |
+| `/mitwirken` | `apps/website/app/mitwirken/page.tsx` | Static — neu (8. Apr.) |
+| `/updates` | `apps/website/app/updates/page.tsx` | Static — neu (8. Apr.) |
 | `/impressum` | `apps/website/app/impressum/page.tsx` | Static |
 | `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | Static |
 
 **Pfade:** `apps/website/lib/routes.ts` — nur Seitenrouten (keine Fragment-IDs).
 
-**Footer / CTAs:** `lib/site/navigation.ts` (Footer: Mitwirkung, Kontakt, Impressum, Datenschutz, Links), `lib/site/survey.ts` (aktive Umfrage-URL, derzeit `forms.office.com`), `lib/site/content.ts` (Hero → `/mitwirkung`, Mitwirkung-CTA → externe Umfrage), `ContactCtaSection` → `/kontakt`.
+**Footer / CTAs:** `apps/website/components/layout/footer-nav.tsx`, `lib/site/navigation.ts`, `lib/site/survey.ts`, `lib/site/content.ts`.
 
 **Homepage-Anker:** Keine `id` auf Sektions-Wrappern; keine internen `#…`-Ziele auf `/`.
 
-**Letzte Validierung (7. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `tsx --test src/audit/audit.foundation.test.ts` — erfolgreich.
+**Letzte Build-Validierung (7. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `tsx --test src/audit/audit.foundation.test.ts` — erfolgreich.  
+**Website deployed (8. Apr. 2026):** `b9a4093 final figma website deploy` — Vercel.
 
 ## Build
 
@@ -86,6 +92,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
 | Letzter Website-Lauf (lokal, 7. Apr. 2026) | Erfolgreich (Next 16.2.1), 8/8 statische Seiten |
+| Website-Deployment (8. Apr. 2026) | ✓ Deployed auf Vercel — Figma-Migration Phase 1 (`b9a4093`) |
 
 ## Risiken
 

@@ -1,5 +1,70 @@
 # Arbeitssession
 
+**Datum:** 8. April 2026  
+**Art:** Arbeitstages-Abschluss — Website-Figma-Migration abgeschlossen und deployed; Dokumentationsabgleich
+
+## Was heute umgesetzt wurde (8. April 2026)
+
+### Website — Figma-Migration Phase 1 (abgeschlossen)
+
+| Bereich | Änderung |
+|---------|----------|
+| `apps/website/app/globals.css` | Komplettes CSS-Redesign auf Figma-Basis (+150 Zeilen) |
+| `apps/website/components/` | Neue Komponentenstruktur: `layout/`, `sections/`, `ui/` |
+| `apps/website/components/sections/` | 9 Sections: Hero, Problem, Idea, Status, Audience, Mitwirkung, Faq, ContactCta, ProjectGoal |
+| `apps/website/components/layout/` | site-shell, site-header, site-footer, footer-nav, main-nav, Section, Container, Stack |
+| `apps/website/components/ui/` | badge, button-link, card-title, container, content-card, page-header, section-frame, section-heading, stack, text-link |
+| `apps/website/app/mitwirken/` | Neue Route `/mitwirken` (Anmeldeseite) |
+| `apps/website/app/updates/` | Neue Route `/updates` |
+| `apps/website/app/links/links-bio.module.css` | CSS-Aktualisierung |
+| `apps/website/figma/` | Figma-Export als Referenz im Repo |
+| `apps/website-lab/` | Isolierter Figma-Architektur-Playground |
+| `apps/mobile-app-lab/figma-export/` | Mobile-Figma-Export-Referenz |
+
+### Root-Level-Struktur (beobachtet, zu klären)
+
+Im Repo-Root existiert jetzt eine parallele Next.js-ähnliche Struktur:
+- `app/` mit identischen Routen (datenschutz, impressum, kontakt, links, mitwirken, mitwirkung + layout.tsx + theme.css)
+- `components/` mit cards, layout, sections, ui
+- `lib/` mit routes.ts und site/
+
+**Unklar:** Ist diese Root-Struktur bewusst (zukünftiges Website-v2-Setup) oder ein Artefakt (Befehle im falschen Verzeichnis ausgeführt)?  
+**Kein Einfluss auf produktives Deployment** — Vercel nutzt `rootDirectory: "apps/website"`.
+
+### Deployment
+
+- Alle Website-Commits deployed auf Vercel (`final figma website deploy` — `b9a4093`)
+- Git-Status: sauber, Branch `main` up-to-date
+
+## Validierungen (8. April 2026)
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| Git-Status | ✓ Clean (keine uncommitted changes) |
+| Letzter `pnpm build` (7. Apr.) | ✓ Next.js 16.2.1, 8 statische Seiten |
+| Domain-`tsc --noEmit` (7. Apr.) | ✓ erfolgreich |
+| Deployment | ✓ auf Vercel deployed (b9a4093) |
+
+**Hinweis:** Kein neuer lokaler Build-Lauf heute — letzter valider Build war 7. Apr. 2026.
+
+## Risiken / Hinweise
+
+- Root-Level-`app/`/`components/`/`lib/`-Struktur: Zweck und Lebenszyklus klären — ggf. in `apps/website/` verschieben oder als `website-v2` separieren.
+- `apps/website/app/mitwirken/page.tsx` existiert jetzt neben `/mitwirkung` — inhaltliche Abgrenzung dokumentieren.
+- `/updates`-Route vorhanden — Inhalt und Datenpfad noch zu klären.
+
+## Nächste sinnvolle Schritte (Priorität)
+
+1. **Bundle-Persistenz — Konzept:** `docs/context/bundle-persistence-concept.md` anlegen (lookupSource-Erweiterung)
+2. **Root-Struktur klären:** `app/`, `components/`, `lib/` am Root bereinigen oder formalisieren
+3. **`/mitwirken` vs. `/mitwirkung`:** Inhaltliche Abgrenzung dokumentieren
+4. **Sync-Konzept** (inhaltlich, als Dokument)
+5. **Mobile `pnpm mobile:verify`** — vor nächsten Mobile-Änderungen sicherstellen
+
+---
+
+## Session 7. April 2026 (Archiv)
+
 **Datum:** 7. April 2026  
 **Art:** Arbeitstages-Abschluss — Workspace-Analyse, Domain-/Website-Validierung, `pnpm build`, Status- und README-Abgleich, Git-Sync
 
