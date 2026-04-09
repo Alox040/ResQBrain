@@ -4,6 +4,7 @@ import type { ApiErrorResponse } from '../../shared/contracts/ApiErrorResponse';
 import type { GetMedicationListRequest } from '../contracts/GetMedicationListRequest';
 import type { MedicationListResponse } from '../contracts/MedicationListResponse';
 import { mapMedicationListRequestToQuery } from '../mappers/mapMedicationListRequestToQuery';
+import { createLookupServices } from '../runtime/createLookupServices';
 
 export interface GetMedicationListHandlerResult {
   readonly status: number;
@@ -12,7 +13,7 @@ export interface GetMedicationListHandlerResult {
 
 export async function getMedicationListHandler(
   request: GetMedicationListRequest,
-  service: Pick<GetMedicationListService, 'execute'>,
+  service: Pick<GetMedicationListService, 'execute'> = createLookupServices().getMedicationListService,
 ): Promise<GetMedicationListHandlerResult> {
   if (!request.organizationId) {
     return {

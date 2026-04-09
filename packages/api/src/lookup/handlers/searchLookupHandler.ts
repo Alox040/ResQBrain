@@ -4,6 +4,7 @@ import type { ApiErrorResponse } from '../../shared/contracts/ApiErrorResponse';
 import type { SearchLookupRequest } from '../contracts/SearchLookupRequest';
 import type { SearchLookupResponse } from '../contracts/SearchLookupResponse';
 import { mapSearchLookupRequestToQuery } from '../mappers/mapSearchLookupRequestToQuery';
+import { createLookupServices } from '../runtime/createLookupServices';
 
 export interface SearchLookupHandlerResult {
   readonly status: number;
@@ -12,7 +13,7 @@ export interface SearchLookupHandlerResult {
 
 export async function searchLookupHandler(
   request: SearchLookupRequest,
-  service: Pick<SearchLookupContentService, 'execute'>,
+  service: Pick<SearchLookupContentService, 'execute'> = createLookupServices().searchLookupContentService,
 ): Promise<SearchLookupHandlerResult> {
   if (!request.organizationId) {
     return {

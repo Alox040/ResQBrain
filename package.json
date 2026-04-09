@@ -21,6 +21,7 @@
     "dbrd:build": "pnpm dbrd:validate-normalized && pnpm dbrd:build-lookup-seed",
     "verify": "tsx scripts/verify.ts",
     "build": "pnpm --filter @resqbrain/website build",
+    "test": "pnpm --filter @resqbrain/api test",
     "build:website": "pnpm --filter @resqbrain/website build",
     "mobile:verify": "pnpm --filter resqbrain-mobile run verify:local",
     "mobile:verify:doctor": "pnpm --filter resqbrain-mobile run verify:expo-doctor"

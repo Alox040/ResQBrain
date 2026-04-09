@@ -4,6 +4,7 @@ import type { ApiErrorResponse } from '../../shared/contracts/ApiErrorResponse';
 import type { AlgorithmListResponse } from '../contracts/AlgorithmListResponse';
 import type { GetAlgorithmListRequest } from '../contracts/GetAlgorithmListRequest';
 import { mapAlgorithmListRequestToQuery } from '../mappers/mapAlgorithmListRequestToQuery';
+import { createLookupServices } from '../runtime/createLookupServices';
 
 export interface GetAlgorithmListHandlerResult {
   readonly status: number;
@@ -12,7 +13,7 @@ export interface GetAlgorithmListHandlerResult {
 
 export async function getAlgorithmListHandler(
   request: GetAlgorithmListRequest,
-  service: Pick<GetAlgorithmListService, 'execute'>,
+  service: Pick<GetAlgorithmListService, 'execute'> = createLookupServices().getAlgorithmListService,
 ): Promise<GetAlgorithmListHandlerResult> {
   if (!request.organizationId) {
     return {

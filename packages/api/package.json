@@ -9,12 +9,14 @@
   },
   "types": "./src/index.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "test": "tsx --test src/lookup/adapters/InMemoryAlgorithmReadRepository.test.ts src/lookup/adapters/InMemoryLookupSearchRepository.test.ts src/lookup/adapters/InMemoryMedicationReadRepository.test.ts src/lookup/runtime/createLookupServices.test.ts"
   },
   "dependencies": {
     "@resqbrain/application": "workspace:*"
   },
   "devDependencies": {
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
 }

@@ -4,6 +4,7 @@ import type { ApiErrorResponse } from '../../shared/contracts/ApiErrorResponse';
 import type { AlgorithmDetailResponse } from '../contracts/AlgorithmDetailResponse';
 import type { GetAlgorithmDetailRequest } from '../contracts/GetAlgorithmDetailRequest';
 import { mapAlgorithmDetailRequestToQuery } from '../mappers/mapAlgorithmDetailRequestToQuery';
+import { createLookupServices } from '../runtime/createLookupServices';
 
 export interface GetAlgorithmDetailHandlerResult {
   readonly status: number;
@@ -12,7 +13,7 @@ export interface GetAlgorithmDetailHandlerResult {
 
 export async function getAlgorithmDetailHandler(
   request: GetAlgorithmDetailRequest,
-  service: Pick<GetAlgorithmDetailService, 'execute'>,
+  service: Pick<GetAlgorithmDetailService, 'execute'> = createLookupServices().getAlgorithmDetailService,
 ): Promise<GetAlgorithmDetailHandlerResult> {
   if (!request.organizationId) {
     return {
