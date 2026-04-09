@@ -1,9 +1,63 @@
 # Arbeitssession
 
+**Datum:** 9. April 2026  
+**Art:** Arbeitstages-Abschluss — Domain-Release-Modul, TS-Barrel-/Lifecycle-Bereinigung, vollständige Build-Validierung, Status-/README-Sync
+
+## Was heute umgesetzt wurde (9. April 2026)
+
+### Domain (`@resqbrain/domain`)
+
+| Bereich | Änderung |
+|---------|----------|
+| `packages/domain/src/release/` | Neues Release-Subsystem: `ReleaseBundle`, semantische Release-Version, `ReleaseEngine`, domain-spezifische Fehlerklassen; `package.json`-Script `compile:release` |
+| `packages/domain/src/index.ts` | Exporte für `./release/entities`, `./release/services`, `./release/errors` |
+| `packages/domain/tsconfig.json` | `exclude: ["src/**/*.test.ts"]` — Root-`tsc --noEmit` prüft Produktionscode ohne Testdateien |
+| `packages/domain/src/lifecycle/entities/ContentLifecycle.ts` | `ContentEntityType` nur noch aus `versioning/entities/EntityType` (kein doppeltes `CONTENT_ENTITY_TYPES` am Lifecycle-Barrel) |
+| `packages/domain/src/lifecycle/services/ContentLifecycleService.ts` | Typ `Permission` umbenannt in `LifecyclePermissionKey` (Konflikt mit Governance-`Permission` am Root-Barrel vermieden) |
+
+### Dokumentation / Repo-Hygiene
+
+| Bereich | Änderung |
+|---------|----------|
+| `docs/status/PROJECT_STATUS.md` | Stand und Validierungsergebnisse 9. Apr. 2026 |
+| `docs/status/WORK_SESSION.md` | Diese Session |
+| `docs/roadmap/PROJECT_ROADMAP.md` | Validierungsfußzeile, Release-Hinweis |
+| `README.md` | Current Status, Build Status, Website Status, Risiken — Datum 9. Apr. 2026 |
+
+## Validierungen (9. April 2026)
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | ✓ |
+| `pnpm --filter @resqbrain/domain run compile:versioning` | ✓ |
+| `pnpm --filter @resqbrain/domain run compile:release` | ✓ |
+| `pnpm build` (Next.js 16.2.1) | ✓ — 11 Routen inkl. `/`, `/impressum`, `/datenschutz` |
+| Website-Routing / Footer / Umfrage-CTAs | ✓ Dateien und `href` konsistent (`lib/site/navigation.ts`, `content.ts`, `mitwirkung.ts`, `links/page.tsx` → `survey.ts`) |
+| `tsx --test src/lifecycle/lifecycle.engine.test.ts` | ✓ (Stichprobe nach Lifecycle-Typumbenennung) |
+| TODO/FIXME/WIP in `apps/**/*.ts(x)`, `packages/**/*.ts(x)` | Keine Treffer (außer Union-Literal in `scripts/status/types.ts`) |
+
+**Hinweis:** Domain-**Testdateien** sind von Root-`tsc` ausgeschlossen; einzelne Content-Tests erwarten noch `createAlgorithm` / Graph-Modell — bei Bedarf `pnpm --filter @resqbrain/domain run test:content` separat adressieren.
+
+## Risiken / Hinweise
+
+- Root-Level-`app/`/`components/`/`lib/` am Monorepo-Root weiterhin unklar (siehe Archiv 8. Apr.).
+- Office-Forms-Umfrage-URL: Datenschutz/AV-Vertrag bei Produktion prüfen.
+- Domain-Tests vs. vereinfachtes `Algorithm`-Entity (`steps: string`): Modell und Tests angleichen oder Tests anpassen.
+
+## Nächste sinnvolle Schritte (Priorität)
+
+1. **Content-Tests / Algorithm-Factory:** `createAlgorithm` und Invarianten-Tests an aktuelles Entity-Modell anbinden oder Modell erweitern.  
+2. **Release-Modul:** Integrationstests (`compile:release` grün); Abgrenzung zu `src/legacy/release/` dokumentieren.  
+3. **Bundle-Persistenz-Konzept** (`lookupSource`) — siehe Roadmap.  
+4. **Root-Struktur** bereinigen oder formalisieren.  
+5. **`pnpm mobile:verify`** vor nächsten Mobile-Änderungen.
+
+---
+
+## Session 8. April 2026 (Archiv)
+
 **Datum:** 8. April 2026  
 **Art:** Arbeitstages-Abschluss — Website-Figma-Migration abgeschlossen und deployed; Dokumentationsabgleich
-
-## Was heute umgesetzt wurde (8. April 2026)
 
 ### Website — Figma-Migration Phase 1 (abgeschlossen)
 
@@ -31,12 +85,11 @@ Im Repo-Root existiert jetzt eine parallele Next.js-ähnliche Struktur:
 **Unklar:** Ist diese Root-Struktur bewusst (zukünftiges Website-v2-Setup) oder ein Artefakt (Befehle im falschen Verzeichnis ausgeführt)?  
 **Kein Einfluss auf produktives Deployment** — Vercel nutzt `rootDirectory: "apps/website"`.
 
-### Deployment
+### Deployment (8. Apr.)
 
 - Alle Website-Commits deployed auf Vercel (`final figma website deploy` — `b9a4093`)
-- Git-Status: sauber, Branch `main` up-to-date
 
-## Validierungen (8. April 2026)
+### Validierungen (8. April 2026) — Archiv
 
 | Prüfung | Ergebnis |
 |---------|----------|
@@ -44,22 +97,6 @@ Im Repo-Root existiert jetzt eine parallele Next.js-ähnliche Struktur:
 | Letzter `pnpm build` (7. Apr.) | ✓ Next.js 16.2.1, 8 statische Seiten |
 | Domain-`tsc --noEmit` (7. Apr.) | ✓ erfolgreich |
 | Deployment | ✓ auf Vercel deployed (b9a4093) |
-
-**Hinweis:** Kein neuer lokaler Build-Lauf heute — letzter valider Build war 7. Apr. 2026.
-
-## Risiken / Hinweise
-
-- Root-Level-`app/`/`components/`/`lib/`-Struktur: Zweck und Lebenszyklus klären — ggf. in `apps/website/` verschieben oder als `website-v2` separieren.
-- `apps/website/app/mitwirken/page.tsx` existiert jetzt neben `/mitwirkung` — inhaltliche Abgrenzung dokumentieren.
-- `/updates`-Route vorhanden — Inhalt und Datenpfad noch zu klären.
-
-## Nächste sinnvolle Schritte (Priorität)
-
-1. **Bundle-Persistenz — Konzept:** `docs/context/bundle-persistence-concept.md` anlegen (lookupSource-Erweiterung)
-2. **Root-Struktur klären:** `app/`, `components/`, `lib/` am Root bereinigen oder formalisieren
-3. **`/mitwirken` vs. `/mitwirkung`:** Inhaltliche Abgrenzung dokumentieren
-4. **Sync-Konzept** (inhaltlich, als Dokument)
-5. **Mobile `pnpm mobile:verify`** — vor nächsten Mobile-Änderungen sicherstellen
 
 ---
 

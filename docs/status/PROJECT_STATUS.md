@@ -1,6 +1,6 @@
 # Projektstatus
 
-**Stand:** 8. April 2026 (Arbeitstages-Abschluss)
+**Stand:** 9. April 2026 (Arbeitstages-Abschluss)
 
 ## Gesamtstatus
 
@@ -43,13 +43,17 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Aspekt | Status |
 |--------|--------|
 | Paket `@resqbrain/domain` | Aktiv |
-| `tsc -p tsconfig.json` (gesamtes Paket, noEmit) | Erfolgreich (7. Apr. 2026); Release-Audit-Testfixture um `regionId: null` ergänzt (Typangleich an `ReleaseAuditEvent`) |
+| `tsc -p tsconfig.json` (noEmit, ohne `*.test.ts`) | Erfolgreich (9. Apr. 2026) |
 | `compile:versioning` (tsc) | Erfolgreich |
 | `compile:content` (tsc) | Erfolgreich |
 | `compile:governance` (tsc) | Erfolgreich |
-| Barrel-Export `src/index.ts` | Konsistent mit Content-, Tenant-, Versioning- und Survey-Modulen |
+| `compile:release` (tsc) | Erfolgreich — `src/release/**` inkl. Engine, Bundle, semantische Version, Fehler |
+| Barrel-Export `src/index.ts` | Content-, Tenant-, Versioning-, Survey-, **Release**-Slices |
+| Lifecycle vs. Governance | `LifecyclePermissionKey` (Lifecycle-Service) vs. `Permission` (Governance-Entity) — keine Root-Barrel-Kollision |
+| `ContentEntityType` (Lifecycle) | Bezogen aus `versioning/entities/EntityType` (kein zweites `CONTENT_ENTITY_TYPES` am Lifecycle-Export) |
 | Layering | Keine Website-/App-Imports im Domain-Paket (reine Domain-Logik) |
 | Mandantentrennung (Organization) | Modellierung im Domain-Code zentral; Runtime-Enforcement folgt mit API/Auth |
+| **Offen** | Mehrere `*.entities.test.ts` erwarten `createAlgorithm` / Graph-Felder — mit vereinfachtem `Algorithm` (`steps: string`) nicht per Root-`tsc` geprüft; Tests gezielt reparieren oder Modell erweitern |
 
 ## Website
 
@@ -82,8 +86,8 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 
 **Homepage-Anker:** Keine `id` auf Sektions-Wrappern; keine internen `#…`-Ziele auf `/`.
 
-**Letzte Build-Validierung (7. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `tsx --test src/audit/audit.foundation.test.ts` — erfolgreich.  
-**Website deployed (8. Apr. 2026):** `b9a4093 final figma website deploy` — Vercel.
+**Letzte Build-Validierung (9. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:release`, `pnpm build` (Next 16.2.1) — erfolgreich.  
+**Website deployed (8. Apr. 2026):** `b9a4093 final figma website deploy` — Vercel (lokaler Build heute zur Routing-/TS-Verifikation).
 
 ## Build
 
@@ -91,7 +95,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 |--------|-----------|
 | `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
-| Letzter Website-Lauf (lokal, 7. Apr. 2026) | Erfolgreich (Next 16.2.1), 8/8 statische Seiten |
+| Letzter Website-Lauf (lokal, 9. Apr. 2026) | Erfolgreich (Next 16.2.1), 11 Routen (inkl. `/api/mitwirken`) |
 | Website-Deployment (8. Apr. 2026) | ✓ Deployed auf Vercel — Figma-Migration Phase 1 (`b9a4093`) |
 
 ## Risiken

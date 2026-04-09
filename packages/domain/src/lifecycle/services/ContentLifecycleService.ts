@@ -5,7 +5,7 @@ import type { ContentEntityId } from '../../common/ids';
 export type ContentId = ContentEntityId;
 export type OrganizationId = OrgId;
 export type VersionIdentifier = VersionId;
-export type Permission = string;
+export type LifecyclePermissionKey = string;
 
 export interface ResultOk<TValue> {
   readonly ok: true;
@@ -87,7 +87,7 @@ export type ContentLifecycleError =
   | {
       readonly kind: 'InsufficientPermission';
       readonly actorId: UserId;
-      readonly required: Permission;
+      readonly required: LifecyclePermissionKey;
     };
 
 export type GuardResult =

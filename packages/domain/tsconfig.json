@@ -11,5 +11,6 @@
     "types": ["node"],
     "typeRoots": ["../../apps/website/node_modules/@types"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
 }

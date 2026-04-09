@@ -1,6 +1,6 @@
 # Projekt-Roadmap
 
-**Stand:** 7. April 2026 (abgeglichen mit `apps/mobile-app`, Lookup-Seed und letzter Build-/TS-Validierung)
+**Stand:** 9. April 2026 (abgeglichen mit Domain-Release-Slice, Website-Build und `pnpm`-Validierung)
 
 ## Legende
 
@@ -18,7 +18,7 @@
 | Punkt | Status |
 |-------|--------|
 | Architektur- und Terminologie-Basis | [x] |
-| Domain-Paket (Typen, Invarianten) | [~] |
+| Domain-Paket (Typen, Invarianten) | [~] — Release-Subsystem (`ReleaseBundle`, `ReleaseEngine`) im Code; Content-Entity-Tests teilweise hinter Modell (Algorithm) |
 | Öffentliche Website (Landing, Legal) | [x] |
 | Website Messaging auf Einsatzfokus | [x] |
 | Seed-Daten aufbereiten (Medikamente + Algorithmen) | [x] |
@@ -105,4 +105,5 @@
 
 Dokumentation zur lokalen Prüfung: `docs/context/mobile-validation-checklist.md`.
 
-**Letzte Repo-Validierung (7. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:content`, `compile:governance`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`; Audit-Foundation-Tests nach `regionId`-Ergänzung im Release-Fixture — erfolgreich.
+**Letzte Repo-Validierung (9. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` (ohne `*.test.ts`), `compile:versioning`, `compile:release`, `pnpm build` — erfolgreich.  
+**Offen:** Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen.

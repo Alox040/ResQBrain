@@ -21,7 +21,7 @@ Aktuelle Statusdateien:
 
 ## Current Development State
 
-Kurzstatus (abgeglichen mit dem Repo, **8. April 2026**):
+Kurzstatus (abgeglichen mit dem Repo, **9. April 2026**):
 
 - **Aktuelle Phase:** Phase 0 (Lookup-first MVP) **plus** umgesetzte einsatznahe Erweiterungen; Details und Legende **`[~]` teilweise** in der Roadmap.  
 - **Produktiv sichtbar:** **Mobile App** (Expo): Lookup offline aus eingebettetem Bundle; **Website** (Next.js) — Figma-Migration Phase 1 deployed (8. Apr. 2026).  
@@ -101,22 +101,22 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 
 ## Aktueller Stand
 
-- Domain-Paket (`@resqbrain/domain`): gesamtes `src` per `tsc -p tsconfig.json --noEmit` sowie `compile:content` / `compile:versioning` / `compile:governance` — siehe `packages/domain/package.json`. Release-Audit-Testfixture in `audit.foundation.test.ts` enthält `regionId` (Stand 7. Apr. 2026).  
-- Website (Next.js 16): statische Routen `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`. Umfrage-Link zentral in `apps/website/lib/site/survey.ts` (aktuell `forms.office.com`).  
+- Domain-Paket (`@resqbrain/domain`): `tsc -p tsconfig.json --noEmit` prüft Produktionscode (`*.test.ts` ausgeschlossen). Zusätzlich `compile:content`, `compile:versioning`, `compile:governance`, **`compile:release`** — siehe `packages/domain/package.json`. Neues Release-Subsystem unter `src/release/` (`ReleaseBundle`, `ReleaseEngine`, Fehlerklassen). Lifecycle: `ContentEntityType` aus Versioning; `LifecyclePermissionKey` statt Namenskollision mit Governance-`Permission`.  
+- Website (Next.js 16): Routen u. a. `/`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`, `/impressum`, `/datenschutz`. Umfrage-URLs zentral in `apps/website/lib/site/survey.ts` (`forms.office.com`).  
 - Mobile-App: Expo, Lookup-Bundle eingebettet, AsyncStorage für Favoriten/Verlauf — Details `docs/status/PROJECT_STATUS.md`.  
-- Root-Build: `pnpm build` → nur `@resqbrain/website`.
+- Root-Build: `pnpm build` → `@resqbrain/website`.
 
 ## Current Status (EN)
 
-Domain `tsc --noEmit` clean; website static routes and typecheck OK; mobile Phase-0+ per status doc. After `next build`, `next-env.d.ts` references `./.next/types/routes.d.ts` (production typed routes).
+Domain root `tsc --noEmit` green for non-test sources; `compile:release` added. Website production build and typed routes OK (9 Apr. 2026). **Open:** align content entity tests (`createAlgorithm` / graph fields) with current `Algorithm` model or extend the model. After `next build`, `next-env.d.ts` may reference `./.next/types/routes.d.ts`.
 
 ## Nächste Schritte (kurz)
 
-Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Bundle-Persistenz / `lookupSource` (Konzept), Root-Level-Struktur klären, Mobile-`tsc` grün; nach Mobile-Änderungen `pnpm mobile:verify`.
+Siehe [**`docs/context/12-next-steps.md`**](docs/context/12-next-steps.md) und **`docs/roadmap/PROJECT_ROADMAP.md`**. Schwerpunkt: Content-Tests/Algorithm-Modell konsolidieren, Release-Modul vertiefen, Bundle-Persistenz / `lookupSource`, Root-Level-Struktur; nach Mobile-Änderungen `pnpm mobile:verify`.
 
 ## Next Steps (EN)
 
-Bundle persistence concept (`lookupSource` non-embedded layers); clarify root-level `app/`/`components/`/`lib/` structure; fix mobile TypeScript errors; sync concept; API/auth boundary for tenant enforcement.
+Reconcile `createAlgorithm` / invariant tests with `Algorithm` entity; exercise `test:release` / integration for new release slice; bundle persistence (`lookupSource`); clarify root-level duplicate `app/` tree; mobile `tsc` / `mobile:verify`; API–auth tenant enforcement.
 
 ## Bekannte Risiken
 
@@ -124,24 +124,26 @@ Bundle persistence concept (`lookupSource` non-embedded layers); clarify root-le
 - Mandantentrennung im Domain-Modell; Laufzeitenforcement erst mit API und Auth.  
 - Deployment Website vs. Mobile separat planen.  
 - Dosisrechner: nur orientierend; Dosistext-Heuristik.  
+- Domain-Unit-Tests für Content: Teilweise veraltet gegenüber schlankem `Algorithm`-Interface — gezielt beheben.  
 - `next-env.d.ts` kann Next-generierte Referenzen unter `.next/` enthalten — nach frischem Clone Build oder Dev einmal ausführen.
 
 ## Risks (EN)
 
-Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isolation not runtime-enforced yet; dose calculator heuristic; `next-env.d.ts` path flips between dev and production Next outputs.
+Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isolation not runtime-enforced yet; dose calculator heuristic; content tests vs. simplified Algorithm model; `next-env.d.ts` path flips between dev and production Next outputs.
 
 ## Build Status
 
 | Befehl | Zweck |
 |--------|--------|
-| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | Gesamtes Domain-`src` (noEmit) |
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | Domain-Produktions-`src` (ohne `*.test.ts`) |
 | `pnpm --filter @resqbrain/domain run compile:versioning` | Versioning-TS isoliert |
+| `pnpm --filter @resqbrain/domain run compile:release` | Release-Slice isoliert |
 | `pnpm --filter @resqbrain/domain run compile:content` | Content-TS isoliert |
 | `pnpm build` | Produktionsbuild Website |
 | `pnpm --filter @resqbrain/website run typecheck` | Website `tsc --noEmit` |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav, Android-Export |
 
-**Zuletzt verifiziert:** 7. April 2026 — Domain-`tsc --noEmit`, `compile:content`, `compile:versioning`, `compile:governance`, `pnpm build`, Website-`typecheck`, Audit-Foundation-Tests erfolgreich.  
+**Zuletzt verifiziert:** 9. April 2026 — Domain-`tsc --noEmit`, `compile:versioning`, `compile:release`, `pnpm build` erfolgreich.  
 **Website deployed:** 8. April 2026 — Figma-Migration Phase 1 (`b9a4093`).
 
 ## Website Status
@@ -150,7 +152,7 @@ Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isol
 
 | Route | Status |
 |-------|--------|
-| `/` | OK (Landing — 9 Sections, Figma-Design) |
+| `/` | OK (Landing — 9 Sections, Figma-Design; Umfrage-CTA über `content.mitwirkung.cta` → `survey.ts`) |
 | `/kontakt` | OK |
 | `/links` | OK (TikTok-optimiert) |
 | `/mitwirkung` | OK (Umfrage-CTA) |

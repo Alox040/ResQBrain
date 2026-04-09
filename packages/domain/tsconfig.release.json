@@ -5,6 +5,7 @@
     "src/tenant/**/*.ts",
     "src/versioning/**/*.ts",
     "src/content/**/*.ts",
+    "src/release/**/*.ts",
     "src/governance/**/*.ts",
     "src/audit/**/*.ts",
     "src/legacy/release/**/*.ts"

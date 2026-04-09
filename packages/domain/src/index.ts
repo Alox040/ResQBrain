@@ -4,3 +4,6 @@ export * from './content';
 export * from './governance';
 export * from './lifecycle';
 export * from './versioning';
+export * from './release/entities';
+export * from './release/services';
+export * from './release/errors';

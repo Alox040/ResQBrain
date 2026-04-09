@@ -15,6 +15,8 @@ import {
   isTerminalApprovalStatus,
 } from './ApprovalStatus';
 
+import type { ContentEntityType } from '../../versioning/entities/EntityType';
+
 export const LIFECYCLE_AGGREGATE_KINDS = Object.freeze([
   'ContentEntity',
   'ContentPackage',
@@ -22,15 +24,6 @@ export const LIFECYCLE_AGGREGATE_KINDS = Object.freeze([
 
 export type LifecycleAggregateKind =
   (typeof LIFECYCLE_AGGREGATE_KINDS)[number];
-
-export const CONTENT_ENTITY_TYPES = Object.freeze([
-  'Algorithm',
-  'Medication',
-  'Protocol',
-  'Guideline',
-] as const);
-
-export type ContentEntityType = (typeof CONTENT_ENTITY_TYPES)[number];
 
 export type ContentEntityId =
   | AlgorithmId
