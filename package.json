@@ -26,8 +26,8 @@
     "test": "pnpm --filter @resqbrain/api test",
     "smoke:api-local": "pnpm --filter @resqbrain/api-local smoke",
     "build:website": "pnpm --filter @resqbrain/website build",
-    "mobile:verify": "pnpm --filter resqbrain-mobile run verify:local",
-    "mobile:verify:doctor": "pnpm --filter resqbrain-mobile run verify:expo-doctor"
+    "mobile:verify": "pnpm --filter @resqbrain/mobile-app run verify:local",
+    "mobile:verify:doctor": "pnpm --filter @resqbrain/mobile-app run verify:expo-doctor"
   },
   "devDependencies": {
     "tsx": "^4.21.0",

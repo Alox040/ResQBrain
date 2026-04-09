@@ -97,16 +97,30 @@ async function lookupGet<TResponse>(
     const payload = (await response.json().catch(() => null)) as LookupApiErrorPayload | null;
     const code = payload?.error?.code;
     const message = payload?.error?.message || `Request failed with status ${response.status}`;
+    const notFoundMessage =
+      response.status === 404 ? "Lookup-Eintrag wurde nicht gefunden." : undefined;
 
     throw new LookupApiClientError({
       code,
       message,
       status: response.status,
-      uiMessage: payload?.error?.message || "Lookup-Daten konnten nicht geladen werden.",
+      uiMessage:
+        payload?.error?.message ||
+        notFoundMessage ||
+        "Lookup-Daten konnten nicht geladen werden.",
     });
   }
 
-  return (await response.json()) as TResponse;
+  try {
+    return (await response.json()) as TResponse;
+  } catch {
+    throw new LookupApiClientError({
+      code: "LOOKUP_API_INVALID_RESPONSE",
+      message: `Lookup API returned invalid JSON for ${path}`,
+      status: response.status,
+      uiMessage: "Lookup-Antwort hat ein ungueltiges Format.",
+    });
+  }
 }
 
 export function listAlgorithms(params?: LookupListParams) {

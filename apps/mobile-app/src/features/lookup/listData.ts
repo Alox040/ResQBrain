@@ -1,4 +1,5 @@
 import {
+  getLookupApiErrorMessage,
   listAlgorithms,
   listMedications,
 } from "@/lib/lookup-api/client";
@@ -8,6 +9,10 @@ import type {
   LookupMedicationListItem,
   LookupMedicationsResponse,
 } from "@/lib/lookup-api/types";
+import {
+  assertLookupAlgorithmListResponse,
+  assertLookupMedicationListResponse,
+} from "@/features/lookup/guards";
 import type { ContentCategory, ContentTag } from "@/types/content";
 
 export type LookupRequestContext = {
@@ -89,7 +94,7 @@ export function resolveLookupRequestContext(): LookupRequestContext {
   const stationId = process.env.EXPO_PUBLIC_STATION_ID?.trim();
 
   if (!organizationId) {
-    throw new Error("EXPO_PUBLIC_ORGANIZATION_ID ist nicht gesetzt.");
+    throw new Error("EXPO_PUBLIC_ORGANIZATION_ID ist nicht gesetzt. Ohne Organization-Kontext ist Lookup deaktiviert.");
   }
 
   return {
@@ -100,13 +105,23 @@ export function resolveLookupRequestContext(): LookupRequestContext {
 }
 
 export async function loadAlgorithmList() {
-  const context = resolveLookupRequestContext();
-  const response: LookupAlgorithmsResponse = await listAlgorithms(context);
-  return response.items.map(mapAlgorithmListItem);
+  try {
+    const context = resolveLookupRequestContext();
+    const response: LookupAlgorithmsResponse = await listAlgorithms(context);
+    assertLookupAlgorithmListResponse(response);
+    return response.items.map(mapAlgorithmListItem);
+  } catch (error) {
+    throw new Error(getLookupApiErrorMessage(error));
+  }
 }
 
 export async function loadMedicationList() {
-  const context = resolveLookupRequestContext();
-  const response: LookupMedicationsResponse = await listMedications(context);
-  return response.items.map(mapMedicationListItem);
+  try {
+    const context = resolveLookupRequestContext();
+    const response: LookupMedicationsResponse = await listMedications(context);
+    assertLookupMedicationListResponse(response);
+    return response.items.map(mapMedicationListItem);
+  } catch (error) {
+    throw new Error(getLookupApiErrorMessage(error));
+  }
 }

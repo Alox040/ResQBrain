@@ -3,7 +3,6 @@ import { ALGORITHM_MOCK_DATA } from './algorithms';
 import { MEDICATION_MOCK_DATA } from './medications';
 
 export interface LookupSearchIndexRecord extends SearchResultDto {
-  readonly kind: 'algorithm' | 'medication';
   readonly searchTerms: ReadonlyArray<string>;
 }
 

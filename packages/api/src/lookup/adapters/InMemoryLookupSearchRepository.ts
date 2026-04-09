@@ -89,6 +89,7 @@ function applyPagination<T>(
 
 function toSearchResultDto(record: LookupSearchIndexRecord): SearchResultDto {
   return {
+    kind: record.kind,
     id: record.id,
     title: record.title,
     summary: record.summary,

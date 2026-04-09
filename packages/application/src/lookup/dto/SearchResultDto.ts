@@ -1,6 +1,7 @@
 import type { OrgId, RegionId, StationId, VersionId } from '../../../../domain/src/shared/types';
 
 export interface SearchResultDto {
+  readonly kind: 'algorithm' | 'medication';
   readonly id: string;
   readonly title: string;
   readonly summary?: string | null;

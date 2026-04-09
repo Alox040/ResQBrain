@@ -3,6 +3,7 @@ import {
   searchLookup,
 } from "@/lib/lookup-api/client";
 import type { LookupSearchResultItem } from "@/lib/lookup-api/types";
+import { assertLookupSearchItems } from "@/features/lookup/guards";
 import { resolveLookupRequestContext } from "@/features/lookup/listData";
 
 export type LookupSearchKind = "algorithm" | "medication";
@@ -53,11 +54,18 @@ function mapSearchResult(item: LookupSearchResultItem): LookupSearchViewItem {
 }
 
 export async function loadLookupSearchResults(searchTerm: string) {
+  const normalizedSearchTerm = searchTerm.trim();
+
+  if (normalizedSearchTerm.length === 0) {
+    return [];
+  }
+
   try {
     const results = await searchLookup({
       ...resolveLookupRequestContext(),
-      searchTerm,
+      searchTerm: normalizedSearchTerm,
     });
+    assertLookupSearchItems(results);
 
     return results.map(mapSearchResult);
   } catch (error) {

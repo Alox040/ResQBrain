@@ -8,6 +8,10 @@ import type {
   LookupMedicationDetail,
   LookupScopedContentRecord,
 } from "@/lib/lookup-api/types";
+import {
+  assertLookupAlgorithmDetail,
+  assertLookupMedicationDetail,
+} from "@/features/lookup/guards";
 import { resolveLookupRequestContext } from "@/features/lookup/listData";
 
 export type LookupDetailViewData = {
@@ -77,6 +81,7 @@ export async function loadAlgorithmDetailViewData(id: string) {
       id,
       resolveLookupRequestContext(),
     );
+    assertLookupAlgorithmDetail(detail);
     return mapSharedFields(detail, detail.title);
   } catch (error) {
     throw new Error(getLookupApiErrorMessage(error));
@@ -89,6 +94,7 @@ export async function loadMedicationDetailViewData(id: string) {
       id,
       resolveLookupRequestContext(),
     );
+    assertLookupMedicationDetail(detail);
     return mapSharedFields(detail, detail.name);
   } catch (error) {
     throw new Error(getLookupApiErrorMessage(error));

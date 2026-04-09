@@ -43,6 +43,7 @@ export interface LookupMedicationDetail extends LookupScopedContentRecord {
 export interface LookupSearchResultItem extends LookupScopedContentRecord {
   id: string;
   title: string;
+  kind?: 'algorithm' | 'medication';
 }
 
 export interface LookupSearchResponse {
