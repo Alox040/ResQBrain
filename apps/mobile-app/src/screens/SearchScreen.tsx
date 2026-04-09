@@ -1,18 +1,18 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useMemo, useState } from 'react';
-import type { AppPalette } from '@/theme/palette';
-import { useTheme } from '@/theme/ThemeContext';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import {
   Badge,
+  ButtonSecondary,
   ContentListCard,
   EmptyState,
   InputText,
@@ -20,15 +20,14 @@ import {
   Tag,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
-import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
-import { contentItems } from '@/data/contentIndex';
-import type { RootTabParamList } from '@/navigation/AppNavigator';
-import type { ContentListItem } from '@/types/content';
 import {
-  rankContentItemsForSearch,
-  type ScoredContentListItem,
-} from '@/utils/searchRanking';
+  loadLookupSearchResults,
+  type LookupSearchViewItem,
+} from '@/features/lookup/searchData';
+import type { RootTabParamList } from '@/navigation/AppNavigator';
 import { LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
 
 function createSearchStyles(colors: AppPalette) {
   return StyleSheet.create({
@@ -120,6 +119,16 @@ function createSearchStyles(colors: AppPalette) {
       gap: SPACING.gapMd,
       paddingBottom: SPACING.screenPadding,
     },
+    loadingWrap: {
+      flex: 1,
+      justifyContent: 'center',
+      minHeight: 220,
+    },
+    loadingText: {
+      marginTop: SPACING.gapMd,
+      textAlign: 'center',
+      color: colors.textMuted,
+    },
     emptyWrap: {
       flex: 1,
       justifyContent: 'center',
@@ -132,32 +141,74 @@ export function SearchScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createSearchStyles(colors), [colors]);
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [kindFilter, setKindFilter] = useState<
     'all' | 'medication' | 'algorithm'
   >('all');
+  const [results, setResults] = useState<LookupSearchViewItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
-  const normalizedQuery = query.trim().toLowerCase();
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
 
-  const results = useMemo(() => {
-    if (!normalizedQuery) return [];
-    return rankContentItemsForSearch(
-      contentItems,
-      normalizedQuery,
-      kindFilter,
-    );
-  }, [normalizedQuery, kindFilter]);
+    return () => clearTimeout(handle);
+  }, [query]);
 
-  const resultRows = useMemo(
-    () =>
-      results.map((r) => {
-        const vm = resolveContentViewModel(r.id, r.kind);
-        return { ...r, vm };
-      }),
-    [results],
-  );
+  const normalizedQuery = debouncedQuery.trim();
 
-  const handlePressResult = (item: ContentListItem) => {
+  useEffect(() => {
+    if (normalizedQuery.length === 0) {
+      setResults([]);
+      setIsLoading(false);
+      setErrorMessage(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    const run = async () => {
+      setIsLoading(true);
+      setErrorMessage(null);
+
+      try {
+        const nextResults = await loadLookupSearchResults(normalizedQuery);
+        if (!cancelled) {
+          setResults(nextResults);
+        }
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Suche konnte nicht geladen werden.';
+        if (!cancelled) {
+          setResults([]);
+          setErrorMessage(message);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [normalizedQuery]);
+
+  const filteredResults = useMemo(() => {
+    if (kindFilter === 'all') {
+      return results;
+    }
+
+    return results.filter((item) => item.kind === kindFilter);
+  }, [kindFilter, results]);
+
+  const handlePressResult = (item: LookupSearchViewItem) => {
     if (item.kind === 'medication') {
       navigation.navigate('MedicationTab', {
         screen: 'MedicationDetail',
@@ -166,14 +217,21 @@ export function SearchScreen() {
       return;
     }
 
-    navigation.navigate('AlgorithmTab', {
-      screen: 'AlgorithmDetail',
-      params: { algorithmId: item.id },
-    });
+    if (item.kind === 'algorithm') {
+      navigation.navigate('AlgorithmTab', {
+        screen: 'AlgorithmDetail',
+        params: { algorithmId: item.id },
+      });
+    }
   };
 
-  const showResultsList = normalizedQuery.length > 0 && resultRows.length > 0;
-  const showNoHits = normalizedQuery.length > 0 && resultRows.length === 0;
+  const showResultsList =
+    normalizedQuery.length > 0 && filteredResults.length > 0;
+  const showNoHits =
+    normalizedQuery.length > 0 &&
+    !isLoading &&
+    !errorMessage &&
+    filteredResults.length === 0;
   const filterLabel =
     kindFilter === 'all'
       ? 'Alle Inhalte'
@@ -181,8 +239,8 @@ export function SearchScreen() {
         ? 'Nur Medikamente'
         : 'Nur Algorithmen';
 
-  const listKeyExtractor = (item: ScoredContentListItem) =>
-    `${item.kind}:${item.id}`;
+  const listKeyExtractor = (item: LookupSearchViewItem) =>
+    `${item.kind ?? 'unknown'}:${item.id}`;
 
   const renderResults = () => {
     if (!normalizedQuery) {
@@ -191,42 +249,83 @@ export function SearchScreen() {
           <EmptyState
             when={true}
             message="Noch keine Suche"
-            hint="Tippe einen Begriff — Treffer kommen aus Medikamenten und Algorithmen des lokalen Bundles. Der Inhalt-Filter schränkt die Ergebnisse mit ein."
+            hint="Tippe einen Begriff. Die Anfrage geht direkt an die Lookup-API."
           />
         </View>
       );
     }
+
+    if (isLoading) {
+      return (
+        <View style={styles.loadingWrap}>
+          <ActivityIndicator size="small" color={colors.primary} />
+          <Text style={styles.loadingText}>Suche wird geladen...</Text>
+        </View>
+      );
+    }
+
+    if (errorMessage) {
+      return (
+        <View style={styles.emptyWrap}>
+          <EmptyState
+            when={true}
+            message={errorMessage}
+            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            action={
+              <ButtonSecondary
+                label="Erneut laden"
+                onPress={() => {
+                  setDebouncedQuery(query);
+                }}
+              />
+            }
+          />
+        </View>
+      );
+    }
+
     if (showNoHits) {
       return (
         <View style={styles.emptyWrap}>
           <EmptyState
             when={true}
             message="Keine Treffer"
-            hint={`Für „${query.trim()}“ unter „${filterLabel}“ nichts gefunden. Filter zurücksetzen oder andere Schreibweise probieren (z. B. Synonym in den Suchbegriffen).`}
+            hint={`Fuer „${query.trim()}“ unter „${filterLabel}“ nichts gefunden.`}
           />
         </View>
       );
     }
+
     if (showResultsList) {
       return (
         <FlatList
           style={styles.resultsList}
-          data={resultRows}
+          data={filteredResults}
           keyboardShouldPersistTaps="handled"
           keyExtractor={listKeyExtractor}
           renderItem={({ item }) => {
             const isMed = item.kind === 'medication';
-            const title = item.vm?.label ?? item.label;
-            const subtitle = item.vm?.listSubtitle ?? item.subtitle;
+            const badgeLabel = item.kind
+              ? isMed
+                ? 'Medikament'
+                : 'Algorithmus'
+              : 'Treffer';
+
             return (
               <ContentListCard
-                title={title}
-                subtitle={subtitle}
-                onPress={() => handlePressResult(item)}
-                accessibilityLabel={`${isMed ? 'Medikament' : 'Algorithmus'}. ${title}`}
+                title={item.title}
+                subtitle={item.summary}
+                onPress={
+                  item.kind
+                    ? () => {
+                        handlePressResult(item);
+                      }
+                    : undefined
+                }
+                accessibilityLabel={`${badgeLabel}. ${item.title}`}
                 metaStart={
                   <Badge
-                    label={isMed ? 'Medikament' : 'Algorithmus'}
+                    label={badgeLabel}
                     variant={isMed ? 'primary' : 'muted'}
                   />
                 }
@@ -238,6 +337,7 @@ export function SearchScreen() {
         />
       );
     }
+
     return null;
   };
 
@@ -247,7 +347,7 @@ export function SearchScreen() {
         <SectionHeader
           variant="screen"
           title="Suche"
-          description="Lokales Bundle — Begriff tippen, Filter optional."
+          description="Lookup-API durchsuchen, Filter optional."
         />
 
         <View style={styles.stickyControls}>

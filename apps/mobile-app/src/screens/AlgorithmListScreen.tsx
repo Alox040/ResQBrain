@@ -3,14 +3,18 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   type ListRenderItemInfo,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import {
+  ButtonSecondary,
   CategoryFilterChips,
   ContentBadge,
+  EmptyState,
   FlatListSeparator,
   ListRowFavoriteStar,
   ListScreenEmptyPlaceholder,
@@ -18,12 +22,14 @@ import {
   SectionHeader,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
-import { mapAlgorithmToViewModel } from '@/data/adapters/mapAlgorithmToViewModel';
-import type { AlgorithmViewModel } from '@/data/adapters/viewModels';
-import { algorithms } from '@/data/contentIndex';
+import {
+  loadAlgorithmList,
+  type LookupListRowItem,
+} from '@/features/lookup/listData';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
+import { useTheme } from '@/theme/ThemeContext';
 import {
   filterByListCategory,
   type ListCategoryFilter,
@@ -39,7 +45,7 @@ type AlgorithmListRoute = RouteProp<
   'AlgorithmListScreen'
 >;
 
-const algorithmListKeyExtractor = (item: AlgorithmViewModel): string =>
+const algorithmListKeyExtractor = (item: LookupListRowItem): string =>
   item.id;
 
 const FLAT_LIST_INITIAL_NUM_TO_RENDER = 14;
@@ -61,23 +67,54 @@ const styles = StyleSheet.create({
   listHeader: {
     paddingBottom: SPACING.gapMd,
   },
+  stateWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: SPACING.screenPaddingBottom,
+  },
+  loadingText: {
+    marginTop: SPACING.gapMd,
+    textAlign: 'center',
+  },
 });
 
 export function AlgorithmListScreen() {
+  const { colors } = useTheme();
   const navigation = useNavigation<Nav>();
   const route = useRoute<AlgorithmListRoute>();
   const [categoryFilter, setCategoryFilter] = useState<ListCategoryFilter>(
     route.params?.category ?? 'all',
   );
+  const [algorithmRows, setAlgorithmRows] = useState<LookupListRowItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setCategoryFilter(route.params?.category ?? 'all');
   }, [route.params?.category]);
 
-  const algorithmRows = useMemo(
-    () => algorithms.map(mapAlgorithmToViewModel),
-    [algorithms],
-  );
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const items = await loadAlgorithmList();
+      setAlgorithmRows(items);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Algorithmen konnten nicht geladen werden.';
+      setErrorMessage(message);
+      setAlgorithmRows([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadData();
+  }, [loadData]);
 
   const filteredAlgorithmRows = useMemo(
     () => filterByListCategory(algorithmRows, categoryFilter),
@@ -116,7 +153,7 @@ export function AlgorithmListScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<AlgorithmViewModel>) => {
+    ({ item }: ListRenderItemInfo<LookupListRowItem>) => {
       const primaryTag = item.tags[0];
       const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
       const leading = tagCfg ? (
@@ -142,6 +179,41 @@ export function AlgorithmListScreen() {
     },
     [handlePress],
   );
+
+  if (isLoading) {
+    return (
+      <ScreenContainer>
+        <View style={styles.stateWrap}>
+          <ActivityIndicator size="small" color={colors.primary} />
+          <Text style={[styles.loadingText, { color: colors.textMuted }]}>
+            Algorithmen werden geladen...
+          </Text>
+        </View>
+      </ScreenContainer>
+    );
+  }
+
+  if (errorMessage) {
+    return (
+      <ScreenContainer>
+        <View style={styles.stateWrap}>
+          <EmptyState
+            when={true}
+            message={errorMessage}
+            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            action={
+              <ButtonSecondary
+                label="Erneut laden"
+                onPress={() => {
+                  void loadData();
+                }}
+              />
+            }
+          />
+        </View>
+      </ScreenContainer>
+    );
+  }
 
   return (
     <ScreenContainer>

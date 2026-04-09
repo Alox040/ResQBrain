@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
-import { Pressable } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Pressable, Text } from 'react-native';
 import {
   FlatList,
   type ListRenderItemInfo,
@@ -10,8 +10,10 @@ import {
   View,
 } from 'react-native';
 import {
+  ButtonSecondary,
   CategoryFilterChips,
   ContentBadge,
+  EmptyState,
   FlatListSeparator,
   ListRowFavoriteStar,
   ListScreenEmptyPlaceholder,
@@ -19,9 +21,10 @@ import {
   SectionHeader,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
-import { mapMedicationToViewModel } from '@/data/adapters/mapMedicationToViewModel';
-import type { MedicationViewModel } from '@/data/adapters/viewModels';
-import { medications } from '@/data/contentIndex';
+import {
+  loadMedicationList,
+  type LookupListRowItem,
+} from '@/features/lookup/listData';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
@@ -36,7 +39,7 @@ type Nav = NativeStackNavigationProp<
   'MedicationListScreen'
 >;
 
-const medicationListKeyExtractor = (item: MedicationViewModel): string =>
+const medicationListKeyExtractor = (item: LookupListRowItem): string =>
   item.id;
 
 const FLAT_LIST_INITIAL_NUM_TO_RENDER = 14;
@@ -58,6 +61,15 @@ const styles = StyleSheet.create({
   listHeader: {
     paddingBottom: SPACING.gapMd,
   },
+  stateWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: SPACING.screenPaddingBottom,
+  },
+  loadingText: {
+    marginTop: SPACING.gapMd,
+    textAlign: 'center',
+  },
 });
 
 export function MedicationListScreen() {
@@ -65,11 +77,34 @@ export function MedicationListScreen() {
   const navigation = useNavigation<Nav>();
   const [categoryFilter, setCategoryFilter] =
     useState<ListCategoryFilter>('all');
-
-  const medicationRows = useMemo(
-    () => medications.map(mapMedicationToViewModel),
-    [medications],
+  const [medicationRows, setMedicationRows] = useState<LookupListRowItem[]>(
+    [],
   );
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const items = await loadMedicationList();
+      setMedicationRows(items);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Medikamente konnten nicht geladen werden.';
+      setErrorMessage(message);
+      setMedicationRows([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadData();
+  }, [loadData]);
 
   const filteredMedicationRows = useMemo(
     () => filterByListCategory(medicationRows, categoryFilter),
@@ -134,7 +169,7 @@ export function MedicationListScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<MedicationViewModel>) => {
+    ({ item }: ListRenderItemInfo<LookupListRowItem>) => {
       const primaryTag = item.tags[0];
       const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
       const leading = tagCfg ? (
@@ -160,6 +195,41 @@ export function MedicationListScreen() {
     },
     [handlePress],
   );
+
+  if (isLoading) {
+    return (
+      <ScreenContainer>
+        <View style={styles.stateWrap}>
+          <ActivityIndicator size="small" color={colors.primary} />
+          <Text style={[styles.loadingText, { color: colors.textMuted }]}>
+            Medikamente werden geladen...
+          </Text>
+        </View>
+      </ScreenContainer>
+    );
+  }
+
+  if (errorMessage) {
+    return (
+      <ScreenContainer>
+        <View style={styles.stateWrap}>
+          <EmptyState
+            when={true}
+            message={errorMessage}
+            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            action={
+              <ButtonSecondary
+                label="Erneut laden"
+                onPress={() => {
+                  void loadData();
+                }}
+              />
+            }
+          />
+        </View>
+      </ScreenContainer>
+    );
+  }
 
   return (
     <ScreenContainer>

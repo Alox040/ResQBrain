@@ -16,7 +16,7 @@ const DEFAULT_MIN_HEIGHT = LAYOUT.searchHitMinHeight;
 export type ContentListCardProps = {
   title: string;
   subtitle: string;
-  onPress: () => void;
+  onPress?: () => void;
   accessibilityLabel: string;
   metaStart: React.ReactNode;
   minHeight?: number;
@@ -42,15 +42,18 @@ export function ContentListCard({
       style={({ pressed }) => [
         styles.card,
         { minHeight },
-        pressed && styles.pressed,
+        onPress && pressed && styles.pressed,
         style,
       ]}
-      accessibilityRole="button"
+      accessibilityRole={onPress ? 'button' : 'text'}
       accessibilityLabel={accessibilityLabel}
+      disabled={!onPress}
     >
       <View style={styles.metaRow}>
         {metaStart}
-        <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
+        {onPress ? (
+          <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
+        ) : null}
       </View>
       <Text style={styles.cardTitle}>{title}</Text>
       <Text style={styles.subtitle} numberOfLines={3}>
