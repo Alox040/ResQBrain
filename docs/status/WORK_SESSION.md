@@ -3,6 +3,40 @@
 **Datum:** 9. April 2026  
 **Art:** Arbeitstages-Abschluss — Domain-Release-Modul, TS-Barrel-/Lifecycle-Bereinigung, vollständige Build-Validierung, Status-/README-Sync
 
+## EOD — Validierung & Docs-Sync (zweiter Lauf, 9. April 2026)
+
+### Repo-Stand (Start dieses Laufs)
+
+- **HEAD:** `b491609` — *add internal lookup lab page for local runtime testing*
+- **Working tree:** leer (vor diesem Dokumentations-Commit)
+
+### Ergänzung zum Tagesstand (Lookup-Lab)
+
+| Bereich | Inhalt |
+|---------|--------|
+| Website | Route **`/lab/lookup`** (`apps/website/app/lab/lookup/page.tsx`) — **dynamisch (ƒ)**; lokale Runtime-Tests gegen Lookup-API; **nicht** in Hauptnavigation oder Footer verlinkt |
+
+### Validierung (dieser Lauf)
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | ✓ |
+| `pnpm --filter @resqbrain/domain run compile:versioning` | ✓ |
+| `pnpm build` | ✓ — Next.js 16.2.1 |
+| `pnpm --filter @resqbrain/website run typecheck` | ✓ |
+
+### Website — Routing / Links (Stichprobe)
+
+- **`/`**, **`/impressum`**, **`/datenschutz`:** jeweils `app/.../page.tsx` vorhanden; Build + `tsc` ohne Importfehler.
+- **Footer** (`components/layout/footer-nav.tsx` → `lib/site/navigation.ts` → `footerNavigation`): Impressum, Datenschutz (`routes.impressum` / `routes.datenschutz`); extern GitHub, Discord, Kontakt-Mailto.
+- **CTAs:** Hero Primary → `routes.mitwirken`; Mitwirkungsblock auf `/` nutzt `content.mitwirkung.cta.href` → `surveys.active.href` (`lib/site/survey.ts`); Abschluss-CTA → `routes.kontakt`.
+- **Umfrage / „SurveysSection“:** Keine Komponente dieses Namens auf der Startseite; Umfrage über **`content.mitwirkung`** (Home) und **`mitwirkungPageContent`** (`lib/site/mitwirkung` → `survey.ts`); `/links` verweist ebenfalls auf `surveys.active.href`.
+- **Fragment-Anker auf `/`:** weiterhin keine Sektions-`id`s — keine internen `#…`-Navigation auf der Landingpage.
+
+**Hinweis:** Im Domain-`tsconfig.json` zeigt `typeRoots` auf `apps/website/node_modules/@types` (Tooling-Kopplung für `@types/node`); **keine** Domain-Source-Imports aus der Website.
+
+---
+
 ## Was heute umgesetzt wurde (9. April 2026)
 
 ### Domain (`@resqbrain/domain`)
@@ -31,7 +65,7 @@
 | `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | ✓ |
 | `pnpm --filter @resqbrain/domain run compile:versioning` | ✓ |
 | `pnpm --filter @resqbrain/domain run compile:release` | ✓ |
-| `pnpm build` (Next.js 16.2.1) | ✓ — 11 Routen inkl. `/`, `/impressum`, `/datenschutz` |
+| `pnpm build` (Next.js 16.2.1) | ✓ — inkl. `/`, `/impressum`, `/datenschutz`, `/lab/lookup` (siehe EOD-Lauf oben) |
 | Website-Routing / Footer / Umfrage-CTAs | ✓ Dateien und `href` konsistent (`lib/site/navigation.ts`, `content.ts`, `mitwirkung.ts`, `links/page.tsx` → `survey.ts`) |
 | `tsx --test src/lifecycle/lifecycle.engine.test.ts` | ✓ (Stichprobe nach Lifecycle-Typumbenennung) |
 | TODO/FIXME/WIP in `apps/**/*.ts(x)`, `packages/**/*.ts(x)` | Keine Treffer (außer Union-Literal in `scripts/status/types.ts`) |

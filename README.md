@@ -102,13 +102,13 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 ## Aktueller Stand
 
 - Domain-Paket (`@resqbrain/domain`): `tsc -p tsconfig.json --noEmit` prüft Produktionscode (`*.test.ts` ausgeschlossen). Zusätzlich `compile:content`, `compile:versioning`, `compile:governance`, **`compile:release`** — siehe `packages/domain/package.json`. Neues Release-Subsystem unter `src/release/` (`ReleaseBundle`, `ReleaseEngine`, Fehlerklassen). Lifecycle: `ContentEntityType` aus Versioning; `LifecyclePermissionKey` statt Namenskollision mit Governance-`Permission`.  
-- Website (Next.js 16): Routen u. a. `/`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`, `/impressum`, `/datenschutz`. Umfrage-URLs zentral in `apps/website/lib/site/survey.ts` (`forms.office.com`).  
+- Website (Next.js 16): Routen u. a. `/`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`, `/impressum`, `/datenschutz`, intern `/lab/lookup` (Lookup-API-Tests, nicht im Footer). Umfrage-URLs zentral in `apps/website/lib/site/survey.ts` (`forms.office.com`).  
 - Mobile-App: Expo, Lookup-Bundle eingebettet, AsyncStorage für Favoriten/Verlauf — Details `docs/status/PROJECT_STATUS.md`.  
 - Root-Build: `pnpm build` → `@resqbrain/website`.
 
 ## Current Status (EN)
 
-Domain root `tsc --noEmit` green for non-test sources; `compile:release` added. Website production build and typed routes OK (9 Apr. 2026). **Open:** align content entity tests (`createAlgorithm` / graph fields) with current `Algorithm` model or extend the model. After `next build`, `next-env.d.ts` may reference `./.next/types/routes.d.ts`.
+Domain root `tsc --noEmit` green for non-test sources; `compile:versioning` green. Website production build + `typecheck` OK (9 Apr. 2026, EOD). Internal **`/lab/lookup`** route added for local Lookup API testing (`b491609`); not linked from marketing nav/footer. **Open:** align content entity tests (`createAlgorithm` / graph fields) with current `Algorithm` model or extend the model. After `next build`, `next-env.d.ts` may reference `./.next/types/routes.d.ts`.
 
 ## Nächste Schritte (kurz)
 
@@ -143,8 +143,8 @@ Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isol
 | `pnpm --filter @resqbrain/website run typecheck` | Website `tsc --noEmit` |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav, Android-Export |
 
-**Zuletzt verifiziert:** 9. April 2026 — Domain-`tsc --noEmit`, `compile:versioning`, `compile:release`, `pnpm build` erfolgreich.  
-**Website deployed:** 8. April 2026 — Figma-Migration Phase 1 (`b9a4093`).
+**Zuletzt verifiziert:** 9. April 2026 (EOD) — Domain-`tsc --noEmit`, `compile:versioning`, `compile:release`, `pnpm build`, Website `typecheck` erfolgreich.  
+**Website deployed:** 8. April 2026 — Figma-Migration Phase 1 (`b9a4093`). Lookup-Lab (`/lab/lookup`, `b491609`) bei Bedarf separat deployen.
 
 ## Website Status
 
@@ -160,12 +160,13 @@ Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isol
 | `/updates` | OK — neu (8. Apr. 2026) |
 | `/impressum` | OK |
 | `/datenschutz` | OK |
+| `/lab/lookup` | Intern — Lookup-API-Labort (dynamisch); nicht in Footer/Hauptnav |
 
-Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/components/layout/footer-nav.tsx`. Umfrage-URLs: `apps/website/lib/site/survey.ts`. Homepage-Sektionen ohne feste `id`-Anker.
+Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/components/layout/footer-nav.tsx`. Umfrage-URLs: `apps/website/lib/site/survey.ts`. Homepage-Sektionen ohne feste `id`-Anker; Umfrage-CTAs über `content.mitwirkung` / `/mitwirkung` / `/links`.
 
 ## Website Status (EN)
 
-All listed routes static; footer and CTAs wired via `navigation.ts`, `content.ts`, and `survey.ts`. No section fragment IDs on the home page.
+Core marketing routes are static; `/lab/lookup` is dynamic for dev-style API checks. Footer and CTAs use `navigation.ts`, `content.ts`, and `survey.ts`. No section fragment IDs on the home page; survey CTAs via `content.mitwirkung` and dedicated pages, not a separate `SurveysSection` component on `/`.
 
 ## Mitmachen
 

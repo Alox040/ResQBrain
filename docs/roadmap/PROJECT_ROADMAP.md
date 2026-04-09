@@ -105,5 +105,5 @@
 
 Dokumentation zur lokalen Prüfung: `docs/context/mobile-validation-checklist.md`.
 
-**Letzte Repo-Validierung (9. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` (ohne `*.test.ts`), `compile:versioning`, `compile:release`, `pnpm build` — erfolgreich.  
+**Letzte Repo-Validierung (9. Apr. 2026, EOD):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` (ohne `*.test.ts`), `compile:versioning`, `compile:release`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich. Website: `/lab/lookup` (intern) ergänzt (`b491609`).  
 **Offen:** Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen.

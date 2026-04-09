@@ -66,6 +66,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Sektionen | HeroSection, ProblemSection, IdeaSection, StatusSection, AudienceSection, MitwirkungSection, FaqSection, ContactCtaSection, ProjectGoalSection |
 | Komponentenstruktur | `apps/website/components/layout/`, `sections/`, `ui/` — neu durch Figma-Migration |
 | Deployment | Vercel (`rootDirectory: "apps/website"`) — Stand 8. Apr. 2026 deployed |
+| Internes Lab | `/lab/lookup` (9. Apr. 2026, `b491609`) — dynamisch; für lokale Lookup-Runtime, ohne Marketing-Verlinkung |
 
 ## Routing
 
@@ -79,15 +80,17 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `/updates` | `apps/website/app/updates/page.tsx` | Static — neu (8. Apr.) |
 | `/impressum` | `apps/website/app/impressum/page.tsx` | Static |
 | `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | Static |
+| `/lab/lookup` | `apps/website/app/lab/lookup/page.tsx` | Dynamic (ƒ) — intern, lokale Lookup-API-Tests; nicht in `routes` / Footer |
 
-**Pfade:** `apps/website/lib/routes.ts` — nur Seitenrouten (keine Fragment-IDs).
+**Pfade:** `apps/website/lib/routes.ts` — öffentliche Seitenrouten (keine Fragment-IDs); Lab unter `/lab/*` bewusst außerhalb.
 
 **Footer / CTAs:** `apps/website/components/layout/footer-nav.tsx`, `lib/site/navigation.ts`, `lib/site/survey.ts`, `lib/site/content.ts`.
 
 **Homepage-Anker:** Keine `id` auf Sektions-Wrappern; keine internen `#…`-Ziele auf `/`.
 
-**Letzte Build-Validierung (9. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:release`, `pnpm build` (Next 16.2.1) — erfolgreich.  
-**Website deployed (8. Apr. 2026):** `b9a4093 final figma website deploy` — Vercel (lokaler Build heute zur Routing-/TS-Verifikation).
+**Letzte Build-Validierung (9. Apr. 2026, EOD):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich.  
+**Commit (Lookup-Lab):** `b491609` — interne `/lab/lookup`-Seite.  
+**Website deployed (8. Apr. 2026):** `b9a4093` — Vercel Figma Phase 1; Lookup-Lab ggf. erst nach erneutem Deploy sichtbar.
 
 ## Build
 
@@ -95,7 +98,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 |--------|-----------|
 | `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
-| Letzter Website-Lauf (lokal, 9. Apr. 2026) | Erfolgreich (Next 16.2.1), 11 Routen (inkl. `/api/mitwirken`) |
+| Letzter Website-Lauf (lokal, 9. Apr. 2026, EOD) | Erfolgreich (Next 16.2.1); u. a. `/`, `/impressum`, `/datenschutz`, `/lab/lookup`, `/api/mitwirken` |
 | Website-Deployment (8. Apr. 2026) | ✓ Deployed auf Vercel — Figma-Migration Phase 1 (`b9a4093`) |
 
 ## Risiken
