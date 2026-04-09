@@ -146,6 +146,13 @@ export class ReleaseEngine {
   }
 
   public validateApproved(input: ValidateApprovedInput): void {
+    if (!Array.isArray(input.compositionEntries)) {
+      throw new DomainError(
+        'DATA_INTEGRITY_VIOLATION',
+        'compositionEntries are required for release validation.',
+      );
+    }
+
     if (input.contentPackage.organizationId !== input.packageVersion.organizationId) {
       throw new DomainError(
         'CROSS_TENANT_ACCESS_DENIED',

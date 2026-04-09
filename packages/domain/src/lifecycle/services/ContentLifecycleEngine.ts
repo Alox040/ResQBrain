@@ -2,7 +2,7 @@ import {
   AuditOperation,
   type LifecycleAuditEvent,
 } from '../../shared/audit';
-import { deny, type AllowedPolicyDecision, type DeniedPolicyDecision } from '../../shared/types';
+import { type AllowedPolicyDecision, type DeniedPolicyDecision } from '../../shared/types';
 import type { OrgId, UserId, UserRoleId } from '../../shared/types';
 import type { ApprovalStatus } from '../entities/ApprovalStatus';
 import type { LifecycleState } from '../entities/ContentLifecycle';
@@ -54,20 +54,6 @@ export function transitionLifecycle(
   command: LifecycleTransitionCommand,
 ): LifecycleTransitionResult {
   const evaluation = evaluateTransition(command);
-
-  if (evaluation.rule?.operation === 'release') {
-    return createDeniedResult(
-      command.state,
-      evaluation.rule,
-      deny('TRANSITION_NOT_PERMITTED', {
-        aggregate: command.state.aggregate,
-        operation: evaluation.rule.operation,
-        from: command.state.approvalStatus,
-        to: command.targetStatus,
-        reason: 'RELEASE_EXECUTION_NOT_IMPLEMENTED_IN_LIFECYCLE_ENGINE',
-      }),
-    );
-  }
 
   if (!evaluation.decision.allowed || evaluation.rule === null) {
     return createDeniedResult(

@@ -138,24 +138,32 @@ test('engine denies forbidden transition Draft -> Approved as business result', 
   assert.equal(result.auditRecord, undefined);
 });
 
-test('engine denies release execution in MVP even when lifecycle policy resolves the path', () => {
+test('engine allows Approved -> Released for content entities via content-package release channel', () => {
   const result = transitionLifecycle({
-    state: createPackageState('Approved'),
+    state: createEntityState('Approved'),
     targetStatus: ApprovalStatus.Released,
     actor: createActor(),
     auditEventId: 'evt-5',
     organizationIsActive: true,
+    viaContentPackageRelease: true,
   });
 
-  assert.equal(result.allowed, false);
-  assert.equal(result.rule?.operation, 'release');
-  assert.equal(result.decision.denyReason, 'TRANSITION_NOT_PERMITTED');
-  assert.deepEqual(result.decision.context, {
-    aggregate: 'ContentPackage',
-    operation: 'release',
-    from: 'Approved',
-    to: 'Released',
-    reason: 'RELEASE_EXECUTION_NOT_IMPLEMENTED_IN_LIFECYCLE_ENGINE',
+  assert.equal(result.allowed, true);
+  assert.equal(result.nextState.approvalStatus, ApprovalStatus.Released);
+  assert.equal(result.rule.operation, 'release');
+  assert.equal(result.auditRecord.operation, 'release');
+  assert.deepEqual(result.auditRecord.metadata, {
+    aggregate: 'ContentEntity',
+    ruleAggregate: 'ContentEntity',
+    releaseChannel: 'content-package',
+    organizationIsActive: true,
+    structuralCompletenessSatisfied: null,
+    hasDeprecatedReferences: null,
+    quorumResolved: null,
+    deprecationDate: null,
+    deprecationReason: null,
+    viaContentPackageRelease: true,
+    alreadyReleasedInPackage: null,
   });
 });
 
