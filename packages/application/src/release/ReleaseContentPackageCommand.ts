@@ -4,7 +4,7 @@ import type {
   OrgId,
   UserId,
   VersionId,
-} from '../../../../domain/src/shared/types';
+} from '../../../domain/src/shared/types';
 
 export interface ReleaseContentPackageCommand {
   readonly packageId: ContentPackageId;

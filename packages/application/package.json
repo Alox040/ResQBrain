@@ -1,0 +1,20 @@
+{
+  "name": "@resqbrain/application",
+  "private": true,
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./lookup": "./src/lookup/index.ts",
+    "./release": "./src/release/index.ts"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "echo \"No application tests configured\""
+  },
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  }
+}

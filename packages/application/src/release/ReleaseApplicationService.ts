@@ -13,7 +13,6 @@ import {
 } from '../../../domain/src/lifecycle/services';
 import {
   ReleaseEngine,
-  ReleaseType,
   type ReleaseCompositionApprovalEntry,
 } from '../../../domain/src/release/services/ReleaseEngine';
 import type {
@@ -24,10 +23,11 @@ import type {
   UserRoleId,
   VersionId,
 } from '../../../domain/src/shared/types';
-import type {
-  ContentEntityType,
-  ContentPackageVersion,
-  ReleaseVersion,
+import {
+  ReleaseType,
+  type ContentEntityType,
+  type ContentPackageVersion,
+  type ReleaseVersion,
 } from '../../../domain/src/versioning/entities';
 import type { ReleaseContentPackageCommand } from './ReleaseContentPackageCommand';
 import type {
@@ -236,7 +236,7 @@ export class ReleaseApplicationService {
 
       const state: ContentEntityLifecycleState = {
         aggregate: 'ContentEntity',
-        organizationId: resolvedEntry.organizationId,
+        organizationId: resolvedEntry.organizationId as OrgId,
         approvalStatus: resolvedEntry.approvalStatus,
         currentVersionId: resolvedEntry.currentVersionId,
         entityType: entry.entityType,
@@ -329,5 +329,7 @@ function mapAuditReleaseType(
       return AuditReleaseType.UPDATE;
     case ReleaseType.ROLLBACK:
       return AuditReleaseType.ROLLBACK;
+    default:
+      throw new Error(`Unsupported release type: ${String(releaseType)}`);
   }
 }
