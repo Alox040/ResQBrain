@@ -1,0 +1,59 @@
+[
+  {
+    "id": "med-adrenalin",
+    "name": "Adrenalin",
+    "summary": "Katecholamin fuer Reanimation und anaphylaktischen Schock.",
+    "category": "Notfallmedikation",
+    "organizationId": "pilot-wache-001",
+    "regionId": "pilot-region-nord",
+    "stationId": "pilot-station-01",
+    "currentReleasedVersionId": "pilot-wache-001@2026.03.29.1",
+    "versionLabel": "2026.03.29.1",
+    "lastReleasedAt": "2026-03-29T19:02:49.378Z",
+    "tags": [
+      "reanimation",
+      "anaphylaxie",
+      "vasopressor"
+    ],
+    "visibility": null,
+    "scope": null
+  },
+  {
+    "id": "med-glukose",
+    "name": "Glukose 40%",
+    "summary": "Hypertonische Glukoseloesung bei schwerer Hypoglykaemie.",
+    "category": "Notfallmedikation",
+    "organizationId": "pilot-wache-001",
+    "regionId": null,
+    "stationId": null,
+    "currentReleasedVersionId": "pilot-wache-001@2026.03.29.1",
+    "versionLabel": "2026.03.29.1",
+    "lastReleasedAt": "2026-03-29T19:02:49.378Z",
+    "tags": [
+      "stoffwechsel",
+      "zucker",
+      "glukose"
+    ],
+    "visibility": null,
+    "scope": null
+  },
+  {
+    "id": "med-salbutamol",
+    "name": "Salbutamol",
+    "summary": "Bronchodilatator bei bronchospastischer Atemnot.",
+    "category": "Atemweg",
+    "organizationId": "pilot-wache-001",
+    "regionId": "pilot-region-nord",
+    "stationId": null,
+    "currentReleasedVersionId": "pilot-wache-001@2026.03.29.1",
+    "versionLabel": "2026.03.29.1",
+    "lastReleasedAt": "2026-03-29T19:02:49.378Z",
+    "tags": [
+      "bronchospasmus",
+      "asthma",
+      "atemweg"
+    ],
+    "visibility": null,
+    "scope": null
+  }
+]

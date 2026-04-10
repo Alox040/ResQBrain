@@ -1,0 +1,59 @@
+[
+  {
+    "id": "alg-cpr-adult",
+    "title": "Reanimation Erwachsene",
+    "summary": "Basisalgorithmus fuer Kreislaufstillstand bei Erwachsenen.",
+    "category": "Notfall",
+    "organizationId": "pilot-wache-001",
+    "regionId": "pilot-region-nord",
+    "stationId": "pilot-station-01",
+    "currentReleasedVersionId": "pilot-wache-001@2026.03.29.1",
+    "versionLabel": "2026.03.29.1",
+    "lastReleasedAt": "2026-03-29T19:02:49.378Z",
+    "tags": [
+      "reanimation",
+      "als",
+      "cpr"
+    ],
+    "visibility": null,
+    "scope": null
+  },
+  {
+    "id": "alg-anaphylaxis",
+    "title": "Anaphylaxie",
+    "summary": "Erstversorgung bei schwerer allergischer Reaktion.",
+    "category": "Atemweg",
+    "organizationId": "pilot-wache-001",
+    "regionId": "pilot-region-nord",
+    "stationId": null,
+    "currentReleasedVersionId": "pilot-wache-001@2026.03.29.1",
+    "versionLabel": "2026.03.29.1",
+    "lastReleasedAt": "2026-03-29T19:02:49.378Z",
+    "tags": [
+      "allergie",
+      "anaphylaxie",
+      "atemweg"
+    ],
+    "visibility": null,
+    "scope": null
+  },
+  {
+    "id": "alg-hypoglycemia",
+    "title": "Hypoglykaemie",
+    "summary": "Diagnostik und Ersttherapie bei symptomatischer Unterzuckerung.",
+    "category": "Internistisch",
+    "organizationId": "pilot-wache-001",
+    "regionId": null,
+    "stationId": null,
+    "currentReleasedVersionId": "pilot-wache-001@2026.03.29.1",
+    "versionLabel": "2026.03.29.1",
+    "lastReleasedAt": "2026-03-29T19:02:49.378Z",
+    "tags": [
+      "stoffwechsel",
+      "glukose",
+      "bewusstsein"
+    ],
+    "visibility": null,
+    "scope": null
+  }
+]
