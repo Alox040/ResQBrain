@@ -1,7 +1,7 @@
 import type { Algorithm, ContentItem, ContentKind, Medication } from '../types/content';
 import type { LookupManifest } from './lookupSchema';
 import { isNewerBundle } from './lookupBundleVersion';
-import { loadStoredBundle } from './lookupStorage';
+import { loadAndValidateBundle } from './lookupCache';
 import { validateLookupBundle } from './validateLookupBundle';
 
 /** Kanonische Phase-0-Quelle: `apps/mobile-app/data/lookup-seed/`. */
@@ -136,12 +136,12 @@ export function loadEmbeddedLookupBundle(): LookupRamStore {
 
 export async function loadLookupBundleWithSource(): Promise<LoadedLookupBundle> {
   const embeddedStore = loadEmbeddedLookupBundle();
-  const storedBundle = await loadStoredBundle();
+  const cachedBundle = await loadAndValidateBundle();
 
-  if (storedBundle && isNewerBundle(storedBundle, embeddedStore)) {
+  if (cachedBundle.found && isNewerBundle(cachedBundle.snapshot, embeddedStore)) {
     return {
       source: 'cached',
-      store: buildLookupRamStore(storedBundle),
+      store: buildLookupRamStore(cachedBundle.snapshot),
     };
   }
 

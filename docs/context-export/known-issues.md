@@ -1,56 +1,57 @@
-# Bekannte Themen / Abweichungen (Export, nachweisbar)
+# Bekannte Themen & Risiken (Export)
 
-Nur Einträge mit **konkretem Repo-Beleg**; keine Vermutungen über externe Systeme. **Letzte Aktualisierung:** 8. April 2026.
+**Stand:** 12. April 2026 — nur Einträge mit **Beleg** in Repo-Doku oder konkreten Dateien. Keine Build-Lauf-Verifikation in dieser Session.
 
-## Dokumentation vs. Code
+---
 
-- **Roadmap/Status/README:** können hinter schnellen Codeänderungen zurückbleiben; erneuter Export empfohlen nach größeren Änderungen.
-- **`docs/roadmap/PROJECT_ROADMAP.md`:** Trägt Stand 7. April 2026 — Mobile-Verifikation ist seitdem lokal grün (`pnpm mobile:verify`); Doku-Zeile ggf. veraltet.
+## Aus Projekt-Dokumentation
 
-## Repository-Struktur / Website
+| Thema | Beleg |
+|-------|--------|
+| Domain-Tests / Algorithm-Modell | `docs/roadmap/PROJECT_ROADMAP.md`: „Offen: Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen.“ |
+| Expo-Doctor / Dependency-Hinweise | `docs/context/12-next-steps.md`: `expo-doctor`-Hinweise (Beispiel `@expo/vector-icons`-Version) „bereinigen, wenn relevant“. |
+| ESLint Mobile | `apps/mobile-app/package.json` Script `lint` meldet explizit: keine ESLint-Konfiguration. |
+| Datenqualität (historisch Plattform-Baseline) | `docs/context/11-implementation-baseline.md`: Seed-Duplikate/Textinkonsistenzen als bekanntes Thema der Prototyp-Ära. |
 
-- **Workspace:** `pnpm-workspace.yaml` listet nur `apps/mobile-app`, `apps/website`, `packages/*` — **`apps/website-old`** und **`apps/website-pre-v2-backup`** sind **keine** Workspace-Mitglieder, besitzen aber jeweils eigenes `package.json` (beide mit Name `@resqbrain/website` in der Backup-/Alt-Kopie).
-- **Root `tsconfig.json`:** `extends: "expo/tsconfig.base"` — atypisch für Root ohne Expo-App im Root-`package.json`.
+---
 
-## Build / CI / Validierung
+## Struktur / Routing (Repo)
 
-- **Keine CI-Konfiguration** unter `.github/` oder `.gitlab-ci*.yml` (Stand Export 8. April 2026).
-- **`scripts/validate-routing.ts`:** Exit **1** — erwartet Importe von `HeroSection`, `ProblemSection`, … in `apps/website/app/page.tsx`; **Ist:** Seite importiert nur UI-Primitives und `content`, keine `*Section`-Komponenten.
-- **`scripts/validate-content-isolation.ts`:** Exit **1** — `allowedRoutes` (Zeile ~16) listet nur `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`; tatsächlich existieren zusätzlich **`/mitwirken`** und **`/updates`** unter `apps/website/app/`.
-- **`pnpm verify`:** ruft nach erfolgreichem `pnpm build` `validate-routing` auf — bricht dort mit Exit 1 ab (`scripts/verify.ts`).
-- **Mobile-App:** nicht Teil von Root-`pnpm build`; **`pnpm mobile:verify`** im Export-Lauf Exit **0**.
+| Thema | Beleg |
+|-------|--------|
+| Zwei mögliche „Website“-Wurzeln | Root-Verzeichnis `app/` mit Next-App-Router-Dateien vs. deploytes Projekt `apps/website` laut Root-`vercel.json` — Root hat **kein** `next.config.*`; Risiko der Verwechslung bei Bearbeitung. |
+| Umfrage-URLs | `apps/website/lib/site/survey.ts` vs. `docs/context/website-config.json` — unterschiedliche Links (manueller Abgleich nötig für „eine Wahrheit“). |
 
-## Navigation / App
+---
 
-- **`HistoryScreen`:** in `AppNavigator` als Stack-Screen `History` registriert; `HomeStackParamList` enthält `History` (Quelltext `AppNavigator.tsx`, `homeStackParamList.ts`).
-- Keine automatisierten UI-E2E-Tests für React Navigation in diesem Export nachgewiesen.
+## Encoding
 
-## Expo / SDK
+| Thema | Beleg |
+|-------|--------|
+| Mojibake in Kommentar | `apps/mobile-app/src/lookup/loadLookupBundle.ts`: Kommentar enthält `â€"` statt erwarteter Satzzeichen — Datei-basiert. |
 
-- **Abhängigkeiten** laut `apps/mobile-app/package.json`: Expo ~54.0.33, RN 0.81.5, React 19.1.0 — Gerätelaufzeit hier nicht verifiziert.
+---
 
-## Encoding / Website
+## Build / CI
 
-- **`TemporaryEncodingTest`:** unter `apps/website` nicht gefunden; Legacy ggf. unter `apps/website-old`.
-- **`app/layout.tsx`:** Kommentar zu UTF-8 / einmaligem Charset-Meta durch Next.js.
+| Thema | Beleg |
+|-------|--------|
+| Keine GitLab CI-Datei im Root | Suche ergab keine `.gitlab-ci*.yml` — kein automatisierter CI-Pfad aus diesem Artefakt ersichtlich. |
+| Vercel Branch-Filter | `scripts/vercel-ignore.js`: Builds auf Nicht-`main`/`master` werden übersprungen — kann als „Deployment erscheint nicht“ interpretiert werden, ist aber beabsichtigte Logik. |
 
-## Deployment
+---
 
-- **`apps/website/vercel.json`:** kein `ignoreCommand` — im Gegensatz zu `apps/website-old/vercel.json`.
-- **`docs/status/PROJECT_STATUS.md`:** produktives Deployment nicht aus lokalem Build allein ableitbar.
+## SDK / Workspace
 
-## Website-Struktur
+| Thema | Beleg |
+|-------|--------|
+| `apps/api` ohne `package.json` | Ordner existiert, ist aber **nicht** in `pnpm-workspace.yaml` als App gelistet — ggf. verwaister oder manuell genutzter Codepfad. |
+| TypeScript-Versionen | Root `devDependencies` TypeScript 5.7; `apps/website` und `packages/domain` listen TypeScript 6.x — belegte Versionsheterogenität zwischen Paketen. |
 
-- **Root-Level `app/`, `components/`, `lib/`:** Am Repo-Root existiert eine parallele Next.js-ähnliche Struktur. **Kein Einfluss auf Produktion** (`vercel.json` zeigt auf `apps/website`), aber Klärung sinnvoll.
-- **`apps/website/figma/`:** Figma-Export als Referenz im Repo — keine produktive Nutzung im Build, erhöht Repo-Größe.
+---
 
-## Datenmodell-Drift
+## Nicht belegt (keine Einträge)
 
-- **Phase-0 JSON + App-Typen**, **Plattform-`content/entities`**, **Domain-`lookup/entities`**, **`DbrdNormalized*`** — mehrere Modelle; Mobile hängt **nicht** an `@resqbrain/domain` (`package.json` ohne Dependency).
-
-## Behoben (frühere Exporte, nicht mehr zutreffend)
-
-- ~~**`npx tsc --noEmit` (`apps/mobile-app`):** Exit 2~~ — aktueller Lauf: Exit **0**.
-- ~~**`HistoryScreen` nicht im Navigator**~~ — jetzt registriert (`History` im Home-Stack).
-- ~~**Umfrage-URL nur `example.com`** in `survey.ts`~~ — `lib/site/survey.ts` nutzt `https://forms.office.com/r/vzHuUdFBRy` für `surveys.active.href`.
-- ~~**`validate-content-isolation.ts`:** letzter Lauf PASS~~ — aktueller Lauf: **FAIL** wegen neuer Routen (siehe oben).
+- Konkrete **Build-Fehler-Logs** aus CI — in diesem Export nicht eingesehen.
+- Spezifische **Navigation-Bugs** in der Mobile-App — keine Issue-Liste in den gelesenen Dateien.
+- Produktions-**Deployment-Warnungen** von Vercel — nicht im Repo-Text dokumentiert.

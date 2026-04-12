@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Algorithm, Medication } from '@/types/content';
-import type { LookupManifest } from '@/lookup/lookupSchema';
+import type { LookupManifest } from './lookupSchema';
+import { validateLookupBundle } from './validateLookupBundle';
 
 const LOOKUP_CACHE_KEY = '@resqbrain/lookup/bundle-v1';
 const LOOKUP_UPDATED_KEY = '@resqbrain/lookup/updated-v1';
@@ -11,6 +12,10 @@ export type LookupBundleSnapshot = {
   medications: Medication[];
   algorithms: Algorithm[];
 };
+
+export type LookupCacheReadResult =
+  | { found: true; snapshot: LookupBundleSnapshot }
+  | { found: false };
 
 type StoredLookupEnvelope = {
   v: number;
@@ -32,6 +37,28 @@ function reviveEnvelope(raw: unknown): StoredLookupEnvelope | null {
     return null;
   }
   return rec as StoredLookupEnvelope;
+}
+
+function validateSnapshot(
+  snapshot: LookupBundleSnapshot | null,
+): LookupBundleSnapshot | null {
+  if (!snapshot) return null;
+
+  const result = validateLookupBundle({
+    manifest: snapshot.manifest as unknown,
+    medications: snapshot.medications as unknown,
+    algorithms: snapshot.algorithms as unknown,
+  });
+
+  if (!result.ok) {
+    return null;
+  }
+
+  return {
+    manifest: result.data.manifest,
+    medications: result.data.medications,
+    algorithms: result.data.algorithms,
+  };
 }
 
 /**
@@ -75,6 +102,15 @@ export async function loadBundle(): Promise<LookupBundleSnapshot | null> {
   return loadEnvelope(LOOKUP_CACHE_KEY);
 }
 
+export async function loadAndValidateBundle(): Promise<LookupCacheReadResult> {
+  const snapshot = validateSnapshot(await loadBundle());
+  if (!snapshot) {
+    return { found: false };
+  }
+
+  return { found: true, snapshot };
+}
+
 export async function loadUpdatedBundle(): Promise<LookupBundleSnapshot | null> {
   return loadEnvelope(LOOKUP_UPDATED_KEY);
 }
@@ -82,23 +118,19 @@ export async function loadUpdatedBundle(): Promise<LookupBundleSnapshot | null> 
 async function loadEnvelope(
   storageKey: string,
 ): Promise<LookupBundleSnapshot | null> {
+  const text = await AsyncStorage.getItem(storageKey);
+  if (!text) return null;
+  let parsed: unknown;
   try {
-    const text = await AsyncStorage.getItem(storageKey);
-    if (!text) return null;
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(text) as unknown;
-    } catch {
-      return null;
-    }
-    const env = reviveEnvelope(parsed);
-    if (!env) return null;
-    return {
-      manifest: env.manifest,
-      medications: env.medications,
-      algorithms: env.algorithms,
-    };
+    parsed = JSON.parse(text) as unknown;
   } catch {
     return null;
   }
+  const env = reviveEnvelope(parsed);
+  if (!env) return null;
+  return {
+    manifest: env.manifest,
+    medications: env.medications,
+    algorithms: env.algorithms,
+  };
 }

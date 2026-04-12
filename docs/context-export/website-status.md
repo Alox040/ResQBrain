@@ -1,86 +1,101 @@
-# Website-Status (Export)
+# Website-Status (`apps/website`)
 
-**Vorhanden:** `apps/website/` (Next.js App Router). Zusätzlich im Baum, nicht Workspace-Mitglied: `apps/website-old/`, `apps/website-pre-v2-backup/`, `apps/website-lab/` (Figma-Playground). **`apps/website-v2/`** im aktuellen Repo **nicht** vorhanden.
+**Stand:** 12. April 2026 — aus App-Router-Dateien, `lib/`, `vercel.json`, Root-`vercel.json`.
 
-**Letzte Verifikation (Export):** `pnpm build` (Root) Exit 0, Next.js 16.2.1, **10** statische Seiten (8. April 2026). Live-Vercel-Status in diesem Lauf nicht per API/Dashboard geprüft.
+---
 
-**Design-Stand:** Figma-basiertes CSS-System und Komponentenbibliothek unter `components/`; Startseite nutzt komponierte Layout-Primitives statt direkter Section-Imports (siehe unten).
+## Vorhanden
 
-## Next.js-Struktur
+**Ja.** Deploy-Konfiguration: Root-`vercel.json` setzt `rootDirectory: "apps/website"` und `buildCommand: pnpm --filter @resqbrain/website build`.
 
-- **`apps/website/app/layout.tsx`** — `SiteShell`, Schrift `Instrument_Sans` (`next/font/google`, Subsets `latin`, `latin-ext`), `lang="de"`.
-- **`apps/website/app/globals.css`** — CSS-System (Figma-orientiert).
-- **`apps/website/app/page.tsx`** — Startseite: `SectionFrame`/`Container`/`Stack`/`ContentCard`/`SectionHeading`/`ButtonLink`; Inhalte aus `content` (`@/lib/site/content`).
-- **`apps/website/components/`** — `layout/`, `sections/` (Komponenten z. B. `HeroSection.tsx` existieren, werden von `app/page.tsx` aktuell nicht importiert), `ui/`.
-- **`package.json`:** `next ^16.2.1` (Build: Next.js **16.2.1** mit Turbopack).
+---
 
-## Komponentenstruktur (Auszug)
+## Next.js Struktur
 
-### `apps/website/components/layout/`
-`site-shell.tsx`, `site-header.tsx`, `site-footer.tsx`, `footer-nav.tsx`, `main-nav.tsx`, `Section.tsx`, `Container.tsx`, `Stack.tsx`
+- **App Router:** `apps/website/app/`
+- **Konfiguration:** `apps/website/next.config.ts` (im Repo vorhanden; Inhalt hier nicht zeilenweise zitiert)
+- **Globales Layout:** `app/layout.tsx`
+- **Styling:** Tailwind (siehe `package.json`: `tailwindcss`, `@tailwindcss/postcss`)
 
-### `apps/website/components/sections/`
-`HeroSection.tsx`, `ProblemSection.tsx`, `IdeaSection.tsx`, `StatusSection.tsx`, `AudienceSection.tsx`, `MitwirkungSection.tsx`, `FaqSection.tsx`, `ContactCtaSection.tsx`, `ProjectGoalSection.tsx`
+---
 
-### `apps/website/components/ui/`
-`badge.tsx`, `button-link.tsx`, `card-title.tsx`, `container.tsx`, `content-card.tsx`, `page-header.tsx`, `section-frame.tsx`, `section-heading.tsx`, `stack.tsx`, `text-link.tsx`
+## Sections / Seiten (App Router)
 
-## Startseite (inhaltliche Blöcke)
+Aus dem Dateisystem `app/` (ohne `figma/`-Unterbaum):
 
-Reihenfolge und Texte aus `apps/website/lib/site/content.ts`, gerendert in `app/page.tsx` als aufeinanderfolgende `SectionFrame`-Abschnitte u. a. für: Hero (+ eingebetteter Mitwirkungs-/Status-Kartenbereich), Problem, Idea + Projektziel (Split), Status, Audience, Mitwirkung, FAQ, Abschluss-CTA.
+| Route | Datei |
+|-------|--------|
+| `/` | `app/page.tsx` |
+| `/impressum` | `app/impressum/page.tsx` |
+| `/kontakt` | `app/kontakt/page.tsx` |
+| `/links` | `app/links/page.tsx` |
+| `/mitwirkung` | `app/mitwirkung/page.tsx` |
+| `/mitwirken` | `app/mitwirken/page.tsx` |
+| `/datenschutz` | `app/datenschutz/page.tsx` |
+| `/updates` | `app/updates/page.tsx` |
+| `/lab/lookup` | `app/lab/lookup/page.tsx` |
+| 404 | `app/not-found.tsx` |
 
-## Routing
+**Startseiten-Inhalt (`page.tsx`):** nutzt `content` aus `@/lib/site/content` — u. a. Hero (Badge, CTAs), Problem-, Idee-, Projektziel-, Status-, Zielgruppen-Sektionen (weitere Abschnitte unterhalb der gelesenen Zeilen nicht vollständig aufgelistet).
 
-| Route | Datei | Build-Modus | Hinweis |
-|-------|--------|-------------|---------|
-| `/` | `app/page.tsx` | Static | Layout-Komposition, kein `*Section`-Import |
-| `/kontakt` | `app/kontakt/page.tsx` | Static | |
-| `/links` | `app/links/page.tsx` | Static | TikTok-optimiert |
-| `/mitwirkung` | `app/mitwirkung/page.tsx` | Static | Umfrage-CTA |
-| `/mitwirken` | `app/mitwirken/page.tsx` | Static | |
-| `/updates` | `app/updates/page.tsx` | Static | Copy `updates-page.ts`, Formular-Link `updates-form.ts` |
-| `/impressum` | `app/impressum/page.tsx` | Static | |
-| `/datenschutz` | `app/datenschutz/page.tsx` | Static | |
-| `/_not-found` | Framework | Static | |
+---
 
-Navigation: `apps/website/lib/routes.ts` — `routes`, `mainNav`, `footerNav`.
+## Routing (Navigation)
+
+**Datei:** `apps/website/lib/routes.ts`
+
+- Routen-Konstanten: `/`, `/kontakt`, `/mitwirkung`, `/mitwirken`, `/links`, `/impressum`, `/datenschutz`, `/updates`
+- **`mainNav`:** Start, Mitwirkung, Mitwirken, Updates, Links, Kontakt
+- **`footerNav`:** Impressum, Datenschutz
+
+---
 
 ## Umfragen-Integration
 
-- **`lib/site/survey.ts`:** Export `surveys` mit `active: { label, href, description, date }`; `href` zeigt auf **`https://forms.office.com/r/vzHuUdFBRy`** (Microsoft Forms), nicht auf einen generischen Platzhalter-Domain-Namen.
-- **`lib/site/content.ts`** / **`lib/site/mitwirkung.ts`** / **`lib/site/links-page.ts`** beziehen sich auf Umfrage-Daten aus `./survey` bzw. `surveys`.
-- **`app/mitwirkung/page.tsx`:** Umfrage-Abschnitt mit `ButtonLink` auf konfigurierte URLs aus Seiteninhalt.
-- Kein Survey-Backend im Repository — externe Formular-URLs und statische Copy.
+1. **`apps/website/lib/site/survey.ts`**  
+   - Aktive Umfrage: Label „Aktuelle Umfrage“, URL `https://forms.office.com/r/vzHuUdFBRy`, Beschreibung „UI & UX Feedback“, Datum „April 2026“.  
+   - `previous: []` (leer).
 
-## Updates-Seite / zweites Formular
+2. **`docs/context/website-config.json`** (Konfigurationsdatei, nicht identisch mit `survey.ts`):  
+   - Einträge unter `surveys.active` / `surveys.completed` mit **anderen** URLs (`forms.cloud.microsoft/...`).  
+   **Hinweis für externe Analyse:** Zwei unterschiedliche Quellen für Umfrage-Links — welche im UI gebunden ist, erfordert Abgleich der Komponenten, die `survey.ts` bzw. die JSON-Datei importieren (nicht vollständig für diesen Export verfolgt).
 
-- **`lib/site/updates-form.ts`:** `updatesInterestFormHref` aus `NEXT_PUBLIC_UPDATES_FORM_URL` (wenn gesetzt und `http…`) sonst derselbe Microsoft-Forms-Link wie oben.
-- **`lib/site/updates-page.ts`:** Texte und CTA für `/updates` (Hinweis: keine Registrierungslogik auf der Website).
+---
 
-## CTA / Buttons
+## CTA Buttons
 
-- Hero (laut `content.hero`): primär **Mitwirken** (`routes.mitwirken`), sekundär **Projekt auf GitHub** (`https://github.com/Alox040/ResQBrain`, `external: true`).
-- Mitwirkungsbereich auf der Startseite: Button mit `content.mitwirkung.cta` (u. a. `external`).
-- Abschluss-CTA: `content.cta` mit `ButtonLink`.
+- **Hero:** Primär-Link aus `content.hero.ctaPrimary` → `routes.mitwirken` (`/mitwirken`); Sekundär extern zu GitHub-Repository-URL in `content.ts`.
+- **Mitwirken-Seite:** Formular `MitwirkenForm` (siehe `app/mitwirken/page.tsx`).
 
-## Deployment (Vercel, dateibasiert)
+---
 
-- **Repository-Root `vercel.json`:** `rootDirectory: "apps/website"`, `buildCommand` / `outputDirectory` auf diese App.
-- **`apps/website/vercel.json`:** `framework`, `installCommand`, `buildCommand` — **ohne** `ignoreCommand`.
-- **`apps/website-old/vercel.json`:** `ignoreCommand` → `node ../../scripts/vercel-ignore.js`.
+## API (Formular)
 
-## Encoding / Copy
+- **`POST`** `apps/website/app/api/mitwirken/route.ts` — `runtime: "nodejs"`, Validierung über `@/lib/mitwirken/schema`, Rate-Limit, E-Mail-Versand über `@/lib/mitwirken/mail`.
 
-- Layout-Kommentar zu UTF-8 / Charset-Meta (Next.js) in `app/layout.tsx`.
-- Sichtbare deutsche Texte in `content.ts` und Seiten mit Umlauten — keine `TemporaryEncodingTest`-Komponente unter `apps/website` (Repo-Suche im Rahmen dieses Exports).
+---
 
-## Assets
+## Deployment (Vercel)
 
-- Ordner `apps/website/ui8/` vorhanden (u. a. Template-ZIPs); Root-`.gitignore` enthält `*.zip` (ZIPs werden nicht versioniert, sofern ignoriert).
+- **Root `vercel.json`:** `framework: nextjs`, `installCommand: pnpm install`, `buildCommand` und `outputDirectory` auf Website-Paket ausgerichtet.
+- **`apps/website/vercel.json`:** kürzere Variante mit `buildCommand: pnpm --filter @resqbrain/website build`.
+- **Ignore-Logik:** `scripts/vercel-ignore.js` — Build wird für Branches **außer** `main`/`master` übersprungen (`process.exit(0)` vs `1`).
 
-## Duplikat / Legacy / Labs
+**Live-Deployment-URL:** in den geprüften Dateien nicht hinterlegt.
 
-- **`apps/website-old/`** — ältere Marketing-Site.
-- **`apps/website-pre-v2-backup/`** — Backup mit eigenem `package.json` (`@resqbrain/website`), nicht in `pnpm-workspace.yaml`.
-- **`apps/website-lab/`** — Isolierter Figma-Architektur-Playground (kein Workspace-Mitglied).
-- **Root-Level-Struktur (`app/`, `components/`, `lib/`)** — Parallele Next.js-ähnliche Struktur am Repo-Root; kein Einfluss auf produktives Deployment (`vercel.json` zeigt auf `apps/website`).
+---
+
+## Repo-Root `app/` (Abgrenzung)
+
+Unter **`e:\Programmierung\ResQBrain\app\`** existiert ein weiteres App-Router-Layout (`layout.tsx`, `page.tsx`, u. a. `mitwirkung/page.tsx`). Am **Repo-Root** gibt es **kein** `next.config.*`; das konfigurierte Next-Projekt für Vercel ist **`apps/website`**. Die Root-`app/`-Struktur ist damit **nicht** Teil des in `vercel.json` referenzierten Website-Builds.
+
+---
+
+## Bekannte UI-Probleme
+
+- In den geprüften Dateien **keine** explizite Liste von UI-Bugs — **nicht belegt**.
+
+## Bekannte Encoding-Probleme
+
+- **Nicht systematisch gescannt.**  
+- Einzelbeleg: in `apps/mobile-app/src/lookup/loadLookupBundle.ts` Kommentarzeile mit Zeichenfolge `â€"` (typische UTF-8/Latin-1-Verlesung) — **Datei-basiert**, betrifft Kommentar, nicht zwingend UI.

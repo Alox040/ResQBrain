@@ -1,9 +1,10 @@
 import {
   buildLookupRamStore,
   loadEmbeddedLookupBundle,
-  loadLookupBundleWithSource,
   type LookupRamStore,
 } from './loadLookupBundle';
+import { BUNDLE_VERSION_COMPARISON, compareBundleVersion } from './lookupBundleVersion';
+import { loadAndValidateBundle, saveBundle } from './lookupCache';
 import type { LookupManifest } from './lookupSchema';
 
 /**
@@ -40,14 +41,22 @@ export type LookupSourceDescriptor = {
   manifest: LookupManifest;
 };
 
+export type LookupSourceResult = {
+  source: LookupSource;
+  store: LookupRamStore;
+  fromCache: boolean;
+};
+
 let activeStore: LookupRamStore | null = null;
 
-/** Set alongside `activeStore` whenever resolution logic picks a layer (today always `embedded`). */
+/** Set alongside `activeStore` whenever resolution logic picks the winning layer. */
 let activeProvisionSource: LookupSource = 'embedded';
 
-type LookupLoadedSource = 'cached' | 'embedded';
+type LookupLayerOutcome =
+  | { ok: true; store: LookupRamStore; source: LookupSource }
+  | { ok: false; reason: string };
 
-let loadPromise: Promise<LookupLoadedSource> | null = null;
+let loadPromise: Promise<LookupSourceResult> | null = null;
 
 const SAFE_EMBEDDED_FALLBACK_MANIFEST: LookupManifest = {
   schemaVersion: '1',
@@ -72,25 +81,104 @@ function loadEmbeddedStoreSafely(): LookupRamStore {
   }
 }
 
+async function tryLoadCachedLayer(): Promise<LookupLayerOutcome> {
+  try {
+    const result = await loadAndValidateBundle();
+    if (!result.found) {
+      return { ok: false, reason: 'cache-miss' };
+    }
+
+    const embeddedStore = loadEmbeddedLookupBundle();
+    const versionComparison = compareBundleVersion(
+      result.snapshot.manifest,
+      embeddedStore.manifest,
+    );
+    if (versionComparison === BUNDLE_VERSION_COMPARISON.ROLLBACK_REQUIRED) {
+      return { ok: false, reason: 'cache-stale' };
+    }
+
+    return {
+      ok: true,
+      source: 'cached',
+      store: buildLookupRamStore(result.snapshot),
+    };
+  } catch (error) {
+    logLookupLoadError('cached', error);
+    return { ok: false, reason: 'cache-error' };
+  }
+}
+
+function tryLoadEmbeddedLayer(): LookupLayerOutcome {
+  try {
+    return {
+      ok: true,
+      source: 'embedded',
+      store: loadEmbeddedLookupBundle(),
+    };
+  } catch (error) {
+    logLookupLoadError('embedded', error);
+    return { ok: false, reason: 'embedded-error' };
+  }
+}
+
+function buildSafeFallbackStore(): LookupRamStore {
+  return buildLookupRamStore({
+    manifest: SAFE_EMBEDDED_FALLBACK_MANIFEST,
+    medications: [],
+    algorithms: [],
+  });
+}
+
 /**
- * Phase-2 provisioning: cached → embedded.
+ * Phase-2 provisioning: cached -> embedded -> fallback.
  *
  * Call once at app start; safe to call multiple times (dedupes via `loadPromise`).
  */
-export async function loadLookupSource(): Promise<LookupLoadedSource> {
-  if (activeStore) return activeProvisionSource === 'cached' ? 'cached' : 'embedded';
+export async function loadLookupSource(): Promise<LookupSourceResult> {
+  if (activeStore) {
+    return {
+      source: activeProvisionSource,
+      store: activeStore,
+      fromCache: activeProvisionSource === 'cached',
+    };
+  }
   if (!loadPromise) {
     loadPromise = (async () => {
       try {
-        const result = await loadLookupBundleWithSource();
-        activeProvisionSource = result.source;
-        activeStore = result.store;
-        return result.source;
-      } catch (error) {
-        logLookupLoadError('cached', error);
-        activeProvisionSource = 'embedded';
-        activeStore = loadEmbeddedStoreSafely();
-        return 'embedded' as const;
+        const cached = await tryLoadCachedLayer();
+        if (cached.ok) {
+          activeProvisionSource = cached.source;
+          activeStore = cached.store;
+          return {
+            source: cached.source,
+            store: cached.store,
+            fromCache: true,
+          };
+        }
+
+        const embedded = tryLoadEmbeddedLayer();
+        if (embedded.ok) {
+          activeProvisionSource = embedded.source;
+          activeStore = embedded.store;
+          void saveBundle({
+            manifest: embedded.store.manifest,
+            medications: embedded.store.medications,
+            algorithms: embedded.store.algorithms,
+          });
+          return {
+            source: embedded.source,
+            store: embedded.store,
+            fromCache: false,
+          };
+        }
+
+        activeProvisionSource = 'fallback';
+        activeStore = buildSafeFallbackStore();
+        return {
+          source: 'fallback',
+          store: activeStore,
+          fromCache: false,
+        };
       } finally {
         loadPromise = null;
       }
@@ -103,9 +191,9 @@ export async function loadLookupSource(): Promise<LookupLoadedSource> {
  * Initializes the in-memory lookup store after {@link loadLookupSource}.
  *
  * Today this is a small explicit step so App startup can:
- * `const bundle = await loadLookupSource(); initializeLookupStore(bundle);`
+ * `const result = await loadLookupSource(); initializeLookupStore(result);`
  */
-export function initializeLookupStore(_bundle: LookupLoadedSource): void {
+export function initializeLookupStore(_bundle: LookupSourceResult): void {
   // `loadLookupSource` already sets `activeStore`; this ensures late callers
   // (or future refactors) still get a RAM store deterministically.
   resolveActiveLookupStore();
@@ -114,10 +202,8 @@ export function initializeLookupStore(_bundle: LookupLoadedSource): void {
 /**
  * Resolves the singleton RAM store for the app process.
  *
- * **Current behavior:** loads and validates the embedded seed bundle once (see `loadLookupBundle`).
- *
- * **Future (not implemented):** try, in order, updated → cached → fallback → embedded, assign
- * `activeProvisionSource` when a layer wins, then cache `activeStore`.
+ * If startup provisioning was skipped, this falls back to the embedded seed and, if needed,
+ * to a minimal safe bundle to keep the app bootable.
  */
 function resolveActiveLookupStore(): LookupRamStore {
   if (activeStore) {
@@ -144,7 +230,6 @@ export function getActiveLookupStore(): LookupRamStore {
 
 /**
  * Provisioning label for the active bundle.
- * Today always `'embedded'`; will differ once optional layers exist.
  */
 export function getActiveLookupProvisionSource(): LookupSource {
   resolveActiveLookupStore();

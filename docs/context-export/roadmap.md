@@ -1,60 +1,54 @@
-# Roadmap & nächste Schritte (Export)
+# Roadmap (Export)
 
-Quellen: `docs/context/04-mvp-scope.md`, `docs/context/12-next-steps.md`, `docs/roadmap/PROJECT_ROADMAP.md`, `README.md`, `docs/status/PROJECT_STATUS.md`.  
-**Abgleich Code/Doku (Export 8. April 2026):** Ergänzt um Verifikationsläufe (Build, Mobile-Verify, Validierungsskripte).
+**Stand:** 12. April 2026 — extrahiert aus `docs/roadmap/PROJECT_ROADMAP.md`, `docs/context/12-next-steps.md`, `docs/context/04-mvp-scope.md`.
 
-## Aktuelle Phase (Doku)
+---
 
-- **README / `current-phase.md`:** Phase 0 — Lookup-first MVP; Website + Mobile-Lookup; keine produktive API-/Multi-Tenant-Runtime in App.
-- **`docs/context/04-mvp-scope.md`:** MVP in Scope: Medikamente, Algorithmen, Offline-Nutzung (Bundle), schnelle Suche; Post-MVP u. a. Release Engine, Multi-Tenant, SurveyInsight, API/Auth.
-- **Code:** `resolveLookupBundle()` (updated → cached → embedded → fallback), optional `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` + Hintergrund-Update in `App.tsx` — **ohne** vollständig nachgewiesenes produktives Sync-/Governance-Ende-zu-Ende.
+## Aktuelle Phase
 
-## Nächste Schritte (`docs/context/12-next-steps.md`, README)
+- **Phase 0 — Lookup App:** Kernfunktionen (Architektur-Basis, Seed, Loader, Mobile-Screens, lokale Suche, eingebettetes Offline-Bundle, Favoriten/Verlauf) überwiegend **[x]**; offen **[ ]** u. a. Bundle separat auf Gerät / Sync.
+- **Phase 1 — Einsatz Features:** Dosisrechner **[~]**; Vitalreferenz, Favoriten, Verlauf, View-Model-Adapter **[x]**; Push-Updates **[ ]**.
 
-1. Seed-Daten / Sourcing — DBRD-Pipeline (`pnpm dbrd:*`, `scripts/dbrd/`).
-2. Offline-Datenhaltung / Architektur — Produktziel vs. RAM + optionale persistierte Schichten.
-3. Einsatz-UI-Optimierung (Roadmap-Checkboxen).
-4. Organisationskontext / API / Auth.
+---
 
-## `docs/roadmap/PROJECT_ROADMAP.md` — Checkboxen (Auszug, Tabelle dort vollständig)
+## Nächste Schritte (priorisiert laut `PROJECT_ROADMAP.md`)
 
-**Phase 0 — Lookup App:**
+1. Bundle-Persistenz / Ersetzung — Anbindung an `lookupSource` (`cached` / `updated` / `fallback`) ohne Embedded-Quelle zu brechen.  
+2. Sync-Konzept (nach Bundle-Lieferung).  
+3. Seed & Pilot — Daten und Bundle-Metadaten.  
+4. Einsatz-UI iterativ; optional `expo-doctor`-Abweichungen.
 
-- Kernpfade (Website statisch, Mobile Lookup, Suche, Listen/Details, Favoriten/Verlauf-Stores) **[x]** laut Roadmap-Tabelle.
-- Bundle separat speichern / aus Sync laden, Netzwerk-Refresh **[ ]** bzw. **[~]** für Teilaspekte.
-- **`lookupSource` / Resolver:** Code-Pfad für mehrere Schichten vorhanden; produktive Befüllung von updated/cached und Betrieb **offen** (Roadmap: Offline-Update **[~]**).
+**Zusätzlich `12-next-steps.md`:** Lookup-Bundle auf Gerät (über embedded hinaus), Sync/Push-Updates, Seed ausbauen, ESLint optional, expo-doctor-Hinweise.
 
-**Phase 1 — Einsatz Features:**
+---
 
-- Dosisrechner **[~]** (Heuristik mg/µg-pro-kg).
-- Vitalwerte, Favoriten, Verlauf, View-Model-Adapter **[x]** laut Roadmap — **Code:** `HistoryScreen` im Home-Stack registriert, Navigation von `HomeScreen` aus.
+## Offene TODOs / Lücken (explizit in Doku)
 
-## MVP-Definition (kanonische Doku)
+- **`PROJECT_ROADMAP.md`:** Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen — **offen**.
+- **MVP `04-mvp-scope.md` — Post-MVP / zurückgestellt:** u. a. Content Lifecycle UI, Approval/Release-Pipelines für Produktivbetrieb, Multi-Tenant-Runtime, Auth, Survey-Produktivbetrieb, Editor-UI.
 
-- **`docs/context/04-mvp-scope.md`:** Medikamentensuche, Notfallalgorithmen, Offline-Nutzung (Bundle), schnelle Suche; Exit-Kriterien u. a. „unter 3 Klicks“, offline Algorithmus, Seed-Quelle.
+---
 
-## Offene TODOs (aus Doku + Verifikation 8. April 2026)
+## Priorisierte Tasks (kurz, aus Kontextdateien)
 
-- **`scripts/validate-routing.ts`:** Exit 1 — erwartet noch `*Section`-Imports in `app/page.tsx`; Ist: inline `SectionFrame`-Komposition.
-- **`scripts/validate-content-isolation.ts`:** Exit 1 — `allowedRoutes` enthält `/mitwirken` und `/updates` nicht.
-- **`pnpm verify`:** scheitert damit nach Build an `validate-routing`.
-- **Offline/Sync:** weiterhin laut Roadmap/Produktziel; Code-Vorbereitung ohne abgeschlossene Betriebsstory.
+1. Bundle-Layering + Persistenz (`lookupSource`).  
+2. Sync-/Update-Konzept.  
+3. Seed-Qualität und Pilot-Konfiguration.  
+4. Domain-Testabgleich (`test:content` / Algorithm-Graph).
 
-## Website — zuletzt im Code sichtbar
+---
 
-- Routen `/mitwirken`, `/updates`; Copy/Formular-Konfiguration unter `lib/site/updates-page.ts`, `lib/site/updates-form.ts`.
-- Startseite ohne direkte `*Section.tsx`-Imports; Figma-orientierte UI-Primitives.
-- Umfrage-Link in `lib/site/survey.ts` auf Microsoft Forms (kein generischer Platzhalter-Domain-String mehr).
+## MVP-Definition (Kern aus `04-mvp-scope.md`)
 
-## Priorisierte Tasks — Doku + Code-Fakten (Stand 8. Apr. 2026)
+**In Scope:** Medikamentensuche mit Dosierung/Kontraindikationen; Notfallalgorithmen Schritt-für-Schritt; **Offline** mit lokaler Datenhaltung und Hintergrund-Sync (als Ziel beschrieben); schnelle Suche ohne Anmeldung im Einsatz.
 
-1. **Validierungsskripte synchronisieren:** `validate-content-isolation.ts` (`allowedRoutes`) und `validate-routing.ts` (Section-Checks oder neue Heuristik) — Ziel: `pnpm verify` grün.
-2. **Bundle-Persistenz — Konzept:** `lookupSource`-Erweiterung (Roadmap Phase 0) als Dokument ausarbeiten.
-3. **Root-Level-Struktur klären:** `app/`, `components/`, `lib/` am Repo-Root bereinigen oder als v2 formalisieren.
-4. **Sync-Konzept:** Inhaltliches Konzept für Bundle-Lieferung, Integrität, Fehlerpfade.
-5. **`docs/roadmap/PROJECT_ROADMAP.md`:** Stand-Datum und ggf. Verlauf-Zeile mit Navigator-Registrierung abstimmen (Doku- housekeeping).
+**Exit-Kriterien (Auszug):** Dosierung in unter 3 Klicks; Algorithmus vollständig offline; geprüfte Seed-Quelle; ohne Einweisung nutzbar.
 
-## Erledigt / verifiziert (seit früherem Export, 8. Apr. 2026)
+---
 
-- **Mobile `tsc --noEmit`:** Exit 0.
-- **`pnpm mobile:verify`:** Exit 0 (inkl. `expo export` Android).
+## Phase-1-Planung (aus Roadmap + Next Steps)
+
+- Gewichtsbasierter Dosisrechner (Parser aus Freitext) — **teilweise**.  
+- Vitalwerte-Referenz — **umgesetzt**.  
+- Favoriten & Verlauf — **umgesetzt**.  
+- Push-Updates bei Netz — **ausstehend**.

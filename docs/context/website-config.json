@@ -1,0 +1,77 @@
+{
+    "project": {
+      "name": "ResQBrain",
+      "tagline": "Einsatzwissen ohne Suchen",
+      "description": "Plattform für Rettungsdienst Algorithmen, Medikamente und Nachbereitung"
+    },
+  
+    "contact": {
+      "email": "deine@email.de",
+      "website": "https://resqbrain.de",
+      "github": "https://github.com/Alox040/ResQBrain.git"
+    },
+  
+    "legal": {
+      "owner": "Alexander Posdziech",
+      "organization": "ResQBrain",
+      "street": "Voßort 14",
+      "zip": "21037",
+      "city": "Hamburg",
+      "country": "Deutschland",
+      "email": "triggerhub@outlook.com"
+    },
+  
+    "social": {
+      "tiktok": "https://tiktok.com/@wiwawunderbar",
+      "reddit": "https://reddit.com/u/gullihuhn69",
+      "youtube": "",
+      "twitter": ""
+    },
+  
+    "product": {
+      "status": "Early Development",
+      "offlineSupport": true,
+      "targetGroup": [
+        "Notfallsanitäter",
+        "Rettungsdienst",
+        "Ausbildung"
+      ]
+    },
+  
+    "features": {
+      "algorithms": true,
+      "medications": true,
+      "protocols": true,
+      "learning": true,
+      "offline": true,
+      "voice": false
+    },
+  
+    "surveys": {
+        "active": [
+          {
+            "id": "survey-002",
+            "title": "Funktionspriorisierung",
+            "status": "active",
+            "url": "https://forms.cloud.microsoft/r/tw508dTuDK",
+            "cta": "An Umfrage teilnehmen",
+            "showOnHomepage": true
+          }
+        ],
+        "completed": [
+          {
+            "id": "survey-001",
+            "title": "Bedarfsanalyse Rettungsdienst App",
+            "status": "completed",
+            "url": "https://forms.cloud.microsoft/r/quaHYEbjAC",
+            "responses": 120,
+            "showResults": true
+          }
+        ]
+      },
+  
+    "branding": {
+      "primaryColor": "#0ea5e9",
+      "logo": "/logo.png"
+    }
+  }

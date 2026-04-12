@@ -1,110 +1,103 @@
-# Architektur (Export, codebasiert)
+# Architektur (Export)
 
-## Ordnerstruktur (relevant für Produkt)
+**Stand:** 12. April 2026 — Struktur und Begriffe aus dem Dateisystem und ausgewählten Modulen; keine Zukunftsannahmen.
 
-- **`apps/mobile-app/`** — Expo-App: `App.tsx`, `src/navigation`, `src/screens`, `src/data`, `src/lookup` (u. a. `sourceResolver.ts`, `bundleUpdateService.ts`, `lookupCache.ts`, `bundleStorage.ts`, `loadLookupBundle.ts`), `src/types`, `src/ui`, `src/theme`, `src/state`, `src/features`.
-- **`apps/website/`** — Next.js: `app/` (Routes), `components/` (`layout/`, `sections/`, `pages/`, `ui/`), `lib/` (`routes.ts`, `lib/site/*` inkl. `updates-page.ts`, `updates-form.ts`, `survey.ts`), `styles/`, `public/`; Ordner `ui8/` (Assets/Vorlagen, u. a. ZIP-basierte Quellen; `*.zip` in Root-`.gitignore`).
-- **`apps/website-pre-v2-backup/`** — Backup einer früheren Website-Variante (nicht in `pnpm-workspace.yaml`).
-- **`apps/website-old/`** — ältere Next.js-Website; `vercel.json` mit `ignoreCommand`.
-- **`packages/domain/src/`** — Domain-Logik, u. a.:
-  - `content/entities/` — ApprovalStatus, ScopeTarget, Algorithm, Medication, Protocol, Guideline, ContentPackage, ContentPackageFoundation
-  - `versioning/entities/` — u. a. CompositionEntry, ContentPackageVersion, ReleaseVersion, LineageState, …
-  - `release/ReleaseEngine.ts`
-  - `lifecycle/services/ContentLifecycleEngine.ts`
-  - `governance/` — Policies, Entities, `approval/services/ApprovalEngine.ts`, `services/PermissionEngine.ts`
-  - `audit/`, `survey/`, `tenant/`, `lookup/entities/`
-- **`data/lookup-seed/`** — Phase-0-JSON: `manifest.json`, `medications.json`, `algorithms.json`.
-- **`data/schemas/`** — `dbrd-normalized.schema.ts`, `dbrd-normalized.examples.json`.
-- **`scripts/`** — u. a. `dbrd/`, `status/`, `utils/`, `verify.ts`, `vercel-ignore.js`, `validate-routing.ts`, `validate-content-isolation.ts`, `check-german-umlauts.ts`, `validate-algorithms.ts`, `import-dbrd.ts`, `transform-algorithms.ts`, `cleanup-algorithms.ts`, `seed-update.mjs`.
+---
 
-**Zusatz (Root):** `app/`, `components/` — parallele/alte Struktur; nicht Root-`pnpm build`.
+## Ordnerstruktur (relevant)
 
-**Hinweis:** Unter `apps/` kann ein leerer Ordnername `Neuer Ordner` vorkommen (nicht in jedem Checkout relevant).
+- **`apps/website`** — Next.js App Router (`app/`), `components/`, `lib/`, `public/`.
+- **`apps/mobile-app`** — Expo-App: `app.json`, `src/` (Screens, Navigation, Lookup, Theme, Storage).
+- **`apps/api-local`** — Lokaler Node/TSX-Einstieg (`src/index.ts` laut `package.json`).
+- **`apps/api`** — Unterordner `src/lookup` (Handler, Contracts, Mappers); **kein** `package.json` im Ordner gefunden.
+- **`packages/domain`** — Domänencode: u. a. `content/`, `versioning/`, `release/`, `governance/`, `lifecycle/`, `tenant/`, `lookup/`, `survey/`, `audit/`, `shared/`, `legacy/`.
+- **`packages/application`** — `lookup/` (Services, Queries, DTOs, Ports), `release/`.
+- **`packages/api`** — `src/lookup/adapters`, an `@resqbrain/application` gekoppelt.
+- **`data/`** — `lookup-seed/` (Mobile-Bundle-Kopie), `schemas/` (DBRD-Normalisierung), `dbrd-source/`.
+- **`scripts/`** — Build-/Validierungs-/DBRD-Pipelines, `verify.ts`, `vercel-ignore.js`.
+- **Repo-Root** — zusätzlich `app/`, `components/`, `lib/`, `src/domain/` (TS-Pfade `@/*` in Root-`tsconfig.json`); **kein** `next.config.*` am Root (Next liegt unter `apps/website`).
+
+---
 
 ## Navigation (Mobile-App)
 
 **Datei:** `apps/mobile-app/src/navigation/AppNavigator.tsx`
 
-- **Bottom Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `Settings`, `MedicationTab`, `AlgorithmTab`.
-- **Home-Stack (`HomeStackParamList` in `homeStackParamList.ts`):** `HomeMain`, `History` (`HistoryScreen`), `VitalReference`.
-- **Medikament-Stack:** `MedicationListScreen` → `MedicationDetail` (Param: `medicationId`) → `DoseCalculator`.
-- **Algorithmus-Stack:** `AlgorithmListScreen` → `AlgorithmDetail` (Param: `algorithmId`).
+- **Tabs (`RootTabParamList`):** `Home`, `Search`, `Favorites`, `Settings`, `MedicationTab`, `AlgorithmTab`.
+- **Home-Stack:** `HomeMain` → `HomeScreen`; `History` → `HistoryScreen`; `VitalReference` → `VitalReferenceScreen` (`homeStackParamList.ts`).
+- **Medikamente-Stack:** `MedicationListScreen` → `MedicationDetail` → `DoseCalculator`.
+- **Algorithmen-Stack:** `AlgorithmListScreen` (optional `category`) → `AlgorithmDetail`.
 
-**Einstieg:** `App.tsx` — Hydration Favoriten/Verlauf/Recent, `resolveLookupBundle()` → `initializeContent(buildLookupRamStore(...))`, danach `NavigationContainer` + `AppNavigator`.
+---
 
-## Navigation / Routing (aktive Website)
+## Domain Layer (`packages/domain`)
 
-**Datei:** `apps/website/lib/routes.ts`
+**Exporte (Auszug aus `package.json`):** u. a. `compile:content`, `compile:versioning`, `compile:release`, `compile:lifecycle`, `compile:governance`, …
 
-- Routen-Objekt: `home` `/`, `kontakt`, `mitwirkung`, `mitwirken`, `links`, `impressum`, `datenschutz`, `updates`.
-- `mainNav` / `footerNav` wie im Quelltext (u. a. Einträge für Mitwirkung, Mitwirken, Updates, Links, Kontakt).
+**Inhaltliche Module (Ordner unter `src/`):**
 
-**Startseite:** `app/page.tsx` — Abschnitte als `SectionFrame`/`Container`-Komposition mit Daten aus `content` (`@/lib/site/content`); keine direkten Imports der `components/sections/*Section.tsx`-Dateien.
+- **`content/entities`:** `Algorithm`, `Medication`, `Protocol`, `Guideline`, `ContentPackage`, `ApprovalStatus`, …
+- **`versioning/entities`:** u. a. `ContentPackageVersion`, `ReleaseVersion`, `EntityType`, `LineageState`, …
+- **`release/`:** `ReleaseEngine` in `release/services/ReleaseEngine.ts`, `ReleaseBundle` in `release/entities/`.
+- **`governance/`:** `ApprovalEngine`, Policies (`ApprovalResolutionPolicy`, `TransitionAuthorizationPolicy`, `DeprecationAuthorizationPolicy`, …), Capability-Checks.
+- **`lifecycle/`:** `ContentLifecycleEngine`, `ContentLifecycleService`, `TransitionPolicy`, …
+- **`tenant/`:** `Organization`, Region/County, `tenant/policies` (z. B. `ContentSharingPolicyGuard`).
+- **`lookup/entities/`:** eigenständiges Lookup-Medikament u. a. mit eingebetteter `Version` (nicht identisch mit Mobile-Phase-0-JSON).
 
-**Layout:** `app/layout.tsx` — `SiteShell`, Schrift `Instrument_Sans` (`next/font/google`), `lang="de"`, Metadaten aus `lib/site/site-content.ts`.
+---
 
-## Domain Layer (`@resqbrain/domain`)
+## Datenmodelle (Kurz)
 
-- **Exportfassade:** `packages/domain/src/index.ts` re-exportiert Content-Factory-Funktionen, Typen, Governance-Evaluatoren, `Versioning`, `Audit`, `release`, `survey`, `Lookup`.
-- **Mobile-App:** `apps/mobile-app/package.json` listet `@resqbrain/domain` **nicht**; eigene Typen in `src/types/content.ts`, Validierung in `src/lookup/`.
+| Schicht | Ort | Zweck |
+|---------|------|--------|
+| Phase-0 Mobile-Bundle | `apps/mobile-app/data/lookup-seed/*.json` + `src/types/content.ts` + `src/lookup/lookupSchema.ts` | `Medication` / `Algorithm` mit linearen Algorithmus-Schritten (`{ text }`) |
+| DBRD-Normalisierung | `data/schemas/dbrd-normalized.schema.ts` | `NormalizedMedication`, `NormalizedAlgorithm`, `DbrdNormalizedProvenance`, Bundle-Hülle |
+| Plattform-Domain | `packages/domain/src/content/entities/*.ts` | Vollständige Content-Entities mit Org, Version-IDs, Approval, Audit |
+| Lookup-Domain-Submodule | `packages/domain/src/lookup/` | Separates Lookup-Medikament-Modell |
 
-## Datenmodelle (zwei Ebenen)
+---
 
-### A) Mobile Phase 0 (`apps/mobile-app/src/types/content.ts`)
+## Versioning-System
 
-- `ContentKind`: `'medication' | 'algorithm'`
-- `ContentTag`: festes Vokabular — abgestimmt mit `lookupSchema.ts` (`CONTENT_TAG_VALUES`)
-- `ContentCategory`: u. a. `pediatrics`, `trauma`, `sepsis`, `resuscitation` — optional auf `Medication`/`Algorithm` (`category?`)
-- `Medication` / `Algorithm` / `ContentItem` — wie Typdefinitionen
+- **Domain:** `packages/domain/src/versioning/entities/` — u. a. `ContentPackageVersion`, `ReleaseVersion`, `ReleaseType`, `LineageState`, Tests in `versioning.*.test.ts`.
+- **Mobile Phase 0:** Manifest-Felder `schemaVersion`, `version`, … in `LookupManifest` (`lookupSchema.ts`); **keine** Domain-Versioning-Anbindung in der App (laut `docs/context/12-next-steps.md`: keine `@resqbrain/domain`-Nutzung in der App).
 
-Validierung: `lookupSchema.ts` (`MEDICATION_ITEM_KEYS`, `ALGORITHM_ITEM_KEYS` inkl. `category`, `ALGORITHM_ITEM_KEYS`, Manifest-Keys).
-
-### B) Plattform-Domain (`packages/domain/src/content/entities/`)
-
-- **Medication / Algorithm / Guideline / Protocol / ContentPackage** — org- und versionsbezogene Modelle; Algorithm mit `decisionLogic` (Graph), abweichend vom linearen Phase-0-`steps[]` der App.
-
-## Mobile: Bundle-Auflösung und Quellen
-
-- **`sourceResolver.ts`:** `resolveLookupBundle()` — Reihenfolge updated → cached → embedded → fallback; Rückgabetyp `ResolvedLookupBundle` mit `source`, `bundle`, `meta` (`BundleMeta`: `bundleId`, `version`, `generatedAt`, `schemaVersion` — `version` aus Manifest, siehe `extractMeta`).
-- **`bundleUpdateService.ts`:** Remote-Check/Apply (Aufruf aus `App.tsx` wenn `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` gesetzt).
-- **`lookupSource.ts`:** dokumentiert `LookupSource` (`embedded` | `cached` | `updated` | `fallback` | `resolved`).
-
-## Versioning (Domain-Paket)
-
-- **`packages/domain/src/versioning/entities/`:** u. a. `ContentPackageVersion`, `ReleaseVersion`, `CompositionEntry`, `LineageState`, …
-- **`packages/domain/src/shared/versioning/`:** z. B. `assertExplicitVersionId`.
+---
 
 ## Release Engine
 
-- **`packages/domain/src/release/ReleaseEngine.ts`** — Release-Flow mit Policy-/Capability-Bezug; Tests `release.engine.test.ts`.
-- **Mobile/Website:** kein direkter Aufruf in den App-Ordnern im Rahmen dieses Exports nachgewiesen.
+- **Implementiert im Domain-Paket:** `packages/domain/src/release/services/ReleaseEngine.ts` (u. a. `createPackage`, `createRelease`, Validierung von Composition/Approval).
+- **Application:** `packages/application/src/release/ReleaseApplicationService.ts`, `ReleaseContentPackageCommand.ts`, Ports für Repositories/Audit.
 
-## Content-Struktur (App-Laufzeit)
+---
 
-- **Medikamente** und **Algorithmen** aus JSON-Bundle; keine Protokolle/Leitlinien in `data/lookup-seed/`.
+## Content-Struktur (fachlich)
 
-## Website-Startseite (aktive `apps/website`)
+- **Mobile-Bundle:** Medikamente und Algorithmen (keine Guidelines im Phase-0-JSON-Whitelist in `lookupSchema.ts`).
+- **Domain:** Algorithm, Medication, Protocol, Guideline als eigene Entities; `ContentPackage` als Container.
 
-**Datei:** `apps/website/app/page.tsx`
+---
 
-- Struktur: mehrere `SectionFrame`-Blöcke mit `SectionHeading`, `ContentCard`, `ButtonLink` usw.; Inhaltsfelder aus `content` (`hero`, `problem`, `idea`, `projectGoal`, `status`, `audience`, `mitwirkung`, `faq`, `cta`).
-- Die älteren Section-Komponenten (`HeroSection.tsx`, …) liegen unter `components/sections/` und werden von dieser Seite aktuell nicht eingebunden.
+## Services (Application Layer)
 
-## Services (Domain-Paket, explizite `*Engine*` / Services)
+Unter `packages/application/src/lookup/services/` u. a.:
 
-| Pfad | Rolle (Kurzname) |
-|------|------------------|
-| `lifecycle/services/ContentLifecycleEngine.ts` | Content-Lifecycle |
-| `governance/approval/services/ApprovalEngine.ts` | Freigabe / Approval |
-| `governance/services/PermissionEngine.ts` | Berechtigungen |
-| `release/ReleaseEngine.ts` | Release-Orchestrierung |
+- `GetMedicationListService`, `GetMedicationDetailService`
+- `GetAlgorithmListService`, `GetAlgorithmDetailService`
+- `SearchLookupContentService`
 
-## Policies (`packages/domain/src/governance/policies/`)
+Release: `ReleaseApplicationService`.
 
-Export in `policies/index.ts`:
+---
 
-- `OrganizationScopedAccessPolicy`, `TransitionAuthorizationPolicy`, `ApprovalResolutionPolicy`, `ReleaseAuthorizationPolicy`, `DeprecationAuthorizationPolicy`, `hasCapability`, `getCapabilityGrantingRoles`
+## Entities (Domain, Auswahl)
 
-## Entities (Governance, Auszug)
+Exportiert über `packages/domain/src/content/entities/index.ts`: u. a. `Algorithm`, `Medication`, `Protocol`, `Guideline`, `ContentPackage`, `ContentPackageFoundation`, `ApprovalStatus`, `ScopeTarget`.
 
-Unter anderem in `governance/entities/`: Capability, Permission, UserRole, ApprovalPolicy, … (siehe `packages/domain/src/governance/entities/index.ts`).
+---
+
+## Policies (Domain, Auswahl)
+
+- **`governance/policies/`:** u. a. `ApprovalResolutionPolicy`, `TransitionAuthorizationPolicy`, `DeprecationAuthorizationPolicy`, `hasCapability`, `PolicyContext`.
+- **`lifecycle/policies/`:** `TransitionPolicy`.
+- **`tenant/policies/`:** u. a. `ContentSharingPolicyGuard` (siehe `packages/domain/src/tenant/policies/index.ts`).

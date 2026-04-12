@@ -1,72 +1,81 @@
 # Projekt-Überblick (Export)
 
-**Quelle:** Analyse des Repositories `ResQBrain` (Stand Export: 8. April 2026, aktueller Workspace-Zustand).  
-**Hinweis:** Nur Code-/Datei-basierte Fakten; keine Live-Deployment-Verifikation per Dashboard/API in diesem Lauf.
+**Stand:** 12. April 2026 — nur aus Repo-Artefakten (`package.json`, `README.md`, `docs/context/*`, `docs/roadmap/*`, Codepfade) abgeleitet.
 
-**Verifikation (frischer Lauf, lokal):** Root `pnpm build` → Exit **0** (Next.js **16.2.1**, **10** statische Seiten); `apps/mobile-app` `npx tsc --noEmit` → Exit **0**; `pnpm mobile:verify` → Exit **0** (Typecheck, Nav-Checks, `expo export` Android); `pnpm exec tsx scripts/validate-content-isolation.ts` → Exit **1** (`allowedRoutes` ohne `/mitwirken`, `/updates`); `pnpm exec tsx scripts/validate-routing.ts` → Exit **1** (Skript erwartet noch `*Section`-Imports in `app/page.tsx`); `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` → Exit **0**.
+---
 
 ## Projektname
 
-**ResQBrain** (`package.json` Root: `resqbrain`; Workspace-Apps: `@resqbrain/website`, `resqbrain-mobile`). Zusätzlich im Dateibaum, **ohne** Eintrag in `pnpm-workspace.yaml`: `apps/website-old`, `apps/website-pre-v2-backup`, `apps/website-lab`, `apps/mobile-app-lab`.
+**ResQBrain**
 
 ## Ziel des Projekts
 
-- Mehrmandantenfähige EMS-Plattform mit versionierten/freigegebenen Inhalten (Dokumentationsbasis unter `docs/context` und `docs/architecture`).
-- Im Code sichtbar: Mobile Lookup-App (`apps/mobile-app`), aktive Website (`apps/website`), Legacy/Backup-Website-Ordner (`apps/website-old`, `apps/website-pre-v2-backup`).
+- **Produkt (Kanonisch):** Mehrmandantenfähige Plattform für den Rettungsdienst: Organisationen verwalten und verteilen medizinische/operative Inhalte (Algorithmen, Medikamente, Protokolle, Leitlinien) mit Versionierung und Freigabe — beschrieben in `README.md` und `docs/architecture/`.
+- **Aktueller Umsetzungsschwerpunkt im Code:** **Phase-0-Lookup-App** (Mobile): offline Medikamente und Algorithmen aus eingebettetem Bundle; Website für Projekt-/Community-Kommunikation.
 
 ## Aktuelle Phase
 
-- `docs/context/current-phase.md` (letzte Aktualisierung 2026-03-27): **Phase 0 (Lookup App)** — statische/mock-basierte Datenquellen in der App, keine produktive API-/Auth-/Multi-Tenant-Runtime.
-- Codebasiert: Lookup-Bundle weiterhin aus eingebettetem Seed (`data/lookup-seed`); **`resolveLookupBundle()`** mit Priorität updated → cached → embedded → fallback sowie Hintergrund-Check über `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` (`App.tsx`, `bundleUpdateService.ts`, `sourceResolver.ts`).
+- **`docs/roadmap/PROJECT_ROADMAP.md`:** **Phase 0 — Lookup App** (Lookup-Bundle, Listen, Details, Suche, eingebettetes Offline-Bundle) mit mehreren Punkten als **[~] teilweise**; **Phase 1 — Einsatz Features** teils umgesetzt (z. B. Favoriten, Verlauf, Vitalreferenz [x], Dosisrechner [~]).
+- **`apps/website/lib/site/content.ts`:** Hero-Badge-Text **„MVP-Phase | in Entwicklung“**.
 
 ## Kurzer Status
 
-| Bereich | Beleg |
-|--------|--------|
-| **Website (Root-Buildziel)** | Root-`build` nutzt `pnpm --filter @resqbrain/website build`; Root-`vercel.json` setzt `rootDirectory: "apps/website"`. |
-| **Website (App)** | Next.js 16.2.1; Startseite in `app/page.tsx` als zusammenhängendes Layout mit `SectionFrame`/`Container` und UI-Primitives; Copy aus `@/lib/site/content.ts` (die Dateien unter `components/sections/*Section.tsx` sind weiter im Repo, werden von der Startseite derzeit **nicht** importiert). |
-| **Mobile** | Expo ~54.0.33; `App.tsx` lädt Bundle über `resolveLookupBundle`, optional Hintergrund-Update; **`pnpm mobile:verify`** läuft im Export-Lauf **grün** (Typecheck + Nav-Verifikation + `expo export`). |
-| **Domain + Datenpipeline** | `packages/domain` im Workspace; DBRD-/Seed-Skripte `dbrd:*` im Root; Root zusätzlich `pnpm verify` (Orchestrierung: Build → `validate-routing` → `validate-content-isolation` → `mobile:verify`; bricht aktuell an `validate-routing` ab), `pnpm seed:update` (`scripts/seed-update.mjs`). |
+- **In Entwicklung:** Mobile-App (Expo), Domain-/Application-Pakete, Daten-Pipelines (`scripts/dbrd/*`).
+- **Lokal testbar / verifizierbar:** `pnpm mobile:verify` (siehe `apps/mobile-app/package.json`), `pnpm build` (Website), `pnpm verify` (Orchestrierung mehrerer Schritte in `scripts/verify.ts`).
+- **Deployed (laut Doku):** `README.md` nennt Website-Deployment-Stand **8. April 2026**; konkrete Produktions-URL ist im Export **nicht** aus dem Code belegt.
 
-## Architekturüberblick (kurz)
+## Architekturüberblick
 
-- Monorepo: `pnpm-workspace.yaml` listet nur `apps/mobile-app`, `apps/website`, `packages/*`.
-- Website: `apps/website` (Root-Buildziel); `apps/website-old` und `apps/website-pre-v2-backup` sind parallele Ordner, nicht Workspace-Mitglieder.
-- Mobile: Expo + React Navigation; Bundle-Auflösung in `sourceResolver.ts`, In-Memory-Store über `buildLookupRamStore` / `contentIndex`.
-- Domain: `packages/domain` mit Content/Governance/Versioning/Release/Lifecycle/Survey/Lookup-Modulen.
+- **Mobile:** React Native / Expo; Navigation React Navigation; Inhalte aus validiertem JSON-Bundle unter `apps/mobile-app/data/lookup-seed/`; View-Model-Schicht unter `apps/mobile-app/src/data/adapters/`.
+- **Website:** Next.js App Router unter `apps/website/app/`.
+- **Domain (Plattform):** `packages/domain` — Content-Entities, Versioning, Release, Governance, Tenant, Lifecycle (Typsicher, tests vorhanden laut `package.json`-Scripts).
+- **Application Layer:** `packages/application` — Lookup-Services, Release-Application-Service, Ports/DTOs.
+- **API (Paket):** `packages/api` — Tests gegen Lookup-Repositories/Services (`pnpm test` am Root filtert hierauf).
+- **Zusätzlich im Dateisystem:** `apps/api-local` (Workspace), `apps/api/` (TypeScript-Quellen **ohne** `package.json`, **nicht** in `pnpm-workspace.yaml`); Root-Verzeichnis `app/`, `components/`, `src/domain/` (ohne `next.config` am Root — **nicht** das deployte Next-Projekt).
 
-## Verwendete Technologien
+## Verwendete Technologien (nach `package.json`)
 
 | Bereich | Technologien |
-|--------|--------------|
-| Paketmanager | pnpm 10.8.1 |
-| Node | `>=18` |
-| Website | Next.js ^16.2.1, React ^19.2.4, Tailwind CSS ^4.2.2 |
-| Mobile | Expo ~54.0.33, React Native 0.81.5, React Navigation 6.x, Zustand ^5.0.12, `expo-file-system` |
-| Scripts/Tooling | TypeScript, tsx, Expo CLI |
+|--------|----------------|
+| Monorepo | `pnpm` Workspaces (`pnpm-workspace.yaml`) |
+| Website | Next.js ^16, React 19, Tailwind CSS 4, TypeScript |
+| Mobile | Expo ~54, React 19, React Native 0.81, React Navigation 6, Zustand, AsyncStorage |
+| Tooling | `tsx`, TypeScript 5.7+ / 6.x (je Paket) |
+
+## Monorepo-Struktur
+
+**Ja.** Workspaces laut `pnpm-workspace.yaml`:
+
+- `apps/api-local`
+- `apps/mobile-app`
+- `apps/website`
+- `packages/*`
 
 ## Apps + Packages (Übersicht)
 
 | Pfad | Rolle |
 |------|--------|
-| `apps/website/` | Aktives Next.js-Ziel von Root-`pnpm build` und Root-`vercel.json` |
-| `apps/mobile-app/` | Expo-Lookup-App |
-| `apps/website-old/` | Ältere Next.js-Site; `vercel.json` mit `ignoreCommand` |
-| `apps/website-pre-v2-backup/` | Backup-Kopie (eigenes `package.json`, Name `@resqbrain/website` — nicht im Workspace) |
-| `packages/domain/` | Domain-Paket |
+| `apps/website` | Öffentliche Next.js-Website (`@resqbrain/website`) |
+| `apps/mobile-app` | Expo-Mobile-App (`@resqbrain/mobile-app`) |
+| `apps/api-local` | Lokaler API-Dienst (`@resqbrain/api-local`) |
+| `packages/domain` | Domänenmodell, ReleaseEngine, Policies, Entities |
+| `packages/application` | Anwendungsdienste (Lookup, Release) |
+| `packages/api` | API-Schicht / Adapter-Tests (`@resqbrain/api`) |
+| `apps/mobile-app-lab`, `apps/website-lab` | Labor-/Prototyp-Ordner (nicht in `pnpm-workspace.yaml`) |
+| `apps/api` | Zusätzliche API-Routen-Struktur im Tree, **ohne** eigenes `package.json` |
 
-## Wichtigste Features (im Code vorhanden)
+## Wichtigste Features (im Code sichtbar)
 
-- Website (`apps/website`): statische Routen inkl. Rechtstexte; Copy in `lib/site/content.ts`; Umfrage-Metadaten in `lib/site/survey.ts` (`surveys.active` mit Microsoft-Forms-Link); Seite `/updates` mit Inhalten aus `lib/site/updates-page.ts` und Formular-URL aus `lib/site/updates-form.ts` (optional `NEXT_PUBLIC_UPDATES_FORM_URL`).
-- Mobile: Suche, Favoriten, Verlauf (Stores + Hydration in `App.tsx`), **Verlauf-Screen im Home-Stack** (`History` → `HistoryScreen`), Medikamente/Algorithmen (Liste + Detail), Dosisrechner, Vitalwerte, Settings; Bundle-Resolver und optionaler Remote-Update-Pfad.
-- Seed-Daten: `data/lookup-seed` mit manifest + medication/algorithm JSON.
+- Mobile: eingebettetes Lookup-Bundle, Listen/Details Medikamente & Algorithmen, Suche mit Filter, Home, Favoriten, Verlauf, Dosisrechner, Vitalwerte-Referenz, Einstellungen — siehe `apps/mobile-app/src/navigation/AppNavigator.tsx` und `docs/context/12-next-steps.md`.
+- Website: Marketing-/Info-Seiten, Mitwirken-Formular + API-Route `POST` unter `apps/website/app/api/mitwirken/route.ts`.
+- Domain: `ReleaseEngine`, Content-Entities inkl. `ContentPackage`, Versioning-Entities — siehe `packages/domain/src/`.
 
-## Geplante bzw. offene Themen (Doku)
+## Geplante / offene Features (Doku)
 
-- Vollständige Bundle-Persistenz/Sync und produktive Liefer-URL (Hintergrund-Update vorbereitet, End-to-End offen).
-- API/Auth/Org-Governance außerhalb des aktuellen Mobile-Lookup-Alltags.
+- Bundle-Persistenz / Sync / Push-Updates (`docs/context/12-next-steps.md`, `docs/roadmap/PROJECT_ROADMAP.md`).
+- Post-MVP laut `docs/context/04-mvp-scope.md`: u. a. voller Content-Lifecycle, Multi-Tenant-Runtime, Release-Pipeline für Live-Bundles, Auth.
 
-## Bekannte Inkonsistenzen (faktenbasiert)
+## Bekannte Probleme / Lücken (aus Doku, nicht neu verifiziert)
 
-- Zwei Website-Ordner mit `@resqbrain/website` im `package.json`, aber nur `apps/website` ist Workspace-Mitglied.
-- `scripts/validate-routing.ts` und `scripts/validate-content-isolation.ts` sind **nicht** mit dem aktuellen Routing bzw. der Startseiten-Struktur synchron (siehe `known-issues.md`).
+- `docs/roadmap/PROJECT_ROADMAP.md`: **Offen** — Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen.
+- Mobile: ESLint in `apps/mobile-app` laut Script nur Platzhalter-Meldung (`package.json`).
