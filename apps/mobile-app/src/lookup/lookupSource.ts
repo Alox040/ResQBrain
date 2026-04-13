@@ -3,7 +3,7 @@ import {
   loadEmbeddedLookupBundle,
   type LookupRamStore,
 } from './loadLookupBundle';
-import { BUNDLE_VERSION_COMPARISON, compareBundleVersion } from './lookupBundleVersion';
+import { isNewerBundle } from './lookupBundleVersion';
 import { loadAndValidateBundle, saveBundle } from './lookupCache';
 import type { LookupManifest } from './lookupSchema';
 
@@ -88,12 +88,18 @@ async function tryLoadCachedLayer(): Promise<LookupLayerOutcome> {
       return { ok: false, reason: 'cache-miss' };
     }
 
-    const embeddedStore = loadEmbeddedLookupBundle();
-    const versionComparison = compareBundleVersion(
-      result.snapshot.manifest,
-      embeddedStore.manifest,
-    );
-    if (versionComparison === BUNDLE_VERSION_COMPARISON.ROLLBACK_REQUIRED) {
+    let embedded: LookupRamStore;
+    try {
+      embedded = loadEmbeddedLookupBundle();
+    } catch {
+      return {
+        ok: true,
+        source: 'cached',
+        store: buildLookupRamStore(result.snapshot),
+      };
+    }
+
+    if (!isNewerBundle(result.snapshot, embedded)) {
       return { ok: false, reason: 'cache-stale' };
     }
 
