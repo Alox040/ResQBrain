@@ -135,10 +135,10 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
           <EmptyState
             when={true}
             message={errorMessage ?? 'Medikament konnte nicht geladen werden.'}
-            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            hint="Offline-Bundle pruefen oder App neu starten."
             action={
               <ButtonSecondary
-                label="Erneut laden"
+                label="Erneut versuchen"
                 onPress={() => {
                   void loadData();
                 }}
@@ -160,24 +160,34 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
         <DetailContentHero
           title={medication.title}
           categoryLabel={medication.categoryLabel}
-          indication={medication.summary}
+          indication={medication.heroIndication}
         />
 
-        <AccordionPanel title="Zusammenfassung" defaultExpanded={false}>
+        <AccordionPanel title="Zusammenfassung" defaultExpanded>
           <DetailBodyText variant="relaxed">{medication.summary}</DetailBodyText>
         </AccordionPanel>
 
-        <AccordionPanel title="Freigabe" defaultExpanded={false}>
+        <AccordionPanel title="Dosierung" defaultExpanded>
           <DetailBodyText variant="relaxed">
-            {`Version: ${medication.versionLabel ?? 'Nicht angegeben'}\nRelease-ID: ${medication.currentReleasedVersionId}\nFreigegeben: ${medication.releasedAtLabel ?? 'Nicht angegeben'}`}
+            {medication.dosage?.trim().length
+              ? medication.dosage
+              : 'Kein Dosierungstext im Bundle hinterlegt.'}
           </DetailBodyText>
         </AccordionPanel>
 
-        <AccordionPanel title="Metadaten" defaultExpanded={false}>
-          <DetailBodyText variant="relaxed">
-            {`Sichtbarkeit: ${medication.visibility ?? 'Nicht angegeben'}\nScope: ${medication.scope ?? 'Nicht angegeben'}`}
-          </DetailBodyText>
-        </AccordionPanel>
+        {medication.contraindications.length > 0 ? (
+          <AccordionPanel title="Kontraindikationen" defaultExpanded>
+            <DetailBodyText variant="relaxed">
+              {medication.contraindications.join('\n')}
+            </DetailBodyText>
+          </AccordionPanel>
+        ) : null}
+
+        {medication.clinicalNotes ? (
+          <AccordionPanel title="Klinische Hinweise" defaultExpanded>
+            <DetailBodyText variant="relaxed">{medication.clinicalNotes}</DetailBodyText>
+          </AccordionPanel>
+        ) : null}
 
         <AccordionPanel title="Tags" defaultExpanded={false}>
           {medication.tags.length > 0 ? (

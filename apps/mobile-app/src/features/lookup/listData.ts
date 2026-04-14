@@ -1,19 +1,5 @@
-import {
-  getLookupApiErrorMessage,
-  listAlgorithms,
-  listMedications,
-} from "@/lib/lookup-api/client";
-import type {
-  LookupAlgorithmListItem,
-  LookupAlgorithmsResponse,
-  LookupMedicationListItem,
-  LookupMedicationsResponse,
-} from "@/lib/lookup-api/types";
-import {
-  assertLookupAlgorithmListResponse,
-  assertLookupMedicationListResponse,
-} from "@/features/lookup/guards";
-import type { ContentCategory, ContentTag } from "@/types/content";
+import { initializeContentFromLookupBundle } from '@/data/contentIndex';
+import type { Algorithm, ContentCategory, ContentTag, Medication } from '@/types/content';
 
 export type LookupRequestContext = {
   organizationId: string;
@@ -29,73 +15,37 @@ export type LookupListRowItem = {
   category?: ContentCategory;
 };
 
-const CONTENT_CATEGORIES: readonly ContentCategory[] = [
-  "pediatrics",
-  "trauma",
-  "sepsis",
-  "resuscitation",
-];
-
-const CONTENT_TAGS: readonly ContentTag[] = [
-  "kreislauf",
-  "atemwege",
-  "neurologie",
-  "analgesie",
-  "intoxikation",
-  "stoffwechsel",
-];
-
-function normalizeCategory(value?: string | null): ContentCategory | undefined {
-  if (value == null) {
-    return undefined;
-  }
-
-  return CONTENT_CATEGORIES.find((entry) => entry === value);
-}
-
-function normalizeTags(values?: readonly string[]): ContentTag[] {
-  if (values == null) {
-    return [];
-  }
-
-  return values.filter((value): value is ContentTag => CONTENT_TAGS.includes(value as ContentTag));
-}
-
-function buildListSubtitle(summary?: string | null) {
-  const trimmed = summary?.trim();
+function buildListSubtitle(indication?: string | null): string {
+  const trimmed = indication?.trim();
   return trimmed && trimmed.length > 0
     ? trimmed
-    : "Keine Kurzbeschreibung verfuegbar.";
+    : 'Keine Kurzbeschreibung verfuegbar.';
 }
 
-function mapAlgorithmListItem(item: LookupAlgorithmListItem): LookupListRowItem {
+function mapMedicationListItem(item: Medication): LookupListRowItem {
   return {
     id: item.id,
-    label: item.title,
-    listSubtitle: buildListSubtitle(item.summary),
-    tags: normalizeTags(item.tags),
-    category: normalizeCategory(item.category),
+    label: item.label,
+    listSubtitle: buildListSubtitle(item.indication),
+    tags: item.tags,
+    category: item.category,
   };
 }
 
-function mapMedicationListItem(item: LookupMedicationListItem): LookupListRowItem {
+function mapAlgorithmListItem(item: Algorithm): LookupListRowItem {
   return {
     id: item.id,
-    label: item.name,
-    listSubtitle: buildListSubtitle(item.summary),
-    tags: normalizeTags(item.tags),
-    category: normalizeCategory(item.category),
+    label: item.label,
+    listSubtitle: buildListSubtitle(item.indication),
+    tags: item.tags,
+    category: item.category,
   };
 }
 
 export function resolveLookupRequestContext(): LookupRequestContext {
-  const organizationId = process.env.EXPO_PUBLIC_ORGANIZATION_ID?.trim();
+  const organizationId = process.env.EXPO_PUBLIC_ORGANIZATION_ID?.trim() || 'offline-bundle';
   const regionId = process.env.EXPO_PUBLIC_REGION_ID?.trim();
   const stationId = process.env.EXPO_PUBLIC_STATION_ID?.trim();
-
-  if (!organizationId) {
-    throw new Error("EXPO_PUBLIC_ORGANIZATION_ID ist nicht gesetzt. Ohne Organization-Kontext ist Lookup deaktiviert.");
-  }
 
   return {
     organizationId,
@@ -104,24 +54,12 @@ export function resolveLookupRequestContext(): LookupRequestContext {
   };
 }
 
-export async function loadAlgorithmList() {
-  try {
-    const context = resolveLookupRequestContext();
-    const response: LookupAlgorithmsResponse = await listAlgorithms(context);
-    assertLookupAlgorithmListResponse(response);
-    return response.items.map(mapAlgorithmListItem);
-  } catch (error) {
-    throw new Error(getLookupApiErrorMessage(error));
-  }
+export async function loadMedicationList(): Promise<LookupListRowItem[]> {
+  const bundle = await initializeContentFromLookupBundle();
+  return bundle.medications.map(mapMedicationListItem);
 }
 
-export async function loadMedicationList() {
-  try {
-    const context = resolveLookupRequestContext();
-    const response: LookupMedicationsResponse = await listMedications(context);
-    assertLookupMedicationListResponse(response);
-    return response.items.map(mapMedicationListItem);
-  } catch (error) {
-    throw new Error(getLookupApiErrorMessage(error));
-  }
+export async function loadAlgorithmList(): Promise<LookupListRowItem[]> {
+  const bundle = await initializeContentFromLookupBundle();
+  return bundle.algorithms.map(mapAlgorithmListItem);
 }

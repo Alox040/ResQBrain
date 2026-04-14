@@ -486,11 +486,20 @@ export function HomeScreen() {
         ) : null}
 
         <View style={styles.sectionBlock}>
+          <SectionHeader title="Navigation" size="comfortable" />
+          <View style={styles.cardList}>
+            {navigationCards.map((item) => (
+              <ActionCard key={item.key} item={item} />
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.sectionBlock}>
           <SectionHeader title="Favoriten" size="comfortable" />
           {favoriteShortcuts.length === 0 ? (
             <View style={styles.emptyStrip}>
               <Text style={styles.emptyStripText}>
-                Noch keine Favoriten gesetzt. In Details mit dem Stern markieren, dann erscheinen sie hier.
+                Stern in der Detailansicht — Favoriten erscheinen hier.
               </Text>
             </View>
           ) : (
@@ -503,21 +512,12 @@ export function HomeScreen() {
           {recentShortcuts.length === 0 ? (
             <View style={styles.emptyStrip}>
               <Text style={styles.emptyStripText}>
-                Noch keine zuletzt verwendeten Inhalte. Geoeffnete Inhalte werden automatisch gelistet.
+                Geoeffnete Inhalte erscheinen hier automatisch.
               </Text>
             </View>
           ) : (
             <RecentSection items={recentShortcuts} />
           )}
-        </View>
-
-        <View style={styles.sectionBlock}>
-          <SectionHeader title="Navigation" size="comfortable" />
-          <View style={styles.cardList}>
-            {navigationCards.map((item) => (
-              <ActionCard key={item.key} item={item} />
-            ))}
-          </View>
         </View>
       </ScrollView>
     </ScreenContainer>

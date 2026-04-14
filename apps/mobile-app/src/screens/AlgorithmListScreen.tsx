@@ -200,10 +200,10 @@ export function AlgorithmListScreen() {
           <EmptyState
             when={true}
             message={errorMessage}
-            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            hint="Offline-Bundle pruefen oder App neu starten."
             action={
               <ButtonSecondary
-                label="Erneut laden"
+                label="Erneut versuchen"
                 onPress={() => {
                   void loadData();
                 }}

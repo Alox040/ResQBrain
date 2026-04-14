@@ -1,8 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Pressable, Text } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Text } from 'react-native';
 import {
   FlatList,
   type ListRenderItemInfo,
@@ -135,32 +134,6 @@ export function MedicationListScreen() {
       ? 'Keine Medikamente im Bundle vorhanden.'
       : 'Für diese Kategorie sind keine Medikamente im Bundle vorhanden.';
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Pressable
-          onPress={() => navigation.navigate('DoseCalculator')}
-          hitSlop={8}
-          accessibilityRole="button"
-          accessibilityLabel="Dosisrechner öffnen"
-          style={{
-            marginRight: 4,
-            minWidth: 56,
-            minHeight: 56,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Ionicons
-            name="calculator-outline"
-            size={26}
-            color={colors.navHeaderText}
-          />
-        </Pressable>
-      ),
-    });
-  }, [navigation, colors.navHeaderText]);
-
   const handlePress = useCallback(
     (medicationId: string) => {
       navigation.navigate('MedicationDetail', { medicationId });
@@ -216,10 +189,10 @@ export function MedicationListScreen() {
           <EmptyState
             when={true}
             message={errorMessage}
-            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            hint="Offline-Bundle pruefen oder App neu starten."
             action={
               <ButtonSecondary
-                label="Erneut laden"
+                label="Erneut versuchen"
                 onPress={() => {
                   void loadData();
                 }}

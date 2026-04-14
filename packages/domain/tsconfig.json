@@ -7,10 +7,9 @@
     "noEmit": true,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "rootDir": "src",
     "types": ["node"],
     "typeRoots": ["../../apps/website/node_modules/@types"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "models/**/*.ts"],
   "exclude": ["src/**/*.test.ts"]
 }

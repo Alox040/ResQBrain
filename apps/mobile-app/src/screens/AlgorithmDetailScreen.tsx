@@ -132,10 +132,10 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
           <EmptyState
             when={true}
             message={errorMessage ?? 'Algorithmus konnte nicht geladen werden.'}
-            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            hint="Offline-Bundle pruefen oder App neu starten."
             action={
               <ButtonSecondary
-                label="Erneut laden"
+                label="Erneut versuchen"
                 onPress={() => {
                   void loadData();
                 }}
@@ -157,24 +157,36 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
         <DetailContentHero
           title={algorithm.title}
           categoryLabel={algorithm.categoryLabel}
-          indication={algorithm.summary}
+          indication={algorithm.heroIndication}
         />
 
-        <AccordionPanel title="Zusammenfassung" defaultExpanded={false}>
+        <AccordionPanel title="Zusammenfassung" defaultExpanded>
           <DetailBodyText variant="relaxed">{algorithm.summary}</DetailBodyText>
         </AccordionPanel>
 
-        <AccordionPanel title="Freigabe" defaultExpanded={false}>
-          <DetailBodyText variant="relaxed">
-            {`Version: ${algorithm.versionLabel ?? 'Nicht angegeben'}\nRelease-ID: ${algorithm.currentReleasedVersionId}\nFreigegeben: ${algorithm.releasedAtLabel ?? 'Nicht angegeben'}`}
-          </DetailBodyText>
+        <AccordionPanel title="Schritte" defaultExpanded>
+          {algorithm.steps.length > 0 ? (
+            algorithm.steps.map((step) => (
+              <DetailBodyText
+                key={`step-${step.position}`}
+                variant="relaxed"
+                style={{ marginBottom: 8 }}
+              >
+                {`${step.position}. ${step.text}`}
+              </DetailBodyText>
+            ))
+          ) : (
+            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+              Keine Schritte im Bundle hinterlegt.
+            </DetailBodyText>
+          )}
         </AccordionPanel>
 
-        <AccordionPanel title="Metadaten" defaultExpanded={false}>
-          <DetailBodyText variant="relaxed">
-            {`Sichtbarkeit: ${algorithm.visibility ?? 'Nicht angegeben'}\nScope: ${algorithm.scope ?? 'Nicht angegeben'}`}
-          </DetailBodyText>
-        </AccordionPanel>
+        {algorithm.warnings ? (
+          <AccordionPanel title="Warnhinweise" defaultExpanded>
+            <DetailBodyText variant="relaxed">{algorithm.warnings}</DetailBodyText>
+          </AccordionPanel>
+        ) : null}
 
         <AccordionPanel title="Tags" defaultExpanded={false}>
           {algorithm.tags.length > 0 ? (

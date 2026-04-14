@@ -6,6 +6,7 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./models": "./models/index.ts",
     "./release": "./src/release/index.ts",
     "./shared": "./src/shared/index.ts"
   },

@@ -1,0 +1,110 @@
+{
+  "medications": [
+    {
+      "id": "med_adrenalin",
+      "name": "Adrenalin",
+      "class": "Sympathomimetikum",
+      "indications": ["Reanimation", "Anaphylaxie", "Schock"],
+      "dosage": {
+        "adult": "1 mg i.v. alle 3-5 min (Reanimation)",
+        "anaphylaxis": "0.5 mg i.m."
+      },
+      "routes": ["i.v.", "i.o.", "i.m."],
+      "onset": "schnell (<1 min)",
+      "notes": "Standardmedikament im ALS, sehr kurze Wirkdauer"
+    },
+    {
+      "id": "med_tranexamsaeure",
+      "name": "Tranexamsäure",
+      "class": "Antifibrinolytikum",
+      "indications": ["starke Blutung", "hämorrhagischer Schock"],
+      "dosage": {
+        "adult": "1 g i.v. über 10 min"
+      },
+      "routes": ["i.v.", "i.o."],
+      "onset": "wenige Minuten",
+      "notes": "frühzeitige Gabe <3h entscheidend"
+    },
+    {
+      "id": "med_furosemid",
+      "name": "Furosemid",
+      "class": "Schleifendiuretikum",
+      "indications": ["Lungenödem", "Herzinsuffizienz"],
+      "dosage": {
+        "adult": "40 mg i.v."
+      },
+      "routes": ["i.v.", "i.o."],
+      "onset": "2-15 min",
+      "notes": "Vorsicht Elektrolytverlust"
+    },
+    {
+      "id": "med_amiodaron",
+      "name": "Amiodaron",
+      "class": "Antiarrhythmikum Klasse III",
+      "indications": ["Kammerflimmern", "instabile Tachykardie"],
+      "dosage": {
+        "adult": "300 mg i.v. Bolus (Reanimation)"
+      },
+      "routes": ["i.v.", "i.o."],
+      "onset": "schnell",
+      "notes": "bei VF/VT nach Defibrillation"
+    },
+    {
+      "id": "med_ass",
+      "name": "Acetylsalicylsäure",
+      "class": "Thrombozytenaggregationshemmer",
+      "indications": ["ACS"],
+      "dosage": {
+        "adult": "250 mg i.v. oder 150-300 mg p.o."
+      },
+      "routes": ["i.v.", "p.o."],
+      "onset": "wenige Minuten",
+      "notes": "Standard bei ACS, sofern keine KI"
+    }
+  ],
+  "algorithms": [
+    {
+      "id": "alg_reanimation_adult",
+      "name": "Reanimation Erwachsener (ALS)",
+      "steps": [
+        "Bewusstlosigkeit + keine Atmung feststellen",
+        "CPR starten (30:2)",
+        "Defibrillator anschließen",
+        "Rhythmusanalyse",
+        "Schock bei VF/pVT",
+        "Adrenalin alle 3-5 min",
+        "Amiodaron nach 3. Schock",
+        "ROSC prüfen"
+      ],
+      "medications": ["med_adrenalin", "med_amiodaron"],
+      "notes": "ERC/ALS Standardalgorithmus"
+    },
+    {
+      "id": "alg_acs",
+      "name": "Akutes Koronarsyndrom",
+      "steps": [
+        "12-Kanal-EKG",
+        "Monitoring + i.v. Zugang",
+        "ASS geben",
+        "O2 bei Hypoxie",
+        "Nitrat bei Bedarf",
+        "Transport in PCI-Zentrum"
+      ],
+      "medications": ["med_ass"],
+      "notes": "STEMI/NSTEMI prähospital nicht immer differenzierbar"
+    },
+    {
+      "id": "alg_trauma_bleeding",
+      "name": "Starke Blutung / Trauma",
+      "steps": [
+        "Blutungsquelle identifizieren",
+        "Direkter Druck / Tourniquet",
+        "Tranexamsäure geben",
+        "Volumentherapie",
+        "Schneller Transport"
+      ],
+      "medications": ["med_tranexamsaeure"],
+      "notes": "TXA möglichst früh (<3h)"
+    }
+  ]
+}

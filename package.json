@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "seed:update": "node scripts/seed-update.mjs",
+    "seed:ems-reference": "tsx scripts/seeds/emsReferenceCatalog.ts",
     "render:website-status": "tsx scripts/status/render-website-status.ts",
     "dbrd:normalize": "tsx scripts/dbrd/index.ts",
     "dbrd:normalize:medications": "tsx scripts/dbrd/index.ts medications",

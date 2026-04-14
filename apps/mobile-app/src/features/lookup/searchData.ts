@@ -1,10 +1,4 @@
-import {
-  getLookupApiErrorMessage,
-  searchLookup,
-} from "@/lib/lookup-api/client";
-import type { LookupSearchResultItem } from "@/lib/lookup-api/types";
-import { assertLookupSearchItems } from "@/features/lookup/guards";
-import { resolveLookupRequestContext } from "@/features/lookup/listData";
+import { initializeContentFromLookupBundle, searchIndexItems } from "@/data/contentIndex";
 
 export type LookupSearchKind = "algorithm" | "medication";
 
@@ -25,50 +19,41 @@ function normalizeSummary(summary?: string | null) {
     : "Keine Kurzbeschreibung verfuegbar.";
 }
 
-function resolveLookupKind(item: LookupSearchResultItem): LookupSearchKind | undefined {
-  const record = item as LookupSearchResultItem & {
-    kind?: unknown;
-    contentType?: unknown;
-    type?: unknown;
-  };
-
-  const value = record.kind ?? record.contentType ?? record.type;
-
-  if (value === "algorithm" || value === "medication") {
-    return value;
+function matchesQuery(
+  queryLower: string,
+  label: string,
+  subtitle: string,
+  searchTerms: readonly string[],
+): boolean {
+  if (label.toLowerCase().includes(queryLower)) {
+    return true;
   }
-
-  return undefined;
+  if (subtitle.toLowerCase().includes(queryLower)) {
+    return true;
+  }
+  return searchTerms.some((term) => term.toLowerCase().includes(queryLower));
 }
 
-function mapSearchResult(item: LookupSearchResultItem): LookupSearchViewItem {
-  return {
-    id: item.id,
-    title: item.title,
-    summary: normalizeSummary(item.summary),
-    kind: resolveLookupKind(item),
-    category: item.category ?? null,
-    versionLabel: item.versionLabel ?? null,
-    tags: item.tags?.filter((tag): tag is string => tag.trim().length > 0) ?? [],
-  };
-}
-
-export async function loadLookupSearchResults(searchTerm: string) {
+export async function loadLookupSearchResults(searchTerm: string): Promise<LookupSearchViewItem[]> {
   const normalizedSearchTerm = searchTerm.trim();
 
   if (normalizedSearchTerm.length === 0) {
     return [];
   }
 
-  try {
-    const results = await searchLookup({
-      ...resolveLookupRequestContext(),
-      searchTerm: normalizedSearchTerm,
-    });
-    assertLookupSearchItems(results);
+  await initializeContentFromLookupBundle();
 
-    return results.map(mapSearchResult);
-  } catch (error) {
-    throw new Error(getLookupApiErrorMessage(error));
-  }
+  const queryLower = normalizedSearchTerm.toLowerCase();
+
+  return searchIndexItems
+    .filter((item) => matchesQuery(queryLower, item.label, item.subtitle, item.searchTerms))
+    .map((item) => ({
+      id: item.id,
+      title: item.label,
+      summary: normalizeSummary(item.subtitle),
+      kind: item.kind,
+      category: null,
+      versionLabel: null,
+      tags: [],
+    }));
 }

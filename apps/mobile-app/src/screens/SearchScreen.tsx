@@ -5,7 +5,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -65,49 +64,6 @@ function createSearchStyles(colors: AppPalette) {
     },
     filterTag: {
       minHeight: LAYOUT.minTap,
-    },
-    filterStatus: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      gap: SPACING.gapSm,
-      paddingVertical: 12,
-      paddingHorizontal: SPACING.screenPadding,
-      backgroundColor: colors.surface,
-      borderRadius: 12,
-      borderWidth: 1,
-      borderColor: colors.border,
-    },
-    filterStatusIcon: {
-      marginRight: -4,
-    },
-    filterStatusText: {
-      flex: 1,
-      ...TYPOGRAPHY.bodyMuted,
-      color: colors.textMuted,
-      minWidth: 120,
-    },
-    filterStatusEmphasis: {
-      fontWeight: '800',
-      color: colors.text,
-    },
-    filterClearBtn: {
-      minHeight: LAYOUT.minTap,
-      paddingVertical: 10,
-      paddingHorizontal: 14,
-      borderRadius: 12,
-      backgroundColor: colors.primaryMutedBg,
-      borderWidth: 1,
-      borderColor: colors.pressedRowBorder,
-      justifyContent: 'center',
-    },
-    filterClearBtnPressed: {
-      opacity: 0.88,
-    },
-    filterClearLabel: {
-      ...TYPOGRAPHY.body,
-      fontWeight: '800',
-      color: colors.primary,
     },
     resultsPane: {
       flex: 1,
@@ -249,7 +205,7 @@ export function SearchScreen() {
           <EmptyState
             when={true}
             message="Noch keine Suche"
-            hint="Tippe einen Begriff. Die Anfrage geht direkt an die Lookup-API."
+            hint="Tippe einen Begriff. Es wird im lokalen Inhalts-Bundle gesucht."
           />
         </View>
       );
@@ -270,10 +226,10 @@ export function SearchScreen() {
           <EmptyState
             when={true}
             message={errorMessage}
-            hint="Pruefe die Lookup-API und den gesetzten Organization-Kontext."
+            hint="Offline-Bundle pruefen oder App neu starten."
             action={
               <ButtonSecondary
-                label="Erneut laden"
+                label="Erneut versuchen"
                 onPress={() => {
                   setDebouncedQuery(query);
                 }}
@@ -347,7 +303,7 @@ export function SearchScreen() {
         <SectionHeader
           variant="screen"
           title="Suche"
-          description="Lookup-API durchsuchen, Filter optional."
+          description="Lokales Bundle durchsuchen, Filter optional."
         />
 
         <View style={styles.stickyControls}>
@@ -356,6 +312,7 @@ export function SearchScreen() {
               value={query}
               onChangeText={setQuery}
               placeholder="Name, Indikation oder Stichwort"
+              autoFocus
               autoCapitalize="none"
               autoCorrect={false}
               returnKeyType="search"
@@ -388,32 +345,6 @@ export function SearchScreen() {
                 onPress={() => setKindFilter('algorithm')}
                 style={styles.filterTag}
               />
-            </View>
-            <View style={styles.filterStatus} accessibilityRole="text">
-              <Ionicons
-                name="funnel-outline"
-                size={20}
-                color={colors.primary}
-                style={styles.filterStatusIcon}
-              />
-              <Text style={styles.filterStatusText}>
-                Aktiver Filter:{' '}
-                <Text style={styles.filterStatusEmphasis}>{filterLabel}</Text>
-              </Text>
-              {kindFilter !== 'all' ? (
-                <Pressable
-                  onPress={() => setKindFilter('all')}
-                  hitSlop={12}
-                  accessibilityRole="button"
-                  accessibilityLabel="Filter auf alle Inhalte zurücksetzen"
-                  style={({ pressed }) => [
-                    styles.filterClearBtn,
-                    pressed && styles.filterClearBtnPressed,
-                  ]}
-                >
-                  <Text style={styles.filterClearLabel}>Alle anzeigen</Text>
-                </Pressable>
-              ) : null}
             </View>
           </View>
         </View>
