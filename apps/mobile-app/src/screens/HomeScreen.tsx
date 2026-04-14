@@ -5,7 +5,8 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SectionHeader } from '@/components/common';
+import { ButtonSecondary, SectionHeader } from '@/components/common';
+import { FeedbackSheet } from '@/features/feedback';
 import {
   QuickAccessGrid as QuickAccessGridView,
   type QuickAccessGridItem,
@@ -317,6 +318,14 @@ export function HomeScreen() {
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const recentItems = useRecentStore((state) => state.recentItems);
   const [showUpdateBadge, setShowUpdateBadge] = useState(false);
+  const [feedbackVisible, setFeedbackVisible] = useState(false);
+  const [feedbackBundleId, setFeedbackBundleId] = useState<string | null>(null);
+
+  const openGlobalFeedback = useCallback(async () => {
+    const info = await getBundleDebugInfo();
+    setFeedbackBundleId(info?.version ?? null);
+    setFeedbackVisible(true);
+  }, []);
 
   const refreshUpdateBadge = useCallback(async () => {
     const info = await getBundleDebugInfo();
@@ -467,15 +476,22 @@ export function HomeScreen() {
   );
 
   return (
-    <ScreenContainer>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.sectionBlock}>
-          <SearchButton onPress={() => navigation.navigate('Search')} />
-        </View>
+    <>
+      <ScreenContainer>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.sectionBlock}>
+            <SearchButton onPress={() => navigation.navigate('Search')} />
+            <ButtonSecondary
+              label="Feedback"
+              onPress={() => {
+                void openGlobalFeedback();
+              }}
+            />
+          </View>
 
         <QuickAccessGrid items={quickAccessItems} />
 
@@ -519,7 +535,16 @@ export function HomeScreen() {
             <RecentSection items={recentShortcuts} />
           )}
         </View>
-      </ScrollView>
-    </ScreenContainer>
+        </ScrollView>
+      </ScreenContainer>
+      <FeedbackSheet
+        visible={feedbackVisible}
+        bundleId={feedbackBundleId}
+        contextNote="Startseite"
+        onClose={() => {
+          setFeedbackVisible(false);
+        }}
+      />
+    </>
   );
 }

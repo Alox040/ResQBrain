@@ -1,4 +1,7 @@
-import { initializeContentFromLookupBundle, searchIndexItems } from "@/data/contentIndex";
+import {
+  initializeContentFromLookupBundle,
+  searchIndexItems,
+} from "@/data/contentIndex";
 
 export type LookupSearchKind = "algorithm" | "medication";
 

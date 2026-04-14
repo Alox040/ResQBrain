@@ -17,6 +17,7 @@ import {
   EmptyState,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { FeedbackSheet } from '@/features/feedback';
 import {
   loadAlgorithmDetailViewData,
   type LookupDetailViewData,
@@ -39,6 +40,7 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   );
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [feedbackVisible, setFeedbackVisible] = React.useState(false);
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
   const contentKey = favoriteContentKey(
@@ -77,23 +79,40 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     }
 
     return (
-      <Pressable
-        onPress={onPressFavorite}
-        hitSlop={10}
-        accessibilityRole="button"
-        accessibilityLabel={
-          isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
-        }
-        style={styles.headerButton}
-      >
-        <Ionicons
-          name={isFavorite ? 'star' : 'star-outline'}
-          size={HEADER_ICON_SIZE}
-          color="#fbbf24"
-        />
-      </Pressable>
+      <View style={styles.headerActionsRow}>
+        <Pressable
+          onPress={() => {
+            setFeedbackVisible(true);
+          }}
+          hitSlop={10}
+          accessibilityRole="button"
+          accessibilityLabel="Feedback zu diesem Algorithmus senden"
+          style={styles.headerButton}
+        >
+          <Ionicons
+            name="chatbubble-ellipses-outline"
+            size={24}
+            color={colors.navHeaderText}
+          />
+        </Pressable>
+        <Pressable
+          onPress={onPressFavorite}
+          hitSlop={10}
+          accessibilityRole="button"
+          accessibilityLabel={
+            isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
+          }
+          style={styles.headerButton}
+        >
+          <Ionicons
+            name={isFavorite ? 'star' : 'star-outline'}
+            size={HEADER_ICON_SIZE}
+            color="#fbbf24"
+          />
+        </Pressable>
+      </View>
     );
-  }, [algorithm, isFavorite, onPressFavorite]);
+  }, [algorithm, colors.navHeaderText, isFavorite, onPressFavorite]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -148,63 +167,77 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   }
 
   return (
-    <ScreenContainer>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        <DetailContentHero
-          title={algorithm.title}
-          categoryLabel={algorithm.categoryLabel}
-          indication={algorithm.heroIndication}
-        />
+    <>
+      <ScreenContainer>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <DetailContentHero
+            title={algorithm.title}
+            categoryLabel={algorithm.categoryLabel}
+            indication={algorithm.heroIndication}
+          />
 
-        <AccordionPanel title="Zusammenfassung" defaultExpanded>
-          <DetailBodyText variant="relaxed">{algorithm.summary}</DetailBodyText>
-        </AccordionPanel>
-
-        <AccordionPanel title="Schritte" defaultExpanded>
-          {algorithm.steps.length > 0 ? (
-            algorithm.steps.map((step) => (
-              <DetailBodyText
-                key={`step-${step.position}`}
-                variant="relaxed"
-                style={{ marginBottom: 8 }}
-              >
-                {`${step.position}. ${step.text}`}
-              </DetailBodyText>
-            ))
-          ) : (
-            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
-              Keine Schritte im Bundle hinterlegt.
-            </DetailBodyText>
-          )}
-        </AccordionPanel>
-
-        {algorithm.warnings ? (
-          <AccordionPanel title="Warnhinweise" defaultExpanded>
-            <DetailBodyText variant="relaxed">{algorithm.warnings}</DetailBodyText>
+          <AccordionPanel title="Zusammenfassung" defaultExpanded>
+            <DetailBodyText variant="relaxed">{algorithm.summary}</DetailBodyText>
           </AccordionPanel>
-        ) : null}
 
-        <AccordionPanel title="Tags" defaultExpanded={false}>
-          {algorithm.tags.length > 0 ? (
-            <DetailBodyText variant="relaxed">
-              {algorithm.tags.join(', ')}
-            </DetailBodyText>
-          ) : (
-            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
-              Keine Tags hinterlegt.
-            </DetailBodyText>
-          )}
-        </AccordionPanel>
-      </ScrollView>
-    </ScreenContainer>
+          <AccordionPanel title="Schritte" defaultExpanded>
+            {algorithm.steps.length > 0 ? (
+              algorithm.steps.map((step) => (
+                <DetailBodyText
+                  key={`step-${step.position}`}
+                  variant="relaxed"
+                  style={{ marginBottom: 8 }}
+                >
+                  {`${step.position}. ${step.text}`}
+                </DetailBodyText>
+              ))
+            ) : (
+              <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+                Keine Schritte im Bundle hinterlegt.
+              </DetailBodyText>
+            )}
+          </AccordionPanel>
+
+          {algorithm.warnings ? (
+            <AccordionPanel title="Warnhinweise" defaultExpanded>
+              <DetailBodyText variant="relaxed">{algorithm.warnings}</DetailBodyText>
+            </AccordionPanel>
+          ) : null}
+
+          <AccordionPanel title="Tags" defaultExpanded={false}>
+            {algorithm.tags.length > 0 ? (
+              <DetailBodyText variant="relaxed">
+                {algorithm.tags.join(', ')}
+              </DetailBodyText>
+            ) : (
+              <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+                Keine Tags hinterlegt.
+              </DetailBodyText>
+            )}
+          </AccordionPanel>
+        </ScrollView>
+      </ScreenContainer>
+      <FeedbackSheet
+        visible={feedbackVisible}
+        bundleId={algorithm.versionLabel}
+        contextNote={`Algorithmus | ${algorithm.id} | ${algorithm.title}`}
+        onClose={() => {
+          setFeedbackVisible(false);
+        }}
+      />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  headerActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   headerButton: {
     marginRight: 4,
     minWidth: HEADER_HIT,

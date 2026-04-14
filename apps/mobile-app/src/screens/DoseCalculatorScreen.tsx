@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useMemo, useState } from 'react';
 import {
   FlatList,
@@ -26,16 +25,10 @@ import {
   formatDoseNumber,
   parseDosageCalculatorSpec,
 } from '@/features/doseCalculator/parseDosageForCalculator';
-import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import type { Medication } from '@/types/content';
 import { CARD, LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
-
-type Props = NativeStackScreenProps<
-  MedicationStackParamList,
-  'DoseCalculator'
->;
 
 function firstMedicationWithSpec(): Medication | undefined {
   for (const m of medications) {
@@ -44,7 +37,7 @@ function firstMedicationWithSpec(): Medication | undefined {
   return medications[0];
 }
 
-export function DoseCalculatorScreen(_props: Props) {
+export function DoseCalculatorScreen() {
   const { colors, isDark } = useTheme();
   const styles = useMemo(
     () => createDoseStyles(colors, isDark),

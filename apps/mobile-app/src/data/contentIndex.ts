@@ -1,6 +1,7 @@
 import {
   loadLookupBundle,
   toLookupContentKey,
+  type LookupBundleVersionInfo,
   type LookupContentKey,
 } from '@/lookup/loadLookupBundle';
 import type { LookupRamStore } from '@/lookup/loadLookupBundle';
@@ -66,6 +67,10 @@ export type SearchIndexItem = ContentListItem & {
 };
 
 export let searchIndexItems: SearchIndexItem[] = [];
+
+export function getContentVersionInfo(): LookupBundleVersionInfo {
+  return requireStore().versionInfo;
+}
 
 export function getMedicationById(medicationId: string): Medication | undefined {
   return requireStore().getMedicationById(medicationId);

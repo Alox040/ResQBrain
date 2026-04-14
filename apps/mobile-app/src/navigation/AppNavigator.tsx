@@ -5,9 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useMemo } from 'react';
 import { AlgorithmDetailScreen } from '@/screens/AlgorithmDetailScreen';
 import { MedicationDetailScreen } from '@/screens/MedicationDetailScreen';
-import { DoseCalculatorScreen } from '@/screens/DoseCalculatorScreen';
 import { AlgorithmListScreen } from '@/screens/AlgorithmListScreen';
-import { FavoritesScreen } from '@/screens/FavoritesScreen';
 import { VitalReferenceScreen } from '@/features/references/VitalReferenceScreen';
 import { HistoryScreen } from '@/screens/HistoryScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -26,7 +24,6 @@ export type MedicationStackParamList = {
   MedicationDetail: {
     medicationId: string;
   };
-  DoseCalculator: undefined;
 };
 
 export type AlgorithmStackParamList = {
@@ -43,7 +40,6 @@ export type AlgorithmStackParamList = {
 export type RootTabParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Search: undefined;
-  Favorites: undefined;
   Settings: undefined;
   MedicationTab: NavigatorScreenParams<MedicationStackParamList>;
   AlgorithmTab: NavigatorScreenParams<AlgorithmStackParamList>;
@@ -107,11 +103,6 @@ function MedicationStackNavigator() {
         name="MedicationDetail"
         component={MedicationDetailScreen}
         options={{ title: 'Medikament' }}
-      />
-      <MedicationStack.Screen
-        name="DoseCalculator"
-        component={DoseCalculatorScreen}
-        options={{ title: 'Dosisrechner' }}
       />
     </MedicationStack.Navigator>
   );
@@ -177,20 +168,10 @@ export function AppNavigator() {
         }}
       />
       <Tab.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{
-          title: 'Favoriten',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star-outline" size={size ?? 24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          title: 'Settings',
+          title: 'Einstellungen',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" size={size ?? 24} color={color} />
           ),

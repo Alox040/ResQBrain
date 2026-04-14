@@ -1,4 +1,8 @@
-import { initializeContentFromLookupBundle } from '@/data/contentIndex';
+import {
+  algorithms,
+  initializeContentFromLookupBundle,
+  medications,
+} from '@/data/contentIndex';
 import type { Algorithm, ContentCategory, ContentTag, Medication } from '@/types/content';
 
 export type LookupRequestContext = {
@@ -55,11 +59,11 @@ export function resolveLookupRequestContext(): LookupRequestContext {
 }
 
 export async function loadMedicationList(): Promise<LookupListRowItem[]> {
-  const bundle = await initializeContentFromLookupBundle();
-  return bundle.medications.map(mapMedicationListItem);
+  await initializeContentFromLookupBundle();
+  return medications.map(mapMedicationListItem);
 }
 
 export async function loadAlgorithmList(): Promise<LookupListRowItem[]> {
-  const bundle = await initializeContentFromLookupBundle();
-  return bundle.algorithms.map(mapAlgorithmListItem);
+  await initializeContentFromLookupBundle();
+  return algorithms.map(mapAlgorithmListItem);
 }

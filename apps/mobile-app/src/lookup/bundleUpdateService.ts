@@ -1,6 +1,9 @@
-import { saveBundle, getBundleVersion } from './bundleStorage';
 import { loadEmbeddedLookupBundle } from './loadLookupBundle';
-import type { LookupBundleSnapshot } from './lookupCache';
+import {
+  loadAndValidateBundle,
+  saveBundle,
+  type LookupBundleSnapshot,
+} from './lookupCache';
 import { validateLookupBundle } from './validateLookupBundle';
 
 export type BundleUpdateCheckResult = {
@@ -38,6 +41,15 @@ function getSnapshotVersion(bundle: LookupBundleSnapshot): string | null {
 function getEmbeddedVersion(): string | null {
   const embeddedBundle = loadEmbeddedLookupBundle();
   return embeddedBundle.versionInfo.version ?? embeddedBundle.manifest.bundleId ?? null;
+}
+
+async function getCachedVersion(): Promise<string | null> {
+  const cachedBundle = await loadAndValidateBundle();
+  if (!cachedBundle.found) {
+    return null;
+  }
+
+  return getSnapshotVersion(cachedBundle.snapshot);
 }
 
 function normalizeVersionParts(version: string | null): string[] {
@@ -169,7 +181,7 @@ export async function downloadBundle(
 export async function checkForBundleUpdate(
   bundleUrl: string,
 ): Promise<BundleUpdateCheckResult> {
-  const currentVersion = (await getBundleVersion()) ?? getEmbeddedVersion();
+  const currentVersion = (await getCachedVersion()) ?? getEmbeddedVersion();
   const download = await downloadBundle(bundleUrl);
 
   if (download.status === 'error') {
@@ -197,7 +209,7 @@ export async function checkForBundleUpdate(
 export async function applyBundleUpdate(
   bundleUrl: string,
 ): Promise<ApplyBundleUpdateResult> {
-  const currentVersion = (await getBundleVersion()) ?? getEmbeddedVersion();
+  const currentVersion = (await getCachedVersion()) ?? getEmbeddedVersion();
   const download = await downloadBundle(bundleUrl);
 
   if (download.status === 'error') {

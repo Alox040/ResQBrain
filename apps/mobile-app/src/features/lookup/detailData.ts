@@ -1,4 +1,8 @@
-import { initializeContentFromLookupBundle } from "@/data/contentIndex";
+import {
+  getAlgorithmById,
+  getContentVersionInfo,
+  getMedicationById,
+} from "@/data/contentIndex";
 import type { Algorithm, Medication } from "@/types/content";
 
 export type LookupDetailStep = Readonly<{
@@ -124,32 +128,46 @@ function algorithmToDetailViewData(
   };
 }
 
+function ensureContentStoreReady(): void {
+  try {
+    getContentVersionInfo();
+  } catch {
+    throw new Error(
+      'Inhalts-Bundle ist nicht bereit. Bitte die App neu starten oder erneut laden.',
+    );
+  }
+}
+
 export async function loadAlgorithmDetailViewData(id: string): Promise<LookupDetailViewData> {
-  const bundle = await initializeContentFromLookupBundle();
-  const algorithm = bundle.getAlgorithmById(id);
+  ensureContentStoreReady();
+
+  const algorithm = getAlgorithmById(id);
   if (!algorithm) {
     throw new Error(`Algorithmus wurde im Bundle nicht gefunden (ID: ${id}).`);
   }
 
-  const versionLabel = bundle.versionInfo.version?.trim()
-    ? bundle.versionInfo.version.trim()
+  const versionInfo = getContentVersionInfo();
+  const versionLabel = versionInfo.version?.trim()
+    ? versionInfo.version.trim()
     : null;
-  const releasedAtLabel = formatReleasedAt(bundle.versionInfo.createdAt ?? null);
+  const releasedAtLabel = formatReleasedAt(versionInfo.createdAt ?? null);
 
   return algorithmToDetailViewData(algorithm, versionLabel, releasedAtLabel);
 }
 
 export async function loadMedicationDetailViewData(id: string): Promise<LookupDetailViewData> {
-  const bundle = await initializeContentFromLookupBundle();
-  const medication = bundle.getMedicationById(id);
+  ensureContentStoreReady();
+
+  const medication = getMedicationById(id);
   if (!medication) {
     throw new Error(`Medikament wurde im Bundle nicht gefunden (ID: ${id}).`);
   }
 
-  const versionLabel = bundle.versionInfo.version?.trim()
-    ? bundle.versionInfo.version.trim()
+  const versionInfo = getContentVersionInfo();
+  const versionLabel = versionInfo.version?.trim()
+    ? versionInfo.version.trim()
     : null;
-  const releasedAtLabel = formatReleasedAt(bundle.versionInfo.createdAt ?? null);
+  const releasedAtLabel = formatReleasedAt(versionInfo.createdAt ?? null);
 
   return medicationToDetailViewData(medication, versionLabel, releasedAtLabel);
 }

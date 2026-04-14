@@ -4,7 +4,6 @@ import type { LookupManifest } from './lookupSchema';
 import { validateLookupBundle } from './validateLookupBundle';
 
 const LOOKUP_CACHE_KEY = '@resqbrain/lookup/bundle-v1';
-const LOOKUP_UPDATED_KEY = '@resqbrain/lookup/updated-v1';
 const LOOKUP_CACHE_SCHEMA_VERSION = 1;
 
 export type LookupBundleSnapshot = {
@@ -71,12 +70,6 @@ export async function saveBundle(
   await saveEnvelope(LOOKUP_CACHE_KEY, snapshot);
 }
 
-export async function saveUpdatedBundle(
-  snapshot: LookupBundleSnapshot,
-): Promise<void> {
-  await saveEnvelope(LOOKUP_UPDATED_KEY, snapshot);
-}
-
 async function saveEnvelope(
   storageKey: string,
   snapshot: LookupBundleSnapshot,
@@ -109,10 +102,6 @@ export async function loadAndValidateBundle(): Promise<LookupCacheReadResult> {
   }
 
   return { found: true, snapshot };
-}
-
-export async function loadUpdatedBundle(): Promise<LookupBundleSnapshot | null> {
-  return loadEnvelope(LOOKUP_UPDATED_KEY);
 }
 
 async function loadEnvelope(

@@ -17,6 +17,7 @@ import {
   EmptyState,
 } from '@/components/common';
 import { ScreenContainer } from '@/components/layout';
+import { FeedbackSheet } from '@/features/feedback';
 import {
   loadMedicationDetailViewData,
   type LookupDetailViewData,
@@ -42,6 +43,7 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
   );
   const [isLoading, setIsLoading] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [feedbackVisible, setFeedbackVisible] = React.useState(false);
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
   const contentKey = favoriteContentKey(
@@ -80,23 +82,40 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     }
 
     return (
-      <Pressable
-        onPress={onPressFavorite}
-        hitSlop={10}
-        accessibilityRole="button"
-        accessibilityLabel={
-          isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
-        }
-        style={styles.headerButton}
-      >
-        <Ionicons
-          name={isFavorite ? 'star' : 'star-outline'}
-          size={HEADER_ICON_SIZE}
-          color="#fbbf24"
-        />
-      </Pressable>
+      <View style={styles.headerActionsRow}>
+        <Pressable
+          onPress={() => {
+            setFeedbackVisible(true);
+          }}
+          hitSlop={10}
+          accessibilityRole="button"
+          accessibilityLabel="Feedback zu diesem Medikament senden"
+          style={styles.headerButton}
+        >
+          <Ionicons
+            name="chatbubble-ellipses-outline"
+            size={24}
+            color={colors.navHeaderText}
+          />
+        </Pressable>
+        <Pressable
+          onPress={onPressFavorite}
+          hitSlop={10}
+          accessibilityRole="button"
+          accessibilityLabel={
+            isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
+          }
+          style={styles.headerButton}
+        >
+          <Ionicons
+            name={isFavorite ? 'star' : 'star-outline'}
+            size={HEADER_ICON_SIZE}
+            color="#fbbf24"
+          />
+        </Pressable>
+      </View>
     );
-  }, [isFavorite, medication, onPressFavorite]);
+  }, [colors.navHeaderText, isFavorite, medication, onPressFavorite]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -151,61 +170,75 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
   }
 
   return (
-    <ScreenContainer>
-      <ScrollView
-        style={styles.scroll}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        <DetailContentHero
-          title={medication.title}
-          categoryLabel={medication.categoryLabel}
-          indication={medication.heroIndication}
-        />
+    <>
+      <ScreenContainer>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <DetailContentHero
+            title={medication.title}
+            categoryLabel={medication.categoryLabel}
+            indication={medication.heroIndication}
+          />
 
-        <AccordionPanel title="Zusammenfassung" defaultExpanded>
-          <DetailBodyText variant="relaxed">{medication.summary}</DetailBodyText>
-        </AccordionPanel>
+          <AccordionPanel title="Zusammenfassung" defaultExpanded>
+            <DetailBodyText variant="relaxed">{medication.summary}</DetailBodyText>
+          </AccordionPanel>
 
-        <AccordionPanel title="Dosierung" defaultExpanded>
-          <DetailBodyText variant="relaxed">
-            {medication.dosage?.trim().length
-              ? medication.dosage
-              : 'Kein Dosierungstext im Bundle hinterlegt.'}
-          </DetailBodyText>
-        </AccordionPanel>
-
-        {medication.contraindications.length > 0 ? (
-          <AccordionPanel title="Kontraindikationen" defaultExpanded>
+          <AccordionPanel title="Dosierung" defaultExpanded>
             <DetailBodyText variant="relaxed">
-              {medication.contraindications.join('\n')}
+              {medication.dosage?.trim().length
+                ? medication.dosage
+                : 'Kein Dosierungstext im Bundle hinterlegt.'}
             </DetailBodyText>
           </AccordionPanel>
-        ) : null}
 
-        {medication.clinicalNotes ? (
-          <AccordionPanel title="Klinische Hinweise" defaultExpanded>
-            <DetailBodyText variant="relaxed">{medication.clinicalNotes}</DetailBodyText>
+          {medication.contraindications.length > 0 ? (
+            <AccordionPanel title="Kontraindikationen" defaultExpanded>
+              <DetailBodyText variant="relaxed">
+                {medication.contraindications.join('\n')}
+              </DetailBodyText>
+            </AccordionPanel>
+          ) : null}
+
+          {medication.clinicalNotes ? (
+            <AccordionPanel title="Klinische Hinweise" defaultExpanded>
+              <DetailBodyText variant="relaxed">{medication.clinicalNotes}</DetailBodyText>
+            </AccordionPanel>
+          ) : null}
+
+          <AccordionPanel title="Tags" defaultExpanded={false}>
+            {medication.tags.length > 0 ? (
+              <DetailBodyText variant="relaxed">
+                {medication.tags.join(', ')}
+              </DetailBodyText>
+            ) : (
+              <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
+                Keine Tags hinterlegt.
+              </DetailBodyText>
+            )}
           </AccordionPanel>
-        ) : null}
-
-        <AccordionPanel title="Tags" defaultExpanded={false}>
-          {medication.tags.length > 0 ? (
-            <DetailBodyText variant="relaxed">
-              {medication.tags.join(', ')}
-            </DetailBodyText>
-          ) : (
-            <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
-              Keine Tags hinterlegt.
-            </DetailBodyText>
-          )}
-        </AccordionPanel>
-      </ScrollView>
-    </ScreenContainer>
+        </ScrollView>
+      </ScreenContainer>
+      <FeedbackSheet
+        visible={feedbackVisible}
+        bundleId={medication.versionLabel}
+        contextNote={`Medikament | ${medication.id} | ${medication.title}`}
+        onClose={() => {
+          setFeedbackVisible(false);
+        }}
+      />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  headerActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   headerButton: {
     marginRight: 4,
     minWidth: HEADER_HIT,
