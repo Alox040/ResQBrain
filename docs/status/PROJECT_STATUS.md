@@ -1,119 +1,141 @@
-# Projektstatus
+# ResQBrain Projektstatus
 
-**Stand:** 15. April 2026 (Abgleich mit Repo + lokale Builds)
+Stand: 15. April 2026
 
 ## Gesamtstatus
 
-ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig. **Mobile (`apps/mobile-app`):** Phase-0-Lookup ist **umgesetzt** und um **Einsatz-nahe Features** erweitert (Favoriten, Verlauf, Suche mit Ranking, Dosisrechner, Vitalreferenz, Start/Home, Einstellungen mit Bundle-Debug). **Lookup-Daten:** eingebettetes JSON unter `apps/mobile-app/data/lookup-seed/`; **optional** persistiertes Bundle in **AsyncStorage** (`lookupCache.ts`) — wird beim Start genutzt, wenn **neuer** als Embedded; nach erfolgreichem Download aus **optionaler** Bundle-URL (`bundleUpdateService` + `saveBundle`). **Optional:** Hintergrund-Update-Check bei gesetztem `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` in `App.tsx`. **Nicht umgesetzt:** mandantenfähige Backend-Sync-/Release-Pipeline, Push ohne Poll, Organisationsspezifischer Content-Betrieb.
+ResQBrain ist aktuell ein Lookup-first MVP mit einer funktionsfähigen mobilen App für offline nutzbare Einsatzinhalte. Der aktive Produktpfad besteht aus eingebettetem Lookup-Bundle, optional bevorzugtem AsyncStorage-Cache und einem optionalen HTTP-Update-Check im Hintergrund.
 
-## Mobile / Phase 0 und Phase-1-nahe Features
+Die Domain-Schicht ist als eigenständiges TypeScript-Paket strukturiert und für Content-, Tenant- und Release-Logik vorbereitet. Sie ist architektonisch vorhanden, aber nicht als laufender Backend- oder Freigabeprozess an die Mobile-App angebunden.
 
-| Aspekt | Status |
-|--------|--------|
-| **Datenquelle** | **JSON-Bundle** in der App: `apps/mobile-app/data/lookup-seed/` (Repo-Root `data/lookup-seed/` dient u. a. der Build-/Import-Pipeline). Laufzeitpfad: `loadLookupBundle.ts` → `loadLookupBundleWithSource()` → `contentIndex`. Zusätzlich existiert `lookupSource.ts` mit erweiterter Schichtlogik — **nicht** identisch mit dem in `App.tsx` verwendeten Startpfad. |
-| **Offline (Lookup)** | Eingebettetes Bundle + Validierung; **RAM-Store** nach Auflösung. Optional: zuvor gespeichertes Bundle aus **AsyncStorage** wenn **neuer** als Embedded (`loadLookupBundleWithSource`). |
-| **Persistenz / Update** | `lookupCache.ts` (`saveBundle` / `loadAndValidateBundle`); optional Remote: `bundleUpdateService.ts` + `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` — **kein** vollständiges Sync-Produkt. |
-| **Persistenz** | **Favoriten** und **Verlauf** über **AsyncStorage** (`src/storage/localStorage.ts` + Features) — unabhängig vom medizinischen Bundle-Inhalt. |
-| **Suche** | Lokales Ranking über Label, `searchTerms`, Indikation, sekundäre Felder; Filter nach Inhaltsart. |
-| **UI-Schicht** | Adapter `src/data/adapters/*` (View Models); **ohne** Kopplung an `@resqbrain/domain`. |
-| **Screens (Ist)** | Start/Home, Suche, Favoriten, Verlauf, Medikamente (Liste, Detail, **Dosisrechner**), Algorithmen (Liste, Detail), **Vitalwerte-Referenz** (eigenes Stack-Screen, statische Daten). |
-| **Re-Validierung Phase 0** | Weiterhin: kein produktives Multi-Tenant in der App, keine Governance-UI; Fokus Lookup + Einsatzhilfen. |
+Es gibt aktuell kein produktives Sync-System, kein Backend, keine Authentifizierung und keine Tenant-Durchsetzung in der App-Laufzeit.
+
+## Mobile App
+
+### Status
+
+Die Mobile-App ist der aktuelle Kern des Projekts. Sie lädt Lookup-Inhalte beim Start aus einem eingebetteten Seed, kann einen neueren Cache aus AsyncStorage bevorzugen und optional per HTTP nach einem neueren Bundle suchen. Die Inhalte werden danach in einen In-Memory-Store geladen und von Listen-, Such- und Detailansichten synchron verwendet.
+
+### Technischer Stand
+
+| Bereich | Status | Ist-Stand |
+| --- | --- | --- |
+| Lookup-Startup | PASS | `App.tsx` lädt über `loadLookupBundleWithSource()` und initialisiert danach den zentralen Content-Store. |
+| Embedded Bundle | PASS | `apps/mobile-app/data/lookup-seed/` ist der Offline-Fallback im App-Binary. |
+| Cache | PASS | `lookupCache.ts` speichert validierte Bundles in AsyncStorage unter `@resqbrain/lookup/bundle-v1`. |
+| Optionaler Remote-Check | PASS | `bundleUpdateService.ts` prüft nur bei gesetzter `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` auf ein neueres Bundle. |
+| Lookup-Views | PASS | Suche, Listen, Detailseiten und Adapter arbeiten auf dem initialisierten In-Memory-Store. |
+| Qualitätsrahmen | PASS | `typecheck`, Navigations-Checks, Routen-Checks und Expo-Bundle-Check sind vorhanden. |
+| Vollständiges Sync-System | FAIL | Es gibt keinen kontinuierlichen Sync, kein Push/Pull-Modell und keinen Backend-gestützten Datenabgleich. |
 
 ### Ist vs. bewusst offen
 
-| Punkt | Status |
-|-------|--------|
-| Lookup-Bundle-Loader + `contentIndex` + Validierung | **erledigt** |
-| Listen/Detail Medikament & Algorithmus | **erledigt** |
-| Suchscreen + Ranking + Filter | **erledigt** |
-| Start/Home mit Schnellzugriff | **erledigt** |
-| Favoriten (Detail + Tab + Persistenz) | **erledigt** |
-| Verlauf (Detail + Tab + Persistenz, max. 30) | **erledigt** |
-| Dosisrechner (Parser-basiert, Orientierung) | **teilweise** — nur bei erkanntem mg/µg-pro-kg im Dosistext |
-| Vitalwerte-Referenz (Altersgruppen) | **erledigt** (statischer Content) |
-| Offline: eingebettetes Bundle + RAM | **erledigt** |
-| Persistiertes Bundle (AsyncStorage), bevorzugt wenn neuer | **erledigt** (technisch; Produktions-Release-Pipeline offen) |
-| HTTP-Download neuerer Bundle-JSON (eine URL, Env) | **teilweise** (`EXPO_PUBLIC_LOOKUP_BUNDLE_URL`, Hintergrund nach Start) |
-| Org-spezifische / signierte Release-Verteilung, Push-Sync | **offen** |
-| Navigations-Doku vs. Ist (Root-Tabs) | **Hinweis:** Root-Tabs siehe `AppNavigator.tsx` — nicht „Favoriten/Verlauf“ als eigene Tabs |
+Ist:
 
-**Lokale Checks:** `pnpm mobile:verify` — siehe `docs/context/mobile-validation-checklist.md`.
+- Offline-Start mit eingebettetem Bundle
+- Bevorzugung eines neueren lokal gespeicherten Bundles
+- Optionaler HTTP-Check auf ein neueres Bundle nach dem App-Start
+- Zentrale In-Memory-Initialisierung für Lookup-Daten
+
+Bewusst offen:
+
+- Kein serverseitiges Content-Backend
+- Kein Benutzer-Login und keine Authentifizierung
+- Keine mandantenspezifische Laufzeitauflösung in der App
+- Kein inkrementeller Sync und keine Signaturprüfung für Bundle-Downloads
 
 ## Domain
 
-| Aspekt | Status |
-|--------|--------|
-| Paket `@resqbrain/domain` | Aktiv |
-| `tsc -p tsconfig.json` (noEmit, ohne `*.test.ts`) | Erfolgreich (15. Apr. 2026, lokal) |
-| `compile:versioning` (tsc) | Erfolgreich |
-| `compile:content` (tsc) | Erfolgreich |
-| `compile:governance` (tsc) | Erfolgreich |
-| `compile:release` (tsc) | Erfolgreich — `src/release/**` inkl. Engine, Bundle, semantische Version, Fehler |
-| Barrel-Export `src/index.ts` | Content-, Tenant-, Versioning-, Survey-, **Release**-Slices |
-| Lifecycle vs. Governance | `LifecyclePermissionKey` (Lifecycle-Service) vs. `Permission` (Governance-Entity) — keine Root-Barrel-Kollision |
-| `ContentEntityType` (Lifecycle) | Bezogen aus `versioning/entities/EntityType` (kein zweites `CONTENT_ENTITY_TYPES` am Lifecycle-Export) |
-| Layering | Keine Website-/App-Imports im Domain-Paket (reine Domain-Logik) |
-| Mandantentrennung (Organization) | Modellierung im Domain-Code zentral; Runtime-Enforcement folgt mit API/Auth |
-| **Offen** | `pnpm run test:content` **scheitert** (Stand 15. Apr. 2026): Import `createAlgorithm` aus Content-Barrel fehlt / Tests veraltet — mit vereinfachtem `Algorithm` nicht lauffähig; Tests oder Exporte angleichen |
+### Status
 
-## Website
+Die Domain ist als separates Paket unter `packages/domain` vorhanden. Content-Entities, Tenant- und Release-Typen sind modelliert und durch Tests abgesichert, soweit sie im Paket selbst genutzt werden. Die Domain wird derzeit nicht als produktiver Freigabe- oder API-Layer von der Mobile-App verwendet.
 
-| Aspekt | Status |
-|--------|--------|
-| Framework | Next.js 16 (App Router) |
-| Design | Figma-Migration Phase 1 abgeschlossen (8. Apr. 2026) |
-| Startseite `/` | Vorhanden — 9 Sections (Figma-basiert) |
-| Rechtstexte | `/impressum`, `/datenschutz` mit dedizierten `page.tsx` |
-| Sektionen | HeroSection, ProblemSection, IdeaSection, StatusSection, AudienceSection, MitwirkungSection, FaqSection, ContactCtaSection, ProjectGoalSection |
-| Komponentenstruktur | `apps/website/components/layout/`, `sections/`, `ui/` — neu durch Figma-Migration |
-| Deployment | Vercel (`rootDirectory: "apps/website"`) — Stand 8. Apr. 2026 deployed |
-| Internes Lab | `/lab/lookup` — dynamisch; für lokale Lookup-Runtime, ohne Marketing-Verlinkung |
-| API (nicht Marketing) | `/api/mitwirken` — dynamisch |
+### Technischer Stand
 
-## Routing
+| Bereich | Status | Ist-Stand |
+| --- | --- | --- |
+| Content-Entities | PASS | Medication, Protocol, Guideline, ContentPackage und Algorithm sind im Paket modelliert. |
+| Content-Tests | PASS | `pnpm --filter @resqbrain/domain run test:content` ist wieder lauffähig und an den aktuellen Algorithm-Stand angepasst. |
+| Algorithm-Modell | PASS | Das aktuelle Modell ist schlank gehalten; Tests und Factory-Nutzung sind darauf abgestimmt. |
+| Release-Slice | PASS | Release-Versionen, Release-Bundles und Release-Validierung sind vorhanden. |
+| Produktive Nutzung des Release-Slice | WARN | Die Release-Logik ist nicht an den Seed- oder Bundle-Build gekoppelt. |
+| App-Integration | WARN | Die Mobile-App nutzt das Domain-Paket nicht als Laufzeitquelle oder API-Vertrag. |
 
-| Route | Datei | Hinweis |
-|-------|-------|---------|
-| `/` | `apps/website/app/page.tsx` | Static |
-| `/kontakt` | `apps/website/app/kontakt/page.tsx` | Static |
-| `/links` | `apps/website/app/links/page.tsx` | Static |
-| `/mitwirkung` | `apps/website/app/mitwirkung/page.tsx` | Static |
-| `/mitwirken` | `apps/website/app/mitwirken/page.tsx` | Static — neu (8. Apr.) |
-| `/updates` | `apps/website/app/updates/page.tsx` | Static — neu (8. Apr.) |
-| `/impressum` | `apps/website/app/impressum/page.tsx` | Static |
-| `/datenschutz` | `apps/website/app/datenschutz/page.tsx` | Static |
-| `/lab/lookup` | `apps/website/app/lab/lookup/page.tsx` | Dynamic (ƒ) — intern, lokale Lookup-API-Tests; nicht in `routes` / Footer |
+## Kritische technische Punkte
 
-**Pfade:** `apps/website/lib/routes.ts` — öffentliche Seitenrouten (keine Fragment-IDs); Lab unter `/lab/*` bewusst außerhalb.
+### 1. Lookup-Pfade: kanonischer Laufzeitpfad plus Phase-2-Entwurf
 
-**Footer / CTAs:** `apps/website/components/layout/footer-nav.tsx`, `lib/site/navigation.ts`, `lib/site/survey.ts`, `lib/site/content.ts`.
+Der aktive Laufzeitpfad ist heute eindeutig:
 
-**Homepage-Anker:** Keine `id` auf Sektions-Wrappern; keine internen `#…`-Ziele auf `/`.
+- `App.tsx`
+- `loadLookupBundleWithSource()`
+- `initializeContent(store)`
 
-**Letzte Build-Validierung (15. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:release`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `pnpm mobile:verify` — erfolgreich (lokal).  
-**Website / Vercel:** Figma Phase 1 historisch deployed; aktuellen Deploy-Stand separat in Vercel prüfen — Lookup-Lab und API-Routen nur nach passendem Deploy sichtbar.
+Zusätzlich existieren weitere Lookup-Dateien wie `lookupSource.ts`, `bundleStorage.ts`, `LookupBundleUpdateService.ts` und `sourceResolver.ts`. Diese Dateien sind derzeit nicht in `App.tsx` verdrahtet und im Code als Phase-2-Entwürfe markiert.
 
-## Build
+Das ist aktuell kein Produktfehler, bleibt aber eine technische Spannungsstelle: Es gibt vorbereitete Alternativpfade im Repository, die bewusst nicht Teil des aktiven MVP-Ladepfads sind.
 
-| Befehl | Erwartung |
-|--------|-----------|
-| `pnpm build` | Root baut `@resqbrain/website` (Next.js Produktionsbuild) |
-| `pnpm mobile:verify` | Mobile: Typecheck, Nav-Skripte, Android-`expo export` |
-| Letzter Website-Lauf (lokal, 9. Apr. 2026, EOD) | Erfolgreich (Next 16.2.1); u. a. `/`, `/impressum`, `/datenschutz`, `/lab/lookup`, `/api/mitwirken` |
-| Website-Deployment (8. Apr. 2026) | ✓ Deployed auf Vercel — Figma-Migration Phase 1 (`b9a4093`) |
+### 2. Keine End-to-End-Verbindung zwischen Release, Seed und Hosting
+
+Die Seed- und Bundle-Erzeugung ist als Skriptkette vorhanden. Die Release-Domain weiß ebenfalls, welche Inhalte freigegeben wären. Dazwischen fehlt aber weiterhin die verbindende Pipeline.
+
+Aktuell nicht vorhanden:
+
+- Freigegebenes Domain-Release als Input für den Seed-Build
+- durchgehender Build bis zu einem gehosteten Bundle-Endpunkt
+- serverseitig erzwungene Freigabe- oder Tenant-Regeln
+
+Damit ist die technische Verarbeitungskette von Seed bis App lokal vorhanden, aber nicht als vollständige produktive Veröffentlichungsstrecke geschlossen.
+
+### 3. Kein Backend, keine Auth, kein Tenant Enforcement
+
+Im aktuellen MVP gibt es:
+
+- kein Backend
+- keine Benutzeridentität
+- keine Rechteprüfung
+- keine mandantenbezogene Durchsetzung in der App-Laufzeit
+
+Vorbereitete Multi-Tenant- oder regionenspezifische Resolver sind deshalb nur Vorarbeiten und nicht als aktives Feature zu verstehen.
+
+## Bundle-System
+
+### Aktiver Stand
+
+Das Bundle-System der Mobile-App besteht aktuell aus drei klar getrennten Schichten:
+
+1. Embedded Bundle im App-Paket
+2. validierter AsyncStorage-Cache
+3. optionaler HTTP-Check auf ein neueres Bundle
+
+Der Remote-Check erweitert nur den nächsten Kaltstartpfad, er ersetzt keinen lokalen Startup und etabliert kein echtes Sync-System.
+
+### Technische Grenzen
+
+- Versionsvergleich ist vorhanden, aber kein vollständiges Release-Management
+- HTTP-Download ist optional, nicht verpflichtend
+- kein Rollback-Workflow im aktiven Pfad
+- keine Authentifizierung des Bundle-Ursprungs
+- kein produktiv verdrahtetes Hosting-Konzept im Repository
 
 ## Risiken
 
-1. **Dosisrechner** basiert auf Heuristiken im Freitext — kein Ersatz für verbindliche Arzneimitteldokumentation; nutzerseitig klar gekennzeichnet in der App.  
-2. **Externe Umfrage (Microsoft Forms / Office Forms)** ist im Code verlinkt; datenschutzrechtliche Einordnung und Texte auf `/datenschutz` bei produktiver Nutzung final abstimmen.  
-3. **Produktions-Deployment** der Website und der Mobile-Pipeline separat planen.  
-4. **Mandantentrennung** im Domain-Modell, aber ohne produktive API/Auth noch nicht end-to-end erzwungen.  
-5. **expo-doctor** kann Abweichungen melden (z. B. Icon-Paket-Versionen im Monorepo) — siehe Mobile-Checkliste.
+### 1. Bundle-Verteilung bleibt organisatorisch, nicht technisch geschlossen
 
-## Verweise
+Die Skripte für Seed- und Region-Builds existieren, aber das Hosting der erzeugten JSON-Bundles ist nicht Teil des laufenden Systems. Damit bleibt der Remote-Update-Pfad technisch vorbereitet, aber operativ unvollständig.
 
-- Architektur: `docs/architecture/`
-- Produktkontext: `docs/context/` (priorisierte Next Steps: `docs/context/12-next-steps.md`)
-- Arbeitssession-Log: `docs/status/WORK_SESSION.md`
-- Roadmap: `docs/roadmap/PROJECT_ROADMAP.md`
-- Mobile-Validierung: `docs/context/mobile-validation-checklist.md`
+### 2. Phase-2-Dateien können künftige Implementierungen verwirren
+
+Die nicht aktiven Lookup-Dateien sind inzwischen als Entwürfe markiert. Trotzdem bleiben mehrere vorbereitete Komponenten im Repository, die nicht Teil des aktuellen Produktpfads sind.
+
+### 3. Seed-Synchronisation zur App ist weiterhin ein Build-Disziplin-Thema
+
+Der eingebettete Mobile-Seed ist eine Kopie aus `data/lookup-seed/`. Wenn diese Synchronisation nicht bewusst ausgeführt wird, kann das eingebettete Bundle hinter dem aktuellen Seed-Stand zurückbleiben.
+
+### 4. Domain und App entwickeln derzeit nebeneinander
+
+Die Domain ist technisch weiter als ihre produktive Nutzung. Solange keine Backend- oder Release-Anbindung existiert, bleibt sie vor allem Architektur- und Sicherheitsrahmen, nicht aktiver Laufzeitkern der App.
+
+## Kurzfazit
+
+Der aktuelle Repo-Stand ist für ein Lookup-first MVP technisch konsistent: Die Mobile-App startet offline stabil, kann lokale oder aktualisierte Bundles laden und hat einen kleinen, funktionierenden Qualitätsrahmen. Offen bleiben nicht kosmetische, sondern systemische Themen: Veröffentlichungsstrecke für Bundles, Anbindung des Release-Slice und jede Form von Backend-, Auth- oder Tenant-Durchsetzung.
