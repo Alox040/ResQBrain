@@ -8,6 +8,7 @@ From repository root:
 
 | Goal | Command |
 |------|---------|
+| **Fast static gate** (typecheck + nav checks, no Metro/export) | `cd apps/mobile-app && pnpm verify:static` |
 | **Full local gate** (typecheck + nav checks + Android bundle) | `pnpm mobile:verify` |
 | **Typecheck only** | `pnpm --filter @resqbrain/mobile-app exec tsc --noEmit` or `cd apps/mobile-app && pnpm typecheck` |
 | **Screen registration** (JSX `name=` vs param list types) | `cd apps/mobile-app && pnpm verify:navigation` |
@@ -15,11 +16,13 @@ From repository root:
 | **Expo / dependency health** (may warn on duplicates or SDK drift) | `cd apps/mobile-app && pnpm verify:expo-doctor` or `pnpm mobile:verify:doctor` |
 | **Bundler sanity** (no dev server; proves Metro can produce an Android export) | `cd apps/mobile-app && pnpm verify:expo-bundle` (same output dir as `export:android`) |
 
-`verify:local` runs: `typecheck` → `verify:navigation` → `verify:nav-routes` → `verify:expo-bundle`.
+`verify:static` runs: `typecheck` → `verify:navigation` → `verify:nav-routes`.
+
+`verify:local` runs: `verify:static` → `verify:expo-bundle`.
 
 ### Lint
 
-There is **no ESLint configuration** in `apps/mobile-app` today. `pnpm --filter @resqbrain/mobile-app run lint` only prints a reminder. After adding ESLint, point this script at `eslint .` (and document the command here).
+There is **no ESLint configuration** in `apps/mobile-app` today. This is intentional for now: adding ESLint would require new dependencies and config surface area for limited immediate value. `pnpm --filter @resqbrain/mobile-app run lint` currently prints a reminder; the active lightweight quality gate is `verify:static`.
 
 ### Expo start (manual smoke)
 

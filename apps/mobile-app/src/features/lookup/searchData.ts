@@ -1,5 +1,5 @@
 import {
-  initializeContentFromLookupBundle,
+  assertContentInitialized,
   searchIndexItems,
 } from "@/data/contentIndex";
 
@@ -44,7 +44,7 @@ export async function loadLookupSearchResults(searchTerm: string): Promise<Looku
     return [];
   }
 
-  await initializeContentFromLookupBundle();
+  assertContentInitialized();
 
   const queryLower = normalizedSearchTerm.toLowerCase();
 

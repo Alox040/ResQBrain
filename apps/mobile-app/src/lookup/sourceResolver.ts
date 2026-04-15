@@ -1,3 +1,10 @@
+/**
+ * Phase-2 draft only.
+ *
+ * Multi-scope resolution for organization/region bundles is intentionally not
+ * used in the current app runtime. The active startup path is
+ * `loadLookupBundleWithSource()` in `loadLookupBundle.ts`.
+ */
 import { loadBundle as loadUpdatedBundle } from './bundleStorage';
 import { loadEmbeddedLookupBundle } from './loadLookupBundle';
 import { loadBundle as loadCachedBundle, type LookupBundleSnapshot } from './lookupCache';

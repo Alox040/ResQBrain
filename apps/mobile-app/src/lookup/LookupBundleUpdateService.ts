@@ -1,3 +1,10 @@
+/**
+ * Phase-2 draft only.
+ *
+ * This class-based update pipeline adds checksum verification and rollback, but
+ * it is intentionally not wired into the active runtime flow. `App.tsx` uses
+ * `bundleUpdateService.ts`, which updates the AsyncStorage-backed cache.
+ */
 import * as FileSystem from 'expo-file-system/legacy';
 
 import { loadEmbeddedLookupBundle } from './loadLookupBundle';

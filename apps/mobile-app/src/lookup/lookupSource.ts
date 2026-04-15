@@ -1,3 +1,13 @@
+/**
+ * Phase-2 draft only.
+ *
+ * This singleton provisioning layer is intentionally not used by `App.tsx`.
+ * Runtime startup is canonicalized via `loadLookupBundleWithSource()` in
+ * `loadLookupBundle.ts` plus `initializeContent()` in `contentIndex.ts`.
+ *
+ * Keep this file as a reference for future multi-layer provisioning work, but
+ * do not wire new runtime callers to it in Phase 0/1.
+ */
 import {
   buildLookupRamStore,
   loadEmbeddedLookupBundle,

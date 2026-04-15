@@ -1,6 +1,6 @@
 import {
   algorithms,
-  initializeContentFromLookupBundle,
+  assertContentInitialized,
   medications,
 } from '@/data/contentIndex';
 import type { Algorithm, ContentCategory, ContentTag, Medication } from '@/types/content';
@@ -59,11 +59,11 @@ export function resolveLookupRequestContext(): LookupRequestContext {
 }
 
 export async function loadMedicationList(): Promise<LookupListRowItem[]> {
-  await initializeContentFromLookupBundle();
+  assertContentInitialized();
   return medications.map(mapMedicationListItem);
 }
 
 export async function loadAlgorithmList(): Promise<LookupListRowItem[]> {
-  await initializeContentFromLookupBundle();
+  assertContentInitialized();
   return algorithms.map(mapAlgorithmListItem);
 }

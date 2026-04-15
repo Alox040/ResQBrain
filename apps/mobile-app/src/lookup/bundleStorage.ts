@@ -1,3 +1,10 @@
+/**
+ * Phase-2 draft only.
+ *
+ * File-system persistence with staging, backup and rollback is intentionally
+ * not part of the active app startup path. The current canonical cache backend
+ * is `lookupCache.ts` with AsyncStorage.
+ */
 import * as FileSystem from 'expo-file-system/legacy';
 
 import type { LookupBundleSnapshot } from './lookupCache';

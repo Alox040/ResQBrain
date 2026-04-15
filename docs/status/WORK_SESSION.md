@@ -1,5 +1,44 @@
 # Arbeitssession
 
+## 14. April 2026 — Finale Build- & Routing-Validierung (Repo HEAD `366e843`)
+
+**Art:** Validierungs-Agent — Build, Website-Typecheck, Mobile-Verify, Website-Routen/Footer/CTA (dateistrukturell), Mobile-Navigation (Skripte). Kein Produktcode in dieser Session geändert.
+
+### Prüfpunkte (PASS / WARN / FAIL)
+
+| # | Prüfpunkt | Status | Befund |
+|---|-----------|--------|--------|
+| 1 | Root Build (`pnpm build` → `@resqbrain/website` `next build`) | **PASS** | Exit 0; Next.js 16.2.1 (Turbopack); TypeScript-Phase im Build grün. |
+| 2 | Website Typecheck (`pnpm --filter @resqbrain/website run typecheck`) | **PASS** | Exit 0; `tsc --noEmit` ohne Diagnosen. |
+| 3 | Mobile Verify (`pnpm mobile:verify` → `verify:static` + `verify:expo-bundle`) | **PASS** | `verify:navigation` OK; `verify:nav-routes` OK; `expo export --platform android` → `dist-validation` OK. |
+| 4 | Website-Routen `/impressum`, `/datenschutz`, CTA/Footer | **PASS** (dateibasiert) | `app/impressum/page.tsx`, `app/datenschutz/page.tsx`; Build-Route-Liste enthält `○ /impressum`, `○ /datenschutz`. `lib/routes.ts` + `lib/site/navigation.ts` `footerNavigation`: Impressum, Datenschutz, extern GitHub/Discord, Kontakt-Mailto. **Annahme:** Laufzeit-HTTP und Klickpfade im Browser in dieser Session nicht manuell verifiziert. |
+| 5 | Navigation / Routen-Konfiguration (Mobile) | **PASS** (Skripte) | `node scripts/verify-navigation.mjs` und `verify-nav-routes.mjs` grün gegen `AppNavigator.tsx` / Param-Listen. **WARN:** Kein Geräte-/Simulator-Lauf. |
+
+### Konkrete Befehle (ausgeführt)
+
+```text
+pnpm build
+pnpm --filter @resqbrain/website run typecheck
+pnpm mobile:verify
+git rev-parse HEAD
+```
+
+### Konkrete Ergebnisse (Kurz)
+
+- **Website-Build:** u. a. statische Routen `/`, `/impressum`, `/datenschutz`, `/kontakt`, `/mitwirken`, `/mitwirkung`, `/links`, `/updates`; dynamisch `/lab/lookup`, `/api/mitwirken`.
+- **Mobile:** Typecheck + Nav-Checks + Android-Export-Bundle erfolgreich.
+
+### Restwarnungen / Hinweise
+
+- **WARN:** Website- und Mobile-Routen hier **strukturell** und per **Build/Skript** bestätigt — kein E2E-Browser-Test, kein iOS-Export in `mobile:verify` (nur Android laut `verify:expo-bundle`).
+- **WARN:** `pnpm mobile:verify` enthält kein `expo-doctor` (separat: `pnpm mobile:verify:doctor`).
+
+### Abschlussstatus
+
+**PASS** — für den definierten Gate (Root-Build, Website-`tsc`, `mobile:verify` inkl. Expo-Export Android, dateibasierte Legal-/Footer-Konsistenz, Mobile-Nav-Skripte). Keine FAIL-Stufen.
+
+---
+
 ## 15. April 2026 — Doku-Abgleich README / Status (Repo HEAD `afe338e`)
 
 **Art:** Statusdateien und README gegen Ist-Code abgleichen (kein Feature-Code geändert).

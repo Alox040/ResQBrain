@@ -1,3 +1,9 @@
+/**
+ * Phase-2 helper.
+ *
+ * This manifest fetcher is currently not wired into the active lookup update
+ * path. Keep it as a building block for a future manifest-based update flow.
+ */
 const LOOKUP_MANIFEST_PATH = '/lookup/manifest.json';
 const DEFAULT_TIMEOUT_MS = 8000;
 

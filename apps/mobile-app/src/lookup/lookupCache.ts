@@ -4,6 +4,7 @@ import type { LookupManifest } from './lookupSchema';
 import { validateLookupBundle } from './validateLookupBundle';
 
 const LOOKUP_CACHE_KEY = '@resqbrain/lookup/bundle-v1';
+const LEGACY_LOOKUP_CACHE_KEY = 'resqbrain.lookup.bundle';
 const LOOKUP_CACHE_SCHEMA_VERSION = 1;
 
 export type LookupBundleSnapshot = {
@@ -82,6 +83,7 @@ async function saveEnvelope(
   };
   try {
     await AsyncStorage.setItem(storageKey, JSON.stringify(envelope));
+    await AsyncStorage.removeItem(LEGACY_LOOKUP_CACHE_KEY);
   } catch {
     // bewusstes Schlucken: Persistenzfehler sollen den Einsatz nicht blockieren
   }
