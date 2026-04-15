@@ -1,6 +1,6 @@
 # MVP Scope
 
-**Last Updated:** 2026-03-27
+**Last Updated:** 2026-04-15
 
 ## Phase 0 Definition
 
@@ -9,14 +9,14 @@ Phase 0 ist als Lookup-first MVP fuer Einsatznutzung definiert:
 - Algorithm Lookup
 - Medication Lookup
 - statische Datenbasis
-  - **Kanonische Phase-0 Quelle:** JSON-Bundle unter `data/lookup-seed/`
-  - **TypeScript-Mock-Dateien:** nur Übergang, bis der Loader implementiert ist
+  - **In der App gebündelt:** `apps/mobile-app/data/lookup-seed/` (validiert beim Laden)
+  - **Repo-Build-Pipeline:** u. a. `data/lookup-seed/` (siehe Skripte/DBRD-Doku)
 - Listenansicht
 - Detailansicht
 
 ## Explizit ausgeschlossen in Phase 0
 
-- keine Berechnung (z. B. keine dynamischen Dosierungsrechner)
+- keine klinisch validierte Dosierung (der Dosisrechner ist **heuristisch** aus Freitext — siehe Roadmap/Status)
 - keine KI-Funktionen
 - keine Organisationsverwaltung in der App-Oberflaeche
 - keine Versionierungs-UI

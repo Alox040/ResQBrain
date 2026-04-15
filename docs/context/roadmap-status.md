@@ -1,33 +1,27 @@
 # Roadmap Status
 
-**Last Updated:** 2026-03-27
+**Last Updated:** 2026-04-15
 
 ## Phase 0 Status
 
-Gesamtbewertung: **in Arbeit**
+Gesamtbewertung: **weitgehend umgesetzt** (Lookup-App + Einsatz-Features); Verteil-/Sync-Produkt **nicht**
 
-## Fertig
+## Fertig (Ist im Repo nachweisbar)
 
 - Architektur- und Terminologie-Basis dokumentiert
-- Website (Landing + Legal-Seiten) vorhanden
-- Mobile Grundnavigation mit zentralen Lookup-Screens vorhanden
-- Domain-Grundlagen in `@resqbrain/domain` breit modelliert und testbar
+- Website (Landing, Legal, interne Lab-/API-Routen) — siehe `docs/status/PROJECT_STATUS.md`
+- Mobile: Lookup-Flows, Suche, Favoriten/Verlauf (AsyncStorage), Dosisrechner (heuristisch), Vitalreferenz, Einstellungen
+- Lookup-Bundle: eingebettet; optional persistierter Cache; optional HTTP-Bundle-URL — siehe Status
+- Domain-Paket `@resqbrain/domain` mit Release-/Versioning-Slices (Tests teilweise separat — siehe Status)
 
-## In Arbeit
+## In Arbeit / technische Schulden
 
-- Domain-Paket weiter konsolidieren (Module, Invarianten, Testtiefe)
-- Mobile Lookup-Flow verfeinern (insbesondere Algorithmus-Detailtiefe)
-- Kontext- und Statusdokumente als laufender Projektspiegel
+- Domain-Content-Tests vs. vereinfachtes `Algorithm`-Modell
+- Zwei verwandte Lookup-Lade-Pfade (`lookupSource.ts` vs. `loadLookupBundle.ts`) — konsolidieren oder strikt dokumentieren
+- `FavoritesScreen` nicht im Navigator registriert (totes oder experimentelles Artefakt)
 
-## Geplant
+## Geplant / nicht gestartet (Plattform)
 
-- Seed-Daten fuer Medikamente und Algorithmen finalisieren
-- Offline-Datenhaltung fuer App-Read-Pfade festlegen
-- Suchqualitaet und Antwortzeit im MVP absichern
-- fehlende MVP-Screens und konsistente UI-Linie abschliessen
-
-## Blockiert / noch nicht gestartet
-
-- produktive API/Auth-Schicht (als Voraussetzung fuer echten Multi-Tenant-Runtime-Betrieb)
-- operativer Release-/Distribution-Flow ausserhalb von Domain-Modellen
+- mandantenfähige API/Auth und Runtime-Enforcement
+- operativer org-spezifischer Release-/Sync-Betrieb
 - Survey-Datenpipeline in produktiver Form

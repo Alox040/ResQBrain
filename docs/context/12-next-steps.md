@@ -1,6 +1,6 @@
 # Next Steps
 
-**Stand:** 31. März 2026 — abgestimmt mit dem **Ist-Stand** der Mobile-App (`apps/mobile-app`) nach Phase-0-Basis und den umgesetzten Phase-1-nahen Features.
+**Stand:** 15. April 2026 — abgestimmt mit dem **Ist-Stand** der Mobile-App (`apps/mobile-app`) und `docs/status/PROJECT_STATUS.md`.
 
 Kanontische Produktkontexte: `docs/context/04-mvp-scope.md`, `docs/context/11-implementation-baseline.md`.
 
@@ -18,7 +18,8 @@ Diese Punkte sind **implementiert** und laufen gegen das eingebettete Lookup-Bun
 - **Dosisrechner:** Gewichtsbasierte Schätzung aus **Freitext-Dosistext** (Muster `mg|µg/mcg pro kg`, optional Min/Max); Medikamentenauswahl; ohne klinische Validierung — nur Parser + Hinweis „Orientierung“.
 - **Vitalwerte-Referenz:** Eigener Screen (Altersgruppen, HF/AF/RR/SpO₂/Temp.) — **statischer Referenzinhalt** in der App, unabhängig vom Lookup-Bundle.
 - **UI-Schicht:** View-Model-Adapter (`src/data/adapters/`) zwischen Bundle-Typen und Listen/Detail/Suche — vorbereitend für spätere Domain-/Bundle-Migration; **keine** Anbindung an `@resqbrain/domain` in der App.
-- **Offline-Updates (Vorbereitung):** `src/lookup/lookupSource.ts` — aktiv weiterhin nur **embedded** Bundle; Typen/Extension Points für spätere Schichten (`cached` / `updated` / `fallback`) **ohne** Sync/Netzwerk.
+- **Bundle auf dem Gerät:** validiertes Lookup-Bundle kann in **AsyncStorage** liegen und wird beim Start bevorzugt, wenn **neuer** als Embedded (`loadLookupBundleWithSource` in `loadLookupBundle.ts`). Nach erstem Embedded-Laden kann der Cache befüllt sein (u. a. nach erfolgreichem Remote-Download).  
+- **Optional HTTP-Update:** bei gesetztem `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` läuft nach Start ein **Hintergrund-Check** (`bundleUpdateService` / `App.tsx`) — **kein** mandantenfähiges Backend, **kein** Push-Sync. Zusätzlich existiert `lookupSource.ts` mit weiterer Schichtlogik; **App-Start** nutzt den Pfad über `loadLookupBundle.ts`.
 
 **Validierung lokal:** `pnpm mobile:verify` (siehe `docs/context/mobile-validation-checklist.md`).
 
@@ -26,14 +27,14 @@ Diese Punkte sind **implementiert** und laufen gegen das eingebettete Lookup-Bun
 
 ## Kurzfristig (Offen / nächste Iterationen)
 
-### 1. Lookup-Bundle auf dem Gerät (nicht nur RAM/Embed)
+### 1. Produktionsreife Bundle-Verteilung
 
-- Bundle weiterhin **eingebettet** als Quelle der Wahrheit; **kein** separates „heruntergeladenes“ Bundle am Gerät.
-- Offline-Strategie für **ersetzbare** Bundles (Download, Integrität, Fallback) — an `lookupSource` andocken; **kein** Backend-Muss im ersten Schritt, kann mit lokalen Fixtures beginnen.
+- Technisch vorhanden: persistierter Cache + optional eine **Bundle-URL** (siehe Status).  
+- Offen: organisationsspezifische/signierte Releases, Betrieb (Hosting, Rotation), Fehler- und Rollback-Strategie jenseits des aktuellen Minimal-Fetch.
 
-### 2. Sync / Push-Updates
+### 2. Sync / Backend
 
-- Nach Konzept: was wird wann geladen, Signierung, Fehlerpfade — **noch nicht** im Code.
+- **Kein** End-to-End-Sync-Produkt; optionaler HTTP-Download ist **kein** Ersatz für Tenant-API/Auth.
 
 ### 3. Seed-Daten & Pilot-Konfiguration
 

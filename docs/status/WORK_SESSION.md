@@ -1,6 +1,31 @@
 # Arbeitssession
 
-**Datum:** 9. April 2026  
+## 15. April 2026 — Doku-Abgleich README / Status (Repo HEAD `afe338e`)
+
+**Art:** Statusdateien und README gegen Ist-Code abgleichen (kein Feature-Code geändert).
+
+### Verifiziert (lokal, diese Session)
+
+| Prüfung | Ergebnis |
+|---------|----------|
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | ✓ |
+| `pnpm --filter @resqbrain/domain run compile:versioning` | ✓ |
+| `pnpm --filter @resqbrain/domain run compile:release` | ✓ |
+| `pnpm build` (Next.js 16.2.1) | ✓ — 12 Routen inkl. `/api/mitwirken`, `/lab/lookup` (ƒ) |
+| `pnpm --filter @resqbrain/website run typecheck` | ✓ |
+| `pnpm mobile:verify` | ✓ |
+
+### Inhaltliche Korrekturen (Kurz)
+
+- Mobile: persistiertes Lookup-Bundle in **AsyncStorage** (`lookupCache.ts`); Start über `loadLookupBundleWithSource`; optional **HTTP-Bundle-Update** bei `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` (`App.tsx` / `bundleUpdateService.ts`). Frühere Formulierungen „nur embedded / kein Geräte-Bundle“ sind damit überholt.
+- Navigation: **fünf** Root-Tabs inkl. **Einstellungen**; Favoriten/Verlauf **nicht** als eigene Root-Tabs.
+- Website: dynamische Routen `/lab/lookup`, `/api/mitwirken` im Build sichtbar.
+
+Ältere Session-Einträge unten unverändert als Archiv; bei Widerspruch gilt dieser Abgleich-Stand.
+
+---
+
+**Datum (Archiv unten):** 9. April 2026  
 **Art:** Arbeitstages-Abschluss — Domain-Release-Modul, TS-Barrel-/Lifecycle-Bereinigung, vollständige Build-Validierung, Status-/README-Sync
 
 ## EOD — Validierung & Docs-Sync (zweiter Lauf, 9. April 2026)

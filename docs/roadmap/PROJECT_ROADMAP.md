@@ -1,6 +1,6 @@
 # Projekt-Roadmap
 
-**Stand:** 9. April 2026 (abgeglichen mit Domain-Release-Slice, Website-Build und `pnpm`-Validierung)
+**Stand:** 15. April 2026 (abgeglichen mit Repo, Domain-Release-Slice, Website-Build, Mobile-`verify`)
 
 ## Legende
 
@@ -33,9 +33,10 @@
 | Offline: eingebettetes Bundle laden (ohne Netzwerkzwang) | [x] |
 | Schnelle lokale Suche (Ziel unter 3 s — ohne formales Monitoring) | [x] |
 | **Nutzerdaten persistent:** Favoriten + Verlauf (`AsyncStorage`) | [x] |
-| **Lookup-Bundle** separat auf Gerät speichern / aus Sync laden | [ ] |
-| **Offline-Update-Vorbereitung** (`lookupSource` — nur embedded aktiv) | [~] |
-| Sync / Netzwerk-Refresh des Bundles | [ ] |
+| **Lookup-Bundle** auf Gerät (AsyncStorage) — neueres persistiertes Bundle vor Embedded | [x] |
+| **Optional: HTTP-Bundle-URL** (`EXPO_PUBLIC_LOOKUP_BUNDLE_URL`) — Fetch, Validierung, Speicherung | [~] — kein Org-/Signatur-Produkt |
+| **Offline-Update-Vorbereitung** (`lookupSource.ts` vs. `loadLookupBundleWithSource`) | [~] — zwei Pfade im Code; Start nutzt `loadLookupBundle.ts` |
+| Sync / mandantenfähige Release-Pipeline (Backend, Push, Org-Scope) | [ ] |
 | Einsatz-optimierte UI (Schriftgröße, Kontrast, schnelle Navigation — iterativ) | [~] |
 | Pilot-Wache als feste Konfiguration (fachlich / Seed; kein Login) | [~] |
 
@@ -50,7 +51,7 @@
 | Favoriten (Medikamente + Algorithmen) | [x] |
 | Verlauf (zuletzt aufgerufen, cap 30) | [x] |
 | View-Model-Adapter (Bundle vs. UI) | [x] |
-| Push-Updates bei Netzverbindung | [ ] |
+| Hintergrund-Bundle-Check bei konfigurierter URL | [~] — Poll/Fetch, kein Push |
 
 **Hinweise:**
 
@@ -105,5 +106,5 @@
 
 Dokumentation zur lokalen Prüfung: `docs/context/mobile-validation-checklist.md`.
 
-**Letzte Repo-Validierung (9. Apr. 2026, EOD):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` (ohne `*.test.ts`), `compile:versioning`, `compile:release`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich. Website: `/lab/lookup` (intern) ergänzt (`b491609`).  
-**Offen:** Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen.
+**Letzte Repo-Validierung (15. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` (ohne `*.test.ts`), `compile:versioning`, `compile:release`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `pnpm mobile:verify` — erfolgreich (lokal).  
+**Offen:** Domain-`test:content` / Graph-`createAlgorithm` an Entity-Modell angleichen; Lookup-Lade-Pfade (`lookupSource` vs. `loadLookupBundle`) konsolidieren oder klar dokumentieren.

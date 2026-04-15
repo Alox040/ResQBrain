@@ -1,56 +1,60 @@
 # Navigation
 
-**Last Updated:** 2026-03-27
+**Last Updated:** 2026-04-15
 
 ## MVP-Ist-Zustand (Phase 0)
 
 ### Root Bottom Tabs
 
-Root ist ein `BottomTabNavigator` mit vier Tabs:
+Root ist ein `BottomTabNavigator` mit fünf Tabs (Namen siehe `AppNavigator.tsx`):
 
-- `Home`
-- `Search`
-- `MedicationList`
-- `AlgorithmList`
+- **Start** (`Home`) — enthält den Home-Stack
+- **Suche** (`Search`)
+- **Einstellungen** (`Settings`)
+- **Medikamente** (`MedicationTab`) — eigener Stack
+- **Algorithmen** (`AlgorithmTab`) — eigener Stack
 
-### Nested Stacks
+**Hinweis:** **Favoriten** sind in der Startansicht und in Listen integriert (Stern), **kein** eigener Root-Tab. **Verlauf** ist ein Screen im **Home-Stack** (`History`), kein Root-Tab.
 
-Die Tabs `MedicationList` und `AlgorithmList` kapseln jeweils einen eigenen Stack, damit Listen- und Detailpfade innerhalb des Bereichs bleiben.
+### Home Stack (Start-Tab)
+
+- `HomeMain` — Start/Home
+- `History` — Verlauf
+- `VitalReference` — Vitalwerte-Referenz
+
+### Nested Stacks (Medikamente / Algorithmen)
+
+Die Tabs `MedicationTab` und `AlgorithmTab` kapseln jeweils einen eigenen Stack.
 
 #### Medication Stack
 
-- `MedicationList`
+- `MedicationListScreen`
 - `MedicationDetail` (`medicationId`)
 
 #### Algorithm Stack
 
-- `AlgorithmList`
+- `AlgorithmListScreen` (optional `category`)
 - `AlgorithmDetail` (`algorithmId`)
 
 ### Search -> nested Detail Flows
 
-`Search` bleibt ein eigener Root-Tab, navigiert fuer Detailansichten aber in die jeweiligen nested Stacks:
+`Search` bleibt ein eigener Root-Tab, navigiert fuer Detailansichten in die jeweiligen nested Stacks.
 
-- `Search` -> `MedicationList` Stack -> `MedicationDetail`
-- `Search` -> `AlgorithmList` Stack -> `AlgorithmDetail`
+### Screens (Kern, nicht vollstaendig)
 
-Damit bleibt Back-Navigation konsistent zur Herkunftsdomäne (MedicationList vs. AlgorithmList) statt ueber einen globalen Detail-Stack zu laufen.
+- `HomeScreen`, `SearchScreen`, `SettingsScreen`
+- `MedicationListScreen`, `MedicationDetailScreen`
+- `AlgorithmListScreen`, `AlgorithmDetailScreen`
+- `HistoryScreen`, `VitalReferenceScreen`
 
-### Screens (aktuell vorhanden)
-
-- `HomeScreen`
-- `SearchScreen`
-- `MedicationListScreen`
-- `MedicationDetailScreen`
-- `AlgorithmListScreen`
-- `AlgorithmDetailScreen`
+(`FavoritesScreen.tsx` existiert im Repo, ist aber nicht als Route in `AppNavigator` registriert — Stand Abgleich.)
 
 ## Begründung fuer Phase 0
 
-- **Schnelle Orientierung:** Root Tabs geben im Einsatz eine sofort sichtbare Bereichsstruktur (Home, Search, MedicationList, AlgorithmList).
-- **MVP-sicher:** Nested Stacks loesen Detailnavigation ohne komplexe Router- oder Linking-Logik.
-- **Geringes Risiko:** Struktur ist robust fuer mock-basierte Offline-Daten und minimiert Navigationsfehler.
-- **Erweiterbar:** Die gleiche Grundstruktur kann spaeter mit produktiven Datenquellen weitergefuehrt werden.
+- **Schnelle Orientierung:** Root Tabs geben im Einsatz eine sichtbare Bereichsstruktur.
+- **MVP-sicher:** Nested Stacks loesen Detailnavigation ohne komplexe Router-Logik.
+- **Geringes Risiko:** Struktur ist robust fuer lokale Lookup-Daten.
+- **Erweiterbar:** spaeter mit produktiven Datenquellen weiterfuehrbar.
 
 ## Abgrenzung zum langfristigen Zielbild
 

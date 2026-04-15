@@ -9,7 +9,7 @@ From repository root:
 | Goal | Command |
 |------|---------|
 | **Full local gate** (typecheck + nav checks + Android bundle) | `pnpm mobile:verify` |
-| **Typecheck only** | `pnpm --filter resqbrain-mobile exec tsc --noEmit` or `cd apps/mobile-app && pnpm typecheck` |
+| **Typecheck only** | `pnpm --filter @resqbrain/mobile-app exec tsc --noEmit` or `cd apps/mobile-app && pnpm typecheck` |
 | **Screen registration** (JSX `name=` vs param list types) | `cd apps/mobile-app && pnpm verify:navigation` |
 | **Route consistency** (`navigate` / nested `screen:` vs declared routes) | `cd apps/mobile-app && pnpm verify:nav-routes` |
 | **Expo / dependency health** (may warn on duplicates or SDK drift) | `cd apps/mobile-app && pnpm verify:expo-doctor` or `pnpm mobile:verify:doctor` |
@@ -19,7 +19,7 @@ From repository root:
 
 ### Lint
 
-There is **no ESLint configuration** in `apps/mobile-app` today. `pnpm --filter resqbrain-mobile run lint` only prints a reminder. After adding ESLint, point this script at `eslint .` (and document the command here).
+There is **no ESLint configuration** in `apps/mobile-app` today. `pnpm --filter @resqbrain/mobile-app run lint` only prints a reminder. After adding ESLint, point this script at `eslint .` (and document the command here).
 
 ### Expo start (manual smoke)
 
@@ -35,7 +35,7 @@ Long-running dev server is **not** part of `verify:local` (CI-friendly).
 
 Use after data or navigation changes, or when touching lookup / adapters.
 
-- **Tabs**: each tab opens (Start, Suche, Favoriten, Verlauf, Medikamente, Algorithmen).
+- **Root tabs** (see `AppNavigator.tsx`): Start (Home-Stack), Suche, Einstellungen, Medikamente, Algorithmen — **Favoriten** und **Verlauf** sind **keine** eigenen Root-Tabs (Start/Home inkl. Schnellzugriff; Verlauf als Screen im Home-Stack).
 - **Stacks**: back navigation from detail returns to the expected list; nested opens from Home quick actions land on the correct screen.
 - **Cross-tab deep links**: from a medication, open a related algorithm (and reverse); from search / favorites / history, open both kinds of content.
 - **Lookup bundle**: list loads, detail shows content; broken related IDs show the unavailable row (no crash).

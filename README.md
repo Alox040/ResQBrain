@@ -21,13 +21,13 @@ Aktuelle Statusdateien:
 
 ## Current Development State
 
-Kurzstatus (abgeglichen mit dem Repo, **9. April 2026**):
+Kurzstatus (abgeglichen mit dem Repo, **15. April 2026**):
 
 - **Aktuelle Phase:** Phase 0 (Lookup-first MVP) **plus** umgesetzte einsatznahe Erweiterungen; Details und Legende **`[~]` teilweise** in der Roadmap.  
-- **Produktiv sichtbar:** **Mobile App** (Expo): Lookup offline aus eingebettetem Bundle; **Website** (Next.js) — Figma-Migration Phase 1 deployed (8. Apr. 2026).  
-- **Mobile — implementiert:** Listen/Details Medikamente & Algorithmen; **Suche** mit Ranking und Inhalts-Filter; **Start/Home**; **Favoriten** und **Verlauf** (persistiert über **AsyncStorage**); **Dosisrechner** (nur bei erkanntem mg/µg-pro-kg im Dosistext); **Vitalwerte-Referenz** (statischer Screen); UI-**Adapter/View Models** für Bundle vs. Darstellung.  
-- **Mobile — vorbereitet, nicht aktiv:** `lookupSource` für künftige Bundle-Schichten (cached/updated/fallback) — **ohne** Sync/Backend.  
-- **Mobile — offen:** Lookup-Bundle separat auf dem Gerät aus Download/Sync; Netzwerk-Updates.  
+- **Produktiv sichtbar:** **Mobile App** (Expo): Lookup aus eingebettetem JSON-Bundle (`apps/mobile-app/data/lookup-seed/`) mit optionalem **AsyncStorage-Cache** (neueres persistiertes Bundle wird beim Start gegenüber Embedded bevorzugt); optionaler **HTTP-Bundle-Download** bei gesetztem `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` (Hintergrund-Check nach App-Start). **Website** (Next.js) — Figma-Migration Phase 1 (siehe `docs/status/PROJECT_STATUS.md` zum Deployment-Stand).  
+- **Mobile — implementiert:** Listen/Details Medikamente & Algorithmen; **Suche** mit Ranking und Inhalts-Filter; **Start/Home**; **Favoriten** und **Verlauf** (persistiert über **AsyncStorage**, Favoriten/Verlauf primär über Start-/Home-Flows); **Dosisrechner** (nur bei erkanntem mg/µg-pro-kg im Dosistext); **Vitalwerte-Referenz** (statischer Screen); **Einstellungen** mit Bundle-Debug/Feedback; UI-**Adapter/View Models** für Bundle vs. Darstellung.  
+- **Mobile — teilweise / ohne Produkt-Betrieb:** Bundle-Update über **eine konfigurierbare Bundle-URL** (Fetch + Validierung + Speicherung in AsyncStorage) — **kein** mandantenfähiges Backend, **kein** Push-Sync; `lookupSource.ts` enthält zusätzliche Schicht-Logik, der aktuelle App-Startpfad nutzt **`loadLookupBundleWithSource`** in `loadLookupBundle.ts` (Embedded vs. Cache).  
+- **Mobile — offen:** Ende-zu-Ende Release-/Verteil-Pipeline (org-spezifisch, signiert, Fehlerpfade produktiv); Abgleich mehrerer Lookup-Pfade im Code (`lookupSource` vs. `loadLookupBundle`) dokumentieren oder vereinheitlichen.  
 - **Nicht im aktuellen App-Umfang:** KI, Lernlogik, Organisations-/Governance-UI, `@resqbrain/domain` in der Mobile-App.  
 
 ### Mobile — Übersicht (Ist)
@@ -44,9 +44,9 @@ Kurzstatus (abgeglichen mit dem Repo, **9. April 2026**):
 | Dosisrechner | teilweise (siehe Roadmap / Status) |
 | Vitalwerte-Referenz | erledigt |
 | Offline: eingebettetes Bundle (ohne Netz) | erledigt |
-| Offline: Bundle ersetzen / aus Sync laden | offen |
+| Persistiertes Bundle (AsyncStorage) / optional HTTP-URL | teilweise (siehe Roadmap / Status) |
 | View-Model-Adapter | erledigt |
-| `lookupSource` (nur embedded aktiv) | Vorbereitung erledigt / erweitern offen |
+| Bundle-Cache + optional `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` | teilweise (kein Backend-Sync) |
 
 **Lokale Mobile-Prüfung:** `pnpm mobile:verify` — Details: [`docs/context/mobile-validation-checklist.md`](docs/context/mobile-validation-checklist.md).
 
@@ -86,7 +86,7 @@ Repository: [https://github.com/Alox040/ResQBrain](https://github.com/Alox040/Re
 | `packages/domain/` | Gemeinsames Domain-Paket (TypeScript) |
 | `apps/website/` | Öffentliche Next.js-Website |
 | `apps/mobile-app/` | Expo-Mobile-App (Lookup MVP + Einsatzfeatures) |
-| `data/lookup-seed/` | Eingebettetes Lookup-Bundle (JSON) |
+| `data/lookup-seed/` | Seed/Build-Quelle (u. a. DBRD-Pipeline); gebündelte App-Daten unter `apps/mobile-app/data/lookup-seed/` |
 
 ## Technische Module (Architekturüberblick)
 
@@ -102,13 +102,13 @@ Details: [`docs/architecture/system-overview.md`](docs/architecture/system-overv
 ## Aktueller Stand
 
 - Domain-Paket (`@resqbrain/domain`): `tsc -p tsconfig.json --noEmit` prüft Produktionscode (`*.test.ts` ausgeschlossen). Zusätzlich `compile:content`, `compile:versioning`, `compile:governance`, **`compile:release`** — siehe `packages/domain/package.json`. Neues Release-Subsystem unter `src/release/` (`ReleaseBundle`, `ReleaseEngine`, Fehlerklassen). Lifecycle: `ContentEntityType` aus Versioning; `LifecyclePermissionKey` statt Namenskollision mit Governance-`Permission`.  
-- Website (Next.js 16): Routen u. a. `/`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`, `/impressum`, `/datenschutz`, intern `/lab/lookup` (Lookup-API-Tests, nicht im Footer). Umfrage-URLs zentral in `apps/website/lib/site/survey.ts` (`forms.office.com`).  
+- Website (Next.js 16): Routen u. a. `/`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`, `/impressum`, `/datenschutz`, intern `/lab/lookup` (Lookup-API-Tests, nicht im Footer), dynamisch `/api/mitwirken`. Umfrage-URLs zentral in `apps/website/lib/site/survey.ts` (`forms.office.com`).  
 - Mobile-App: Expo, Lookup-Bundle eingebettet, AsyncStorage für Favoriten/Verlauf — Details `docs/status/PROJECT_STATUS.md`.  
 - Root-Build: `pnpm build` → `@resqbrain/website`.
 
 ## Current Status (EN)
 
-Domain root `tsc --noEmit` green for non-test sources; `compile:versioning` green. Website production build + `typecheck` OK (9 Apr. 2026, EOD). Internal **`/lab/lookup`** route added for local Lookup API testing (`b491609`); not linked from marketing nav/footer. **Open:** align content entity tests (`createAlgorithm` / graph fields) with current `Algorithm` model or extend the model. After `next build`, `next-env.d.ts` may reference `./.next/types/routes.d.ts`.
+Domain root `tsc --noEmit` green for non-test sources; `compile:versioning` green. Website production build + `typecheck` OK (15 Apr. 2026). Internal **`/lab/lookup`** (dynamic) for local Lookup checks; not linked from marketing nav/footer. **`/api/mitwirken`** exists (dynamic API route). **Open:** align content entity tests (`createAlgorithm` / graph fields) with current `Algorithm` model or extend the model. After `next build`, `next-env.d.ts` may reference `./.next/types/routes.d.ts`.
 
 ## Nächste Schritte (kurz)
 
@@ -143,8 +143,8 @@ Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isol
 | `pnpm --filter @resqbrain/website run typecheck` | Website `tsc --noEmit` |
 | `pnpm mobile:verify` | Mobile: Typecheck, Nav, Android-Export |
 
-**Zuletzt verifiziert:** 9. April 2026 (EOD) — Domain-`tsc --noEmit`, `compile:versioning`, `compile:release`, `pnpm build`, Website `typecheck` erfolgreich.  
-**Website deployed:** 8. April 2026 — Figma-Migration Phase 1 (`b9a4093`). Lookup-Lab (`/lab/lookup`, `b491609`) bei Bedarf separat deployen.
+**Zuletzt verifiziert:** 15. April 2026 — `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:release`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `pnpm mobile:verify` erfolgreich (lokal).  
+**Website deployed:** siehe `docs/status/PROJECT_STATUS.md` — Figma-Migration Phase 1; Lookup-Lab `/lab/lookup` ist dynamisch und ggf. erst nach Deploy sichtbar.
 
 ## Website Status
 
@@ -161,6 +161,7 @@ Survey third-party (Office Forms URL in repo) DPA/privacy alignment; tenant isol
 | `/impressum` | OK |
 | `/datenschutz` | OK |
 | `/lab/lookup` | Intern — Lookup-API-Labort (dynamisch); nicht in Footer/Hauptnav |
+| `/api/mitwirken` | Dynamisch — API-Route (nicht Marketing) |
 
 Routen: `apps/website/lib/routes.ts`. Footer: `apps/website/components/layout/footer-nav.tsx`. Umfrage-URLs: `apps/website/lib/site/survey.ts`. Homepage-Sektionen ohne feste `id`-Anker; Umfrage-CTAs über `content.mitwirkung` / `/mitwirkung` / `/links`.
 

@@ -1,18 +1,18 @@
 # Projektstatus
 
-**Stand:** 9. April 2026 (Arbeitstages-Abschluss)
+**Stand:** 15. April 2026 (Abgleich mit Repo + lokale Builds)
 
 ## Gesamtstatus
 
-ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig. **Mobile (`apps/mobile-app`):** Phase-0-Lookup ist **umgesetzt** und um **Einsatz-nahe Features** erweitert (Favoriten, Verlauf, Suche mit Ranking, Dosisrechner, Vitalreferenz, Start/Home). **Nicht umgesetzt:** synchronisiertes oder auf das Gerät heruntergeladenes Lookup-Bundle, Backend-/Sync-Pipeline.
+ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur und Domain sind dokumentiert und teilweise als TypeScript-Paket umgesetzt; die **öffentliche Marketing-Website** (Next.js) ist lauffähig. **Mobile (`apps/mobile-app`):** Phase-0-Lookup ist **umgesetzt** und um **Einsatz-nahe Features** erweitert (Favoriten, Verlauf, Suche mit Ranking, Dosisrechner, Vitalreferenz, Start/Home, Einstellungen mit Bundle-Debug). **Lookup-Daten:** eingebettetes JSON unter `apps/mobile-app/data/lookup-seed/`; **optional** persistiertes Bundle in **AsyncStorage** (`lookupCache.ts`) — wird beim Start genutzt, wenn **neuer** als Embedded; nach erfolgreichem Download aus **optionaler** Bundle-URL (`bundleUpdateService` + `saveBundle`). **Optional:** Hintergrund-Update-Check bei gesetztem `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` in `App.tsx`. **Nicht umgesetzt:** mandantenfähige Backend-Sync-/Release-Pipeline, Push ohne Poll, Organisationsspezifischer Content-Betrieb.
 
 ## Mobile / Phase 0 und Phase-1-nahe Features
 
 | Aspekt | Status |
 |--------|--------|
-| **Datenquelle** | **JSON-Bundle** `data/lookup-seed/` inkl. `manifest.json` — Einstieg über `lookupSource` → `loadLookupBundle` / `contentIndex`. |
-| **Offline (Lookup)** | Eingebettetes Bundle, Validierung beim Laden, **RAM-Store** — **kein** separates persistiertes Bundle-File durch die App. |
-| **Offline (Vorbereitung)** | `src/lookup/lookupSource.ts`: Extension Points für spätere Schichten (`cached` / `updated` / `fallback`); aktiv nur **embedded**. |
+| **Datenquelle** | **JSON-Bundle** in der App: `apps/mobile-app/data/lookup-seed/` (Repo-Root `data/lookup-seed/` dient u. a. der Build-/Import-Pipeline). Laufzeitpfad: `loadLookupBundle.ts` → `loadLookupBundleWithSource()` → `contentIndex`. Zusätzlich existiert `lookupSource.ts` mit erweiterter Schichtlogik — **nicht** identisch mit dem in `App.tsx` verwendeten Startpfad. |
+| **Offline (Lookup)** | Eingebettetes Bundle + Validierung; **RAM-Store** nach Auflösung. Optional: zuvor gespeichertes Bundle aus **AsyncStorage** wenn **neuer** als Embedded (`loadLookupBundleWithSource`). |
+| **Persistenz / Update** | `lookupCache.ts` (`saveBundle` / `loadAndValidateBundle`); optional Remote: `bundleUpdateService.ts` + `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` — **kein** vollständiges Sync-Produkt. |
 | **Persistenz** | **Favoriten** und **Verlauf** über **AsyncStorage** (`src/storage/localStorage.ts` + Features) — unabhängig vom medizinischen Bundle-Inhalt. |
 | **Suche** | Lokales Ranking über Label, `searchTerms`, Indikation, sekundäre Felder; Filter nach Inhaltsart. |
 | **UI-Schicht** | Adapter `src/data/adapters/*` (View Models); **ohne** Kopplung an `@resqbrain/domain`. |
@@ -31,10 +31,11 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Verlauf (Detail + Tab + Persistenz, max. 30) | **erledigt** |
 | Dosisrechner (Parser-basiert, Orientierung) | **teilweise** — nur bei erkanntem mg/µg-pro-kg im Dosistext |
 | Vitalwerte-Referenz (Altersgruppen) | **erledigt** (statischer Content) |
-| Offline: Bundle nur eingebettet/RAM | **erledigt** (wie konzipiert für Phase 0) |
-| Offline: Bundle auf Gerät aus Download/Sync | **offen** |
-| Sync / Push-Update des Bundles | **offen** |
-| `lookupSource` nicht-embedded befüllen | **offen** (API vorbereitet) |
+| Offline: eingebettetes Bundle + RAM | **erledigt** |
+| Persistiertes Bundle (AsyncStorage), bevorzugt wenn neuer | **erledigt** (technisch; Produktions-Release-Pipeline offen) |
+| HTTP-Download neuerer Bundle-JSON (eine URL, Env) | **teilweise** (`EXPO_PUBLIC_LOOKUP_BUNDLE_URL`, Hintergrund nach Start) |
+| Org-spezifische / signierte Release-Verteilung, Push-Sync | **offen** |
+| Navigations-Doku vs. Ist (Root-Tabs) | **Hinweis:** Root-Tabs siehe `AppNavigator.tsx` — nicht „Favoriten/Verlauf“ als eigene Tabs |
 
 **Lokale Checks:** `pnpm mobile:verify` — siehe `docs/context/mobile-validation-checklist.md`.
 
@@ -43,7 +44,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Aspekt | Status |
 |--------|--------|
 | Paket `@resqbrain/domain` | Aktiv |
-| `tsc -p tsconfig.json` (noEmit, ohne `*.test.ts`) | Erfolgreich (9. Apr. 2026) |
+| `tsc -p tsconfig.json` (noEmit, ohne `*.test.ts`) | Erfolgreich (15. Apr. 2026, lokal) |
 | `compile:versioning` (tsc) | Erfolgreich |
 | `compile:content` (tsc) | Erfolgreich |
 | `compile:governance` (tsc) | Erfolgreich |
@@ -53,7 +54,7 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | `ContentEntityType` (Lifecycle) | Bezogen aus `versioning/entities/EntityType` (kein zweites `CONTENT_ENTITY_TYPES` am Lifecycle-Export) |
 | Layering | Keine Website-/App-Imports im Domain-Paket (reine Domain-Logik) |
 | Mandantentrennung (Organization) | Modellierung im Domain-Code zentral; Runtime-Enforcement folgt mit API/Auth |
-| **Offen** | Mehrere `*.entities.test.ts` erwarten `createAlgorithm` / Graph-Felder — mit vereinfachtem `Algorithm` (`steps: string`) nicht per Root-`tsc` geprüft; Tests gezielt reparieren oder Modell erweitern |
+| **Offen** | `pnpm run test:content` **scheitert** (Stand 15. Apr. 2026): Import `createAlgorithm` aus Content-Barrel fehlt / Tests veraltet — mit vereinfachtem `Algorithm` nicht lauffähig; Tests oder Exporte angleichen |
 
 ## Website
 
@@ -66,7 +67,8 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 | Sektionen | HeroSection, ProblemSection, IdeaSection, StatusSection, AudienceSection, MitwirkungSection, FaqSection, ContactCtaSection, ProjectGoalSection |
 | Komponentenstruktur | `apps/website/components/layout/`, `sections/`, `ui/` — neu durch Figma-Migration |
 | Deployment | Vercel (`rootDirectory: "apps/website"`) — Stand 8. Apr. 2026 deployed |
-| Internes Lab | `/lab/lookup` (9. Apr. 2026, `b491609`) — dynamisch; für lokale Lookup-Runtime, ohne Marketing-Verlinkung |
+| Internes Lab | `/lab/lookup` — dynamisch; für lokale Lookup-Runtime, ohne Marketing-Verlinkung |
+| API (nicht Marketing) | `/api/mitwirken` — dynamisch |
 
 ## Routing
 
@@ -88,9 +90,8 @@ ResQBrain befindet sich in der **frühen Implementierungsphase**: Architektur un
 
 **Homepage-Anker:** Keine `id` auf Sektions-Wrappern; keine internen `#…`-Ziele auf `/`.
 
-**Letzte Build-Validierung (9. Apr. 2026, EOD):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck` — erfolgreich.  
-**Commit (Lookup-Lab):** `b491609` — interne `/lab/lookup`-Seite.  
-**Website deployed (8. Apr. 2026):** `b9a4093` — Vercel Figma Phase 1; Lookup-Lab ggf. erst nach erneutem Deploy sichtbar.
+**Letzte Build-Validierung (15. Apr. 2026):** `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit`, `compile:versioning`, `compile:release`, `pnpm build`, `pnpm --filter @resqbrain/website run typecheck`, `pnpm mobile:verify` — erfolgreich (lokal).  
+**Website / Vercel:** Figma Phase 1 historisch deployed; aktuellen Deploy-Stand separat in Vercel prüfen — Lookup-Lab und API-Routen nur nach passendem Deploy sichtbar.
 
 ## Build
 

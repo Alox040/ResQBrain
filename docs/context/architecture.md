@@ -1,21 +1,21 @@
 # Architecture
 
-**Last Updated:** 2026-03-27
+**Last Updated:** 2026-04-15
 
 ## App Struktur
 
-Monorepo mit PNPM Workspaces:
+Monorepo mit PNPM Workspaces (siehe Root-`package.json`):
 
 - `apps/mobile-app`: Expo/React-Native App (Lookup-UI)
-- `apps/website`: Next.js Website (Landing + Legal)
+- `apps/website`: Next.js Website (Landing + Legal + interne Lab-Routen)
 - `packages/domain`: Domain-Module und Regeln als TypeScript-Paket
 - `docs/architecture`: kanonische Zielarchitektur
 
-Zusatzverzeichnisse wie `app/`, `components/`, `src/`, `backend/`, `data/`, `content/` sind aktuell nicht die primaeren produktiven Implementierungspfade.
+Weitere Verzeichnisse (`apps/api-local`, `apps/website-lab`, `packages/api`, `packages/application`, Root-`app/`/`components/`/`lib/`) sind **nicht** der alleinige produktive Pfad der Website — Vercel nutzt `apps/website` als Root.
 
 ## Domain Layer
 
-`packages/domain/src` enthaelt:
+`packages/domain/src` enthaelt u. a.:
 
 - `content`
 - `tenant`
@@ -31,8 +31,8 @@ Der Domain-Layer ist framework-agnostisch aufgebaut und exportiert Entitaeten, P
 
 ## UI Layer
 
-- **Mobile UI:** Lookup-first Screens fuer Home, Suche, Medikamentenliste/-detail, Algorithmusliste/-detail
-- **Website UI:** Informationsseiten fuer Projektkommunikation
+- **Mobile UI:** Lookup-first Screens; Daten aus validiertem Lookup-Bundle (eingebettet; optional AsyncStorage-Cache; optional HTTP-Update bei Env) — siehe `docs/status/PROJECT_STATUS.md`
+- **Website UI:** Informationsseiten fuer Projektkommunikation; dynamische Routen u. a. `/lab/lookup`, `/api/mitwirken`
 
 Keine produktive Admin-/Authoring-UI fuer Governance oder Versioning vorhanden.
 
@@ -40,9 +40,9 @@ Keine produktive Admin-/Authoring-UI fuer Governance oder Versioning vorhanden.
 
 In `apps/mobile-app/src/navigation/AppNavigator.tsx`:
 
-- Root `BottomTabNavigator` mit `Home`, `Search`, `Medication`, `Algorithm`
-- nested `MedicationStack` fuer List/Detail (`MedicationList` -> `MedicationDetail`)
-- nested `AlgorithmStack` fuer List/Detail (`AlgorithmList` -> `AlgorithmDetail`)
+- Root `BottomTabNavigator` mit **Start (Home-Stack)**, **Suche**, **Einstellungen**, **Medikamente** (Stack), **Algorithmen** (Stack)
+- Home-Stack: `HomeMain`, `History` (Verlauf), `VitalReference`
+- nested Stacks fuer Medikamente und Algorithmen (Liste -> Detail)
 - Search-zu-Detail-Flows ueber die jeweiligen nested Stacks
 - typed Param-Listen fuer Detailnavigation (`medicationId`, `algorithmId`)
 
@@ -51,7 +51,7 @@ In `apps/mobile-app/src/navigation/AppNavigator.tsx`:
 Die akzeptierte MVP-Struktur mit Root Tabs und nested Stacks ist fuer Phase 0 geeignet, weil sie:
 
 - schnelle, klare Hauptbereiche fuer Einsatzsituationen bereitstellt
-- mit statischen/mock-basierten Daten ohne zusaetzliche Routing-Komplexitaet funktioniert
+- mit lokalem Lookup-Bundle ohne Server-Zwang fuer die Basisfunktion funktioniert
 - stabile Back-Navigation in Listen-/Detail-Flows sicherstellt
 - bewusst keine Governance-/Admin-Navigation vorweg nimmt
 
@@ -70,10 +70,8 @@ Das langfristige Zielbild bleibt in den kanonischen Architekturartefakten unter 
 
 Aktuell:
 
-- Screens beziehen Daten aus lokalen Mock-Dateien
-- keine API-Anbindung
-- kein Backend-Read/Write-Flow
-- keine persistente Produktionsdatenquelle
+- Mobile: Lookup-Bundle aus Embedded JSON; optional neueres persistiertes Bundle; optional Fetch einer Bundle-URL — siehe `loadLookupBundle.ts`, `lookupCache.ts`, `bundleUpdateService.ts`, `App.tsx`
+- keine produktive mandantenfaehige API-Anbindung fuer Content in der App
 
 Zielbild laut Architektur-Dokumenten:
 
@@ -88,5 +86,5 @@ Zielbild laut Architektur-Dokumenten:
 
 ## Release Engine (vorhanden / nicht vorhanden)
 
-- **Vorhanden (Domain):** Release-Modelle und Tests (`release.engine.test.ts`, `ReleaseEngine.ts`)
-- **Nicht vorhanden (Runtime):** keine produktive Backend-Release-Pipeline und keine operative Distribution
+- **Vorhanden (Domain):** Release-Modelle und Tests (`ReleaseEngine.ts` u. a.)
+- **Nicht vorhanden (Runtime):** keine produktive Backend-Release-Pipeline und keine operative Distribution fuer die Mobile-App
