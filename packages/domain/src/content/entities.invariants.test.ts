@@ -45,41 +45,18 @@ test('LC-01/T-CON-01: Algorithm structural completeness detects dangling branche
     id: 'alg-1' as AlgorithmId,
     organizationId: orgA,
     title: 'Algorithm',
+    steps: '',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.Draft,
-    decisionLogic: [
-      {
-        id: 'start',
-        label: 'Start',
-        terminal: false,
-        nextNodeIds: ['missing-node'],
-        medicationReferences: [],
-      },
-    ],
   });
 
   const complete = createAlgorithm({
     id: 'alg-2' as AlgorithmId,
     organizationId: orgA,
     title: 'Algorithm',
+    steps: '1. Start\n2. Finish',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.Draft,
-    decisionLogic: [
-      {
-        id: 'start',
-        label: 'Start',
-        terminal: false,
-        nextNodeIds: ['finish'],
-        medicationReferences: [],
-      },
-      {
-        id: 'finish',
-        label: 'Finish',
-        terminal: true,
-        nextNodeIds: [],
-        medicationReferences: [],
-      },
-    ],
   });
 
   assert.equal(isAlgorithmStructurallyComplete(incomplete), false);
@@ -167,6 +144,7 @@ test('INV-B-01/02/04: content editability and immutability are bound to Approval
     id: 'alg-draft' as AlgorithmId,
     organizationId: orgA,
     title: 'Draft algorithm',
+    steps: 'Draft step',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.Draft,
   });
@@ -175,6 +153,7 @@ test('INV-B-01/02/04: content editability and immutability are bound to Approval
     id: 'alg-review' as AlgorithmId,
     organizationId: orgA,
     title: 'Review algorithm',
+    steps: 'Review step',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.InReview,
   });
@@ -183,6 +162,7 @@ test('INV-B-01/02/04: content editability and immutability are bound to Approval
     id: 'alg-released' as AlgorithmId,
     organizationId: orgA,
     title: 'Released algorithm',
+    steps: 'Released step',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.Released,
   });
@@ -240,6 +220,7 @@ test('INV-A-06: audit trail is append-only on content entities', () => {
     id: 'alg-audit' as AlgorithmId,
     organizationId: orgA,
     title: 'Algorithm',
+    steps: 'Audit step',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.Draft,
     auditTrail: [

@@ -56,6 +56,7 @@ test('G1-03/INV-A-01/INV-A-02: Algorithm identity is immutable and organization-
     id: 'alg-1' as AlgorithmId,
     organizationId: orgA,
     title: 'Algorithm',
+    steps: 'Assess airway. Escalate if unstable.',
     currentVersionId: versionId,
     approvalStatus: ApprovalStatus.Draft,
   });
@@ -72,25 +73,17 @@ test('G1-03/INV-A-01/INV-A-02: Algorithm identity is immutable and organization-
 test('TI-04/T-CON-05: Algorithm rejects cross-organization references', () => {
   assert.throws(
     () =>
-      createAlgorithm({
-        id: 'alg-1' as AlgorithmId,
+      createProtocol({
+        id: 'proto-alg-ref' as ProtocolId,
         organizationId: orgA,
-        title: 'Algorithm',
+        title: 'Protocol',
         currentVersionId: versionId,
         approvalStatus: ApprovalStatus.Draft,
-        decisionLogic: [
+        references: [
           {
-            id: 'node-1',
-            label: 'Check',
-            terminal: true,
-            nextNodeIds: [],
-            medicationReferences: [
-              {
-                entityId: 'med-1' as MedicationId,
-                entityType: 'Medication',
-                organizationId: orgB,
-              },
-            ],
+            entityId: 'alg-1' as AlgorithmId,
+            entityType: 'Algorithm',
+            organizationId: orgB,
           },
         ],
       }),
