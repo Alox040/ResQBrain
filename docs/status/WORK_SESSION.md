@@ -381,7 +381,7 @@ Im Repo-Root existiert jetzt eine parallele Next.js-ähnliche Struktur:
 
 - Lookup-Bundle separat auf Gerät speichern (Download/Sync)
 - Netzwerk-Refresh / Sync-Engine
-- Dosisrechner: nur heuristikbasiert (mg/µg-pro-kg im Freitext)
+- Keine Dosisrechner-Funktion im MVP (MDR-sicherer Modus)
 - Externe Umfrage-URLs: vor Go-Live inhaltlich und datenschutzrechtlich finalisieren
 
 ### Nächste sinnvolle Schritte (historisch)

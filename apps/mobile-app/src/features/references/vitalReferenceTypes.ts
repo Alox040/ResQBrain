@@ -1,12 +1,12 @@
 /**
- * Static offline vital sign reference material for emergency orientation.
- * Not patient-specific; local protocols and clinical judgment always take precedence.
+ * Static offline physiology reference ranges for emergency orientation.
+ * General reference only; local protocols and clinical judgment always take precedence.
  */
 
 export type AgeGroupId = 'adult' | 'child' | 'infant';
 
 /** Clinical quantity we show as a reference card. */
-export type VitalSignId =
+export type VitalsMetricId =
   | 'heart_rate'
   | 'respiratory_rate'
   | 'systolic_bp'
@@ -15,7 +15,7 @@ export type VitalSignId =
   | 'temp_c';
 
 export type VitalReferenceCard = {
-  id: VitalSignId;
+  id: VitalsMetricId;
   /** Short heading on card */
   title: string;
   /** Unit line, e.g. /min, mmHg */

@@ -1,4 +1,4 @@
-import { Search, Heart, Clock, Pill, FileText, Calculator, Activity, Star } from 'lucide-react';
+import { Search, Heart, Clock, Pill, FileText, Star } from 'lucide-react';
 import { useState } from 'react';
 
 interface DashboardProps {
@@ -29,8 +29,8 @@ export function Dashboard({ onViewMedication, onViewAlgorithm }: DashboardProps)
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <QuickAction icon={<Heart />} label="Favoriten" count={12} />
         <QuickAction icon={<Clock />} label="Verlauf" count={24} />
-        <QuickAction icon={<Calculator />} label="Dosisrechner" />
-        <QuickAction icon={<Activity />} label="Vitalwerte" />
+        <QuickAction icon={<Search />} label="Suche" />
+        <QuickAction icon={<FileText />} label="Referenzen" />
       </div>
 
       {/* Main Content Grid */}
@@ -134,12 +134,11 @@ function QuickAction({ icon, label, count }: QuickActionProps) {
 interface MedicationCardProps {
   name: string;
   category: string;
-  dosage: string;
   favorite?: boolean;
   onClick: () => void;
 }
 
-function MedicationCard({ name, category, dosage, favorite, onClick }: MedicationCardProps) {
+function MedicationCard({ name, category, favorite, onClick }: MedicationCardProps) {
   return (
     <button
       onClick={onClick}
@@ -154,7 +153,6 @@ function MedicationCard({ name, category, dosage, favorite, onClick }: Medicatio
           {favorite && <Star className="size-4 text-amber-500 fill-amber-500" />}
         </div>
         <p className="text-sm text-muted-foreground mb-1">{category}</p>
-        <p className="text-xs text-muted-foreground">{dosage}</p>
       </div>
     </button>
   );
@@ -212,28 +210,24 @@ const medications = [
     id: '1',
     name: 'Adrenalin',
     category: 'Notfallmedikament',
-    dosage: '1mg/ml, 0.01mg/kg i.v.',
     favorite: true,
   },
   {
     id: '2',
     name: 'Midazolam',
     category: 'Sedierung',
-    dosage: '5mg/ml, 0.1-0.2mg/kg',
     favorite: false,
   },
   {
     id: '3',
     name: 'Fentanyl',
     category: 'Analgesie',
-    dosage: '0.05mg/ml, 1-2µg/kg',
     favorite: true,
   },
   {
     id: '4',
     name: 'Amiodaron',
     category: 'Antiarrhythmikum',
-    dosage: '50mg/ml, 300mg Bolus',
   },
 ];
 

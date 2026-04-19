@@ -11,12 +11,12 @@ Kanontische Produktkontexte: `docs/context/04-mvp-scope.md`, `docs/context/11-im
 Diese Punkte sind **implementiert** und laufen gegen das eingebettete Lookup-Bundle:
 
 - **Lookup:** Loader + Validierung (`loadLookupBundle`), `contentIndex`, Listen/Detail Medikamente & Algorithmen, Querverweise zwischen Einträgen (wo im Bundle referenziert).
-- **Suche:** Lokale Suche ohne Server; Relevanz-Ranking (Label, `searchTerms`, Indikation, sekundäre Texte wie Dosistext/Notizen/Schritte); Filter „Alle / Medikamente / Algorithmen“.
-- **Start/Home:** Tab mit Statistiken, Schnellzugriff (Suche, Vitalwerte, Listen, Dosisrechner-Kachel), Karussell für Favoriten und Verlauf.
+- **Suche:** Lokale Suche ohne Server; einfache Stichwortsuche (Label, `searchTerms`, Indikation) ohne Relevanz-Ranking; Filter „Alle / Medikamente / Algorithmen“.
+- **Start/Home:** Tab mit Statistiken, Schnellzugriff (Suche, Listen), Karussell für Favoriten und Verlauf.
 - **Favoriten:** Stern in Detailansichten; Tab „Favoriten“; Persistenz über **AsyncStorage** (nicht im Lookup-Bundle).
 - **Verlauf:** „Zuletzt geöffnet“ (max. 30 Einträge); Tab „Verlauf“; Persistenz über **AsyncStorage**; Eintrag beim Öffnen eines Details.
-- **Dosisrechner:** Gewichtsbasierte Schätzung aus **Freitext-Dosistext** (Muster `mg|µg/mcg pro kg`, optional Min/Max); Medikamentenauswahl; ohne klinische Validierung — nur Parser + Hinweis „Orientierung“.
-- **Vitalwerte-Referenz:** Eigener Screen (Altersgruppen, HF/AF/RR/SpO₂/Temp.) — **statischer Referenzinhalt** in der App, unabhängig vom Lookup-Bundle.
+- **Keine Dosisrechner-Funktion** im MVP (MDR-sicherer Modus; keine gewichtsbezogene Berechnung in der App).
+- **Keine Vitalwertverarbeitung** im MVP (kein eigener Vitalwerte-Workflow; Ausrichtung auf statische Referenztexte und Navigation).
 - **UI-Schicht:** View-Model-Adapter (`src/data/adapters/`) zwischen Bundle-Typen und Listen/Detail/Suche — vorbereitend für spätere Domain-/Bundle-Migration; **keine** Anbindung an `@resqbrain/domain` in der App.
 - **Bundle auf dem Gerät:** validiertes Lookup-Bundle kann in **AsyncStorage** liegen und wird beim Start bevorzugt, wenn **neuer** als Embedded (`loadLookupBundleWithSource` in `loadLookupBundle.ts`). Nach erstem Embedded-Laden kann der Cache befüllt sein (u. a. nach erfolgreichem Remote-Download).  
 - **Optional HTTP-Update:** bei gesetztem `EXPO_PUBLIC_LOOKUP_BUNDLE_URL` läuft nach Start ein **Hintergrund-Check** (`bundleUpdateService` / `App.tsx`) — **kein** mandantenfähiges Backend, **kein** Push-Sync. Zusätzlich existiert `lookupSource.ts` mit weiterer Schichtlogik; **App-Start** nutzt den Pfad über `loadLookupBundle.ts`.

@@ -120,3 +120,14 @@ vollständige Datei
 
 keine langen Erklärungen  
 keine Alternativen  
+
+Regulatory constraint:
+All generated code must remain inside Knowledge-Only Mode as defined in:
+`docs/context/regulatory-boundary.md`
+
+Never generate:
+- decision support
+- recommendation logic
+- dosage calculation
+- patient-specific medical processing
+- clinical prioritization

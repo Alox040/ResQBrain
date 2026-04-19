@@ -279,12 +279,12 @@ references     : string[]
 
 ### 3.8 Guideline
 
-**Zweck:** Operative oder medizinische Empfehlung, die Protocols ergänzt. Managed als `ContentEntityLine` mit `kind = 'Guideline'`.
+**Zweck:** Operative oder medizinische Inhaltsdarstellung, die Protocols ergänzt. Managed als `ContentEntityLine` mit `kind = 'Guideline'`.
 
 **Inhaltliche Pflichtfelder:**
 ```
-title          : string
-recommendation : string
+title   : string
+summary : string
 ```
 
 **Inhaltliche optionale Felder:**

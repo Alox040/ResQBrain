@@ -85,9 +85,9 @@ function medicationToDetailViewData(
     scope: null,
     visibility: null,
     tags: m.tags.map((t) => String(t)),
-    dosage: m.dosage.trim().length > 0 ? m.dosage.trim() : null,
+    dosage: null,
     contraindications: [],
-    clinicalNotes: m.notes?.trim() ? m.notes.trim() : null,
+    clinicalNotes: null,
     steps: [],
     warnings: null,
   };
@@ -100,13 +100,6 @@ function algorithmToDetailViewData(
 ): LookupDetailViewData {
   const summary = normalizeSummary(a.indication);
   const hero = a.indication.trim().length > 0 ? a.indication.trim() : summary;
-
-  const steps: LookupDetailStep[] = a.steps.map((step, index) =>
-    Object.freeze({
-      position: index + 1,
-      text: step.text.trim(),
-    }),
-  );
 
   return {
     id: a.id,
@@ -122,9 +115,9 @@ function algorithmToDetailViewData(
     tags: a.tags.map((t) => String(t)),
     dosage: null,
     contraindications: [],
-    clinicalNotes: a.notes?.trim() ? a.notes.trim() : null,
-    steps: Object.freeze(steps),
-    warnings: a.warnings?.trim() ? a.warnings.trim() : null,
+    clinicalNotes: null,
+    steps: Object.freeze([]),
+    warnings: null,
   };
 }
 

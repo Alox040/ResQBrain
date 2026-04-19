@@ -55,7 +55,7 @@ export default function KontaktPage() {
               <SectionHeading title="Mitwirkung und Pilot" />
               <p className="body-text muted-text section-intro">
                 Für strukturierte Rückmeldung zu Beta, Pilot oder Zusammenarbeit nutze das Formular
-                „Projekt mitmachen“. Für einzelne Fragen bleibt der E-Mail-Weg bestehen.
+                „Projekt mitmachen“. Für einzelne Fragen ist der E-Mail-Kontakt weiterhin möglich.
               </p>
               <ButtonLink href={routes.mitwirken} size="lg">
                 Zum Formular „Projekt mitmachen“

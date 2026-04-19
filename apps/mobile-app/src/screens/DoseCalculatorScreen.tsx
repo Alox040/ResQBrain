@@ -158,7 +158,7 @@ export function DoseCalculatorScreen() {
         <View style={styles.resultWrap}>
           {spec && Number.isFinite(weightKg) && weightKg > 0 && result ? (
             <>
-              <Text style={styles.resultLabel}>Empfohlene Einzeldosis (Orientierung)</Text>
+              <Text style={styles.resultLabel}>Einzeldosis (Orientierung)</Text>
               <Text style={styles.resultValue} accessibilityRole="header">
                 {formatDoseNumber(result.value, result.unit)}
               </Text>

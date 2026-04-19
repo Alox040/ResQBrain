@@ -97,8 +97,8 @@ export const Home = () => {
               <Brain className="text-[#1E61D9] mb-6" size={28} strokeWidth={1.5} />
               <H3>Cognitive Overload</H3>
               <BodyText className="!mb-0 !text-sm flex-grow">
-                Calculating precise weight-based dosages and navigating complex contraindication 
-                tables mentally increases the margin for error.
+                Locating the right passage in long documents under time pressure increases
+                cognitive load and the risk of missing critical details.
               </BodyText>
             </Card>
             <Card className="flex flex-col">
@@ -121,8 +121,8 @@ export const Home = () => {
           <>
             <BodyText>
               ResQBrain translates static medical documents into a structured, machine-readable format. 
-              Instead of searching through pages of a PDF, responders can access context-specific 
-              algorithms and pre-calculated dosages instantly.
+              Instead of searching through pages of a PDF, responders can access structured source documents 
+              and approved reference texts quickly.
             </BodyText>
             <BodyText>
               The system is designed strictly as an offline-first reference tool. It synchronizes 
@@ -140,7 +140,7 @@ export const Home = () => {
             { 
               label: "Phase 1: Current", 
               title: "Data Modeling", 
-              description: "Defining a standard schema that can accurately represent complex medical flowcharts, nested conditions, and dynamic dosing regimens without ambiguity." 
+              description: "Defining a standard schema that can represent complex medical documents and cross-references in a consistent, reviewable structure." 
             },
             { 
               label: "Phase 2: Upcoming", 
@@ -169,7 +169,7 @@ export const Home = () => {
               <Activity className="text-[#29C5D9] mb-6" size={28} strokeWidth={1.5} />
               <H3>Paramedics & EMTs</H3>
               <BodyText className="!mb-0 !text-sm">
-                Fast, reliable, and distraction-free access to operational algorithms and weight-adapted dosages precisely when needed.
+                Fast, reliable, and distraction-free access to approved reference content when needed.
               </BodyText>
             </Card>
             <Card>

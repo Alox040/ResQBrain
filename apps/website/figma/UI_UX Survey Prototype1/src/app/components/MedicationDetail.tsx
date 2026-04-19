@@ -1,4 +1,4 @@
-import { ArrowLeft, Star, AlertCircle, Info, Calculator, Clock } from 'lucide-react';
+import { ArrowLeft, Star, AlertCircle, Info, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 interface MedicationDetailProps {
@@ -7,14 +7,6 @@ interface MedicationDetailProps {
 
 export function MedicationDetail({ onBack }: MedicationDetailProps) {
   const [isFavorite, setIsFavorite] = useState(true);
-  const [weight, setWeight] = useState('');
-
-  const calculateDose = () => {
-    if (!weight) return null;
-    const weightNum = parseFloat(weight);
-    if (isNaN(weightNum)) return null;
-    return (weightNum * 0.01).toFixed(2);
-  };
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -124,41 +116,15 @@ export function MedicationDetail({ onBack }: MedicationDetailProps) {
 
         {/* Sidebar */}
         <div className="space-y-6">
-          {/* Dosisrechner */}
+          {/* Dosierung: statischer Referenzblock, keine Eingaben oder Berechnung */}
           <div className="bg-card border border-border rounded-xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Calculator className="size-5 text-destructive" />
-              <h3>Dosisrechner</h3>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm mb-2 block">Körpergewicht (kg)</label>
-                <input
-                  type="number"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  placeholder="z.B. 70"
-                  className="w-full px-3 py-2 bg-input-background rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-destructive"
-                />
-              </div>
-
-              {calculateDose() && (
-                <div className="bg-destructive/10 rounded-lg p-4">
-                  <p className="text-sm text-muted-foreground mb-1">Pädiatrische Dosis (0.01mg/kg):</p>
-                  <p className="text-destructive">
-                    <strong className="text-2xl">{calculateDose()}</strong> mg
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    = {calculateDose()} ml der 1mg/ml Lösung
-                  </p>
-                </div>
-              )}
-
-              <div className="text-xs text-muted-foreground flex items-start gap-2">
-                <Info className="size-4 shrink-0 mt-0.5" />
-                <p>Rechner nur zur Orientierung. Immer Protokolle beachten!</p>
-              </div>
+            <h3 className="mb-2">Dosierung</h3>
+            <p className="text-sm text-muted-foreground">
+              Referenzinhalt nur als statischer Freitext aus freigegebener Quelle.
+            </p>
+            <div className="text-xs text-muted-foreground flex items-start gap-2 mt-4">
+              <Info className="size-4 shrink-0 mt-0.5" />
+              <p>Keine patientenbezogene Berechnung in dieser Ansicht.</p>
             </div>
           </div>
 

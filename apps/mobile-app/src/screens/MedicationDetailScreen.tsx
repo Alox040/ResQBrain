@@ -187,27 +187,11 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
             <DetailBodyText variant="relaxed">{medication.summary}</DetailBodyText>
           </AccordionPanel>
 
-          <AccordionPanel title="Dosierung" defaultExpanded>
+          <AccordionPanel title="Quelle" defaultExpanded>
             <DetailBodyText variant="relaxed">
-              {medication.dosage?.trim().length
-                ? medication.dosage
-                : 'Kein Dosierungstext im Bundle hinterlegt.'}
+              Freigegebener Referenzeintrag ohne operative Anleitung.
             </DetailBodyText>
           </AccordionPanel>
-
-          {medication.contraindications.length > 0 ? (
-            <AccordionPanel title="Kontraindikationen" defaultExpanded>
-              <DetailBodyText variant="relaxed">
-                {medication.contraindications.join('\n')}
-              </DetailBodyText>
-            </AccordionPanel>
-          ) : null}
-
-          {medication.clinicalNotes ? (
-            <AccordionPanel title="Klinische Hinweise" defaultExpanded>
-              <DetailBodyText variant="relaxed">{medication.clinicalNotes}</DetailBodyText>
-            </AccordionPanel>
-          ) : null}
 
           <AccordionPanel title="Tags" defaultExpanded={false}>
             {medication.tags.length > 0 ? (

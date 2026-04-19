@@ -15,15 +15,10 @@
     ],
     "steps": [
       {
-        "text": "Eigensicherung; ggf. Auslöser entfernen oder Patienten aus Exposition bringen."
-      },
-      {
-        "text": "Vitalzeichen und Atemweg beurteilen; bei Bedarf Basismaßnahmen nach Leitfaden."
-      },
-      {
-        "text": "Adrenalin und weitere Maßnahmen ausschließlich nach lokalem Protokoll und Medikamententext."
+        "text": "Statischer Quellenhinweis. Operative Schrittfolge in dieser Ansicht nicht dargestellt."
       }
     ],
+    "notes": "Statischer Quellenhinweis. Schrittfolge im MDR-safe mode entfernt.",
     "relatedMedicationIds": [
       "med-adrenalin-i-m"
     ]

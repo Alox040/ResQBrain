@@ -188,7 +188,7 @@ export function getFieldErrorMessage(error: ApiError): string {
   }
 
   if (error.field === "privacyAccepted") {
-    return "Bitte bestätige die Datenschutzhinweise.";
+    return "Bitte akzeptiere die Datenschutzhinweise.";
   }
 
   if (error.code === "rate_limited") {

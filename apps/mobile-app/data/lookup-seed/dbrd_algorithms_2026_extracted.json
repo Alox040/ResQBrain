@@ -5469,70 +5469,12 @@
       "schmerz",
       "traumat"
     ],
-    "warnings": [
-      "i.v.-Zugang nicht möglich?",
-      "ACHTUNG: für i.v.-Esketamin 25 mg/5 ml (= 5 mg/1 ml) Ampullen nutzen!",
-      "Kontraindikationen?",
-      "Keine ausreichende Besserung erreicht?",
-      "Umlagern/Immobilisieren noch nicht möglich?"
-    ],
     "steps": [
       {
-        "text": "Langsame Gabe von 1,0 mg Midazolam i.v."
-      },
-      {
-        "text": "i.v.-Zugang nicht möglich?"
-      },
-      {
-        "text": "Traumat. Schmerz,"
-      },
-      {
-        "text": "immob. Rückenschmerz, …"
-      },
-      {
-        "text": "(NRS ≥ 4) nasal/i.m."
-      },
-      {
-        "text": "Anlage i.v.-Zugang + kristalloide Infusion"
-      },
-      {
-        "text": "Atemwegshilfe 2G, Absaugbereitschaft"
-      },
-      {
-        "text": "Patientenvorgeschichte"
-      },
-      {
-        "text": "(NRS ≥ 4) Kind"
-      },
-      {
-        "text": "ABCDE-Herangehensweise + Schmerzen NRS ≥4"
-      },
-      {
-        "text": "Zwingend: O2-Gabe; EKG, SpO2, RR"
-      },
-      {
-        "text": "ACHTUNG: für i.v.-Esketamin 25 mg/5 ml (= 5 mg/1 ml) Ampullen nutzen!"
-      },
-      {
-        "text": "Kind < 30 kg"
-      },
-      {
-        "text": "Muskuloskelettaler Schmerz?"
-      },
-      {
-        "text": "Traumatischer Schmerz?"
-      },
-      {
-        "text": "Immob. Rückenschmerz?"
-      },
-      {
-        "text": "Verbrennung? ..."
-      },
-      {
-        "text": "Vitale Bedrohung?"
+        "text": "Statischer Quellenhinweis. Operative Schrittfolge in dieser Ansicht nicht dargestellt."
       }
     ],
-    "notes": "Langsame Gabe von 1,0 mg Midazolam i.v. i.v.-Zugang nicht möglich? Traumat. Schmerz, immob. Rückenschmerz, … (NRS ≥ 4) nasal/i.m. Anlage i.v.-Zugang + kristalloide Infusion Bereithalten: Beatmungsbeutel + Maske, Guedeltubus, supraglottische Atemwegshilfe 2G, Absaugbereitschaft PFLICHTANAMNESE: Symptome Allergien Medikamente Patientenvorgeschichte Letzte Mahlzeit Ereignis, das zum Trauma geführt hat Risikofaktoren/Kontra- indikationen für Analgesie Größe + Gewicht + Schmerzstärke (NRS) = Pflichtdokumentation Wahl des Algorithmus Traum. Schmerz (NRS ≥ 4) Kind ABCDE-Herangehensweise + Schmerzen NRS ≥4 Zwingend: O2-Gabe; EKG, SpO2, RR ACHTUNG: für i.v.-Esketamin 25 mg/5 ml (= 5 mg/1 ml) Ampullen nutzen! Kind < 30 kg Muskuloskelettaler Schmerz? Traumatischer Schmerz? Immob. Rückenschmerz? Verbrennung? ... Vitale Bedrohung? Risiken? Bedenken? Notarzt erwägen Kontraindikationen? ACS; Maligne Hypertension Langsame Gabe von Esketamin (0,125 mg/kg KG) i.v. Körpergewicht Dosis Esketamin Menge bei 5,0 mg/ml < 30 kg Wechsel zu Algorithmus Traumatischer Schmerz (NRS ≥4) Kind < 30 kgKG 31 - 40 kg 4,0 mg 0,8 ml 41 - 50 kg 5,0 mg 1,0 ml 51 - 60 kg 6,0 mg 1,2 ml 61 - 70 kg 7,5 mg 1,5 ml 71 - 80 kg 9,0 mg 1,8 ml 81 - 90 kg 10,0 mg 2,0 ml 91 - 100 kg 11,0 mg 2,2 ml > 100 kg 12,5 mg 2,5 ml Seite 1 von 2 STÄNDIGE KONTROLLE BIS ZUR ÜBERGABE! Atemweg Belüftung Circulation Ggf. Esmarch-Handgriff Ständige Bereitschaft: zur Absaugung zur Beatmung Wahl des Algorithmus ACS – Morphin Fentanyl Wiederholungsgaben: Esketamin (0,125 mg/kg KG) i.v. nach Tabelle Durchführung von Versorgung nach rettungsdienstlichem Standard! Z. B.: Immobilisation Extremitätenschienung Transport Abklingen der Wirkung – erneute Schmerzen? Nach 2–3 Minuten Reassessment + Schmerzstärke (NRS) = Pflichtdokumentation Algorithmus Traumatischer Schmerz –Fentanylgabe Algorithmus Traumatischer Schmerz –Sufentanilgabe 1 Erhaltungsgabe von Esketamin (0,125 mg/kg KG) i.v. Körpergewicht Dosis Esketamin Menge bei 5 mg/ml 31 - 40 kg 4",
+    "notes": "Quellverweis vorhanden. Operative Entscheidungslogik und Dosierungslogik im MDR-safe mode entfernt.",
     "relatedMedicationIds": [
       "esketamin",
       "fentanyl",

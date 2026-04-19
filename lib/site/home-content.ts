@@ -2,7 +2,7 @@ import { routes } from "@/lib/routes";
 import { surveys } from "@/lib/site/survey";
 
 /**
- * Startseiten-Inhalt. `content` (unten) spiegelt die bisherige Form für bestehende Komponenten.
+ * Startseiten-Inhalt. `content` (unten) spiegelt die bisherige Form für vorhandene Komponenten.
  */
 export const homeContent = {
   hero: {
@@ -156,7 +156,7 @@ export const homeContent = {
   },
 } as const;
 
-/** @deprecated Nutze `homeContent`; bleibt für bestehende Imports von `content`. */
+/** @deprecated Nutze `homeContent`; bleibt für vorhandene Imports von `content`. */
 export const content = {
   hero: {
     badge: homeContent.hero.subtitle,

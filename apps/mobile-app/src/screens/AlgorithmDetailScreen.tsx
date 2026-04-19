@@ -184,30 +184,6 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
             <DetailBodyText variant="relaxed">{algorithm.summary}</DetailBodyText>
           </AccordionPanel>
 
-          <AccordionPanel title="Schritte" defaultExpanded>
-            {algorithm.steps.length > 0 ? (
-              algorithm.steps.map((step) => (
-                <DetailBodyText
-                  key={`step-${step.position}`}
-                  variant="relaxed"
-                  style={{ marginBottom: 8 }}
-                >
-                  {`${step.position}. ${step.text}`}
-                </DetailBodyText>
-              ))
-            ) : (
-              <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
-                Keine Schritte im Bundle hinterlegt.
-              </DetailBodyText>
-            )}
-          </AccordionPanel>
-
-          {algorithm.warnings ? (
-            <AccordionPanel title="Warnhinweise" defaultExpanded>
-              <DetailBodyText variant="relaxed">{algorithm.warnings}</DetailBodyText>
-            </AccordionPanel>
-          ) : null}
-
           <AccordionPanel title="Tags" defaultExpanded={false}>
             {algorithm.tags.length > 0 ? (
               <DetailBodyText variant="relaxed">
