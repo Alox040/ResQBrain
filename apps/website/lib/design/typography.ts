@@ -7,13 +7,19 @@ export const typography = {
       fontSize: "var(--font-hero-title)",
       fontWeight: "var(--font-weight-semibold)",
       letterSpacing: "var(--letter-spacing-tight)",
-      lineHeight: "var(--line-height-tight)",
+      lineHeight: "var(--line-height-display)",
     },
     sectionTitle: {
       fontSize: "var(--font-section-title)",
       fontWeight: "var(--font-weight-semibold)",
       letterSpacing: "var(--letter-spacing-heading)",
       lineHeight: "var(--line-height-heading)",
+    },
+    subheadline: {
+      fontSize: "var(--font-subheadline)",
+      fontWeight: "var(--font-weight-regular)",
+      letterSpacing: "var(--letter-spacing-body)",
+      lineHeight: "var(--line-height-body-relaxed)",
     },
     body: {
       fontSize: "var(--font-body)",

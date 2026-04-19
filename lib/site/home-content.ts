@@ -10,7 +10,7 @@ export const homeContent = {
     subtitle: "MVP-Phase | in Entwicklung",
     description:
       "Das Projekt arbeitet an einer gemeinsamen, nachvollziehbaren Wissensgrundlage für Einsatz, Ausbildung und Nachbereitung. Der Funktionsumfang wächst schrittweise in der MVP-Phase.",
-    hints: ["Kurzumfrage (2 Minuten)", "Community entwickelt die App mit"],
+    hints: ["Kurzumfrage (2 Minuten)", "Mitwirkung über Formular & Umfrage"],
     status: {
       title: "Aktueller Stand",
       intro:
@@ -18,12 +18,12 @@ export const homeContent = {
       cards: ["MVP-Phase", "Aktives Feedback", "Schrittweise Erweiterung"],
     },
     primaryCta: {
-      label: "Mitwirken",
-      href: routes.mitwirken,
+      label: "Mitwirkung",
+      href: routes.mitwirkung,
     },
     secondaryCta: {
-      label: "Projekt auf GitHub",
-      href: "https://github.com/Alox040/ResQBrain",
+      label: "Zur Umfrage",
+      href: surveys.active.href,
       external: true as const,
     },
   },
@@ -114,11 +114,11 @@ export const homeContent = {
         external: true as const,
       },
       {
-        title: "Mitwirkung",
+        title: "Projekt mitmachen",
         description:
-          "Rückmeldungen aus Praxis und Ausbildung fließen direkt in die Priorisierung des Projekts ein.",
+          "Interesse an Beta, Pilot, Updates oder Zusammenarbeit über das kurze Formular melden — freiwillig und ohne Verpflichtung.",
         href: routes.mitwirken,
-        linkLabel: "Mitwirken",
+        linkLabel: "Zum Formular",
         external: false as const,
       },
     ],
@@ -136,11 +136,12 @@ export const homeContent = {
     {
       question: "Wer kann mitwirken?",
       answer:
-        "Mitwirkende kommen aus Praxis, Organisation und Ausbildung. Feedback ist über die Mitwirkungsseite möglich.",
+        "Mitwirkende kommen aus Praxis, Organisation und Ausbildung. Überblick und Umfrage: Seite „Mitwirkung“. Formular: „Projekt mitmachen“ (/mitwirken).",
     },
     {
       question: "Wie erfolgt der Einstieg?",
-      answer: "Der Einstieg erfolgt über die Mitwirkungsseite. Die aktuelle Umfrage ist dort verlinkt.",
+      answer:
+        "Über die Seite „Mitwirkung“ zur Umfrage und zum Formular; Kontakt und Updates sind im Menü verlinkt.",
     },
   ],
   faqSection: {
@@ -148,7 +149,7 @@ export const homeContent = {
   },
   prefooterCta: {
     title: "Kontakt",
-    text: "Rückfragen und Anregungen zum Projekt sind über die Kontaktseite möglich.",
+    text: "Rückfragen, Partneranfragen und Anregungen zum Projekt sind über die Kontaktseite möglich.",
     button: {
       label: "Kontakt aufnehmen",
       href: routes.kontakt,
@@ -190,8 +191,9 @@ export const content = {
     title: homeContent.contribution.sectionTitle,
     text: homeContent.contribution.cards[1].description,
     cta: {
-      label: "UI & UX mitgestalten",
-      href: homeContent.contribution.cards[0].href,
+      label: "Zum Formular",
+      href: routes.mitwirken,
+      external: false as const,
       badge: surveys.active.label,
       description: surveys.active.description,
       date: surveys.active.date,

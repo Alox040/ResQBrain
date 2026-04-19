@@ -177,7 +177,7 @@ export default function HomePage() {
                 </div>
               </Stack>
               <div className="cta-actions">
-                <ButtonLink href={content.mitwirkung.cta.href} size="lg" external>
+                <ButtonLink href={content.mitwirkung.cta.href} size="lg" external={content.mitwirkung.cta.external}>
                   {content.mitwirkung.cta.label}
                 </ButtonLink>
               </div>

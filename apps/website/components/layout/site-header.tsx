@@ -14,8 +14,8 @@ export function SiteHeader() {
             {siteContent.name}
           </Link>
           <MainNav />
-          <Link className="button-link button-link--secondary site-header-cta" href={routes.mitwirken}>
-            Projekt Mitmachen
+          <Link className="button-link button-link--secondary site-header-cta" href={routes.mitwirkung}>
+            Mitwirkung
           </Link>
         </div>
       </Container>

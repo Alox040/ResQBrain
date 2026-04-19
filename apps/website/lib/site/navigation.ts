@@ -14,9 +14,10 @@ export const mainNavigation = [
 export const footerNavigation = [
   { label: "Impressum", href: routes.impressum, external: false },
   { label: "Datenschutz", href: routes.datenschutz, external: false },
+  { label: "Kontakt", href: routes.kontakt, external: false },
+  { label: "E-Mail", href: contactInfo.email.href, external: true },
   { label: "GitHub", href: publicLinks.github, external: true },
   { label: "Discord", href: publicLinks.discord, external: true },
-  { label: "Kontakt", href: contactInfo.email.href, external: true },
 ] as const;
 
 export type PublicNavigationItem = (typeof mainNavigation)[number];

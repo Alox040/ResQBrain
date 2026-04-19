@@ -19,6 +19,7 @@ export const spacing = {
     lg: "var(--space-5)",
   },
   section: {
+    hero: "var(--section-space-hero)",
     compact: "var(--section-space-compact)",
     default: "var(--section-space)",
   },

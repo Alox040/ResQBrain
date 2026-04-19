@@ -14,7 +14,7 @@ export const updatesPageContent = {
     formHref: updatesInterestFormHref,
     primaryLabel: "Eintragen",
     secondaryLabel: "Mehr zur Mitwirkung",
-    secondaryHref: routes.mitwirken,
+    secondaryHref: routes.mitwirkung,
   },
   info: [
     "Möglich für Tests",
