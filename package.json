@@ -22,6 +22,7 @@
     "dbrd:build-lookup-seed": "tsx scripts/dbrd/build-lookup-seed.ts",
     "dbrd:build": "pnpm dbrd:validate-normalized && pnpm dbrd:build-lookup-seed",
     "verify": "tsx scripts/verify.ts",
+    "mdr-check": "tsx scripts/mdr-check.ts",
     "build": "pnpm --filter @resqbrain/website build",
     "build:api-local": "pnpm --filter @resqbrain/api-local build",
     "test": "pnpm --filter @resqbrain/api test",

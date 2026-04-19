@@ -1,52 +1,97 @@
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
 import { ButtonLink } from "@/components/ui/button-link";
+import { Container } from "@/components/ui/container";
+import { ContentCard } from "@/components/ui/content-card";
+import { SectionFrame } from "@/components/ui/section-frame";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Stack } from "@/components/ui/stack";
+import { TextLink } from "@/components/ui/text-link";
 
-type MitwirkungSectionProps = {
+export type MitwirkungSectionProps = {
   title: string;
+  subtitle: string;
   text: string;
-  href: string;
-  buttonLabel: string;
-  surveyBadge?: string;
-  surveyDescription?: string;
-  surveyDate?: string;
+  activeSurvey: {
+    title: string;
+    meta: readonly string[];
+    href: string;
+  };
+  paths: readonly {
+    label: string;
+    description: string;
+    href?: string;
+  }[];
+  primaryCta: {
+    label: string;
+    href: string;
+    external?: boolean;
+  };
+  secondaryCta: {
+    label: string;
+    href: string;
+    external?: boolean;
+  };
 };
 
 export function MitwirkungSection({
   title,
+  subtitle,
   text,
-  href,
-  buttonLabel,
-  surveyBadge,
-  surveyDescription,
-  surveyDate,
+  activeSurvey,
+  paths,
+  primaryCta,
+  secondaryCta,
 }: MitwirkungSectionProps) {
-  const hasMeta = surveyBadge || surveyDescription || surveyDate;
-
   return (
-    <Section>
-      <article className="card card--cta-accent">
-        <Stack gap="var(--space-6)">
-          <Stack gap="var(--space-4)" className="section-lead">
-            <h2 className="section-title">{title}</h2>
-            <p className="body-text muted-text section-intro section-intro--compact">{text}</p>
+    <SectionFrame compact>
+      <Container>
+        <ContentCard>
+          <Stack gap="md" className="mitwirkung-layout">
+            <Stack gap="md">
+              <Stack gap="sm">
+                <SectionHeading title={title} />
+                <p className="body-text muted-text section-intro">{subtitle}</p>
+                <p className="body-text muted-text section-intro">{text}</p>
+              </Stack>
+              <div className="card card--nested card--cta-accent mitwirkung-survey-card">
+                <Stack gap="sm">
+                  <span className="badge">{activeSurvey.title}</span>
+                  <div className="ui8-action-row">
+                    {activeSurvey.meta.slice(0, 2).map((item) => (
+                      <span key={item} className="badge">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  {activeSurvey.meta.length > 2 ? (
+                    <p className="small-text muted-text">{activeSurvey.meta.slice(2).join(" · ")}</p>
+                  ) : null}
+                  <div className="cta-actions mitwirkung-primary-action">
+                    <ButtonLink href={primaryCta.href} size="lg" external={primaryCta.external}>
+                      {primaryCta.label}
+                    </ButtonLink>
+                  </div>
+                </Stack>
+              </div>
+            </Stack>
+            {paths.map((path) => (
+              <p key={path.label} className="small-text muted-text mitwirkung-secondary-link">
+                {path.label}{" "}
+                {path.href ? (
+                  <TextLink href={path.href} external={false}>
+                    {path.description}
+                  </TextLink>
+                ) : secondaryCta.href ? (
+                  <TextLink href={secondaryCta.href} external={Boolean(secondaryCta.external)}>
+                    {secondaryCta.label}
+                  </TextLink>
+                ) : (
+                  path.description
+                )}
+              </p>
+            ))}
           </Stack>
-
-          {hasMeta && (
-            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
-              {surveyBadge && <span className="badge">{surveyBadge}</span>}
-              {surveyDescription && <span className="eyebrow muted-text">{surveyDescription}</span>}
-              {surveyDate && <span className="eyebrow muted-text">Stand: {surveyDate}</span>}
-            </div>
-          )}
-
-          <div className="cta-actions">
-            <ButtonLink href={href} size="lg">
-              {buttonLabel}
-            </ButtonLink>
-          </div>
-        </Stack>
-      </article>
-    </Section>
+        </ContentCard>
+      </Container>
+    </SectionFrame>
   );
 }

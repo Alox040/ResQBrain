@@ -3,36 +3,45 @@ import { Check } from "lucide-react";
 export function Features() {
   const features = [
     {
-      title: "Mandantenfähigkeit",
-      description: "Klare Trennung von Daten. Jeder Rettungsdienstbereich sieht und pflegt ausschließlich seine eigenen Vorgaben."
+      title: "Mandantenfaehigkeit",
+      description:
+        "Klare Trennung von Daten. Jeder Rettungsdienstbereich sieht und pflegt ausschliesslich seine eigenen Vorgaben.",
     },
     {
       title: "Strukturierte Daten statt PDFs",
-      description: "Inhalte werden nicht als statische Dokumente, sondern in strukturierten Formularen erfasst, was gezielte Such- und Filterfunktionen ermöglicht."
+      description:
+        "Inhalte werden nicht als statische Dokumente, sondern in strukturierten Formularen erfasst, was gezielte Such- und Filterfunktionen ermoeglicht.",
     },
     {
       title: "Historisierung",
-      description: "Jede veröffentlichte Änderung erzeugt eine neue Version. Ältere Versionen bleiben archiviert und aufrufbar."
+      description:
+        "Jede veroeffentlichte Aenderung erzeugt eine neue Version. Aeltere Versionen bleiben archiviert und aufrufbar.",
     },
     {
       title: "Medikamentendatenbank",
-      description: "Basis-Datenbank für Standard-Präparate (Wirkstoff, Handelsname), die von Organisationen um eigene Dosierungsrichtlinien erweitert werden kann."
+      description:
+        "Basis-Datenbank fuer Standard-Praeparate (Wirkstoff, Handelsname), die von Organisationen um eigene organisationsspezifische Inhalte erweitert werden kann.",
     },
     {
       title: "Rollen- und Rechtesystem",
-      description: "Unterscheidung zwischen Administratoren (Technik), Redakteuren (Medizinische Pflege) und Lesern (Einsatzkräfte)."
+      description:
+        "Unterscheidung zwischen Administratoren (Technik), Redakteuren (Medizinische Pflege) und Lesern (Fachpersonal).",
     },
     {
-      title: "Offline-Fähigkeit (Geplant)",
-      description: "Für den Einsatz auf dem Fahrzeug muss die App auch im Funkloch zuverlässig den letzten synchronisierten Stand anzeigen können."
-    }
+      title: "Offline-Faehigkeit (Geplant)",
+      description:
+        "Fuer mobile Nutzung muss die App auch ohne stabile Verbindung den letzten synchronisierten Stand anzeigen koennen.",
+    },
   ];
 
   return (
     <div className="animate-in fade-in duration-700 max-w-4xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
-      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-zinc-50 mb-6">Geplante Features</h1>
+      <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-zinc-50 mb-6">
+        Geplante Features
+      </h1>
       <p className="text-lg text-zinc-400 mb-16 max-w-2xl">
-        Eine Übersicht der Kernfunktionen, die im Rahmen der ersten Entwicklungsphase evaluiert und priorisiert werden.
+        Eine Uebersicht der Kernfunktionen, die im Rahmen der ersten Entwicklungsphase evaluiert
+        und priorisiert werden.
       </p>
 
       <div className="grid sm:grid-cols-2 gap-x-8 gap-y-12">

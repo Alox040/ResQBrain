@@ -23,12 +23,11 @@ const pageExists = fileExists(PAGE_FILE);
 const REQUIRED_SECTIONS = [
   "HeroSection",
   "ProblemSection",
-  "IdeaSection",
+  "IdeaProjectGoalSplitSection",
   "StatusSection",
   "AudienceSection",
   "MitwirkungSection",
   "FaqSection",
-  "ContactCtaSection",
 ] as const;
 
 type SectionImportCheck = {

@@ -28,7 +28,7 @@ export const mitwirkungPageContent = {
   additional: {
     title: "Weitere Möglichkeiten",
     items: [
-      "Konkrete Rückmeldungen zu Arbeitsabläufen im Einsatz geben",
+      "Konkrete Rückmeldungen zu Arbeitsabläufen im Alltag geben",
       "Hinweise zu fachlichen Inhalten und Prioritäten teilen",
       "Anforderungen aus Ausbildung und Fortbildung einbringen",
     ],

@@ -1,37 +1,62 @@
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
+import { Container } from "@/components/ui/container";
+import { ContentCard } from "@/components/ui/content-card";
+import { SectionFrame } from "@/components/ui/section-frame";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Stack } from "@/components/ui/stack";
+import { TextLink } from "@/components/ui/text-link";
 
 type AudienceItem = {
-  title: string;
-  text: string;
+  audience: string;
+  headline: string;
+  paragraphs: readonly string[];
+  status: {
+    label: string;
+  };
+  cta?: {
+    label: string;
+    href: string;
+  };
 };
 
-type AudienceSectionProps = {
+export type AudienceSectionProps = {
   title: string;
-  intro: string;
   items: readonly AudienceItem[];
+  closingText: string;
+  cta: {
+    label: string;
+    href: string;
+  };
 };
 
-export function AudienceSection({ title, intro, items }: AudienceSectionProps) {
+export function AudienceSection({ title, items, closingText, cta }: AudienceSectionProps) {
   return (
-    <Section>
-      <Stack gap="var(--space-7)">
-        <Stack gap="var(--space-4)" className="section-lead">
-          <h2 className="section-title">{title}</h2>
-          <p className="body-text muted-text section-intro">{intro}</p>
+    <SectionFrame compact>
+      <Container>
+        <Stack gap="md">
+          <SectionHeading title={title} />
+          <div className="use-case-list">
+            {items.map((item) => (
+              <ContentCard key={item.headline}>
+                <Stack gap="sm">
+                  <span className="badge">{item.status.label}</span>
+                  <p className="eyebrow muted-text">{item.audience}</p>
+                  <h2 className="card-heading">{item.headline}</h2>
+                  {item.paragraphs.map((paragraph) => (
+                    <p key={paragraph} className="body-text muted-text">
+                      {paragraph}
+                    </p>
+                  ))}
+                  {item.cta ? <TextLink href={item.cta.href}>{item.cta.label}</TextLink> : null}
+                </Stack>
+              </ContentCard>
+            ))}
+          </div>
+          <div className="card card--subtle use-case-cta">
+            <p className="body-text muted-text section-intro">{closingText}</p>
+            <TextLink href={cta.href}>{cta.label}</TextLink>
+          </div>
         </Stack>
-
-        <div className="cards-grid">
-          {items.map((item) => (
-            <article className="card card--interactive" key={item.title}>
-              <Stack gap="var(--space-3)">
-                <h3 className="card-heading">{item.title}</h3>
-                <p className="small-text muted-text">{item.text}</p>
-              </Stack>
-            </article>
-          ))}
-        </div>
-      </Stack>
-    </Section>
+      </Container>
+    </SectionFrame>
   );
 }

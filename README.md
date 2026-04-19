@@ -64,19 +64,17 @@ Der Fokus bleibt aktuell:
 
 ## Projektstruktur (Kurzüberblick)
 
-
+```
 apps/
-mobile-app/ → Expo App (MVP)
-website/ → Next.js Website
-
+  mobile-app/     → Expo App (MVP)
+  website/        → Next.js Website (produktiv; App-Router unter app/; Landing-Inhalt lib/site/home-content.ts am Repo-Root)
 packages/
-domain/ → Domain-Logik (Versioning, Governance, Release)
-
+  domain/         → Domain-Logik (Versioning, Governance, Release)
 docs/
-context/ → Produktkontext
-architecture/ → technische Architektur
-status/ → aktueller Projektstatus
-
+  context/        → Produktkontext
+  architecture/   → technische Architektur
+  status/         → aktueller Projektstatus
+```
 
 ---
 
@@ -90,52 +88,34 @@ status/ → aktueller Projektstatus
 
 ```bash
 pnpm install
-Website
+```
+
+**Website (Build / Typen):**
+
+```bash
 pnpm build
 pnpm --filter @resqbrain/website run typecheck
-Mobile App
+```
+
+**Mobile App:**
+
+```bash
 pnpm --filter @resqbrain/mobile-app start
-Mobile Validierung
 pnpm mobile:verify
-Projektstatus
-Phase: Phase 0 – Lookup-first MVP
-Stand: April 2026
+```
 
-Details:
+### Projektstatus
 
-docs/status/PROJECT_STATUS.md
-docs/context/12-next-steps.md
-Nächste Schritte
+- **Phase:** Phase 0 – Lookup-first MVP  
+- **Stand:** April 2026  
+- **Details:** [docs/status/PROJECT_STATUS.md](docs/status/PROJECT_STATUS.md), [docs/context/12-next-steps.md](docs/context/12-next-steps.md)
 
-Aktueller Fokus:
+**Aktueller Fokus:** Stabilisierung der Domain-Tests, Vereinheitlichung der Bundle-Ladepfade, Verbesserung der Bundle-Verteilung (lokal → später Remote), Ausbau der Seed-Daten — Konsolidierung und Stabilität, keine neuen Feature-Sprünge außerhalb der Roadmap.
 
-Stabilisierung der Domain-Tests
-Vereinheitlichung der Bundle-Ladepfade
-Verbesserung der Bundle-Verteilung (lokal → später Remote)
-Ausbau der Seed-Daten
+### Mitmachen / Feedback
 
-Keine neuen Features, sondern:
+Das Projekt wird mit Feedback aus dem Rettungsdienst weiterentwickelt. Ideen, Probleme und Content-Hinweise sind erwünscht.
 
-Konsolidierung und Stabilität
-
-Mitmachen / Feedback
-
-Das Projekt wird aktiv mit Feedback aus dem Rettungsdienst entwickelt.
-
-Wenn du:
-
-Ideen hast
-Probleme siehst
-Inhalte beitragen willst
-
-→ Feedback ist ausdrücklich erwünscht.
-
-Hinweis
-
-ResQBrain ist aktuell ein Unterstützungs- und Nachschlage-Tool.
-
-keine medizinische Entscheidungssoftware
-keine Therapieempfehlung
-Dosisrechner nur als Orientierung
+**Hinweis:** ResQBrain ist ein Unterstützungs- und Nachschlage-Tool — keine medizinische Entscheidungssoftware, keine Therapieempfehlung; Dosisrechner nur als Orientierung.
 
 ---

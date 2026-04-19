@@ -27,19 +27,19 @@ const EXPECTED_ROUTES: Array<{ path: string; file: string }> = [
 
 const LINK_SOURCES: Array<{ component: string; file: string; hrefs: string[] }> = [
   {
-    component: "FooterSection",
-    file: "apps/website/components/sections/FooterSection.tsx",
-    hrefs: ["/impressum", "/datenschutz"],
+    component: "SiteFooter",
+    file: "apps/website/components/layout/site-footer.tsx",
+    hrefs: ["/impressum", "/datenschutz", "/kontakt"],
   },
   {
-    component: "CTASection",
-    file: "apps/website/components/sections/CTASection.tsx",
-    hrefs: ["/datenschutz"],
+    component: "survey",
+    file: "apps/website/lib/site/survey.ts",
+    hrefs: ["https://forms.office.com/r/vzHuUdFBRy"],
   },
   {
-    component: "HeroSection",
-    file: "apps/website/components/sections/HeroSection.tsx",
-    hrefs: ["/#cta"],
+    component: "publicLinks",
+    file: "apps/website/lib/site/public-links.ts",
+    hrefs: ["https://github.com/Alox040/ResQBrain"],
   },
 ];
 

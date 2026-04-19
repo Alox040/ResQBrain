@@ -1,5 +1,25 @@
 # Arbeitssession
 
+## 19. April 2026 — Website-Rebuild: Statusdokumentation
+
+**Art:** Dokumentationsupdate nach abgeschlossem Website-Rebuild (kein Produktcode in diesem Commit-Pfad durch diese Aufgabe beschrieben).
+
+### Festgehalten (sachlich)
+
+| Thema | Inhalt |
+| --- | --- |
+| Figma | Landingpage an aktueller Figma-Vorlage neu aufgebaut; Umsetzung in `apps/website` (Sections + `globals.css`). |
+| Produktiv | Next.js App unter `apps/website`; Inhalt `homeContent` aus `lib/site/home-content.ts` (Re-Export `apps/website/lib/site/content.ts`); Navigation Header über `mainNavigation` (`lib/site/navigation.ts`). |
+| Routen | Build: u.a. `/`, `/impressum`, `/datenschutz`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`; Skript `scripts/validate-routing.ts` prüft Kernrouten + Section-Imports auf `/`. |
+| CTAs | `landingPageLinks`: Umfrage (`survey.ts`), GitHub (`public-links.ts`), Kontakt (`routes.kontakt`); Zuordnung über `homeContent`. |
+| Nicht produktiv | `apps/website/figma/` (exkl. tsconfig); `main-nav`/`footer-nav` ohne Shell-Einbindung; ggf. Root-`app/`/`components/` parallel zu `apps/website`. |
+
+### Referenz
+
+- `docs/status/PROJECT_STATUS.md` (Abschnitt Website), `README.md` (Struktur/Setup).
+
+---
+
 ## 14. April 2026 — Finale Build- & Routing-Validierung (Repo HEAD `366e843`)
 
 **Art:** Validierungs-Agent — Build, Website-Typecheck, Mobile-Verify, Website-Routen/Footer/CTA (dateistrukturell), Mobile-Navigation (Skripte). Kein Produktcode in dieser Session geändert.

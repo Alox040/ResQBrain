@@ -1,6 +1,6 @@
 # ResQBrain Projektstatus
 
-Stand: 15. April 2026
+Stand: 19. April 2026
 
 ## Gesamtstatus
 
@@ -9,6 +9,44 @@ ResQBrain ist aktuell ein Lookup-first MVP mit einer funktionsfähigen mobilen A
 Die Domain-Schicht ist als eigenständiges TypeScript-Paket strukturiert und für Content-, Tenant- und Release-Logik vorbereitet. Sie ist architektonisch vorhanden, aber nicht als laufender Backend- oder Freigabeprozess an die Mobile-App angebunden.
 
 Es gibt aktuell kein produktives Sync-System, kein Backend, keine Authentifizierung und keine Tenant-Durchsetzung in der App-Laufzeit.
+
+## Website (Next.js)
+
+### Status
+
+Die öffentliche Site liegt unter **`apps/website`** (Next.js App Router, `SiteShell` mit `SiteHeader` / `SiteFooter`). Die Landingpage wurde nach Abschluss des Rebuilds an die **aktuelle Figma-Vorlage** ausgerichtet und aus Section-Komponenten unter `apps/website/components/sections/` zusammengesetzt. Der Seiteninhalt kommt aus **`lib/site/home-content.ts`** (Repo-Root), re-exportiert über **`apps/website/lib/site/content.ts`** als `homeContent` / `content`.
+
+Die **Hauptnavigation** im Header nutzt **`mainNavigation`** aus `apps/website/lib/site/navigation.ts` (konsistent mit `lib/routes.ts`). Es gibt keine separate tote Nav-Liste mehr mit nicht existierenden Pfaden.
+
+### Produktive Struktur (kurz)
+
+| Bereich | Pfad / Quelle |
+| --- | --- |
+| App Router | `apps/website/app/` |
+| Startseite | `app/page.tsx` → Sections + `homeContent` |
+| Globales CSS | u.a. `apps/website/app/globals.css` |
+| Routing-Check (CI/manuell) | `scripts/validate-routing.ts` (Kernrouten + erwartete Section-Imports in `page.tsx`) |
+
+### Routen (validiert / Build)
+
+- **Skript `validate-routing.ts`:** Präsenz von `page.tsx` u.a. für `/`, `/kontakt`, `/links`, `/mitwirkung`, `/impressum`, `/datenschutz`.
+- **`pnpm build` (Website):** u.a. statisch `○ /`, `/impressum`, `/datenschutz`, `/kontakt`, `/links`, `/mitwirkung`, `/mitwirken`, `/updates`; dynamisch z.B. `/lab/lookup`, `/api/mitwirken`.
+
+### CTA-Ziele (Landing, aktiv)
+
+Zentral in **`landingPageLinks`** / **`homeContent`** (`lib/site/home-content.ts`):
+
+- **Umfrage:** `surveys.active.href` → `apps/website/lib/site/survey.ts` (Microsoft Forms, extern).
+- **GitHub:** `publicLinks.github` → `apps/website/lib/site/public-links.ts` (extern).
+- **Kontakt:** `routes.kontakt` → intern `/kontakt`.
+
+Verteilung über die Sections (Hero primär/sekundär, Status-Link, Audiences/FAQ/Mitwirkung je nach Feld); keine zweite parallele Content-Quelle für `/`.
+
+### Altstrukturen (Repo, nicht produktiv für die deployierte Website)
+
+- **`apps/website/figma/`:** Figma-Referenz/Export; im Website-`tsconfig` per `exclude: ["figma/**/*"]` vom Typecheck ausgenommen.
+- **`apps/website/components/layout/main-nav.tsx`**, **`footer-nav.tsx`:** nicht in `SiteShell` verwendet (ältere Nav-Komponenten).
+- **Repo-Root** ggf. `app/`, `components/`, `lib/`:** falls vorhanden, nicht das Vercel-Root (`rootDirectory: apps/website`); produktive Website nur unter `apps/website`.
 
 ## Mobile App
 
@@ -138,4 +176,4 @@ Die Domain ist technisch weiter als ihre produktive Nutzung. Solange keine Backe
 
 ## Kurzfazit
 
-Der aktuelle Repo-Stand ist für ein Lookup-first MVP technisch konsistent: Die Mobile-App startet offline stabil, kann lokale oder aktualisierte Bundles laden und hat einen kleinen, funktionierenden Qualitätsrahmen. Offen bleiben nicht kosmetische, sondern systemische Themen: Veröffentlichungsstrecke für Bundles, Anbindung des Release-Slice und jede Form von Backend-, Auth- oder Tenant-Durchsetzung.
+Der aktuelle Repo-Stand ist für ein Lookup-first MVP technisch konsistent: Die Mobile-App startet offline stabil, kann lokale oder aktualisierte Bundles laden und hat einen kleinen, funktionierenden Qualitätsrahmen. Die **Website** (`apps/website`) ist als öffentliche Next.js-App mit dokumentierter Route-/CTA-Struktur beschrieben (siehe Abschnitt Website). Offen bleiben nicht kosmetische, sondern systemische Themen: Veröffentlichungsstrecke für Bundles, Anbindung des Release-Slice und jede Form von Backend-, Auth- oder Tenant-Durchsetzung.

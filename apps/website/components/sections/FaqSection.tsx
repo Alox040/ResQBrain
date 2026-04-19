@@ -1,37 +1,46 @@
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
+import { Container } from "@/components/ui/container";
+import { SectionFrame } from "@/components/ui/section-frame";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Stack } from "@/components/ui/stack";
+import { TextLink } from "@/components/ui/text-link";
 
 type FaqItem = {
   question: string;
   answer: string;
+  cta?: {
+    label: string;
+    href: string;
+  };
 };
 
-type FaqSectionProps = {
+export type FaqSectionProps = {
   title: string;
   items: readonly FaqItem[];
 };
 
 export function FaqSection({ title, items }: FaqSectionProps) {
-  const limitedItems = items.slice(0, 4);
-
   return (
-    <Section>
-      <Stack gap="var(--space-7)">
-        <div className="section-lead">
-          <h2 className="section-title">{title}</h2>
-        </div>
-
-        <div className="faq-accordion">
-          {limitedItems.map((item) => (
-            <details className="card card--accordion faq-item" key={item.question}>
-              <summary className="faq-question">
-                <span className="faq-question-text">{item.question}</span>
-              </summary>
-              <p className="small-text muted-text faq-answer">{item.answer}</p>
-            </details>
-          ))}
-        </div>
-      </Stack>
-    </Section>
+    <SectionFrame compact>
+      <Container>
+        <Stack gap="md">
+          <SectionHeading title={title} />
+          <div className="faq-accordion">
+            {items.map((item) => (
+              <details key={item.question} className="card card--accordion faq-item">
+                <summary className="faq-question">
+                  <span className="faq-question-text">{item.question}</span>
+                </summary>
+                <div className="faq-answer">
+                  <p className="small-text muted-text">{item.answer}</p>
+                  {item.cta ? (
+                    <TextLink href={item.cta.href}>{item.cta.label}</TextLink>
+                  ) : null}
+                </div>
+              </details>
+            ))}
+          </div>
+        </Stack>
+      </Container>
+    </SectionFrame>
   );
 }

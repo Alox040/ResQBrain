@@ -1,37 +1,39 @@
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
+import { Container } from "@/components/ui/container";
+import { ContentCard } from "@/components/ui/content-card";
+import { SectionFrame } from "@/components/ui/section-frame";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Stack } from "@/components/ui/stack";
 
 type ProblemCard = {
-  title: string;
+  headline: string;
   text: string;
 };
 
-type ProblemSectionProps = {
+export type ProblemSectionProps = {
   title: string;
-  intro: string;
-  cards: [ProblemCard, ProblemCard, ProblemCard];
+  cards: readonly ProblemCard[];
+  conclusion?: string;
 };
 
-export function ProblemSection({ title, intro, cards }: ProblemSectionProps) {
+export function ProblemSection({ title, cards, conclusion }: ProblemSectionProps) {
   return (
-    <Section>
-      <Stack gap="var(--space-7)">
-        <Stack gap="var(--space-4)" className="section-lead">
-          <h2 className="section-title">{title}</h2>
-          <p className="body-text muted-text section-intro">{intro}</p>
+    <SectionFrame compact>
+      <Container>
+        <Stack gap="md" className="problem-section">
+          <SectionHeading title={title} />
+          <div className="problem-scenarios">
+            {cards.map((card) => (
+              <ContentCard key={card.headline} className="problem-scenario">
+                <Stack gap="sm">
+                  <h2 className="card-heading">{card.headline}</h2>
+                  <p className="body-text muted-text">{card.text}</p>
+                </Stack>
+              </ContentCard>
+            ))}
+          </div>
+          {conclusion ? <p className="body-text muted-text section-intro problem-conclusion">{conclusion}</p> : null}
         </Stack>
-
-        <div className="cards-grid">
-          {cards.map((card) => (
-            <article className="card card--interactive" key={card.title}>
-              <Stack gap="var(--space-3)">
-                <h3 className="card-heading">{card.title}</h3>
-                <p className="small-text muted-text">{card.text}</p>
-              </Stack>
-            </article>
-          ))}
-        </div>
-      </Stack>
-    </Section>
+      </Container>
+    </SectionFrame>
   );
 }

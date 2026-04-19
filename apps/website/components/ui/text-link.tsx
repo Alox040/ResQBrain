@@ -5,11 +5,22 @@ type TextLinkProps = {
   href: string;
   children: ReactNode;
   className?: string;
+  external?: boolean;
 };
 
-export function TextLink({ href, children, className }: TextLinkProps) {
+export function TextLink({ href, children, className, external = false }: TextLinkProps) {
+  const linkClassName = ["text-link", className].filter(Boolean).join(" ");
+
+  if (external) {
+    return (
+      <a className={linkClassName} href={href} rel="noreferrer" target="_blank">
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link className={["text-link", className].filter(Boolean).join(" ")} href={href}>
+    <Link className={linkClassName} href={href}>
       {children}
     </Link>
   );

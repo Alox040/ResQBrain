@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Running MDR boundary check..."
-node scripts/check-mdr-boundary.js
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+echo ""
+echo "=== git pre-push: MDR text check ==="
+echo "Repository: $ROOT"
+echo "Command:    pnpm exec tsx scripts/mdr-check.ts"
+echo ""
+
+if ! pnpm exec tsx scripts/mdr-check.ts; then
+  echo ""
+  echo "=== git pre-push: BLOCKED ==="
+  echo "MDR check exited with an error (HIGH findings or scan failure)."
+  echo "See file:line and reason above. Push aborted."
+  exit 1
+fi
+
+echo ""
+echo "=== git pre-push: MDR check OK ==="
