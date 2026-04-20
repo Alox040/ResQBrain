@@ -19,7 +19,6 @@ export type LandingPageStatusTag = {
 export type LandingPageHero = {
   headline: string;
   subheadline: string;
-  supportingCopy: string;
   statusIndicator: string;
   current: readonly string[];
   cta: {
@@ -156,19 +155,16 @@ export const landingPageLinks = {
 
 export const homeContent: LandingPageContent = {
   hero: {
-    headline: "ResQBrain strukturiert medizinische Inhalte fuer Rettungsdienstorganisationen.",
+    headline: "ResQBrain macht freigegebene Inhalte im Rettungsdienst schneller auffindbar.",
     subheadline:
-      "Algorithmen, Medikamente und Protokolle organisationsspezifisch, versioniert, offline verfuegbar.",
-    supportingCopy:
-      "Das Projekt befindet sich in der MVP-Phase. Die mobile App ist als Prototyp verfuegbar. Wir suchen Rettungsdienstorganisationen und Fachpersonal, die die Entwicklung aktiv mitgestalten.",
-    statusIndicator: "MVP-Phase April 2026",
-    current: ["MVP-Prototyp", "Mobile App (Prototyp)", "Offline-Lookup", "Oeffentliches Repository"],
+      "Algorithmen, Medikamente und Protokolle an einem Ort: nachvollziehbar, versioniert und offline verfuegbar.",
+    statusIndicator: "MVP-Einordnung April 2026",
+    current: [],
     cta: {
       primary: {
-        label: "An Umfrage teilnehmen",
-        href: landingPageLinks.survey,
-        external: true,
-        emphasis: "primary",
+        label: "Mehr zur Mitwirkung",
+        href: routes.mitwirkung,
+        emphasis: "secondary",
       },
       secondary: {
         label: "Projekt auf GitHub",
@@ -179,47 +175,47 @@ export const homeContent: LandingPageContent = {
     },
   },
   problem: {
-    headline: "So sieht die aktuelle Realitaet aus.",
+    headline: "So sieht die Realitaet heute oft aus.",
     scenarios: [
       {
-        title: "Szenario 1",
+        title: "Aktuelle Infos sind nicht direkt greifbar",
         text: "Die aktualisierte Medikamenteninformation liegt als PDF im Intranet. Der Link funktioniert auf Mobilgeraeten nicht.",
       },
       {
-        title: "Szenario 2",
+        title: "Freigaben kommen an, aber nicht sauber im Alltag",
         text: "Die neue SOP wurde freigegeben. Ob alle Wachen die aktuelle Version haben, ist unklar.",
       },
       {
-        title: "Szenario 3",
+        title: "Nachschlagen bleibt umstaendlich",
         text: "Unterwegs wird nachgeschlagen. Das Heft liegt im Fahrzeug. Der Zugriff bleibt umstaendlich.",
       },
     ],
-    conclusion: "Das sind keine Ausnahmen. Das ist der Alltag in vielen Rettungsdienstbereichen.",
+    conclusion: "Genau hier setzt ResQBrain an: nicht mit neuen Regeln, sondern mit besserem Zugriff auf bereits freigegebene Inhalte.",
   },
   idea: {
-    headline: "Was ResQBrain bereitstellt.",
+    headline: "Was ResQBrain heute leisten soll.",
     subheadline:
-      "Keine Entscheidungshilfe. Kein medizinischer Ratgeber. Eine Struktur fuer freigegebene Inhalte.",
+      "Keine Entscheidungshilfe. Kein medizinischer Ratgeber. Sondern eine klare Struktur fuer Inhalte, die ohnehin freigegeben sind.",
     blocks: [
       {
-        title: "Offline-first",
-        text: "Inhalte liegen auf dem Geraet. Der Zugriff funktioniert ohne Mobilfunknetz, auch in Kellern, auf der Autobahn oder im Aufzugsschacht.",
+        title: "Schneller nachschlagen",
+        text: "Freigegebene Inhalte sind in einer kompakten, mobilen Form auffindbar statt verteilt ueber PDFs, Dateien und Einzellinks.",
         status: {
           label: "AKTUELL",
           tone: "current",
         },
       },
       {
-        title: "Organisationsspezifisch",
-        text: "Das Ziel: Jede Organisation verwaltet eigene Inhalte.",
+        title: "Offline verfuegbar",
+        text: "Inhalte liegen auf dem Geraet und bleiben auch dann zugaenglich, wenn die Verbindung schlecht oder gerade nicht verlasslich ist.",
         status: {
-          label: "GEPLANT",
-          tone: "planned",
+          label: "AKTUELL",
+          tone: "current",
         },
       },
       {
         title: "Versioniert und freigegeben",
-        text: "Inhalte haben einen definierten Status: Entwurf, Freigegeben, Archiviert. Sichtbar ist immer der aktuell freigegebene Stand der eigenen Organisation.",
+        text: "Inhalte lassen sich mit einem klaren Status fuehren. Ziel ist ein nachvollziehbarer Stand statt Unsicherheit ueber Versionen und Verteilerwege.",
         status: {
           label: "AKTUELL",
           tone: "current",
@@ -227,26 +223,26 @@ export const homeContent: LandingPageContent = {
       },
     ],
     disclaimer:
-      "ResQBrain trifft keine klinischen Entscheidungen. Die fachliche Verantwortung fuer Inhalte liegt bei der jeweiligen Organisation und ihrer aerztlichen Leitung.",
+      "ResQBrain ersetzt keine lokalen Protokolle und trifft keine klinischen Entscheidungen. Die fachliche Verantwortung fuer Inhalte liegt bei der jeweiligen Organisation und ihrer aerztlichen Leitung.",
   },
   trust: {
-    headline: "Einordnung und Grundlagen.",
+    headline: "Einordnung und Grundlage.",
     items: [
       {
         title: "Inhaltliche Basis",
-        text: "Die aktuellen Seed-Daten orientieren sich an den DBRD-Algorithmen 2026 als technische Ausgangsbasis. Eigene Inhalte koennen Organisationen selbst einpflegen und freigeben.",
+        text: "Die aktuellen Seed-Daten orientieren sich an den DBRD-Algorithmen 2026 als technische Ausgangsbasis. Sie zeigen die Struktur des Systems, nicht den Anspruch auf universelle Gueltigkeit.",
       },
       {
         title: "Offene Entwicklung",
-        text: "Der Quellcode ist oeffentlich auf GitHub einsehbar. Keine Blackbox, keine versteckte Logik.",
+        text: "Der Quellcode ist oeffentlich auf GitHub einsehbar. Architektur, Datenmodell und Entwicklungsstand bleiben nachvollziehbar.",
       },
       {
         title: "Kein kommerzielles Produkt",
-        text: "ResQBrain ist ein unabhaengiges Entwicklungsprojekt. Kein Abo-Modell, kein Vendor Lock-in, keine kommerzielle Verwertungsabsicht in der aktuellen Phase.",
+        text: "ResQBrain ist ein unabhaengiges Entwicklungsprojekt in der MVP-Phase. Es gibt aktuell kein Preismodell und keine Produktvermarktung.",
       },
       {
         title: "Datenschutz",
-        text: "Die App verarbeitet keine Patientendaten. Keine Nutzerprofile ohne explizite Einwilligung. Keine Tracking-Mechanismen im Prototyp.",
+        text: "Der Website- und App-Prototyp verarbeitet keine Patientendaten. Es gibt keine Nutzerprofile ohne explizite Einwilligung und kein verstecktes Tracking.",
       },
       {
         title: "Medizinische Verantwortung",
@@ -255,102 +251,81 @@ export const homeContent: LandingPageContent = {
     ],
   },
   status: {
-    headline: "Aktueller Entwicklungsstand.",
-    subheadline: "Stand: April 2026 - kein Produktionsrelease.",
+    headline: "Was heute existiert und was noch nicht.",
+    subheadline: "Stand: April 2026. Kein Produktionsrelease, sondern ein klar abgegrenzter MVP.",
     groups: [
       {
         title: "Aktuell",
         items: [
-          { label: "Datenmodell - Medikamente, Algorithmen, Protokolle", tone: "current" },
-          { label: "Offline-faehige Mobile App (Prototyp, iOS/Android)", tone: "current" },
+          { label: "Datenmodell fuer Medikamente, Algorithmen und Protokolle", tone: "current" },
+          { label: "Mobile App als Prototyp fuer Offline-Nachschlagen", tone: "current" },
           { label: "Bundle-System mit Versionsvergleich", tone: "current" },
-          { label: "Seed-Daten: DBRD-Algorithmen 2026", tone: "current" },
+          { label: "Technische Seed-Daten auf Basis DBRD-Algorithmen 2026", tone: "current" },
         ],
       },
       {
         title: "Geplant",
         items: [
-          { label: "Freigabe-Workflow (Entwurf - Freigabe - Archiv)", tone: "planned" },
-          { label: "Organisationsverwaltung (Tenant-Isolation)", tone: "planned" },
-          { label: "Produktionsreifer Content-Editor", tone: "planned" },
+          { label: "Freigabe-Workflow fuer Entwurf, Freigabe und Archiv", tone: "planned" },
+          { label: "Organisationsverwaltung mit sauberer Trennung von Inhalten", tone: "planned" },
+          { label: "Produktionsreifer Editor fuer Inhalte", tone: "planned" },
           { label: "Multi-Organisationsbetrieb", tone: "planned" },
-          { label: "Offizielle medizinische Validierung", tone: "planned" },
+          { label: "Weiterer fachlicher Abgleich mit der Praxis", tone: "planned" },
         ],
       },
     ],
-    disclaimer: "Alles, was hier als aktuell markiert ist, existiert. Der Rest ist geplant, aber nicht garantiert.",
+    disclaimer: "Alles unter Aktuell existiert bereits im MVP-Kontext. Alles unter Geplant beschreibt die naechsten Entwicklungsziele, nicht den heutigen Stand.",
     cta: {
-      label: "Entwicklung verfolgen auf GitHub",
+      label: "Roadmap auf GitHub",
       href: landingPageLinks.github,
       external: true,
       emphasis: "tertiary",
     },
   },
   audiences: {
-    headline: "Fuer wen und wie.",
+    headline: "Wie ResQBrain heute genutzt werden kann.",
     useCases: [
-      {
-        audience: "Aerztliche Leitung / Organisation",
-        headline: "Inhalte verwalten und freigeben.",
-        paragraphs: [
-          "Die aerztliche Leitung erstellt eine neue Version eines freigegebenen Inhalts. Der Inhalt durchlaeuft einen Freigabeprozess. Nach Freigabe steht fuer alle Geraete der Organisation beim naechsten Sync-Fenster der neue Stand bereit.",
-          "Kein manuelles Verteilen. Kein PDF-Versand. Kein Zweifel, ob alle die aktuelle Version haben.",
-        ],
-        status: {
-          label: "GEPLANT - Freigabe-Workflow in Entwicklung",
-          tone: "planned",
-        },
-        cta: {
-          label: "Kontakt aufnehmen",
-          href: landingPageLinks.contact,
-          emphasis: "inline",
-        },
-      },
       {
         audience: "Rettungsfachpersonal / Nachschlagen",
         headline: "Offline nachschlagen.",
         paragraphs: [
-          "Oeffnet die App. Sucht nach einem Thema. Findet den freigegebenen Inhalt der eigenen Organisation - nicht eine generische Leitlinie, sondern den dokumentierten Stand des eigenen Rettungsdienstbereichs. Kein Netz erforderlich.",
+          "ResQBrain fokussiert heute auf einen klaren Use Case: Inhalte auf dem Geraet nachschlagen, ohne erst in Dateien, Ordnern oder Links suchen zu muessen.",
+          "Im Mittelpunkt steht nicht eine neue Fachlogik, sondern ein direkterer Zugriff auf den dokumentierten Stand, der fuer die eigene Organisation relevant ist.",
         ],
         status: {
           label: "PROTOTYP - im MVP verfuegbar",
           tone: "current",
         },
-      },
-      {
-        audience: "Ausbildung",
-        headline: "Dieselben Inhalte wie im Alltag.",
-        paragraphs: [
-          "Auszubildende lernen mit denselben freigegebenen Algorithmen und Protokollen, die spaeter im Organisationsalltag genutzt werden. Kein Bruch zwischen Ausbildungsstand und Praxis.",
-        ],
-        status: {
-          label: "GEPLANT - abhaengig von Organisationsverwaltung",
-          tone: "planned",
+        cta: {
+          label: "Dein Bereich betroffen?",
+          href: routes.mitwirken,
+          emphasis: "inline",
         },
       },
     ],
-    closingText: "Eines davon betrifft dich? Melde dich.",
+    closingText:
+      "Weitere Rollen und Anforderungen sind in Planung. Welche davon zuerst relevant sind, soll aus der Praxis kommen.",
     cta: {
-      label: "Kontakt aufnehmen",
-      href: landingPageLinks.contact,
+      label: "Dein Bereich betroffen?",
+      href: routes.mitwirken,
       emphasis: "tertiary",
     },
   },
   mitwirkung: {
-    headline: "Mach die App besser.",
-    subheadline: "Praxisrueckmeldungen aus dem Rettungsdienst entscheiden ueber die naechsten Schritte.",
+    headline: "Mitwirkung",
+    subheadline: "Die naechsten Entwicklungsschritte sollen aus der Praxis abgeleitet werden, nicht aus Annahmen.",
     supportingCopy:
-      "Das Projekt waechst mit dem Feedback von Rettungsfachpersonal, aerztlichen Leitungen und Ausbildern. Kein Softwareentwickler kann entscheiden, wie eine Inhaltsansicht im Arbeitsalltag aufgebaut sein soll. Das kannst du.",
+      "Wenn du im Rettungsdienst arbeitest, ausbildest oder Inhalte verantwortest, hilft dein Blick auf Alltag, Zugriff und Verstaendlichkeit. Die Umfrage ist der einfachste Weg, Prioritaeten fuer die Weiterentwicklung sichtbar zu machen.",
     activeSurvey: {
-      title: "UI & UX Feedback April 2026",
+      title: "Kurze Umfrage zur Weiterentwicklung",
       meta: ["2 Minuten", "anonym moeglich", "keine Registrierung"],
       href: landingPageLinks.survey,
     },
     paths: [
       {
         label: "Lieber direkt schreiben?",
-        description: "Kontakt aufnehmen",
-        href: landingPageLinks.contact,
+        description: "Zum Mitwirken-Formular",
+        href: routes.mitwirken,
       },
     ],
     cta: {
@@ -361,8 +336,8 @@ export const homeContent: LandingPageContent = {
         emphasis: "primary",
       },
       secondary: {
-        label: "Kontakt aufnehmen",
-        href: landingPageLinks.contact,
+        label: "Zum Mitwirken-Formular",
+        href: routes.mitwirken,
         emphasis: "inline",
       },
     },
@@ -395,8 +370,8 @@ export const homeContent: LandingPageContent = {
         answer:
           "Aktuell befindet sich die Organisationsverwaltung noch in der Entwicklung. Wenn du Interesse an einem fruehen Piloteinsatz hast, melde dich direkt. Wir arbeiten mit einem kleinen Kreis an fruehen Partnern, um die Anforderungen praxisnah zu definieren.",
         cta: {
-          label: "Kontakt aufnehmen",
-          href: landingPageLinks.contact,
+          label: "Zum Mitwirken-Formular",
+          href: routes.mitwirken,
           emphasis: "inline",
         },
       },
@@ -408,8 +383,20 @@ export const homeContent: LandingPageContent = {
     ],
   },
   finalCta: {
-    eyebrow: "Diese Szenarien stehen noch am Anfang.",
-    title: "Wenn du aus dem Rettungsdienst kommst und erkennst, was hier beschrieben wird - melde dich.",
+    eyebrow: "Die Richtung steht. Die Prioritaeten brauchen Praxis.",
+    title: "Wenn du erkennst, wo dieser Zugriff im Alltag helfen wuerde, dann bring deine Perspektive ein.",
+    subtitle: "Zwei Minuten Rueckmeldung helfen mehr als allgemeine Zustimmung.",
+    primaryAction: {
+      label: "An Umfrage teilnehmen",
+      href: landingPageLinks.survey,
+      external: true,
+      emphasis: "primary",
+    },
+    secondaryAction: {
+      label: "Zum Mitwirken-Formular",
+      href: routes.mitwirken,
+      emphasis: "inline",
+    },
   },
 };
 

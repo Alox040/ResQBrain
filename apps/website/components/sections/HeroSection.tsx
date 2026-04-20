@@ -7,7 +7,6 @@ import { Stack } from "@/components/ui/stack";
 type HeroContent = {
   headline: string;
   subheadline: string;
-  supportingCopy: string;
   statusIndicator: string;
   current: readonly string[];
   cta: {
@@ -28,6 +27,8 @@ type HeroSectionProps = {
 };
 
 export function HeroSection({ hero, survey }: HeroSectionProps) {
+  const surveyMetaText = survey.meta.join(" · ");
+
   return (
     <SectionFrame>
       <Container>
@@ -36,7 +37,6 @@ export function HeroSection({ hero, survey }: HeroSectionProps) {
             <span className="badge badge--hero">{hero.statusIndicator}</span>
             <h1 className="hero-title">{hero.headline}</h1>
             <p className="body-text muted-text hero-subline">{hero.subheadline}</p>
-            <p className="body-text muted-text section-intro">{hero.supportingCopy}</p>
             <div className="cta-actions">
               <ButtonLink href={hero.cta.primary.href} size="lg" external={hero.cta.primary.external}>
                 {hero.cta.primary.label}
@@ -55,21 +55,16 @@ export function HeroSection({ hero, survey }: HeroSectionProps) {
           <ContentCard>
             <Stack gap="md">
               <span className="badge">{survey.title}</span>
-              <div className="ui8-action-row">
-                {survey.meta.slice(0, 2).map((item) => (
-                  <span key={item} className="badge">
-                    {item}
-                  </span>
-                ))}
-              </div>
-              {survey.meta.length > 2 ? <p className="small-text muted-text">{survey.meta.slice(2).join(" · ")}</p> : null}
-              <div className="status-cards-grid">
-                {hero.current.map((item) => (
-                  <div key={item} className="card card--nested">
-                    <p className="small-text status-card-label">{item}</p>
-                  </div>
-                ))}
-              </div>
+              {surveyMetaText ? <p className="eyebrow muted-text">{surveyMetaText}</p> : null}
+              {hero.current.length > 0 ? (
+                <div className="status-cards-grid">
+                  {hero.current.map((item) => (
+                    <div key={item} className="card card--nested">
+                      <p className="small-text status-card-label">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
             </Stack>
           </ContentCard>
         </div>

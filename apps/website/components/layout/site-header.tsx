@@ -1,14 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { PageContainer } from "@/components/layout/page-container";
-import { MobileNav } from "@/components/layout/mobile-nav";
 import { routes } from "@/lib/routes";
 import { mainNavigation } from "@/lib/site";
 import { siteContent } from "@/lib/site/site-content";
+
+const MobileNav = dynamic(
+  () => import("@/components/layout/mobile-nav").then((module) => module.MobileNav),
+  {
+    loading: () => null,
+  },
+);
 
 export interface NavItem {
   label: string;

@@ -521,7 +521,7 @@ select {
 .idea-disclaimer {
   max-width: var(--prose-width);
   padding-left: var(--space-5);
-  border-left: 2px solid var(--critical);
+  border-left: 2px solid var(--border-strong);
 }
 
 .trust-list {
@@ -552,7 +552,7 @@ select {
 .status-cards-grid {
   display: grid;
   gap: var(--space-4);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .status-list {
@@ -661,7 +661,7 @@ select {
   }
 
   .hero-subline {
-    text-align: justify;
+    text-align: left;
   }
 }
 
@@ -938,9 +938,9 @@ select {
 }
 
 .section-intro {
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  text-align: left;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 .mitwirkung-layout {

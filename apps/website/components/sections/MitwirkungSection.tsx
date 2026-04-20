@@ -1,6 +1,5 @@
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
-import { ContentCard } from "@/components/ui/content-card";
 import { SectionFrame } from "@/components/ui/section-frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Stack } from "@/components/ui/stack";
@@ -41,56 +40,45 @@ export function MitwirkungSection({
   primaryCta,
   secondaryCta,
 }: MitwirkungSectionProps) {
+  const surveyMetaText = activeSurvey.meta.join(" · ");
+
   return (
     <SectionFrame compact>
       <Container>
-        <ContentCard>
-          <Stack gap="md" className="mitwirkung-layout">
-            <Stack gap="md">
-              <Stack gap="sm">
-                <SectionHeading title={title} />
-                <p className="body-text muted-text section-intro">{subtitle}</p>
-                <p className="body-text muted-text section-intro">{text}</p>
-              </Stack>
-              <div className="card card--nested card--cta-accent mitwirkung-survey-card">
-                <Stack gap="sm">
-                  <span className="badge">{activeSurvey.title}</span>
-                  <div className="ui8-action-row">
-                    {activeSurvey.meta.slice(0, 2).map((item) => (
-                      <span key={item} className="badge">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                  {activeSurvey.meta.length > 2 ? (
-                    <p className="small-text muted-text">{activeSurvey.meta.slice(2).join(" · ")}</p>
-                  ) : null}
-                  <div className="cta-actions mitwirkung-primary-action">
-                    <ButtonLink href={primaryCta.href} size="lg" external={primaryCta.external}>
-                      {primaryCta.label}
-                    </ButtonLink>
-                  </div>
-                </Stack>
+        <Stack gap="md" className="mitwirkung-layout">
+          <Stack gap="sm">
+            <SectionHeading title={title} />
+            <p className="body-text muted-text section-intro">{subtitle}</p>
+            <p className="body-text muted-text section-intro">{text}</p>
+          </Stack>
+          <div className="card card--cta-accent mitwirkung-survey-card">
+            <Stack gap="sm">
+              <span className="badge">{activeSurvey.title}</span>
+              {surveyMetaText ? <p className="eyebrow muted-text">{surveyMetaText}</p> : null}
+              <div className="cta-actions mitwirkung-primary-action">
+                <ButtonLink href={primaryCta.href} size="lg" external={primaryCta.external}>
+                  {primaryCta.label}
+                </ButtonLink>
               </div>
             </Stack>
-            {paths.map((path) => (
-              <p key={path.label} className="small-text muted-text mitwirkung-secondary-link">
-                {path.label}{" "}
-                {path.href ? (
-                  <TextLink href={path.href} external={false}>
-                    {path.description}
-                  </TextLink>
-                ) : secondaryCta.href ? (
-                  <TextLink href={secondaryCta.href} external={Boolean(secondaryCta.external)}>
-                    {secondaryCta.label}
-                  </TextLink>
-                ) : (
-                  path.description
-                )}
-              </p>
-            ))}
-          </Stack>
-        </ContentCard>
+          </div>
+          {paths.map((path) => (
+            <p key={path.label} className="small-text muted-text mitwirkung-secondary-link">
+              {path.label}{" "}
+              {path.href ? (
+                <TextLink href={path.href} external={false}>
+                  {path.description}
+                </TextLink>
+              ) : secondaryCta.href ? (
+                <TextLink href={secondaryCta.href} external={Boolean(secondaryCta.external)}>
+                  {secondaryCta.label}
+                </TextLink>
+              ) : (
+                path.description
+              )}
+            </p>
+          ))}
+        </Stack>
       </Container>
     </SectionFrame>
   );
