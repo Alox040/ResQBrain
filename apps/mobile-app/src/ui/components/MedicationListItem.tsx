@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { memo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors } from "@/ui/theme/colors";
-import { radii } from "@/ui/theme/radii";
-import { spacing } from "@/ui/theme/spacing";
-import { fontSize, fontWeight, lineHeight } from "@/ui/theme/typography";
+import { colors } from '@/ui/theme/colors';
+import { radii } from '@/ui/theme/radii';
+import { spacing } from '@/ui/theme/spacing';
+import { fontSize, fontWeight, lineHeight } from '@/ui/theme/typography';
 
 export type MedicationListItemProps = {
   title: string;
@@ -12,18 +13,13 @@ export type MedicationListItemProps = {
   onPress: () => void;
 };
 
-export function MedicationListItem({
-  title,
-  subtitle,
-  tag,
-  onPress,
-}: MedicationListItemProps) {
+function MedicationListItemInner({ title, subtitle, tag, onPress }: MedicationListItemProps) {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [styles.container, pressed && styles.pressed]}
     >
-      <View style={styles.textContent}>
+      <View style={styles.textBlock}>
         <View style={styles.titleRow}>
           <Text numberOfLines={1} style={styles.title}>
             {title}
@@ -40,10 +36,12 @@ export function MedicationListItem({
           </Text>
         ) : null}
       </View>
-      <Text style={styles.chevron}>{">"}</Text>
+      <Text style={styles.chevron}>{'>'}</Text>
     </Pressable>
   );
 }
+
+export const MedicationListItem = memo(MedicationListItemInner);
 
 const styles = StyleSheet.create({
   container: {
@@ -54,21 +52,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     paddingHorizontal: spacing.listItemPadding,
     paddingVertical: spacing.listItemPadding,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: spacing.itemGap,
   },
   pressed: {
     backgroundColor: colors.surfaceDeep,
     borderColor: colors.borderSubtle,
   },
-  textContent: {
+  textBlock: {
     flex: 1,
     gap: 6,
   },
   titleRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: spacing.badgeToText,
   },
   title: {

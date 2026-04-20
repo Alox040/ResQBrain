@@ -1,3 +1,4 @@
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, StyleSheet, View, type ListRenderItemInfo } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -24,65 +25,71 @@ export type MedicationListScreenUIProps = {
 
 const keyExtractor = (item: MedicationListScreenRowViewModel): string => item.id;
 
+const INITIAL_RENDER = 10;
+const WINDOW_SIZE = 8;
+const MAX_BATCH = 12;
+
 export default function MedicationListScreenUI({
   items,
   categoryFilter,
   onCategoryFilterChange,
   emptyMessage,
 }: MedicationListScreenUIProps) {
-  const renderItem = ({ item }: ListRenderItemInfo<MedicationListScreenRowViewModel>) => (
-    <MedicationListItem
-      onPress={item.onPress}
-      subtitle={item.subtitle}
-      tag={item.tag}
-      title={item.title}
-    />
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<MedicationListScreenRowViewModel>) => (
+      <MedicationListItem
+        onPress={item.onPress}
+        subtitle={item.subtitle}
+        tag={item.tag}
+        title={item.title}
+      />
+    ),
+    [],
+  );
+
+  const listEmpty = useMemo(
+    () => <ListScreenEmptyPlaceholder message={emptyMessage} />,
+    [emptyMessage],
+  );
+
+  const contentContainerStyle = useMemo(
+    () => [styles.contentContainer, items.length === 0 ? styles.contentEmpty : null],
+    [items.length],
   );
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <SectionHeader
-            title="Medikamentenliste"
-            description="Antippen fuer Dosierung, Hinweise und Algorithmen."
-            size="comfortable"
-          />
-        </View>
+      <SectionHeader
+        title="Medikamentenliste"
+        description="Antippen fuer Dosierung, Hinweise und Algorithmen."
+        size="comfortable"
+        style={styles.header}
+      />
 
-        <View style={styles.filters}>
-          <CategoryFilterChips
-            selected={categoryFilter}
-            onChange={onCategoryFilterChange}
-          />
-        </View>
-
-        <FlatList
-          style={styles.list}
-          data={items}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          initialNumToRender={14}
-          windowSize={7}
-          removeClippedSubviews
-          contentContainerStyle={[
-            styles.contentContainer,
-            items.length === 0 ? styles.contentEmpty : null,
-          ]}
-          ListEmptyComponent={<ListScreenEmptyPlaceholder message={emptyMessage} />}
-          showsVerticalScrollIndicator={false}
-        />
+      <View style={styles.filters}>
+        <CategoryFilterChips selected={categoryFilter} onChange={onCategoryFilterChange} />
       </View>
+
+      <FlatList
+        style={styles.list}
+        data={items}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        initialNumToRender={INITIAL_RENDER}
+        maxToRenderPerBatch={MAX_BATCH}
+        updateCellsBatchingPeriod={50}
+        windowSize={WINDOW_SIZE}
+        removeClippedSubviews
+        contentContainerStyle={contentContainerStyle}
+        ListEmptyComponent={listEmpty}
+        showsVerticalScrollIndicator={false}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
-    backgroundColor: colors.base,
-  },
-  container: {
     flex: 1,
     backgroundColor: colors.base,
   },
