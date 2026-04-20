@@ -1,74 +1,61 @@
-import { ButtonLink } from "@/components/ui/button-link";
-import { Container } from "@/components/ui/container";
-import { ContentCard } from "@/components/ui/content-card";
-import { SectionFrame } from "@/components/ui/section-frame";
-import { Stack } from "@/components/ui/stack";
+import { SectionContainer } from "@/components/layout/section-container";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-type HeroContent = {
-  headline: string;
-  subheadline: string;
-  statusIndicator: string;
-  current: readonly string[];
-  cta: {
-    primary: { label: string; href: string; external?: boolean };
-    secondary: { label: string; href: string; external?: boolean };
-  };
-};
-
-type SurveySnippet = {
-  title: string;
-  meta: readonly string[];
-  href: string;
-};
-
-type HeroSectionProps = {
-  hero: HeroContent;
-  survey: SurveySnippet;
-};
-
-export function HeroSection({ hero, survey }: HeroSectionProps) {
-  const surveyMetaText = survey.meta.join(" · ");
-
+export function HeroSection() {
   return (
-    <SectionFrame>
-      <Container>
-        <div className="layout-split">
-          <Stack gap="md">
-            <span className="badge badge--hero">{hero.statusIndicator}</span>
-            <h1 className="hero-title">{hero.headline}</h1>
-            <p className="body-text muted-text hero-subline">{hero.subheadline}</p>
-            <div className="cta-actions">
-              <ButtonLink href={hero.cta.primary.href} size="lg" external={hero.cta.primary.external}>
-                {hero.cta.primary.label}
-              </ButtonLink>
-              <ButtonLink
-                href={hero.cta.secondary.href}
-                variant="secondary"
-                size="lg"
-                external={hero.cta.secondary.external}
-              >
-                {hero.cta.secondary.label}
-              </ButtonLink>
-            </div>
-          </Stack>
-
-          <ContentCard>
-            <Stack gap="md">
-              <span className="badge">{survey.title}</span>
-              {surveyMetaText ? <p className="eyebrow muted-text">{surveyMetaText}</p> : null}
-              {hero.current.length > 0 ? (
-                <div className="status-cards-grid">
-                  {hero.current.map((item) => (
-                    <div key={item} className="card card--nested">
-                      <p className="small-text status-card-label">{item}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-            </Stack>
-          </ContentCard>
+    <SectionContainer>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)] lg:items-end">
+        <div className="grid gap-6">
+          <Badge className="w-fit">MVP-Phase / Aktive Entwicklung</Badge>
+          <div className="grid gap-4">
+            <p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-zinc-500">
+              Struktur fuer den Einsatzalltag
+            </p>
+            <h1 className="text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.045em] text-zinc-50 sm:text-6xl">
+              ResQBrain baut eine klare Wissensbasis fuer den Rettungsdienst.
+            </h1>
+            <p className="max-w-2xl text-lg leading-8 text-zinc-300">
+              Ein fokussierter MVP fuer nachvollziehbare Inhalte, schnelle Orientierung
+              und praxisnahes Feedback ohne unnoetige Komplexitaet.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button href="/mitwirken" size="lg" variant="primary">
+              Jetzt mitwirken
+            </Button>
+            <Button href="/wie-es-funktioniert" size="lg" variant="ghost">
+              Wie es funktioniert
+            </Button>
+          </div>
         </div>
-      </Container>
-    </SectionFrame>
+
+        <Card className="grid gap-5">
+          <div className="grid gap-2">
+            <p className="text-sm font-medium uppercase tracking-[0.16em] text-zinc-500">
+              Fokus im MVP
+            </p>
+            <h2 className="text-2xl font-semibold leading-[1.1] tracking-[-0.03em] text-zinc-50">
+              Offline zuerst. Klarer Zugriff. Weniger Reibung.
+            </h2>
+          </div>
+          <div className="grid gap-3">
+            <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/60 p-4">
+              <p className="text-sm font-medium text-zinc-100">Lookup-Inhalte</p>
+              <p className="mt-1 text-sm leading-6 text-zinc-400">
+                Medikamente, Algorithmen und Suche in einem sauberen, robusten Datenfluss.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800/70 bg-zinc-950/60 p-4">
+              <p className="text-sm font-medium text-zinc-100">Praxisbezug</p>
+              <p className="mt-1 text-sm leading-6 text-zinc-400">
+                Entscheidungen werden an realen Einsatzablaeufen und Rueckmeldungen ausgerichtet.
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </SectionContainer>
   );
 }

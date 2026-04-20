@@ -9,7 +9,7 @@ import { AlgorithmListScreen } from '@/screens/AlgorithmListScreen';
 import { VitalReferenceScreen } from '@/features/references/VitalReferenceScreen';
 import { HistoryScreen } from '@/screens/HistoryScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
-import { MedicationListScreen } from '@/screens/MedicationListScreen';
+import { MedicationListAdapter } from '@/features/lookup/adapters/MedicationListAdapter';
 import { SearchScreen } from '@/screens/SearchScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
@@ -96,7 +96,7 @@ function MedicationStackNavigator() {
     <MedicationStack.Navigator screenOptions={screenOptions}>
       <MedicationStack.Screen
         name="MedicationListScreen"
-        component={MedicationListScreen}
+        component={MedicationListAdapter}
         options={{ title: 'Medikamente' }}
       />
       <MedicationStack.Screen
