@@ -14,7 +14,7 @@ type LinkItem = {
 const primaryLinks: readonly LinkItem[] = [
   { label: "Mitwirken", href: routes.mitwirken },
   {
-    label: surveys.active.description,
+    label: surveys.active.label,
     href: surveys.active.href,
     external: true,
   },
