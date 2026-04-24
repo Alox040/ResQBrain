@@ -13,7 +13,11 @@ type LinkItem = {
 
 const primaryLinks: readonly LinkItem[] = [
   { label: "Mitwirken", href: routes.mitwirken },
-  { label: "UI Umfrage", href: surveys.active.href, external: true },
+  {
+    label: surveys.active.description,
+    href: surveys.active.href,
+    external: true,
+  },
   { label: "Community", href: publicLinks.github, external: true },
   { label: "Discord", href: publicLinks.discord, external: true },
 ] as const;
@@ -52,7 +56,7 @@ export default function LinksPage() {
 
         <div className={styles.stack}>
           {primaryLinks.map((item) => (
-            <LinkButton key={item.label} {...item} />
+            <LinkButton key={item.href} {...item} />
           ))}
         </div>
 
@@ -60,7 +64,7 @@ export default function LinksPage() {
           <h2 className={styles.sectionLabel}>Mehr</h2>
           <div className={styles.secondaryStack}>
             {secondaryLinks.map((item) => (
-              <LinkButton key={item.label} {...item} secondary />
+              <LinkButton key={item.href} {...item} secondary />
             ))}
           </div>
         </section>
