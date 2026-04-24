@@ -3,39 +3,16 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { ButtonSecondary, EmptyState } from '@/components/common';
-import { initializeContent } from '@/data/contentIndex';
+import {
+  ensureContentStoreReady,
+  getContentVersionInfo,
+} from '@/data/contentIndex';
 import { hydrateHistory } from '@/features/history/historyStore';
 import { getBundleDebugInfo, setBundleDebugInfo } from '@/lookup/bundleDebugInfo';
-import { applyBundleUpdate, checkForBundleUpdate } from '@/lookup/bundleUpdateService';
-import { loadLookupBundleWithSource } from '@/lookup/loadLookupBundle';
 import { AppNavigator } from '@/navigation/AppNavigator';
 import { hydrateFavorites } from '@/state/favoritesStore';
 import { hydrateRecent } from '@/state/recentStore';
 import { ThemeProvider, useTheme } from '@/theme/ThemeContext';
-
-async function runBackgroundBundleUpdate(
-  bundleUrl: string,
-  currentDebugInfo: {
-    version: string | null;
-    source: 'resolved' | 'embedded' | 'cached' | 'updated' | 'fallback';
-    lastUpdate: string | null;
-    pendingUpdate: boolean;
-  },
-): Promise<void> {
-  const updateCheck = await checkForBundleUpdate(bundleUrl);
-  if (updateCheck.status !== 'update-available') {
-    return;
-  }
-
-  const applyResult = await applyBundleUpdate(bundleUrl);
-  if (applyResult.status === 'updated') {
-    await setBundleDebugInfo({
-      ...currentDebugInfo,
-      lastUpdate: new Date().toISOString(),
-      pendingUpdate: true,
-    });
-  }
-}
 
 function AppNavigation() {
   const { navigationTheme, isDark } = useTheme();
@@ -93,27 +70,16 @@ export default function App() {
       setErrorMessage(null);
 
       try {
-        const bundleUrl = process.env.EXPO_PUBLIC_LOOKUP_BUNDLE_URL;
         const persistedDebugInfo = await getBundleDebugInfo();
-        let lastUpdate = persistedDebugInfo?.lastUpdate ?? null;
-        let pendingUpdate = persistedDebugInfo?.pendingUpdate ?? false;
+        await ensureContentStoreReady();
+        const versionInfo = getContentVersionInfo();
+        const bundleVersion = versionInfo.version ?? null;
 
-        const resolved = await loadLookupBundleWithSource();
-        if (pendingUpdate && resolved.source === 'cached') {
-          pendingUpdate = false;
-        }
-
-        const bundleVersion =
-          resolved.store.versionInfo.version ??
-          resolved.store.manifest.bundleId ??
-          null;
-
-        initializeContent(resolved.store);
         await setBundleDebugInfo({
           version: bundleVersion,
-          source: resolved.source,
-          lastUpdate,
-          pendingUpdate,
+          source: 'embedded',
+          lastUpdate: persistedDebugInfo?.lastUpdate ?? null,
+          pendingUpdate: false,
         });
 
         await Promise.all([
@@ -123,15 +89,6 @@ export default function App() {
         ]);
 
         setReady(true);
-
-        if (bundleUrl) {
-          void runBackgroundBundleUpdate(bundleUrl, {
-            version: bundleVersion,
-            source: resolved.source,
-            lastUpdate,
-            pendingUpdate,
-          });
-        }
       } catch (error) {
         const message =
           error instanceof Error

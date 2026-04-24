@@ -2,7 +2,7 @@
  * Phase-2 helper.
  *
  * This manifest fetcher is currently not wired into the active lookup update
- * path. Keep it as a building block for a future manifest-based update flow.
+ * path. Phase-0 keeps this file disabled to prevent accidental HTTP usage.
  */
 const LOOKUP_MANIFEST_PATH = '/lookup/manifest.json';
 const DEFAULT_TIMEOUT_MS = 8000;
@@ -74,62 +74,9 @@ function parseManifestPayload(payload: unknown, manifestUrl: string): RemoteLook
 export async function fetchRemoteManifest(
   options: FetchRemoteManifestOptions = {},
 ): Promise<FetchRemoteManifestResult> {
-  const manifestUrl = buildManifestUrl(options.baseUrl);
-  const controller = new AbortController();
-  const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const response = await fetch(manifestUrl, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-      signal: controller.signal,
-    });
-
-    if (!response.ok) {
-      return {
-        status: 'error',
-        reason: 'invalid-response',
-      };
-    }
-
-    let payload: unknown;
-    try {
-      payload = (await response.json()) as unknown;
-    } catch {
-      return {
-        status: 'error',
-        reason: 'invalid-response',
-      };
-    }
-
-    const manifest = parseManifestPayload(payload, manifestUrl);
-    if (!manifest) {
-      return {
-        status: 'error',
-        reason: 'invalid-response',
-      };
-    }
-
-    return {
-      status: 'success',
-      manifest,
-    };
-  } catch (error) {
-    if (error instanceof Error && error.name === 'AbortError') {
-      return {
-        status: 'error',
-        reason: 'timeout',
-      };
-    }
-
-    return {
-      status: 'error',
-      reason: 'offline',
-    };
-  } finally {
-    clearTimeout(timeoutId);
-  }
+  void options;
+  return {
+    status: 'error',
+    reason: 'offline',
+  };
 }

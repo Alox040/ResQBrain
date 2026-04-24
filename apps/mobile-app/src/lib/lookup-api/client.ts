@@ -22,6 +22,9 @@ type LookupScopeParams = {
   stationId?: string;
 };
 
+const LOOKUP_HTTP_DISABLED_MESSAGE =
+  "Phase-0 Lookup HTTP client ist deaktiviert. Verwende den Embedded-Bundle-Pfad ueber ensureContentStoreReady().";
+
 function buildQuery(params: Record<string, string | number | undefined>) {
   const searchParams = new URLSearchParams();
 
@@ -76,51 +79,16 @@ export function getLookupApiErrorMessage(error: unknown) {
 async function lookupGet<TResponse>(
   path: string,
   query?: Record<string, string | number | undefined>,
-) {
+): Promise<TResponse> {
   const url = `${getLookupApiBaseUrl()}${path}${query ? buildQuery(query) : ""}`;
+  void url;
 
-  let response: Response;
-
-  try {
-    response = await fetch(url, {
-      method: "GET",
-    });
-  } catch {
-    throw new LookupApiClientError({
-      message: `Lookup API request failed for ${path}`,
-      status: 0,
-      uiMessage: "Lookup-API ist nicht erreichbar.",
-    });
-  }
-
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as LookupApiErrorPayload | null;
-    const code = payload?.error?.code;
-    const message = payload?.error?.message || `Request failed with status ${response.status}`;
-    const notFoundMessage =
-      response.status === 404 ? "Lookup-Eintrag wurde nicht gefunden." : undefined;
-
-    throw new LookupApiClientError({
-      code,
-      message,
-      status: response.status,
-      uiMessage:
-        payload?.error?.message ||
-        notFoundMessage ||
-        "Lookup-Daten konnten nicht geladen werden.",
-    });
-  }
-
-  try {
-    return (await response.json()) as TResponse;
-  } catch {
-    throw new LookupApiClientError({
-      code: "LOOKUP_API_INVALID_RESPONSE",
-      message: `Lookup API returned invalid JSON for ${path}`,
-      status: response.status,
-      uiMessage: "Lookup-Antwort hat ein ungueltiges Format.",
-    });
-  }
+  throw new LookupApiClientError({
+    code: "LOOKUP_HTTP_DISABLED",
+    message: `${LOOKUP_HTTP_DISABLED_MESSAGE} Path: ${path}`,
+    status: 0,
+    uiMessage: LOOKUP_HTTP_DISABLED_MESSAGE,
+  });
 }
 
 export function listAlgorithms(params?: LookupListParams) {

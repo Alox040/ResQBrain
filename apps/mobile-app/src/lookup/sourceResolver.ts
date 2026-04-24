@@ -2,11 +2,15 @@
  * Phase-2 draft only.
  *
  * Multi-scope resolution for organization/region bundles is intentionally not
- * used in the current app runtime. The active startup path is
- * `loadLookupBundleWithSource()` in `loadLookupBundle.ts`.
+ * used in the current app runtime. Phase-0 keeps the remote scoped lookup path
+ * disabled to prevent accidental HTTP usage. The active startup path is the
+ * embedded bundle via `ensureContentStoreReady()`.
  */
 import { loadBundle as loadUpdatedBundle } from './bundleStorage';
-import { loadEmbeddedLookupBundle } from './loadLookupBundle';
+import {
+  ensureContentStoreReady,
+  getContentStoreSnapshot,
+} from '@/data/contentIndex';
 import { loadBundle as loadCachedBundle, type LookupBundleSnapshot } from './lookupCache';
 import type { BundleMeta, LookupSource } from './lookupSource';
 import { validateLookupBundle } from './validateLookupBundle';
@@ -161,36 +165,14 @@ async function fetchJson(url: string): Promise<unknown> {
 async function tryLoadScopedBundle(
   options: ResolveLookupBundleOptions,
 ): Promise<LookupBundleSnapshot | null> {
-  const roots = buildBundleLookupRoots(options);
-
-  for (const root of roots) {
-    try {
-      const [manifest, medications, algorithms] = await Promise.all([
-        fetchJson(buildScopedBundleFileUrl(root, 'manifest.json', options.baseUrl)),
-        fetchJson(buildScopedBundleFileUrl(root, 'medications.json', options.baseUrl)),
-        fetchJson(buildScopedBundleFileUrl(root, 'algorithms.json', options.baseUrl)),
-      ]);
-
-      const snapshot = validateSnapshot({
-        manifest: manifest as LookupBundleSnapshot['manifest'],
-        medications: medications as LookupBundleSnapshot['medications'],
-        algorithms: algorithms as LookupBundleSnapshot['algorithms'],
-      });
-
-      if (snapshot) {
-        return snapshot;
-      }
-    } catch {
-      // Try next root in the lookup chain.
-    }
-  }
-
+  void options;
   return null;
 }
 
-function tryLoadEmbeddedBundle(): LookupBundleSnapshot | null {
+async function tryLoadEmbeddedBundle(): Promise<LookupBundleSnapshot | null> {
   try {
-    const embeddedStore = loadEmbeddedLookupBundle();
+    await ensureContentStoreReady();
+    const embeddedStore = getContentStoreSnapshot();
     return toSnapshot({
       manifest: embeddedStore.manifest,
       medications: embeddedStore.medications,
@@ -219,7 +201,7 @@ export async function resolveLookupBundle(
     return buildResolvedBundle(cachedBundle, 'cached');
   }
 
-  const embeddedBundle = tryLoadEmbeddedBundle();
+  const embeddedBundle = await tryLoadEmbeddedBundle();
   if (embeddedBundle) {
     return buildResolvedBundle(embeddedBundle, 'embedded');
   }

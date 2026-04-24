@@ -1,4 +1,7 @@
-import { loadEmbeddedLookupBundle } from './loadLookupBundle';
+import {
+  ensureContentStoreReady,
+  getContentStoreSnapshot,
+} from '@/data/contentIndex';
 import {
   loadAndValidateBundle,
   saveBundle,
@@ -38,8 +41,9 @@ function getSnapshotVersion(bundle: LookupBundleSnapshot): string | null {
   return bundle.manifest.version ?? bundle.manifest.bundleId ?? null;
 }
 
-function getEmbeddedVersion(): string | null {
-  const embeddedBundle = loadEmbeddedLookupBundle();
+async function getEmbeddedVersion(): Promise<string | null> {
+  await ensureContentStoreReady();
+  const embeddedBundle = getContentStoreSnapshot();
   return embeddedBundle.versionInfo.version ?? embeddedBundle.manifest.bundleId ?? null;
 }
 
@@ -136,52 +140,17 @@ export function validateBundle(raw: unknown): {
 export async function downloadBundle(
   bundleUrl: string,
 ): Promise<BundleDownloadResult> {
-  let response: Response;
-  try {
-    response = await fetch(bundleUrl);
-  } catch {
-    return {
-      status: 'error',
-      reason: 'network',
-    };
-  }
-
-  if (!response.ok) {
-    return {
-      status: 'error',
-      reason: 'network',
-    };
-  }
-
-  let payload: unknown;
-  try {
-    payload = (await response.json()) as unknown;
-  } catch {
-    return {
-      status: 'error',
-      reason: 'invalid-json',
-    };
-  }
-
-  try {
-    const validation = validateBundle(payload);
-    return {
-      status: 'success',
-      bundle: validation.bundle,
-      version: validation.version,
-    };
-  } catch {
-    return {
-      status: 'error',
-      reason: 'invalid-schema',
-    };
-  }
+  void bundleUrl;
+  return {
+    status: 'error',
+    reason: 'network',
+  };
 }
 
 export async function checkForBundleUpdate(
   bundleUrl: string,
 ): Promise<BundleUpdateCheckResult> {
-  const currentVersion = (await getCachedVersion()) ?? getEmbeddedVersion();
+  const currentVersion = (await getCachedVersion()) ?? (await getEmbeddedVersion());
   const download = await downloadBundle(bundleUrl);
 
   if (download.status === 'error') {
@@ -209,7 +178,7 @@ export async function checkForBundleUpdate(
 export async function applyBundleUpdate(
   bundleUrl: string,
 ): Promise<ApplyBundleUpdateResult> {
-  const currentVersion = (await getCachedVersion()) ?? getEmbeddedVersion();
+  const currentVersion = (await getCachedVersion()) ?? (await getEmbeddedVersion());
   const download = await downloadBundle(bundleUrl);
 
   if (download.status === 'error') {

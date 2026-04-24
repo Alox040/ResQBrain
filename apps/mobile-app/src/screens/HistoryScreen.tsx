@@ -2,7 +2,7 @@ import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   type ListRenderItemInfo,
@@ -66,6 +66,10 @@ function HistoryListHeader() {
 export function HistoryScreen() {
   const navigation = useNavigation<HistoryScreenNav>();
   const history = useHistorySorted();
+  const [labelsByKey, setLabelsByKey] = useState<Record<string, {
+    title: string;
+    subtitle: string;
+  }>>({});
 
   const openItem = useCallback(
     (item: HistoryRecord) => {
@@ -88,9 +92,9 @@ export function HistoryScreen() {
     ({ item }: ListRenderItemInfo<HistoryRecord>) => {
       const badge =
         item.kind === 'medication' ? KIND_BADGE_MEDICATION : KIND_BADGE_ALGORITHM;
-      const vm = resolveContentViewModel(item.id, item.kind);
-      const title = vm?.label ?? 'Eintrag nicht im Bundle';
-      const subtitle = vm?.listSubtitle ?? item.id;
+      const resolved = labelsByKey[`${item.kind}:${item.id}`];
+      const title = resolved?.title ?? 'Eintrag nicht im Bundle';
+      const subtitle = resolved?.subtitle ?? item.id;
 
       return (
         <LookupListRow
@@ -108,13 +112,48 @@ export function HistoryScreen() {
         />
       );
     },
-    [openItem],
+    [labelsByKey, openItem],
   );
 
   const keyExtractor = useCallback(
     (item: HistoryRecord) => `${item.kind}:${item.id}`,
     [],
   );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadHistoryLabels = async () => {
+      try {
+        const entries = await Promise.all(
+          history.map(async (item) => {
+            const vm = await resolveContentViewModel(item.id, item.kind);
+            return [
+              `${item.kind}:${item.id}`,
+              {
+                title: vm?.label ?? 'Eintrag nicht im Bundle',
+                subtitle: vm?.listSubtitle ?? item.id,
+              },
+            ] as const;
+          }),
+        );
+
+        if (!cancelled) {
+          setLabelsByKey(Object.fromEntries(entries));
+        }
+      } catch {
+        if (!cancelled) {
+          setLabelsByKey({});
+        }
+      }
+    };
+
+    void loadHistoryLabels();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [history]);
 
   if (history.length === 0) {
     return (

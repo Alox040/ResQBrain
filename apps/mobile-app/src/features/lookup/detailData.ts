@@ -1,11 +1,9 @@
 import {
-  assertContentInitialized,
+  ensureContentStoreReady,
   getAlgorithmById,
   getContentVersionInfo,
-  initializeContent,
   getMedicationById,
 } from "@/data/contentIndex";
-import { loadLookupBundle } from "@/lookup/loadLookupBundle";
 import type { Algorithm, Medication } from "@/types/content";
 
 export type LookupDetailStep = Readonly<{
@@ -36,12 +34,6 @@ export type LookupDetailViewData = {
   steps: readonly LookupDetailStep[];
   /** Algorithm: safety warnings from bundle when present. */
   warnings: string | null;
-};
-
-const CONTENT_STORE_READY_PROMISE_KEY = '__lookupContentStoreReadyPromise__';
-
-type ContentStoreGlobal = typeof globalThis & {
-  [CONTENT_STORE_READY_PROMISE_KEY]?: Promise<void>;
 };
 
 function normalizeSummary(text?: string | null) {
@@ -128,33 +120,6 @@ function algorithmToDetailViewData(
     steps: Object.freeze([]),
     warnings: null,
   };
-}
-
-async function ensureContentStoreReady(): Promise<void> {
-  try {
-    assertContentInitialized();
-    return;
-  } catch {
-    // Fall through to lazy initialization.
-  }
-
-  const state = globalThis as ContentStoreGlobal;
-  if (!state[CONTENT_STORE_READY_PROMISE_KEY]) {
-    state[CONTENT_STORE_READY_PROMISE_KEY] = (async () => {
-      try {
-        const bundle = await loadLookupBundle();
-        initializeContent(bundle);
-        assertContentInitialized();
-      } catch {
-        throw new Error('Inhalte konnten nicht geladen werden');
-      }
-    })().catch((error) => {
-      delete state[CONTENT_STORE_READY_PROMISE_KEY];
-      throw error;
-    });
-  }
-
-  await state[CONTENT_STORE_READY_PROMISE_KEY];
 }
 
 export async function loadAlgorithmDetailViewData(id: string): Promise<LookupDetailViewData> {

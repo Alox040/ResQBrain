@@ -11,7 +11,7 @@ export const surveys: {
 } = {
   active: {
     label: "Aktuelle Umfrage",
-    href: "https://forms.office.com/r/vzHuUdFBRy",
+    href: "https://forms.cloud.microsoft/r/AubZiQ0SQw",
     description: "UI & UX Feedback",
     date: "April 2026",
   },

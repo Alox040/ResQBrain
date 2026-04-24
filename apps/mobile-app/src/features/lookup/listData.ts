@@ -1,10 +1,8 @@
 import {
-  initializeContent,
-  algorithms,
-  assertContentInitialized,
-  medications,
+  ensureContentStoreReady,
+  getAlgorithmItems,
+  getMedicationItems,
 } from '@/data/contentIndex';
-import { loadLookupBundle } from '@/lookup/loadLookupBundle';
 import type { Algorithm, ContentCategory, ContentTag, Medication } from '@/types/content';
 
 export type LookupRequestContext = {
@@ -20,39 +18,6 @@ export type LookupListRowItem = {
   tags: ContentTag[];
   category?: ContentCategory;
 };
-
-const CONTENT_STORE_READY_PROMISE_KEY = '__lookupContentStoreReadyPromise__';
-
-type ContentStoreGlobal = typeof globalThis & {
-  [CONTENT_STORE_READY_PROMISE_KEY]?: Promise<void>;
-};
-
-async function ensureContentStoreReady(): Promise<void> {
-  try {
-    assertContentInitialized();
-    return;
-  } catch {
-    // Fall through to lazy initialization.
-  }
-
-  const state = globalThis as ContentStoreGlobal;
-  if (!state[CONTENT_STORE_READY_PROMISE_KEY]) {
-    state[CONTENT_STORE_READY_PROMISE_KEY] = (async () => {
-      try {
-        const bundle = await loadLookupBundle();
-        initializeContent(bundle);
-        assertContentInitialized();
-      } catch {
-        throw new Error('Inhalte konnten nicht geladen werden');
-      }
-    })().catch((error) => {
-      delete state[CONTENT_STORE_READY_PROMISE_KEY];
-      throw error;
-    });
-  }
-
-  await state[CONTENT_STORE_READY_PROMISE_KEY];
-}
 
 function buildListSubtitle(indication?: string | null): string {
   const trimmed = indication?.trim();
@@ -95,10 +60,10 @@ export function resolveLookupRequestContext(): LookupRequestContext {
 
 export async function loadMedicationList(): Promise<LookupListRowItem[]> {
   await ensureContentStoreReady();
-  return medications.map(mapMedicationListItem);
+  return getMedicationItems().map(mapMedicationListItem);
 }
 
 export async function loadAlgorithmList(): Promise<LookupListRowItem[]> {
   await ensureContentStoreReady();
-  return algorithms.map(mapAlgorithmListItem);
+  return getAlgorithmItems().map(mapAlgorithmListItem);
 }

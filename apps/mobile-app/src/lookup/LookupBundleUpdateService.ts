@@ -2,12 +2,16 @@
  * Phase-2 draft only.
  *
  * This class-based update pipeline adds checksum verification and rollback, but
- * it is intentionally not wired into the active runtime flow. `App.tsx` uses
- * `bundleUpdateService.ts`, which updates the AsyncStorage-backed cache.
+ * it is intentionally not wired into the active runtime flow. Phase-0 keeps
+ * network update downloads disabled so the offline lookup core remains
+ * self-contained.
  */
 import * as FileSystem from 'expo-file-system/legacy';
 
-import { loadEmbeddedLookupBundle } from './loadLookupBundle';
+import {
+  ensureContentStoreReady,
+  getContentStoreSnapshot,
+} from '@/data/contentIndex';
 import type { LookupBundleSnapshot } from './lookupCache';
 import { getBundleVersion, loadBundle, saveBundle } from './bundleStorage';
 import { compareBundleVersion } from './bundleUpdateService';
@@ -86,8 +90,9 @@ function getSnapshotVersion(bundle: LookupBundleSnapshot): string | null {
   return bundle.manifest.version ?? bundle.manifest.bundleId ?? null;
 }
 
-function getEmbeddedSnapshot(): LookupBundleSnapshot {
-  const embedded = loadEmbeddedLookupBundle();
+async function getEmbeddedSnapshot(): Promise<LookupBundleSnapshot> {
+  await ensureContentStoreReady();
+  const embedded = getContentStoreSnapshot();
   return toSnapshot({
     manifest: embedded.manifest,
     medications: embedded.medications,
@@ -189,7 +194,8 @@ export class LookupBundleUpdateService {
   }
 
   public async checkForUpdate(): Promise<LookupBundleUpdateCheckResult> {
-    const currentVersion = (await getBundleVersion()) ?? getSnapshotVersion(getEmbeddedSnapshot());
+    const currentVersion =
+      (await getBundleVersion()) ?? getSnapshotVersion(await getEmbeddedSnapshot());
     const download = await this.downloadBundle();
 
     if (download.status === 'error') {
@@ -221,82 +227,20 @@ export class LookupBundleUpdateService {
   }
 
   public async downloadBundle(): Promise<LookupBundleDownloadResult> {
-    try {
-      await ensureDownloadDirectory();
-      await FileSystem.deleteAsync(DOWNLOADED_BUNDLE_PATH, { idempotent: true });
-      await FileSystem.deleteAsync(NORMALIZED_BUNDLE_PATH, { idempotent: true });
-
-      const result = await FileSystem.downloadAsync(this.bundleUrl, DOWNLOADED_BUNDLE_PATH);
-      const text = await FileSystem.readAsStringAsync(result.uri, {
-        encoding: FileSystem.EncodingType.UTF8,
-      });
-
-      let parsed: unknown;
-      try {
-        parsed = JSON.parse(text) as unknown;
-      } catch {
-        this.pendingBundle = null;
-        return {
-          status: 'error',
-          reason: 'invalid-json',
-        };
-      }
-
-      let bundle: LookupBundleSnapshot;
-      try {
-        bundle = parseBundlePayload(parsed);
-      } catch {
-        this.pendingBundle = null;
-        return {
-          status: 'error',
-          reason: 'invalid-bundle',
-        };
-      }
-
-      if (!bundle.manifest.checksum?.trim()) {
-        this.pendingBundle = null;
-        return {
-          status: 'error',
-          reason: 'checksum-missing',
-        };
-      }
-
-      const checksumVerification = await verifyBundleChecksum(bundle, result.uri);
-      if (!checksumVerification.ok) {
-        this.pendingBundle = null;
-        return {
-          status: 'error',
-          reason: 'checksum-mismatch',
-        };
-      }
-
-      const version = getSnapshotVersion(bundle);
-      this.pendingBundle = {
-        bundle,
-        checksum: checksumVerification.checksum,
-        sourceUri: result.uri,
-        version,
-      };
-
-      return {
-        status: 'success',
-        bundle,
-        checksum: checksumVerification.checksum,
-        version,
-      };
-    } catch {
-      this.pendingBundle = null;
-      return {
-        status: 'error',
-        reason: 'download-failed',
-      };
-    }
+    void this.bundleUrl;
+    this.pendingBundle = null;
+    return {
+      status: 'error',
+      reason: 'download-failed',
+    };
   }
 
   public async applyUpdate(): Promise<LookupBundleApplyResult> {
     const currentBundle = await loadBundle();
     const currentVersion =
-      currentBundle ? getSnapshotVersion(currentBundle) : getSnapshotVersion(getEmbeddedSnapshot());
+      currentBundle
+        ? getSnapshotVersion(currentBundle)
+        : getSnapshotVersion(await getEmbeddedSnapshot());
 
     const download =
       this.pendingBundle === null
@@ -332,7 +276,7 @@ export class LookupBundleUpdateService {
       };
     }
 
-    this.previousBundle = currentBundle ?? getEmbeddedSnapshot();
+    this.previousBundle = currentBundle ?? (await getEmbeddedSnapshot());
 
     try {
       await saveBundle(download.bundle);
@@ -354,7 +298,8 @@ export class LookupBundleUpdateService {
   }
 
   public async rollback(): Promise<LookupBundleRollbackResult> {
-    const fallbackBundle = this.previousBundle ?? (await loadBundle()) ?? getEmbeddedSnapshot();
+    const fallbackBundle =
+      this.previousBundle ?? (await loadBundle()) ?? (await getEmbeddedSnapshot());
 
     if (!fallbackBundle) {
       return {

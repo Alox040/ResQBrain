@@ -3,7 +3,7 @@ import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ButtonSecondary, SectionHeader } from '@/components/common';
 import { FeedbackSheet } from '@/features/feedback';
@@ -320,6 +320,8 @@ export function HomeScreen() {
   const [showUpdateBadge, setShowUpdateBadge] = useState(false);
   const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [feedbackBundleId, setFeedbackBundleId] = useState<string | null>(null);
+  const [favoriteLabels, setFavoriteLabels] = useState<Record<string, string>>({});
+  const [recentLabels, setRecentLabels] = useState<Record<string, string>>({});
 
   const openGlobalFeedback = useCallback(async () => {
     const info = await getBundleDebugInfo();
@@ -376,21 +378,80 @@ export function HomeScreen() {
     return favorites.map((favorite) => ({
       id: favorite.id,
       kind: favorite.kind,
-      label: resolveContentViewModel(favorite.id, favorite.kind)?.label ?? 'Nicht im Bundle',
+      label:
+        favoriteLabels[`${favorite.kind}:${favorite.id}`] ?? 'Nicht im Bundle',
       source: 'favorite',
       onPress: () => openContentDetail(favorite.kind, favorite.id),
     }));
-  }, [favorites, openContentDetail]);
+  }, [favoriteLabels, favorites, openContentDetail]);
 
   const recentShortcuts = useMemo((): ContentShortcutItem[] => {
     return recentItems.map((recent) => ({
       id: recent.id,
       kind: recent.kind,
-      label: resolveContentViewModel(recent.id, recent.kind)?.label ?? 'Nicht im Bundle',
+      label: recentLabels[`${recent.kind}:${recent.id}`] ?? 'Nicht im Bundle',
       source: 'recent',
       onPress: () => openContentDetail(recent.kind, recent.id),
     }));
-  }, [recentItems, openContentDetail]);
+  }, [openContentDetail, recentItems, recentLabels]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadFavoriteLabels = async () => {
+      try {
+        const entries = await Promise.all(
+          favorites.map(async (favorite) => {
+            const vm = await resolveContentViewModel(favorite.id, favorite.kind);
+            return [`${favorite.kind}:${favorite.id}`, vm?.label ?? 'Nicht im Bundle'] as const;
+          }),
+        );
+
+        if (!cancelled) {
+          setFavoriteLabels(Object.fromEntries(entries));
+        }
+      } catch {
+        if (!cancelled) {
+          setFavoriteLabels({});
+        }
+      }
+    };
+
+    void loadFavoriteLabels();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [favorites]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadRecentLabels = async () => {
+      try {
+        const entries = await Promise.all(
+          recentItems.map(async (recent) => {
+            const vm = await resolveContentViewModel(recent.id, recent.kind);
+            return [`${recent.kind}:${recent.id}`, vm?.label ?? 'Nicht im Bundle'] as const;
+          }),
+        );
+
+        if (!cancelled) {
+          setRecentLabels(Object.fromEntries(entries));
+        }
+      } catch {
+        if (!cancelled) {
+          setRecentLabels({});
+        }
+      }
+    };
+
+    void loadRecentLabels();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [recentItems]);
 
   const openAlgorithmCategory = useCallback(
     (category: ContentCategory) => {

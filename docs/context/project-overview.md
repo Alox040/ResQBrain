@@ -1,51 +1,22 @@
-# Project Overview
+# project-overview
 
-**Last Updated:** 2026-04-15
+## Zweck
 
-## Projektziel
+- Stabiles, hochstufiges Produktbild fuer ResQBrain.
+- Gemeinsame Referenz fuer neue Features, Architekturentscheidungen und externe AIs.
+- Beschreibt das System auf Ebene von Ziel, Umfang und Grenze, nicht auf Ebene einzelner Tickets oder Implementierungsdetails.
 
-ResQBrain ist eine EMS-Plattform mit langfristigem Zielbild einer multi-tenant-faehigen, governance-gesteuerten Content-Verteilung (Algorithmen, Medikamente, Protokolle, Leitlinien).  
-Der aktuell implementierte Produktfokus liegt auf einer schnellen Lookup-App fuer Einsatzkraefte.
+## Inhalt
 
-## Zielgruppe
+- Produktziel: Offline-first Lookup-App fuer den Rettungsdienst plus oeffentliche Website als Kommunikations- und Informationsflaeche.
+- Langfristiges Zielbild: Domain-driven Aufbau mit klaren Boundaries fuer Content, Versionierung, Governance und Verteilung.
+- Kernnutzer: Einsatzpersonal, Reviewer, Betreiber und spaetere Organisationsrollen.
+- Leitprinzipien: lookup-first, offline-first, versioniert, domain-driven, UI-agnostisch im Domain-Core.
+- Kanonische Quellen fuer Detailfragen: `architecture.md`, `app-status.md`, `website-status.md`, `data-structure.md`, `roadmap.md`.
 
-- Primaer: Rettungsdienstpersonal im Einsatz (schneller Zugriff auf Informationen)
-- Sekundaer: medizinische Reviewer, Ausbildende, Organisationsverantwortliche
-- Strategisch: mehrere Organisationen mit tenant-getrennter Content-Governance
+## Was NICHT rein darf
 
-## MVP Definition (aktueller Arbeitsstand)
-
-Der MVP ist aktuell als **Lookup-first Einsatz-App** definiert:
-
-- Medikamentensuche
-- Algorithmus-Lookup
-- schnelle lokale Suche
-- Listen- und Detailansichten
-- eingebettetes JSON-Bundle in der App (`apps/mobile-app/data/lookup-seed/`) mit optional persistiertem Cache und optionaler Bundle-URL (siehe `docs/status/PROJECT_STATUS.md`)
-
-Kein Fokus auf Governance-Workflows in der UI.
-
-## Lookup-First Ansatz
-
-Die aktuelle App-Struktur priorisiert:
-
-1. Finden statt Editieren
-2. Lesen statt Administrieren
-3. lokale Daten als Basis (eingebettetes Bundle; optional Cache / optional HTTP-Update)
-4. minimalen Navigationsaufwand fuer Zeitdruck-Situationen
-
-## Phase-0 Scope (Ist-Sicht)
-
-- Mobile App mit Home, Search, Medication- und Algorithmus-Navigation; Root-Tabs inkl. Einstellungen; Verlauf im Home-Stack
-- Medikamenten- und Algorithmuslisten mit Detailansicht aus validiertem Lookup-Bundle
-- **Dosisrechner** (heuristisch aus Freitext-Dosierung) und **Vitalwerte-Referenz** (statisch) — siehe Roadmap/Status
-- Website als Projekt-/Informationsflaeche (u. a. `/`, Legal, Mitwirkung, `/lab/lookup` intern)
-- Domain-Paket mit Modellierung und Tests fuer tenant/governance/versioning/release (Tests teilweise nicht mit Root-`tsc` verknuepft — siehe Status)
-
-## Bewusst NICHT enthalten (aktuell)
-
-- keine KI-Assistenz
-- kein produktiver Organisationsbetrieb (Login/Auth/API fuer Tenant-Runtime fehlt)
-- keine Versionierungsoberflaeche in der App
-- keine Lernlogik im mobilen UI
-- keine produktive mandantenfaehige Offline-Sync-Engine (optionaler HTTP-Bundle-Fetch ist kein Sync-Produkt)
+- Sprintziele, Datumswerte, kurzfristige To-dos oder personenbezogene Notizen.
+- Implementierungsdetails, Dateinamen-Listen auf Code-Ebene oder Debug-Infos.
+- Temporare Aussagen wie "aktuell kaputt", "heute getestet" oder "dieser Branch".
+- Marketingtexte, Release-Notizen oder Content-Entwurfe.
