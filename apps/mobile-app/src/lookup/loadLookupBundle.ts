@@ -10,7 +10,7 @@ import manifestJson from '../../data/lookup-seed/manifest.json';
 import medicationsJson from '../../data/lookup-seed/medications.json';
 import algorithmsJson from '../../data/lookup-seed/algorithms.json';
 
-/** Stable key for map lookup â€” matches `contentIndex` convention. */
+/** Stable key for map lookup — matches `contentIndex` convention. */
 export type LookupContentKey = `${ContentKind}:${string}`;
 
 export function toLookupContentKey(kind: ContentKind, id: string): LookupContentKey {
@@ -36,7 +36,7 @@ export type LookupBundleVersionInfo = {
 
 /**
  * In-memory Phase-0 lookup store: validated bundle + indexes for list/search/detail.
- * No persistence, no network, no sync â€” bundle only.
+ * No persistence, no network, no sync — bundle only.
  */
 export type LookupRamStore = {
   manifest: LookupManifest;

@@ -1,1 +1,1 @@
-export { mitwirkungPageContent } from "@/lib/site/mitwirkung-content";
+export { mitwirkungPageContent } from "../../apps/website/lib/site/mitwirkung";

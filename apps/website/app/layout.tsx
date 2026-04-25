@@ -40,6 +40,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html className={instrumentSans.variable} lang="de">
+      <head>
+        <meta charSet="utf-8" />
+      </head>
       <body>
         <SiteShell>{children}</SiteShell>
       </body>

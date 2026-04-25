@@ -98,4 +98,4 @@ Unter **`e:\Programmierung\ResQBrain\app\`** existiert ein weiteres App-Router-L
 ## Bekannte Encoding-Probleme
 
 - **Nicht systematisch gescannt.**  
-- Einzelbeleg: in `apps/mobile-app/src/lookup/loadLookupBundle.ts` Kommentarzeile mit Zeichenfolge `â€"` (typische UTF-8/Latin-1-Verlesung) — **Datei-basiert**, betrifft Kommentar, nicht zwingend UI.
+- Einzelbeleg: in `apps/mobile-app/src/lookup/loadLookupBundle.ts` Kommentarzeile mit einer kaputten Mojibake-Zeichenfolge (typische UTF-8/Latin-1-Verlesung) — **Datei-basiert**, betrifft Kommentar, nicht zwingend UI.
