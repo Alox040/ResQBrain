@@ -48,27 +48,11 @@
     },
   
     "surveys": {
-        "active": [
-          {
-            "id": "survey-002",
-            "title": "Funktionspriorisierung",
-            "status": "active",
-            "url": "https://forms.cloud.microsoft/r/tw508dTuDK",
-            "cta": "An Umfrage teilnehmen",
-            "showOnHomepage": true
-          }
-        ],
-        "completed": [
-          {
-            "id": "survey-001",
-            "title": "Bedarfsanalyse Rettungsdienst App",
-            "status": "completed",
-            "url": "https://forms.cloud.microsoft/r/quaHYEbjAC",
-            "responses": 120,
-            "showResults": true
-          }
-        ]
-      },
+      "deprecated": true,
+      "source": "apps/website/lib/site/survey.ts",
+      "activeUrl": "https://forms.cloud.microsoft/r/AubZiQ0SQw",
+      "note": "Survey-Daten werden zentral in apps/website/lib/site/survey.ts gepflegt."
+    },
   
     "branding": {
       "primaryColor": "#0ea5e9",

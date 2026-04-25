@@ -108,7 +108,7 @@ Status: Vorschlag, noch nicht in Komponenten verdrahtet.
           "id": "survey-002",
           "title": "Funktionspriorisierung",
           "phase": "active",
-          "url": "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
+          "url": "https://forms.cloud.microsoft/r/AubZiQ0SQw",
           "ctaLabel": "An Umfrage teilnehmen",
           "visibility": {
             "showOnHomepage": true,

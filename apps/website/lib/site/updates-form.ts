@@ -1,10 +1,6 @@
 import { surveys } from "@/lib/site/survey";
 
 /**
- * Externes Interessen-/Updates-Formular (z. B. Microsoft Forms).
- * Optional: NEXT_PUBLIC_UPDATES_FORM_URL in .env.local / Deployment setzen, wenn ein eigenes Formular existiert.
+ * Single source of truth for survey/interest form URL.
  */
-const envUrl = process.env.NEXT_PUBLIC_UPDATES_FORM_URL?.trim();
-
-export const updatesInterestFormHref: string =
-  envUrl && envUrl.startsWith("http") ? envUrl : surveys.active.href;
+export const updatesInterestFormHref: string = surveys.active.href;

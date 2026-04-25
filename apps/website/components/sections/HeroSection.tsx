@@ -5,13 +5,13 @@ import { ContentCard } from "@/components/ui/content-card";
 import { SectionFrame } from "@/components/ui/section-frame";
 import { Stack } from "@/components/ui/stack";
 import type { LandingPageHero } from "@/lib/site/content";
+import { surveys } from "@/lib/site/survey";
 
 export type HeroSectionProps = {
   hero: LandingPageHero;
   survey: {
     title: string;
     meta: readonly string[];
-    href: string;
   };
 };
 
@@ -54,7 +54,7 @@ export function HeroSection({ hero, survey }: HeroSectionProps) {
               <span className="badge">{survey.title}</span>
               {surveyMetaText ? <p className="eyebrow muted-text">{surveyMetaText}</p> : null}
               <div className="cta-actions">
-                <ButtonLink href={survey.href} size="lg" external>
+                <ButtonLink href={surveys.active.href} size="lg" external>
                   Zur Umfrage
                 </ButtonLink>
               </div>

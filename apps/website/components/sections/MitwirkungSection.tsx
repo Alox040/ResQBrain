@@ -4,6 +4,7 @@ import { SectionFrame } from "@/components/ui/section-frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Stack } from "@/components/ui/stack";
 import { TextLink } from "@/components/ui/text-link";
+import { surveys } from "@/lib/site/survey";
 
 export type MitwirkungSectionProps = {
   title: string;
@@ -56,7 +57,7 @@ export function MitwirkungSection({
               <span className="badge">{activeSurvey.title}</span>
               {surveyMetaText ? <p className="eyebrow muted-text">{surveyMetaText}</p> : null}
               <div className="cta-actions mitwirkung-primary-action">
-                <ButtonLink href={primaryCta.href} size="lg" external={primaryCta.external}>
+                <ButtonLink href={surveys.active.href} size="lg" external={primaryCta.external}>
                   {primaryCta.label}
                 </ButtonLink>
               </div>

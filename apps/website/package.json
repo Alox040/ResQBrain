@@ -8,7 +8,10 @@
   },
   "scripts": {
     "dev": "next dev",
+    "clean": "rimraf .next tsconfig.tsbuildinfo",
     "build": "next build",
+    "build:clean": "pnpm clean && pnpm build",
+    "verify": "pnpm build && pnpm typecheck",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
@@ -24,6 +27,7 @@
     "@types/node": "25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "rimraf": "^6.1.3",
     "typescript": "^6.0.2"
   }
 }
