@@ -122,6 +122,17 @@ export function MitwirkenForm() {
       <div className="mitwirken-form-status mitwirken-form-status--success" role="status">
         <h2 className="card-title">Danke für deine Nachricht.</h2>
         <p className="body-text muted-text">Wir melden uns so bald wie möglich.</p>
+        <div className="mitwirken-form-actions" aria-label="Nächste Schritte">
+          <Link className="button-link button-link--lg" href={routes.home}>
+            Zur Startseite
+          </Link>
+          <Link className="button-link button-link--secondary button-link--lg" href={routes.mitwirkung}>
+            Mehr zur Mitwirkung
+          </Link>
+          <Link className="button-link button-link--secondary button-link--lg" href={routes.updates}>
+            Updates ansehen
+          </Link>
+        </div>
       </div>
     );
   }

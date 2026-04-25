@@ -30,7 +30,7 @@ const SURVEYS: Survey[] = [
       "Rueckmeldungen aus Stadt- und Landkreisen",
       "Auswertung fliesst direkt in den MVP-Backlog ein",
     ],
-    surveyUrl: "https://forms.cloud.microsoft/r/ZFVgC0L1BZ",
+    surveyUrl: "#feedback",
   },
   {
     id: "survey-002",
@@ -61,8 +61,7 @@ const SURVEYS: Survey[] = [
       "Einhand-Bedienung wurde stark nachgefragt",
       "Suche und Schnellzugriff waren die wichtigsten Features",
     ],
-    resultsUrl:
-      "https://drive.google.com/file/d/1uKMuiNduTUMstE_5W3EmHEzpnGnL5n6_/view?usp=sharing",
+    resultsUrl: "#",
   },
 ];
 
@@ -258,12 +257,24 @@ export function SurveysSection({ surveys = SURVEYS }: { surveys?: Survey[] }) {
               </p>
             </div>
 
-            <a
-              href="#feedback"
-              className="inline-flex items-center justify-center rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-red-700"
-            >
-              Zur naechsten Umfrage
-            </a>
+            <div>
+              <a
+                href="https://forms.cloud.microsoft/r/AubZiQ0SQw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-red-700"
+              >
+                Jetzt teilnehmen
+              </a>
+              <a
+                href="https://drive.google.com/file/d/1uKMuiNduTUMstE_5W3EmHEzpnGnL5n6_/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:underline mt-2 block"
+              >
+                Ergebnisse der letzten Umfrage ansehen
+              </a>
+            </div>
           </div>
         </div>
       </Container>

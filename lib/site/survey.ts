@@ -1,19 +1,6 @@
-export type Survey = {
-  label: string;
-  href: string;
-  description: string;
-  date: string;
-};
-
-export const surveys: {
-  active: Survey;
-  previous: Survey[];
-} = {
-  active: {
-    label: "Aktuelle Umfrage",
-    href: "https://forms.cloud.microsoft/r/AubZiQ0SQw",
-    description: "UI & UX Feedback",
-    date: "April 2026",
-  },
-  previous: [],
-};
+/**
+ * @deprecated Use `apps/website/lib/site/survey.ts` directly.
+ * This file is a compatibility re-export to keep legacy imports working.
+ */
+export type { Survey } from "../../apps/website/lib/site/survey";
+export { surveys } from "../../apps/website/lib/site/survey";
