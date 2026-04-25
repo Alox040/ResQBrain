@@ -1,19 +1,16 @@
 # dependencies
 node_modules/
-.next/
-dist/
-build/
-out/
-.env
-.env.local
 
-# next
+# Next.js
 .next/
 out/
 
 # builds
 dist/
 build/
+
+# TypeScript
+*.tsbuildinfo
 
 # env
 .env
@@ -22,17 +19,20 @@ build/
 .env.test.local
 .env.production.local
 
-# expo
+# Expo / Build
 .expo/
 .expo-shared/
 apps/mobile-app/.expo/
 apps/mobile-app/.expo-shared/
+dist-validation/
+apps/mobile-app/dist-validation/
+apps/mobile-app/dist-validation-ios/
+
+# Logs
+*.log
 
 # misc
 .DS_Store
-*.log
-apps/mobile-app/dist-validation/
-apps/mobile-app/dist-validation-ios/
 *.fig
 *.sketch
 *.zip
