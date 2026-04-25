@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -38,7 +38,95 @@ export type VitalReferenceScreenUIProps = {
   warningBody?: string;
 };
 
-export default function VitalReferenceScreenUI({
+type SectionChipProps = {
+  section: VitalReferenceScreenUISection;
+  isSelected: boolean;
+  onSelectSection: (id: string) => void;
+  ageChipStyle: object;
+  ageChipOnStyle: object;
+  ageChipOffStyle: object;
+  ageChipPressedStyle: object;
+  ageChipLabelStyle: object;
+  ageChipLabelOnStyle: object;
+};
+
+type VitalReferenceCardProps = {
+  item: VitalReferenceScreenUIItem;
+  cardStyle: object[];
+  titleStyle: object;
+  rangeStyle: object;
+  unitStyle: object;
+  hintStyle: object;
+};
+
+const SectionChip = memo(function SectionChip({
+  section,
+  isSelected,
+  onSelectSection,
+  ageChipStyle,
+  ageChipOnStyle,
+  ageChipOffStyle,
+  ageChipPressedStyle,
+  ageChipLabelStyle,
+  ageChipLabelOnStyle,
+}: SectionChipProps) {
+  const handlePress = useCallback(() => {
+    onSelectSection(section.id);
+  }, [onSelectSection, section.id]);
+
+  return (
+    <Pressable
+      onPress={handlePress}
+      hitSlop={8}
+      style={({ pressed }) => [
+        ageChipStyle,
+        isSelected ? ageChipOnStyle : ageChipOffStyle,
+        pressed ? ageChipPressedStyle : null,
+      ]}
+      accessibilityRole="button"
+      accessibilityState={{ selected: isSelected }}
+      accessibilityLabel={`${section.label}. ${section.scope}`}
+    >
+      <Text
+        style={[
+          ageChipLabelStyle,
+          isSelected ? ageChipLabelOnStyle : null,
+        ]}
+        numberOfLines={1}
+      >
+        {section.label}
+      </Text>
+    </Pressable>
+  );
+});
+
+const VitalReferenceCard = memo(function VitalReferenceCard({
+  item,
+  cardStyle,
+  titleStyle,
+  rangeStyle,
+  unitStyle,
+  hintStyle,
+}: VitalReferenceCardProps) {
+  return (
+    <View style={cardStyle}>
+      <Text style={titleStyle} numberOfLines={2}>
+        {item.title}
+      </Text>
+      <Text style={rangeStyle} accessibilityRole="header">
+        {item.range}
+      </Text>
+      <Text style={unitStyle}>{item.unit}</Text>
+      {item.hint ? (
+        <Text style={hintStyle} numberOfLines={3}>
+          {item.hint}
+        </Text>
+      ) : null}
+    </View>
+  );
+});
+
+function VitalReferenceScreenUIComponent({
   title,
   sections,
   selectedSectionId,
@@ -55,6 +143,10 @@ export default function VitalReferenceScreenUI({
   const gap = SPACING.gapMd;
   const horizontalPad = SPACING.screenPadding;
   const colWidth = (width - horizontalPad * 2 - gap) / 2;
+  const vitalCardStyle = useMemo(
+    () => [styles.vitalCard, { width: colWidth, maxWidth: colWidth }],
+    [colWidth, styles.vitalCard],
+  );
 
   return (
     <ScreenContainer>
@@ -78,32 +170,19 @@ export default function VitalReferenceScreenUI({
 
           <View style={styles.ageRow}>
             {sections.map((section) => {
-              const isSelected = section.id === selectedSectionId;
-
               return (
-                <Pressable
+                <SectionChip
                   key={section.id}
-                  onPress={() => onSelectSection(section.id)}
-                  hitSlop={8}
-                  style={({ pressed }) => [
-                    styles.ageChip,
-                    isSelected ? styles.ageChipOn : styles.ageChipOff,
-                    pressed ? styles.ageChipPressed : null,
-                  ]}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected: isSelected }}
-                  accessibilityLabel={`${section.label}. ${section.scope}`}
-                >
-                  <Text
-                    style={[
-                      styles.ageChipLabel,
-                      isSelected ? styles.ageChipLabelOn : null,
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {section.label}
-                  </Text>
-                </Pressable>
+                  section={section}
+                  isSelected={section.id === selectedSectionId}
+                  onSelectSection={onSelectSection}
+                  ageChipStyle={styles.ageChip}
+                  ageChipOnStyle={styles.ageChipOn}
+                  ageChipOffStyle={styles.ageChipOff}
+                  ageChipPressedStyle={styles.ageChipPressed}
+                  ageChipLabelStyle={styles.ageChipLabel}
+                  ageChipLabelOnStyle={styles.ageChipLabelOn}
+                />
               );
             })}
           </View>
@@ -119,23 +198,15 @@ export default function VitalReferenceScreenUI({
         >
           <View style={styles.grid}>
             {referenceItems.map((item) => (
-              <View
+              <VitalReferenceCard
                 key={item.id}
-                style={[styles.vitalCard, { width: colWidth, maxWidth: colWidth }]}
-              >
-                <Text style={styles.vitalTitle} numberOfLines={2}>
-                  {item.title}
-                </Text>
-                <Text style={styles.vitalRange} accessibilityRole="header">
-                  {item.range}
-                </Text>
-                <Text style={styles.vitalUnit}>{item.unit}</Text>
-                {item.hint ? (
-                  <Text style={styles.vitalHint} numberOfLines={3}>
-                    {item.hint}
-                  </Text>
-                ) : null}
-              </View>
+                item={item}
+                cardStyle={vitalCardStyle}
+                titleStyle={styles.vitalTitle}
+                rangeStyle={styles.vitalRange}
+                unitStyle={styles.vitalUnit}
+                hintStyle={styles.vitalHint}
+              />
             ))}
           </View>
         </ScrollView>
@@ -143,6 +214,10 @@ export default function VitalReferenceScreenUI({
     </ScreenContainer>
   );
 }
+
+const VitalReferenceScreenUI = memo(VitalReferenceScreenUIComponent);
+
+export default VitalReferenceScreenUI;
 
 function createStyles(colors: AppPalette) {
   return StyleSheet.create({

@@ -65,6 +65,21 @@ export function FeedbackSheet({
     }
   }, [bundleId, category, contextNote, handleClose, text]);
 
+  const handleCategoryChange = useCallback((nextCategory: FeedbackCategory) => {
+    setCategory((current) =>
+      current === nextCategory ? null : nextCategory,
+    );
+  }, []);
+
+  const handleTextChange = useCallback((value: string) => {
+    setText(value);
+    setError((current) => (current ? null : current));
+  }, []);
+
+  const handleSubmitPress = useCallback(() => {
+    void handleSubmit();
+  }, [handleSubmit]);
+
   return (
     <FeedbackSheetUI
       visible={visible}
@@ -73,20 +88,9 @@ export function FeedbackSheet({
       error={error}
       isSubmitting={isSubmitting}
       maxLength={feedbackConstraints.maxLength}
-      onCategoryChange={(nextCategory) => {
-        setCategory((current) =>
-          current === nextCategory ? null : nextCategory,
-        );
-      }}
-      onTextChange={(value) => {
-        setText(value);
-        if (error) {
-          setError(null);
-        }
-      }}
-      onSubmit={() => {
-        void handleSubmit();
-      }}
+      onCategoryChange={handleCategoryChange}
+      onTextChange={handleTextChange}
+      onSubmit={handleSubmitPress}
       onClose={handleClose}
     />
   );

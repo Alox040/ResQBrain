@@ -29,7 +29,7 @@ export type MedicationDetailScreenUIProps = {
   title: string;
   description: string;
   categoryLabel?: string | null;
-  sections: MedicationDetailSection[];
+  sections: readonly MedicationDetailSection[];
   isLoading: boolean;
   error?: {
     message: string;

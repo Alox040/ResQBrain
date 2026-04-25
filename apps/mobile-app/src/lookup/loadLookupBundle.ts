@@ -58,6 +58,8 @@ export type LoadedLookupBundle = {
   store: LookupRamStore;
 };
 
+let embeddedStoreCache: LookupRamStore | null = null;
+
 export function buildLookupRamStore(bundle: {
   manifest: LookupManifest;
   medications: Medication[];
@@ -120,6 +122,10 @@ export function buildLookupRamStore(bundle: {
  * Throws if the bundle is invalid (fail-fast at startup or test).
  */
 export function loadEmbeddedLookupBundle(): LookupRamStore {
+  if (embeddedStoreCache) {
+    return embeddedStoreCache;
+  }
+
   if (manifestJson == null || medicationsJson == null || algorithmsJson == null) {
     throw new LookupContentError({
       code: 'LOOKUP_EMBEDDED_BUNDLE_MISSING',
@@ -141,7 +147,8 @@ export function loadEmbeddedLookupBundle(): LookupRamStore {
     });
   }
 
-  return buildLookupRamStore(result.data);
+  embeddedStoreCache = buildLookupRamStore(result.data);
+  return embeddedStoreCache;
 }
 
 export async function loadLookupBundleWithSource(): Promise<LoadedLookupBundle> {

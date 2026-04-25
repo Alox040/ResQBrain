@@ -1,6 +1,6 @@
-import { Ionicons } from '@expo/vector-icons';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+﻿import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -25,14 +25,17 @@ import {
   type LookupSearchViewItem,
 } from '@/features/lookup/searchData';
 import { toLookupUiErrorState } from '@/lookup/lookupErrors';
-import type { RootTabParamList } from '@/navigation/AppNavigator';
+import type { RootStackParamList } from '@/navigation/AppNavigator';
 import { LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
 
-const SEARCH_RESULTS_INITIAL_NUM_TO_RENDER = 10;
-const SEARCH_RESULTS_MAX_TO_RENDER_PER_BATCH = 8;
-const SEARCH_RESULTS_WINDOW_SIZE = 6;
+const SEARCH_INPUT_DEBOUNCE_MS = 100;
+const SEARCH_RESULTS_INITIAL_NUM_TO_RENDER = 6;
+const SEARCH_RESULTS_MAX_TO_RENDER_PER_BATCH = 4;
+const SEARCH_RESULTS_WINDOW_SIZE = 5;
+const SEARCH_RESULTS_UPDATE_CELLS_BATCHING_PERIOD_MS = 50;
+const SEARCH_RESULTS_MANY_HITS_THRESHOLD = 100;
 
 function createSearchStyles(colors: AppPalette) {
   return StyleSheet.create({
@@ -96,6 +99,19 @@ function createSearchStyles(colors: AppPalette) {
       justifyContent: 'center',
       minHeight: 220,
     },
+    resultsHintWrap: {
+      marginBottom: SPACING.gapSm,
+      paddingHorizontal: SPACING.gapSm,
+      paddingVertical: SPACING.gapSm,
+      borderRadius: SPACING.radius,
+      backgroundColor: colors.surfaceMuted,
+      borderWidth: StyleSheet.hairlineWidth,
+      borderColor: colors.border,
+    },
+    resultsHintText: {
+      ...TYPOGRAPHY.bodyMuted,
+      color: colors.textMuted,
+    },
   });
 }
 
@@ -150,12 +166,12 @@ export function SearchScreen() {
     hint: string;
   } | null>(null);
   const [retryCount, setRetryCount] = useState(0);
-  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     const handle = setTimeout(() => {
       setDebouncedQuery(query);
-    }, 300);
+    }, SEARCH_INPUT_DEBOUNCE_MS);
 
     return () => clearTimeout(handle);
   }, [query]);
@@ -211,18 +227,12 @@ export function SearchScreen() {
   const handlePressResult = React.useCallback(
     (item: LookupSearchViewItem) => {
       if (item.kind === 'medication') {
-        navigation.navigate('MedicationTab', {
-          screen: 'MedicationDetail',
-          params: { medicationId: item.id },
-        });
+        navigation.navigate('MedicationDetail', { medicationId: item.id });
         return;
       }
 
       if (item.kind === 'algorithm') {
-        navigation.navigate('AlgorithmTab', {
-          screen: 'AlgorithmDetail',
-          params: { algorithmId: item.id },
-        });
+        navigation.navigate('AlgorithmDetail', { algorithmId: item.id });
       }
     },
     [navigation],
@@ -244,12 +254,29 @@ export function SearchScreen() {
 
   const listKeyExtractor = (item: LookupSearchViewItem) =>
     `${item.kind ?? 'unknown'}:${item.id}`;
+  const hasManyHits =
+    normalizedQuery.length > 0 &&
+    filteredResults.length >= SEARCH_RESULTS_MANY_HITS_THRESHOLD;
   const renderSearchResultItem = React.useCallback(
     ({ item }: ListRenderItemInfo<LookupSearchViewItem>) => (
       <SearchResultRow item={item} onPressItem={handlePressResult} />
     ),
     [handlePressResult],
   );
+  const resultsListHeader = useMemo(() => {
+    if (!hasManyHits) {
+      return null;
+    }
+
+    return (
+      <View style={styles.resultsHintWrap}>
+        <Text style={styles.resultsHintText}>
+          {filteredResults.length} Treffer. Die Liste bleibt vollstaendig
+          verfuegbar und wird aus Performance-Gruenden schrittweise gerendert.
+        </Text>
+      </View>
+    );
+  }, [filteredResults.length, hasManyHits, styles.resultsHintText, styles.resultsHintWrap]);
 
   const renderResults = () => {
     if (!normalizedQuery) {
@@ -299,7 +326,7 @@ export function SearchScreen() {
           <EmptyState
             when={true}
             message="Keine Treffer"
-            hint={`Fuer „${query.trim()}“ unter „${filterLabel}“ nichts gefunden.`}
+            hint={`Für „${query.trim()}“ unter „${filterLabel}“ nichts gefunden.`}
           />
         </View>
       );
@@ -316,7 +343,11 @@ export function SearchScreen() {
           initialNumToRender={SEARCH_RESULTS_INITIAL_NUM_TO_RENDER}
           maxToRenderPerBatch={SEARCH_RESULTS_MAX_TO_RENDER_PER_BATCH}
           windowSize={SEARCH_RESULTS_WINDOW_SIZE}
+          updateCellsBatchingPeriod={
+            SEARCH_RESULTS_UPDATE_CELLS_BATCHING_PERIOD_MS
+          }
           removeClippedSubviews
+          ListHeaderComponent={resultsListHeader}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
         />
@@ -383,3 +414,4 @@ export function SearchScreen() {
     </ScreenContainer>
   );
 }
+

@@ -139,4 +139,11 @@ const algoJsxNames = extractJsxScreenNames(algoBody, 'AlgorithmStack');
 
 assertSetEqual('Algorithm stack screens', sortUnique(algoJsxNames), sortUnique(algoTypeKeys));
 
-console.log('[verify-navigation] OK — tab + stack registrations match param lists');
+const rootStackInner = sliceTypeDefinition(appNav, 'RootStackParamList');
+const rootStackTypeKeys = topLevelKeysFromTsBlock(rootStackInner);
+const appNavigatorBody = sliceFunctionBlock(appNav, 'AppNavigator');
+const rootStackJsxNames = extractJsxScreenNames(appNavigatorBody, 'RootStack');
+
+assertSetEqual('Root stack screens', sortUnique(rootStackJsxNames), sortUnique(rootStackTypeKeys));
+
+console.log('[verify-navigation] OK - tab + stack registrations match param lists');

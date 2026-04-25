@@ -8,7 +8,10 @@
       "Bash(xargs ls:*)",
       "Bash(wc -l /e/Programmierung/ResQBrain/apps/mobile-app/src/**/*.tsx)",
       "WebFetch(domain:www.figma.com)",
-      "Bash(git -C \"E:\\\\Programmierung\\\\ResQBrain\" show --stat b491609)"
+      "Bash(git -C \"E:\\\\Programmierung\\\\ResQBrain\" show --stat b491609)",
+      "Bash(pnpm --filter website lint)",
+      "Bash(pnpm --filter website typecheck)",
+      "Bash(pnpm --filter website build)"
     ]
   }
 }

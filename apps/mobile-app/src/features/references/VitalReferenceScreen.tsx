@@ -1,5 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useLayoutEffect, useMemo, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { VITAL_REFERENCE_SECTIONS } from './vitalReferenceData';
 import type { AgeGroupId } from './vitalReferenceTypes';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
@@ -44,14 +44,16 @@ export function VitalReferenceScreen({ navigation }: Props) {
     navigation.setOptions({ title: 'Vitalwerte' });
   }, [navigation]);
 
+  const handleSelectSection = useCallback((nextId: string) => {
+    setAgeId(nextId as AgeGroupId);
+  }, []);
+
   return (
     <VitalReferenceScreenUI
       title="Altersgruppe"
       sections={sections}
       selectedSectionId={ageId}
-      onSelectSection={(nextId) => {
-        setAgeId(nextId as AgeGroupId);
-      }}
+      onSelectSection={handleSelectSection}
       selectedScope={section.scope}
       referenceItems={referenceItems}
       warningTitle="Nur Orientierung"

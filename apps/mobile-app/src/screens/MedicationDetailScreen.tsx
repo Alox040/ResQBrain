@@ -6,42 +6,14 @@ import {
   type LookupDetailViewData,
 } from '@/features/lookup/detailData';
 import { toLookupUiErrorState } from '@/lookup/lookupErrors';
-import type { MedicationStackParamList } from '@/navigation/AppNavigator';
+import type { RootStackParamList } from '@/navigation/AppNavigator';
 import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
 import { MedicationDetailHeaderActions } from '@/ui/components/MedicationDetailHeaderActions';
-import MedicationDetailScreenUI, {
-  type MedicationDetailSection,
-} from '@/ui/screens/MedicationDetailScreenUI';
+import MedicationDetailScreenUI from '@/ui/screens/MedicationDetailScreenUI';
 
-type Props = NativeStackScreenProps<
-  MedicationStackParamList,
-  'MedicationDetail'
->;
-
-function buildSections(medication: LookupDetailViewData): MedicationDetailSection[] {
-  return [
-    {
-      title: 'Zusammenfassung',
-      content: medication.summary,
-      defaultExpanded: true,
-    },
-    {
-      title: 'Quelle',
-      content: 'Freigegebener Referenzeintrag ohne operative Anleitung.',
-      defaultExpanded: true,
-    },
-    {
-      title: 'Tags',
-      content:
-        medication.tags.length > 0
-          ? medication.tags.join(', ')
-          : 'Keine Tags hinterlegt.',
-      defaultExpanded: false,
-      muted: medication.tags.length === 0,
-    },
-  ];
-}
+type Props = NativeStackScreenProps<RootStackParamList, 'MedicationDetail'>;
+const EMPTY_SECTIONS = Object.freeze([]);
 
 export function MedicationDetailScreen({ navigation, route }: Props) {
   const [medication, setMedication] = React.useState<LookupDetailViewData | null>(
@@ -66,6 +38,14 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     toggleFavorite(contentKey);
   }, [contentKey, toggleFavorite]);
 
+  const handleOpenFeedback = useCallback(() => {
+    setFeedbackVisible(true);
+  }, []);
+
+  const handleCloseFeedback = useCallback(() => {
+    setFeedbackVisible(false);
+  }, []);
+
   const loadData = useCallback(async () => {
     setIsLoading(true);
     setErrorState(null);
@@ -89,13 +69,15 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     return (
       <MedicationDetailHeaderActions
         isFavorite={isFavorite}
-        onOpenFeedback={() => {
-          setFeedbackVisible(true);
-        }}
+        onOpenFeedback={handleOpenFeedback}
         onToggleFavorite={onPressFavorite}
       />
     );
-  }, [isFavorite, medication, onPressFavorite]);
+  }, [handleOpenFeedback, isFavorite, medication, onPressFavorite]);
+
+  const handleRetry = useCallback(() => {
+    void loadData();
+  }, [loadData]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -120,21 +102,17 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
         title={medication?.title ?? 'Medikament'}
         description={medication?.heroIndication ?? ''}
         categoryLabel={medication?.categoryLabel ?? null}
-        sections={medication ? buildSections(medication) : []}
+        sections={medication?.sections ?? EMPTY_SECTIONS}
         isLoading={isLoading}
         error={errorState}
-        onRetry={() => {
-          void loadData();
-        }}
+        onRetry={handleRetry}
       />
       {medication ? (
         <FeedbackSheet
           visible={feedbackVisible}
           bundleId={medication.versionLabel}
           contextNote={`Medikament | ${medication.id} | ${medication.title}`}
-          onClose={() => {
-            setFeedbackVisible(false);
-          }}
+          onClose={handleCloseFeedback}
         />
       ) : null}
     </>

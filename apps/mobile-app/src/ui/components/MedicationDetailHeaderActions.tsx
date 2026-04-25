@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { memo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 
@@ -12,7 +12,7 @@ export type MedicationDetailHeaderActionsProps = {
 const HEADER_HIT = 56;
 const HEADER_ICON_SIZE = 28;
 
-export function MedicationDetailHeaderActions({
+function MedicationDetailHeaderActionsComponent({
   isFavorite,
   onOpenFeedback,
   onToggleFavorite,
@@ -52,6 +52,10 @@ export function MedicationDetailHeaderActions({
     </View>
   );
 }
+
+export const MedicationDetailHeaderActions = memo(
+  MedicationDetailHeaderActionsComponent,
+);
 
 const styles = StyleSheet.create({
   root: {

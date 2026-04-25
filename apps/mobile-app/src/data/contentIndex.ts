@@ -56,8 +56,9 @@ function applyStore(nextStore: LookupRamStore): LookupRamStore {
 export function initializeContentFromLookupBundle(
   bundle: LookupRamStore,
 ): LookupRamStore {
-  initializationPromise = Promise.resolve(bundle);
-  return applyStore(bundle);
+  const nextStore = applyStore(bundle);
+  initializationPromise = Promise.resolve(nextStore);
+  return nextStore;
 }
 
 /**

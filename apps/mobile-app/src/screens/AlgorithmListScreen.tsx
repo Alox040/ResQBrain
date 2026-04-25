@@ -1,4 +1,4 @@
-import type { RouteProp } from '@react-navigation/native';
+﻿import type { RouteProp } from '@react-navigation/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -27,7 +27,10 @@ import {
   type LookupListRowItem,
 } from '@/features/lookup/listData';
 import { toLookupUiErrorState } from '@/lookup/lookupErrors';
-import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
+import type {
+  AlgorithmStackParamList,
+  RootStackParamList,
+} from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
 import { useTheme } from '@/theme/ThemeContext';
@@ -36,10 +39,7 @@ import {
   type ListCategoryFilter,
 } from '@/utils/listCategoryFilter';
 
-type Nav = NativeStackNavigationProp<
-  AlgorithmStackParamList,
-  'AlgorithmListScreen'
->;
+type Nav = NativeStackNavigationProp<RootStackParamList>;
 
 type AlgorithmListRoute = RouteProp<
   AlgorithmStackParamList,
@@ -257,3 +257,4 @@ export function AlgorithmListScreen() {
     </ScreenContainer>
   );
 }
+

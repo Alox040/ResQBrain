@@ -135,6 +135,21 @@ export default function MedicationListScreenUI({
           maxToRenderPerBatch={FLAT_LIST_MAX_TO_RENDER_PER_BATCH}
           windowSize={FLAT_LIST_WINDOW_SIZE}
           removeClippedSubviews
+          ListEmptyComponent={
+            <View style={styles.emptyWrap}>
+              <EmptyState
+                when={true}
+                message="Keine Treffer"
+                hint="Suchbegriff ändern oder Suche zurücksetzen"
+                action={
+                  <ButtonSecondary
+                    label="Suche löschen"
+                    onPress={() => onSearchChange('')}
+                  />
+                }
+              />
+            </View>
+          }
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
         />
@@ -159,6 +174,12 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   stateWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    minHeight: 300,
+    paddingHorizontal: SPACING.screenPadding,
+  },
+  emptyWrap: {
     flex: 1,
     justifyContent: 'center',
     minHeight: 300,

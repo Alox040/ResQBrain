@@ -23,19 +23,24 @@ import {
   type LookupDetailViewData,
 } from '@/features/lookup/detailData';
 import { toLookupUiErrorState } from '@/lookup/lookupErrors';
-import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
+import type { RootStackParamList } from '@/navigation/AppNavigator';
 import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
 import { SPACING } from '@/theme';
 import { useTheme } from '@/theme/ThemeContext';
 
-type Props = NativeStackScreenProps<AlgorithmStackParamList, 'AlgorithmDetail'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'AlgorithmDetail'>;
 
 const HEADER_HIT = 56;
 const HEADER_ICON_SIZE = 28;
+const EMPTY_SECTIONS = Object.freeze([]);
 
 export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const { colors } = useTheme();
+  const mutedTextStyle = React.useMemo(
+    () => ({ color: colors.textMuted }),
+    [colors.textMuted],
+  );
   const [algorithm, setAlgorithm] = React.useState<LookupDetailViewData | null>(
     null,
   );
@@ -57,6 +62,14 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
   const onPressFavorite = useCallback(() => {
     toggleFavorite(contentKey);
   }, [contentKey, toggleFavorite]);
+
+  const handleOpenFeedback = useCallback(() => {
+    setFeedbackVisible(true);
+  }, []);
+
+  const handleCloseFeedback = useCallback(() => {
+    setFeedbackVisible(false);
+  }, []);
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
@@ -81,9 +94,7 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     return (
       <View style={styles.headerActionsRow}>
         <Pressable
-          onPress={() => {
-            setFeedbackVisible(true);
-          }}
+          onPress={handleOpenFeedback}
           hitSlop={10}
           accessibilityRole="button"
           accessibilityLabel="Feedback zu diesem Algorithmus senden"
@@ -112,7 +123,11 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
         </Pressable>
       </View>
     );
-  }, [algorithm, colors.navHeaderText, isFavorite, onPressFavorite]);
+  }, [algorithm, colors.navHeaderText, handleOpenFeedback, isFavorite, onPressFavorite]);
+
+  const handleRetry = useCallback(() => {
+    void loadData();
+  }, [loadData]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -155,9 +170,7 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
             action={
               <ButtonSecondary
                 label="Erneut versuchen"
-                onPress={() => {
-                  void loadData();
-                }}
+                onPress={handleRetry}
               />
             }
           />
@@ -180,30 +193,27 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
             indication={algorithm.heroIndication}
           />
 
-          <AccordionPanel title="Zusammenfassung" defaultExpanded>
-            <DetailBodyText variant="relaxed">{algorithm.summary}</DetailBodyText>
-          </AccordionPanel>
-
-          <AccordionPanel title="Tags" defaultExpanded={false}>
-            {algorithm.tags.length > 0 ? (
-              <DetailBodyText variant="relaxed">
-                {algorithm.tags.join(', ')}
+          {(algorithm.sections ?? EMPTY_SECTIONS).map((section) => (
+            <AccordionPanel
+              key={section.title}
+              title={section.title}
+              defaultExpanded={section.defaultExpanded}
+            >
+              <DetailBodyText
+                variant="relaxed"
+                style={section.muted ? mutedTextStyle : undefined}
+              >
+                {section.content}
               </DetailBodyText>
-            ) : (
-              <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
-                Keine Tags hinterlegt.
-              </DetailBodyText>
-            )}
-          </AccordionPanel>
+            </AccordionPanel>
+          ))}
         </ScrollView>
       </ScreenContainer>
       <FeedbackSheet
         visible={feedbackVisible}
         bundleId={algorithm.versionLabel}
         contextNote={`Algorithmus | ${algorithm.id} | ${algorithm.title}`}
-        onClose={() => {
-          setFeedbackVisible(false);
-        }}
+        onClose={handleCloseFeedback}
       />
     </>
   );

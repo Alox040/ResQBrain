@@ -7,15 +7,12 @@ import {
   type LookupListRowItem,
 } from '@/features/lookup/listData';
 import { toLookupUiErrorState } from '@/lookup/lookupErrors';
-import type { MedicationStackParamList } from '@/navigation/AppNavigator';
+import type { RootStackParamList } from '@/navigation/AppNavigator';
 import MedicationListScreenUI, {
   type MedicationListScreenUIItem,
 } from '@/ui/screens/MedicationListScreenUI';
 
-type Nav = NativeStackNavigationProp<
-  MedicationStackParamList,
-  'MedicationListScreen'
->;
+type Nav = NativeStackNavigationProp<RootStackParamList>;
 
 function matchesSearch(item: LookupListRowItem, query: string): boolean {
   const normalizedQuery = query.trim().toLowerCase();
@@ -85,6 +82,10 @@ export function MedicationListAdapter() {
     [navigation],
   );
 
+  const handleRetry = useCallback(() => {
+    void loadData();
+  }, [loadData]);
+
   return (
     <MedicationListScreenUI
       items={items}
@@ -93,9 +94,7 @@ export function MedicationListAdapter() {
       onSearchChange={setSearchValue}
       isLoading={isLoading}
       error={errorState}
-      onRetry={() => {
-        void loadData();
-      }}
+      onRetry={handleRetry}
     />
   );
 }

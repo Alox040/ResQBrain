@@ -60,12 +60,14 @@ function buildAllowedRouteNames() {
   const appNav = read(appNavPath);
   const homeFile = read(homeStackPath);
 
+  const rootStackInner = sliceTypeDefinition(appNav, 'RootStackParamList');
   const rootInner = sliceTypeDefinition(appNav, 'RootTabParamList');
   const homeInner = sliceTypeDefinition(homeFile, 'HomeStackParamList');
   const medInner = sliceTypeDefinition(appNav, 'MedicationStackParamList');
   const algoInner = sliceTypeDefinition(appNav, 'AlgorithmStackParamList');
 
   const all = [
+    ...topLevelKeysFromTsBlock(rootStackInner),
     ...topLevelKeysFromTsBlock(rootInner),
     ...topLevelKeysFromTsBlock(homeInner),
     ...topLevelKeysFromTsBlock(medInner),

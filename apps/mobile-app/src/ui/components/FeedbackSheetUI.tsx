@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import {
   Modal,
   Pressable,
@@ -26,6 +26,17 @@ export type FeedbackSheetUIProps = {
   onClose: () => void;
 };
 
+type CategoryOptionChipProps = {
+  label: string;
+  value: FeedbackCategory;
+  isSelected: boolean;
+  onCategoryChange: (category: FeedbackCategory) => void;
+  chipStyle: object;
+  chipSelectedStyle: object;
+  chipLabelStyle: object;
+  chipLabelSelectedStyle: object;
+};
+
 const CATEGORY_OPTIONS: Array<{
   label: string;
   value: FeedbackCategory;
@@ -35,7 +46,42 @@ const CATEGORY_OPTIONS: Array<{
   { label: 'Verbesserung', value: 'improvement' },
 ];
 
-export function FeedbackSheetUI({
+const CategoryOptionChip = memo(function CategoryOptionChip({
+  label,
+  value,
+  isSelected,
+  onCategoryChange,
+  chipStyle,
+  chipSelectedStyle,
+  chipLabelStyle,
+  chipLabelSelectedStyle,
+}: CategoryOptionChipProps) {
+  const handlePress = useCallback(() => {
+    onCategoryChange(value);
+  }, [onCategoryChange, value]);
+
+  return (
+    <Pressable
+      accessibilityRole="button"
+      onPress={handlePress}
+      style={[
+        chipStyle,
+        isSelected ? chipSelectedStyle : null,
+      ]}
+    >
+      <Text
+        style={[
+          chipLabelStyle,
+          isSelected ? chipLabelSelectedStyle : null,
+        ]}
+      >
+        {label}
+      </Text>
+    </Pressable>
+  );
+});
+
+function FeedbackSheetUIComponent({
   visible,
   category,
   text,
@@ -69,28 +115,18 @@ export function FeedbackSheetUI({
 
           <View style={styles.chipRow}>
             {CATEGORY_OPTIONS.map((option) => {
-              const selected = category === option.value;
               return (
-                <Pressable
+                <CategoryOptionChip
                   key={option.value}
-                  accessibilityRole="button"
-                  onPress={() => {
-                    onCategoryChange(option.value);
-                  }}
-                  style={[
-                    styles.chip,
-                    selected ? styles.chipSelected : null,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.chipLabel,
-                      selected ? styles.chipLabelSelected : null,
-                    ]}
-                  >
-                    {option.label}
-                  </Text>
-                </Pressable>
+                  label={option.label}
+                  value={option.value}
+                  isSelected={category === option.value}
+                  onCategoryChange={onCategoryChange}
+                  chipStyle={styles.chip}
+                  chipSelectedStyle={styles.chipSelected}
+                  chipLabelStyle={styles.chipLabel}
+                  chipLabelSelectedStyle={styles.chipLabelSelected}
+                />
               );
             })}
           </View>
@@ -130,6 +166,8 @@ export function FeedbackSheetUI({
     </Modal>
   );
 }
+
+export const FeedbackSheetUI = memo(FeedbackSheetUIComponent);
 
 function createStyles(colors: AppPalette) {
   return StyleSheet.create({

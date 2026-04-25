@@ -72,35 +72,51 @@ export default function App() {
   const [loadAttempt, setLoadAttempt] = React.useState(0);
 
   React.useEffect(() => {
+    let cancelled = false;
+
     void (async () => {
       setReady(false);
       setErrorState(null);
 
       try {
-        const persistedDebugInfo = await getBundleDebugInfo();
+        const persistedDebugInfoPromise = getBundleDebugInfo();
         await ensureContentStoreReady();
+
+        if (cancelled) {
+          return;
+        }
+
+        setReady(true);
+
         const versionInfo = getContentVersionInfo();
         const bundleVersion = versionInfo.version ?? null;
 
-        await setBundleDebugInfo({
-          version: bundleVersion,
-          source: 'embedded',
-          lastUpdate: persistedDebugInfo?.lastUpdate ?? null,
-          pendingUpdate: false,
-        });
+        void (async () => {
+          const persistedDebugInfo = await persistedDebugInfoPromise;
 
-        await Promise.all([
-          hydrateFavorites(),
-          hydrateHistory(),
-          hydrateRecent(),
-        ]);
-
-        setReady(true);
+          await Promise.allSettled([
+            setBundleDebugInfo({
+              version: bundleVersion,
+              source: 'embedded',
+              lastUpdate: persistedDebugInfo?.lastUpdate ?? null,
+              pendingUpdate: false,
+            }),
+            hydrateFavorites(),
+            hydrateHistory(),
+            hydrateRecent(),
+          ]);
+        })();
       } catch (error) {
-        setErrorState(toLookupUiErrorState(error));
-        setReady(false);
+        if (!cancelled) {
+          setErrorState(toLookupUiErrorState(error));
+          setReady(false);
+        }
       }
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [loadAttempt]);
 
   return (

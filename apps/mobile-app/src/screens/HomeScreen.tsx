@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+﻿import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -13,7 +13,10 @@ import {
 } from '@/components/QuickAccessGrid';
 import { ScreenContainer } from '@/components/layout';
 import { resolveContentViewModel } from '@/data/adapters/resolveContentViewModel';
-import type { RootTabParamList } from '@/navigation/AppNavigator';
+import type {
+  RootStackParamList,
+  RootTabParamList,
+} from '@/navigation/AppNavigator';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import { parseFavoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { useRecentStore } from '@/state/recentStore';
@@ -25,7 +28,10 @@ import { getBundleDebugInfo } from '@/lookup/bundleDebugInfo';
 
 type HomeScreenNav = CompositeNavigationProp<
   NativeStackNavigationProp<HomeStackParamList, 'HomeMain'>,
-  BottomTabNavigationProp<RootTabParamList>
+  CompositeNavigationProp<
+    BottomTabNavigationProp<RootTabParamList>,
+    NativeStackNavigationProp<RootStackParamList>
+  >
 >;
 
 type ActionCardItem = {
@@ -70,6 +76,15 @@ function createStyles(colors: AppPalette) {
       ...TYPOGRAPHY.body,
       color: colors.text,
       lineHeight: 22,
+    },
+    emptyStripContent: {
+      gap: SPACING.gapSm,
+      marginBottom: SPACING.gapMd,
+    },
+    emptyStripTitle: {
+      ...TYPOGRAPHY.title,
+      color: colors.text,
+      lineHeight: 28,
     },
     cardList: {
       gap: SPACING.gapMd,
@@ -212,7 +227,7 @@ function SearchButton({ onPress }: { onPress: () => void }) {
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel="Search oeffnen. Stichwortsuche im lokalen Bundle."
+      accessibilityLabel="Suche oeffnen. Stichwortsuche im lokalen Bundle."
       onPress={onPress}
       style={({ pressed }) => [
         styles.searchButton,
@@ -224,7 +239,7 @@ function SearchButton({ onPress }: { onPress: () => void }) {
           <Ionicons name="search" size={26} color={colors.onPrimary} />
         </View>
         <View style={styles.searchTextCol}>
-          <Text style={styles.searchTitle}>Search</Text>
+          <Text style={styles.searchTitle}>Suche</Text>
           <Text style={styles.searchSubtitle}>Direkt finden, ohne Listen-Navigation</Text>
         </View>
         <Ionicons name="chevron-forward" size={22} color={colors.textMuted} />
@@ -243,7 +258,7 @@ function QuickAccessGrid({
 
   return (
     <View style={styles.sectionBlock}>
-      <SectionHeader title="Quick Access" size="comfortable" />
+      <SectionHeader title="Schnellzugriff" size="comfortable" />
       <QuickAccessGridView items={items} />
     </View>
   );
@@ -311,6 +326,28 @@ function FavoritesSection({
   );
 }
 
+function EmptyActionStrip({
+  message,
+  actionLabel,
+  onAction,
+}: {
+  message: string;
+  actionLabel: string;
+  onAction: () => void;
+}) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
+  return (
+    <View style={styles.emptyStrip}>
+      <View style={styles.emptyStripContent}>
+        <Text style={styles.emptyStripTitle}>{message}</Text>
+      </View>
+      <ButtonSecondary label={actionLabel} onPress={onAction} />
+    </View>
+  );
+}
+
 export function HomeScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
@@ -359,20 +396,24 @@ export function HomeScreen() {
   const openContentDetail = useCallback(
     (kind: ContentKind, id: string) => {
       if (kind === 'medication') {
-        navigation.navigate('MedicationTab', {
-          screen: 'MedicationDetail',
-          params: { medicationId: id },
-        });
+        navigation.navigate('MedicationDetail', { medicationId: id });
         return;
       }
 
-      navigation.navigate('AlgorithmTab', {
-        screen: 'AlgorithmDetail',
-        params: { algorithmId: id },
-      });
+      navigation.navigate('AlgorithmDetail', { algorithmId: id });
     },
     [navigation],
   );
+
+  const openSearch = useCallback(() => {
+    navigation.navigate('Search');
+  }, [navigation]);
+
+  const openMedicationList = useCallback(() => {
+    navigation.navigate('MedicationTab', {
+      screen: 'MedicationListScreen',
+    });
+  }, [navigation]);
 
   const favoriteShortcuts = useMemo((): ContentShortcutItem[] => {
     return favorites.map((favorite) => ({
@@ -510,7 +551,7 @@ export function HomeScreen() {
       },
       {
         key: 'nav-medications',
-        title: 'Medications',
+        title: 'Medikamente',
         subtitle: 'Listen, Dosierungen und Hinweise',
         icon: 'medkit',
         iconColor: '#0f766e',
@@ -522,7 +563,7 @@ export function HomeScreen() {
       },
       {
         key: 'nav-algorithms',
-        title: 'Algorithms',
+        title: 'Algorithmen',
         subtitle: 'Ablaeufe und Warnhinweise oeffnen',
         icon: 'git-branch',
         iconColor: '#5b21b6',
@@ -545,7 +586,7 @@ export function HomeScreen() {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.sectionBlock}>
-            <SearchButton onPress={() => navigation.navigate('Search')} />
+            <SearchButton onPress={openSearch} />
             <ButtonSecondary
               label="Feedback"
               onPress={() => {
@@ -574,11 +615,11 @@ export function HomeScreen() {
         <View style={styles.sectionBlock}>
           <SectionHeader title="Favoriten" size="comfortable" />
           {favoriteShortcuts.length === 0 ? (
-            <View style={styles.emptyStrip}>
-              <Text style={styles.emptyStripText}>
-                Stern in der Detailansicht — Favoriten erscheinen hier.
-              </Text>
-            </View>
+            <EmptyActionStrip
+              message="Keine Favoriten"
+              actionLabel="Medikamente suchen"
+              onAction={openMedicationList}
+            />
           ) : (
             <FavoritesSection items={favoriteShortcuts} />
           )}
@@ -587,11 +628,11 @@ export function HomeScreen() {
         <View style={styles.sectionBlock}>
           <SectionHeader title="Zuletzt verwendet" size="comfortable" />
           {recentShortcuts.length === 0 ? (
-            <View style={styles.emptyStrip}>
-              <Text style={styles.emptyStripText}>
-                Geoeffnete Inhalte erscheinen hier automatisch.
-              </Text>
-            </View>
+            <EmptyActionStrip
+              message="Noch nichts geöffnet"
+              actionLabel="Suche starten"
+              onAction={openSearch}
+            />
           ) : (
             <RecentSection items={recentShortcuts} />
           )}
@@ -609,3 +650,4 @@ export function HomeScreen() {
     </>
   );
 }
+
