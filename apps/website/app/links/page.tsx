@@ -13,14 +13,18 @@ type LinkItem = {
 
 const primaryLinks: readonly LinkItem[] = [
   { label: "Mitwirken", href: routes.mitwirken },
-  { label: "UI Umfrage", href: surveys.active.href, external: true },
-  { label: "Community", href: publicLinks.github, external: true },
+  {
+    label: surveys.active.label,
+    href: surveys.active.href,
+    external: true,
+  },
+  { label: "GitHub", href: publicLinks.github, external: true },
   { label: "Discord", href: publicLinks.discord, external: true },
 ] as const;
 
 const secondaryLinks: readonly LinkItem[] = [
-  { label: "Reddit", href: "https://www.reddit.com/search/?q=ResQBrain", external: true },
-  { label: "TikTok", href: "https://www.tiktok.com/@resqbrain", external: true },
+  { label: "Reddit", href: "https://www.reddit.com/r/ResQBrain/", external: true },
+  { label: "TikTok", href: publicLinks.tiktok, external: true },
   { label: "Website", href: publicLinks.website, external: true },
 ] as const;
 
@@ -52,7 +56,7 @@ export default function LinksPage() {
 
         <div className={styles.stack}>
           {primaryLinks.map((item) => (
-            <LinkButton key={item.label} {...item} />
+            <LinkButton key={item.href} {...item} />
           ))}
         </div>
 
@@ -60,7 +64,7 @@ export default function LinksPage() {
           <h2 className={styles.sectionLabel}>Mehr</h2>
           <div className={styles.secondaryStack}>
             {secondaryLinks.map((item) => (
-              <LinkButton key={item.label} {...item} secondary />
+              <LinkButton key={item.href} {...item} secondary />
             ))}
           </div>
         </section>

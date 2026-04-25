@@ -5,6 +5,10 @@ import {
   type LookupContentKey,
   type LookupRamStore,
 } from '@/lookup/loadLookupBundle';
+import {
+  isLookupContentError,
+  LookupContentError,
+} from '@/lookup/lookupErrors';
 import type {
   Algorithm,
   ContentItem,
@@ -24,14 +28,23 @@ export function toContentKey(kind: ContentKind, id: string): ContentKey {
 
 function requireStore(): LookupRamStore {
   if (!store) {
-    throw new Error(
-      'contentIndex not initialized. Call ensureContentStoreReady() before using content selectors.',
-    );
+    throw new LookupContentError({
+      code: 'LOOKUP_CONTENT_STORE_NOT_READY',
+      message:
+        'Lookup content store was accessed before initialization. Call ensureContentStoreReady() first.',
+    });
   }
   return store;
 }
 
 function applyStore(nextStore: LookupRamStore): LookupRamStore {
+  if (nextStore.contentItems.length === 0) {
+    throw new LookupContentError({
+      code: 'LOOKUP_CONTENT_STORE_EMPTY',
+      message: 'Lookup content store is empty after initialization.',
+    });
+  }
+
   store = nextStore;
   return nextStore;
 }
@@ -43,8 +56,9 @@ function applyStore(nextStore: LookupRamStore): LookupRamStore {
 export function initializeContentFromLookupBundle(
   bundle: LookupRamStore,
 ): LookupRamStore {
-  initializationPromise = Promise.resolve(bundle);
-  return applyStore(bundle);
+  const nextStore = applyStore(bundle);
+  initializationPromise = Promise.resolve(nextStore);
+  return nextStore;
 }
 
 /**
@@ -63,9 +77,15 @@ export async function ensureContentStoreReady(): Promise<LookupRamStore> {
       .then((bundle) => initializeContentFromLookupBundle(bundle))
       .catch((error) => {
         initializationPromise = null;
-        throw error instanceof Error
-          ? error
-          : new Error('Inhalte konnten nicht geladen werden.');
+        if (isLookupContentError(error)) {
+          throw error;
+        }
+
+        throw new LookupContentError({
+          code: 'LOOKUP_CONTENT_INITIALIZATION_FAILED',
+          message: 'Lookup content initialization failed.',
+          cause: error,
+        });
       });
   }
 

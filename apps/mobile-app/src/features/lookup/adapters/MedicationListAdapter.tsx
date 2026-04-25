@@ -1,99 +1,63 @@
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
 
-import { ButtonSecondary, EmptyState } from '@/components/common';
-import { ScreenContainer } from '@/components/layout';
 import {
   loadMedicationList,
   type LookupListRowItem,
 } from '@/features/lookup/listData';
-import type { MedicationStackParamList } from '@/navigation/AppNavigator';
+import { toLookupUiErrorState } from '@/lookup/lookupErrors';
+import type { RootStackParamList } from '@/navigation/AppNavigator';
 import MedicationListScreenUI, {
-  type MedicationListScreenRowViewModel,
+  type MedicationListScreenUIItem,
 } from '@/ui/screens/MedicationListScreenUI';
-import { useTheme } from '@/theme/ThemeContext';
-import { TAG_CONFIG } from '@/utils/tagConfig';
-import {
-  filterByListCategory,
-  type ListCategoryFilter,
-} from '@/utils/listCategoryFilter';
 
-type Nav = NativeStackNavigationProp<
-  MedicationStackParamList,
-  'MedicationListScreen'
->;
+type Nav = NativeStackNavigationProp<RootStackParamList>;
 
-type LoadingStyles = {
-  stateWrap: {
-    flex: number;
-    justifyContent: 'center';
-  };
-  loadingText: {
-    marginTop: number;
-    textAlign: 'center';
-  };
-};
+function matchesSearch(item: LookupListRowItem, query: string): boolean {
+  const normalizedQuery = query.trim().toLowerCase();
 
-const loadingStyles: LoadingStyles = {
-  stateWrap: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  loadingText: {
-    marginTop: 12,
-    textAlign: 'center',
-  },
-};
+  if (normalizedQuery.length === 0) {
+    return true;
+  }
 
-function buildEmptyMessage(hasAnyItems: boolean): string {
-  return hasAnyItems
-    ? 'Fuer diese Kategorie sind keine Medikamente im Bundle vorhanden.'
-    : 'Keine Medikamente im Bundle vorhanden.';
+  const title = item.label.toLowerCase();
+  const subtitle = item.listSubtitle.toLowerCase();
+
+  return (
+    title.includes(normalizedQuery) ||
+    subtitle.includes(normalizedQuery)
+  );
 }
 
-function mapMedicationRowToViewModel(
-  item: LookupListRowItem,
-  onPress: () => void,
-): MedicationListScreenRowViewModel {
-  const primaryTag = item.tags[0];
-  const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
-
+function mapMedicationItem(item: LookupListRowItem): MedicationListScreenUIItem {
   return {
     id: item.id,
     title: item.label,
     subtitle: item.listSubtitle,
-    tag: tagCfg?.label,
-    onPress,
   };
 }
 
 export function MedicationListAdapter() {
-  const { colors } = useTheme();
   const navigation = useNavigation<Nav>();
-  const [categoryFilter, setCategoryFilter] =
-    useState<ListCategoryFilter>('all');
-  const [medicationRows, setMedicationRows] = useState<LookupListRowItem[]>(
-    [],
-  );
+  const [searchValue, setSearchValue] = useState('');
+  const [medicationRows, setMedicationRows] = useState<LookupListRowItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorState, setErrorState] = useState<{
+    message: string;
+    hint: string;
+  } | null>(null);
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
-    setErrorMessage(null);
+    setErrorState(null);
 
     try {
       const items = await loadMedicationList();
       setMedicationRows(items);
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'Medikamente konnten nicht geladen werden.';
-      setErrorMessage(message);
       setMedicationRows([]);
+      setErrorState(toLookupUiErrorState(error));
     } finally {
       setIsLoading(false);
     }
@@ -103,64 +67,34 @@ export function MedicationListAdapter() {
     void loadData();
   }, [loadData]);
 
-  const filteredMedicationRows = useMemo(
-    () => filterByListCategory(medicationRows, categoryFilter),
-    [medicationRows, categoryFilter],
-  );
-
-  const medicationItems = useMemo(
+  const items = useMemo(
     () =>
-      filteredMedicationRows.map((item) =>
-        mapMedicationRowToViewModel(item, () => {
-          navigation.navigate('MedicationDetail', { medicationId: item.id });
-        }),
-      ),
-    [filteredMedicationRows, navigation],
+      medicationRows
+        .filter((item) => matchesSearch(item, searchValue))
+        .map(mapMedicationItem),
+    [medicationRows, searchValue],
   );
 
-  const emptyMessage = buildEmptyMessage(medicationRows.length > 0);
+  const handleItemPress = useCallback(
+    (id: string) => {
+      navigation.navigate('MedicationDetail', { medicationId: id });
+    },
+    [navigation],
+  );
 
-  if (isLoading) {
-    return (
-      <ScreenContainer>
-        <View style={loadingStyles.stateWrap}>
-          <ActivityIndicator size="small" color={colors.primary} />
-          <Text style={[loadingStyles.loadingText, { color: colors.textMuted }]}>
-            Medikamente werden geladen...
-          </Text>
-        </View>
-      </ScreenContainer>
-    );
-  }
-
-  if (errorMessage) {
-    return (
-      <ScreenContainer>
-        <View style={loadingStyles.stateWrap}>
-          <EmptyState
-            when={true}
-            message={errorMessage}
-            hint="Offline-Bundle pruefen oder App neu starten."
-            action={
-              <ButtonSecondary
-                label="Erneut versuchen"
-                onPress={() => {
-                  void loadData();
-                }}
-              />
-            }
-          />
-        </View>
-      </ScreenContainer>
-    );
-  }
+  const handleRetry = useCallback(() => {
+    void loadData();
+  }, [loadData]);
 
   return (
     <MedicationListScreenUI
-      items={medicationItems}
-      categoryFilter={categoryFilter}
-      onCategoryFilterChange={setCategoryFilter}
-      emptyMessage={emptyMessage}
+      items={items}
+      onItemPress={handleItemPress}
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+      isLoading={isLoading}
+      error={errorState}
+      onRetry={handleRetry}
     />
   );
 }

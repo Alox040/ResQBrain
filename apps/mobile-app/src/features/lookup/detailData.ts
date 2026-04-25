@@ -4,11 +4,19 @@ import {
   getContentVersionInfo,
   getMedicationById,
 } from "@/data/contentIndex";
+import { LookupContentError } from "@/lookup/lookupErrors";
 import type { Algorithm, Medication } from "@/types/content";
 
 export type LookupDetailStep = Readonly<{
   position: number;
   text: string;
+}>;
+
+export type LookupDetailSectionView = Readonly<{
+  title: string;
+  content: string;
+  defaultExpanded?: boolean;
+  muted?: boolean;
 }>;
 
 export type LookupDetailViewData = {
@@ -34,7 +42,68 @@ export type LookupDetailViewData = {
   steps: readonly LookupDetailStep[];
   /** Algorithm: safety warnings from bundle when present. */
   warnings: string | null;
+  /** Preprocessed UI sections for detail rendering. */
+  sections: readonly LookupDetailSectionView[];
 };
+
+const NO_TAGS_CONTENT = "Keine Tags hinterlegt.";
+const SOURCE_SECTION_CONTENT =
+  "Freigegebener Referenzeintrag ohne operative Anleitung.";
+const EMPTY_CONTRAINDICATIONS: readonly string[] = Object.freeze([]);
+const EMPTY_STEPS: readonly LookupDetailStep[] = Object.freeze([]);
+
+function buildMedicationSections(
+  medication: Medication,
+  summary: string,
+): readonly LookupDetailSectionView[] {
+  const tagsContent =
+    medication.tags.length > 0
+      ? medication.tags.join(", ")
+      : NO_TAGS_CONTENT;
+
+  return Object.freeze([
+    {
+      title: "Zusammenfassung",
+      content: summary,
+      defaultExpanded: true,
+    },
+    {
+      title: "Quelle",
+      content: SOURCE_SECTION_CONTENT,
+      defaultExpanded: true,
+    },
+    {
+      title: "Tags",
+      content: tagsContent,
+      defaultExpanded: false,
+      muted: medication.tags.length === 0,
+    },
+  ]);
+}
+
+function buildAlgorithmSections(
+  algorithm: Algorithm,
+  summary: string,
+): readonly LookupDetailSectionView[] {
+  const tagsContent =
+    algorithm.tags.length > 0
+      ? algorithm.tags.join(", ")
+      : NO_TAGS_CONTENT;
+
+  return Object.freeze([
+    {
+      title: "Zusammenfassung",
+      content: summary,
+      defaultExpanded: true,
+    },
+    {
+      title: "Tags",
+      content: tagsContent,
+      defaultExpanded: false,
+      muted: algorithm.tags.length === 0,
+    },
+  ]);
+}
 
 function normalizeSummary(text?: string | null) {
   const trimmed = text?.trim();
@@ -73,6 +142,7 @@ function medicationToDetailViewData(
 ): LookupDetailViewData {
   const summary = normalizeSummary(m.indication);
   const hero = m.indication.trim().length > 0 ? m.indication.trim() : summary;
+  const sections = buildMedicationSections(m, summary);
 
   return {
     id: m.id,
@@ -87,10 +157,11 @@ function medicationToDetailViewData(
     visibility: null,
     tags: m.tags.map((t) => String(t)),
     dosage: null,
-    contraindications: [],
+    contraindications: EMPTY_CONTRAINDICATIONS,
     clinicalNotes: null,
-    steps: [],
+    steps: EMPTY_STEPS,
     warnings: null,
+    sections,
   };
 }
 
@@ -101,6 +172,7 @@ function algorithmToDetailViewData(
 ): LookupDetailViewData {
   const summary = normalizeSummary(a.indication);
   const hero = a.indication.trim().length > 0 ? a.indication.trim() : summary;
+  const sections = buildAlgorithmSections(a, summary);
 
   return {
     id: a.id,
@@ -115,10 +187,11 @@ function algorithmToDetailViewData(
     visibility: null,
     tags: a.tags.map((t) => String(t)),
     dosage: null,
-    contraindications: [],
+    contraindications: EMPTY_CONTRAINDICATIONS,
     clinicalNotes: null,
-    steps: Object.freeze([]),
+    steps: EMPTY_STEPS,
     warnings: null,
+    sections,
   };
 }
 
@@ -127,7 +200,10 @@ export async function loadAlgorithmDetailViewData(id: string): Promise<LookupDet
 
   const algorithm = getAlgorithmById(id);
   if (!algorithm) {
-    throw new Error('Eintrag nicht gefunden');
+    throw new LookupContentError({
+      code: 'LOOKUP_CONTENT_ITEM_NOT_FOUND',
+      message: `Lookup algorithm id "${id}" was not found in the embedded bundle.`,
+    });
   }
 
   const versionInfo = getContentVersionInfo();
@@ -144,7 +220,10 @@ export async function loadMedicationDetailViewData(id: string): Promise<LookupDe
 
   const medication = getMedicationById(id);
   if (!medication) {
-    throw new Error('Eintrag nicht gefunden');
+    throw new LookupContentError({
+      code: 'LOOKUP_CONTENT_ITEM_NOT_FOUND',
+      message: `Lookup medication id "${id}" was not found in the embedded bundle.`,
+    });
   }
 
   const versionInfo = getContentVersionInfo();

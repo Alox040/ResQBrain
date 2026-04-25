@@ -9,6 +9,7 @@ import {
 } from '@/data/contentIndex';
 import { hydrateHistory } from '@/features/history/historyStore';
 import { getBundleDebugInfo, setBundleDebugInfo } from '@/lookup/bundleDebugInfo';
+import { toLookupUiErrorState } from '@/lookup/lookupErrors';
 import { AppNavigator } from '@/navigation/AppNavigator';
 import { hydrateFavorites } from '@/state/favoritesStore';
 import { hydrateRecent } from '@/state/recentStore';
@@ -39,10 +40,13 @@ function AppLoading() {
 }
 
 function AppError({
-  message,
+  errorState,
   onRetry,
 }: {
-  message: string;
+  errorState: {
+    message: string;
+    hint: string;
+  };
   onRetry: () => void;
 }) {
   const { colors } = useTheme();
@@ -51,8 +55,8 @@ function AppError({
     <View style={[styles.centeredRoot, { backgroundColor: colors.bg }]}>
       <EmptyState
         when={true}
-        message="Inhalte konnten nicht geladen werden."
-        hint={message}
+        message={errorState.message}
+        hint={errorState.hint}
         action={<ButtonSecondary label="Erneut versuchen" onPress={onRetry} />}
       />
     </View>
@@ -61,52 +65,67 @@ function AppError({
 
 export default function App() {
   const [ready, setReady] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [errorState, setErrorState] = React.useState<{
+    message: string;
+    hint: string;
+  } | null>(null);
   const [loadAttempt, setLoadAttempt] = React.useState(0);
 
   React.useEffect(() => {
+    let cancelled = false;
+
     void (async () => {
       setReady(false);
-      setErrorMessage(null);
+      setErrorState(null);
 
       try {
-        const persistedDebugInfo = await getBundleDebugInfo();
+        const persistedDebugInfoPromise = getBundleDebugInfo();
         await ensureContentStoreReady();
+
+        if (cancelled) {
+          return;
+        }
+
+        setReady(true);
+
         const versionInfo = getContentVersionInfo();
         const bundleVersion = versionInfo.version ?? null;
 
-        await setBundleDebugInfo({
-          version: bundleVersion,
-          source: 'embedded',
-          lastUpdate: persistedDebugInfo?.lastUpdate ?? null,
-          pendingUpdate: false,
-        });
+        void (async () => {
+          const persistedDebugInfo = await persistedDebugInfoPromise;
 
-        await Promise.all([
-          hydrateFavorites(),
-          hydrateHistory(),
-          hydrateRecent(),
-        ]);
-
-        setReady(true);
+          await Promise.allSettled([
+            setBundleDebugInfo({
+              version: bundleVersion,
+              source: 'embedded',
+              lastUpdate: persistedDebugInfo?.lastUpdate ?? null,
+              pendingUpdate: false,
+            }),
+            hydrateFavorites(),
+            hydrateHistory(),
+            hydrateRecent(),
+          ]);
+        })();
       } catch (error) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : 'Inhalte konnten nicht geladen werden.';
-        setErrorMessage(message);
-        setReady(false);
+        if (!cancelled) {
+          setErrorState(toLookupUiErrorState(error));
+          setReady(false);
+        }
       }
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [loadAttempt]);
 
   return (
     <ThemeProvider>
       {ready ? (
         <AppNavigation />
-      ) : errorMessage ? (
+      ) : errorState ? (
         <AppError
-          message={errorMessage}
+          errorState={errorState}
           onRetry={() => {
             setLoadAttempt((value) => value + 1);
           }}

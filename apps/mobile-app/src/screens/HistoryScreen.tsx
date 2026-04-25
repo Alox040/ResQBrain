@@ -1,4 +1,4 @@
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+﻿import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -22,13 +22,19 @@ import {
   useHistorySorted,
   type HistoryRecord,
 } from '@/features/history/historyStore';
-import type { RootTabParamList } from '@/navigation/AppNavigator';
+import type {
+  RootStackParamList,
+  RootTabParamList,
+} from '@/navigation/AppNavigator';
 import type { HomeStackParamList } from '@/navigation/homeStackParamList';
 import { SPACING } from '@/theme';
 
 type HistoryScreenNav = CompositeNavigationProp<
   NativeStackNavigationProp<HomeStackParamList, 'History'>,
-  BottomTabNavigationProp<RootTabParamList>
+  CompositeNavigationProp<
+    BottomTabNavigationProp<RootTabParamList>,
+    NativeStackNavigationProp<RootStackParamList>
+  >
 >;
 
 const KIND_BADGE_MEDICATION = {
@@ -56,7 +62,7 @@ function HistoryListHeader() {
     <View style={styles.listHeader}>
       <SectionHeader
         title="Verlauf"
-        description="Zuletzt geöffnet — max. 30 Einträge, neueste oben."
+        description="Zuletzt geöffnet - max. 30 Einträge, neueste oben."
         size="comfortable"
       />
     </View>
@@ -74,16 +80,10 @@ export function HistoryScreen() {
   const openItem = useCallback(
     (item: HistoryRecord) => {
       if (item.kind === 'medication') {
-        navigation.navigate('MedicationTab', {
-          screen: 'MedicationDetail',
-          params: { medicationId: item.id },
-        });
+        navigation.navigate('MedicationDetail', { medicationId: item.id });
         return;
       }
-      navigation.navigate('AlgorithmTab', {
-        screen: 'AlgorithmDetail',
-        params: { algorithmId: item.id },
-      });
+      navigation.navigate('AlgorithmDetail', { algorithmId: item.id });
     },
     [navigation],
   );
@@ -163,7 +163,7 @@ export function HistoryScreen() {
           <EmptyState
             when={true}
             message="Noch kein Verlauf"
-            hint="Öffne ein Medikament oder einen Algorithmus — der Verlauf erscheint hier automatisch."
+            hint="Öffne ein Medikament oder einen Algorithmus - der Verlauf erscheint hier automatisch."
           />
         </View>
       </ScreenContainer>
@@ -187,3 +187,4 @@ export function HistoryScreen() {
     </ScreenContainer>
   );
 }
+

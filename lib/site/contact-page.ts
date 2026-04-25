@@ -2,5 +2,5 @@ export {
   contactDetails,
   contactInfo,
   contactPageContent,
-  kontaktContent,
-} from "@/lib/site/kontakt-content";
+} from "../../apps/website/lib/site/contact-page";
+export { contactPageContent as kontaktContent } from "../../apps/website/lib/site/contact-page";

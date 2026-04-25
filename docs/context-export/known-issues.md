@@ -28,7 +28,7 @@
 
 | Thema | Beleg |
 |-------|--------|
-| Mojibake in Kommentar | `apps/mobile-app/src/lookup/loadLookupBundle.ts`: Kommentar enthält `â€"` statt erwarteter Satzzeichen — Datei-basiert. |
+| Mojibake in Kommentar | `apps/mobile-app/src/lookup/loadLookupBundle.ts`: Kommentar enthält eine kaputte Mojibake-Zeichenfolge statt erwarteter Satzzeichen — Datei-basiert. |
 
 ---
 

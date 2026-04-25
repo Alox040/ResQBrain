@@ -21,9 +21,6 @@ export type { HomeStackParamList };
 
 export type MedicationStackParamList = {
   MedicationListScreen: undefined;
-  MedicationDetail: {
-    medicationId: string;
-  };
 };
 
 export type AlgorithmStackParamList = {
@@ -32,9 +29,6 @@ export type AlgorithmStackParamList = {
         category?: ContentCategory;
       }
     | undefined;
-  AlgorithmDetail: {
-    algorithmId: string;
-  };
 };
 
 export type RootTabParamList = {
@@ -45,6 +39,17 @@ export type RootTabParamList = {
   AlgorithmTab: NavigatorScreenParams<AlgorithmStackParamList>;
 };
 
+export type RootStackParamList = {
+  Tabs: NavigatorScreenParams<RootTabParamList> | undefined;
+  MedicationDetail: {
+    medicationId: string;
+  };
+  AlgorithmDetail: {
+    algorithmId: string;
+  };
+};
+
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const MedicationStack = createNativeStackNavigator<MedicationStackParamList>();
@@ -99,11 +104,6 @@ function MedicationStackNavigator() {
         component={MedicationListAdapter}
         options={{ title: 'Medikamente' }}
       />
-      <MedicationStack.Screen
-        name="MedicationDetail"
-        component={MedicationDetailScreen}
-        options={{ title: 'Medikament' }}
-      />
     </MedicationStack.Navigator>
   );
 }
@@ -117,16 +117,11 @@ function AlgorithmStackNavigator() {
         component={AlgorithmListScreen}
         options={{ title: 'Algorithmen' }}
       />
-      <AlgorithmStack.Screen
-        name="AlgorithmDetail"
-        component={AlgorithmDetailScreen}
-        options={{ title: 'Algorithmus' }}
-      />
     </AlgorithmStack.Navigator>
   );
 }
 
-export function AppNavigator() {
+function TabsNavigator() {
   const { colors } = useTheme();
 
   const tabOptions = useMemo(
@@ -200,5 +195,29 @@ export function AppNavigator() {
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+export function AppNavigator() {
+  const screenOptions = useStackScreenOptions();
+
+  return (
+    <RootStack.Navigator screenOptions={screenOptions}>
+      <RootStack.Screen
+        name="Tabs"
+        component={TabsNavigator}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name="MedicationDetail"
+        component={MedicationDetailScreen}
+        options={{ title: 'Medikament' }}
+      />
+      <RootStack.Screen
+        name="AlgorithmDetail"
+        component={AlgorithmDetailScreen}
+        options={{ title: 'Algorithmus' }}
+      />
+    </RootStack.Navigator>
   );
 }

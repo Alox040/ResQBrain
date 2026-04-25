@@ -1,119 +1,192 @@
-import React, { useCallback, useMemo } from 'react';
-import { FlatList, StyleSheet, View, type ListRenderItemInfo } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  type ListRenderItemInfo,
+} from 'react-native';
+import { ButtonSecondary, EmptyState } from '@/components/common';
+import { ScreenContainer } from '@/components/layout';
+import { SPACING } from '@/theme';
+import type { AppPalette } from '@/theme/palette';
+import { useTheme } from '@/theme/ThemeContext';
+import { Header } from '@/ui/components/Header';
+import { ListItem } from '@/ui/components/ListItem';
+import { SearchBar } from '@/ui/components/SearchBar';
 
-import { CategoryFilterChips, ListScreenEmptyPlaceholder, SectionHeader } from '@/components/common';
-import { MedicationListItem } from '@/ui/components/MedicationListItem';
-import { colors } from '@/ui/theme/colors';
-import { spacing } from '@/ui/theme/spacing';
-import type { ListCategoryFilter } from '@/utils/listCategoryFilter';
-
-export type MedicationListScreenRowViewModel = {
+export type MedicationListScreenUIItem = {
   id: string;
   title: string;
   subtitle?: string;
-  tag?: string;
-  onPress: () => void;
 };
 
 export type MedicationListScreenUIProps = {
-  items: MedicationListScreenRowViewModel[];
-  categoryFilter: ListCategoryFilter;
-  onCategoryFilterChange: (value: ListCategoryFilter) => void;
-  emptyMessage: string;
+  items: MedicationListScreenUIItem[];
+  onItemPress: (id: string) => void;
+  searchValue: string;
+  onSearchChange: (text: string) => void;
+  isLoading: boolean;
+  error?: {
+    message: string;
+    hint: string;
+  } | null;
+  onRetry?: () => void;
 };
 
-const keyExtractor = (item: MedicationListScreenRowViewModel): string => item.id;
+const FLAT_LIST_INITIAL_NUM_TO_RENDER = 12;
+const FLAT_LIST_MAX_TO_RENDER_PER_BATCH = 8;
+const FLAT_LIST_WINDOW_SIZE = 6;
 
-const INITIAL_RENDER = 10;
-const WINDOW_SIZE = 8;
-const MAX_BATCH = 12;
+type MedicationRowProps = {
+  item: MedicationListScreenUIItem;
+  onItemPress: (id: string) => void;
+};
+
+const MedicationRow = React.memo(function MedicationRow({
+  item,
+  onItemPress,
+}: MedicationRowProps) {
+  const handlePress = React.useCallback(() => {
+    onItemPress(item.id);
+  }, [item.id, onItemPress]);
+
+  return (
+    <ListItem
+      title={item.title}
+      subtitle={item.subtitle}
+      onPress={handlePress}
+    />
+  );
+});
 
 export default function MedicationListScreenUI({
   items,
-  categoryFilter,
-  onCategoryFilterChange,
-  emptyMessage,
+  onItemPress,
+  searchValue,
+  onSearchChange,
+  isLoading,
+  error = null,
+  onRetry,
 }: MedicationListScreenUIProps) {
-  const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<MedicationListScreenRowViewModel>) => (
-      <MedicationListItem
-        onPress={item.onPress}
-        subtitle={item.subtitle}
-        tag={item.tag}
-        title={item.title}
-      />
+  const { colors } = useTheme();
+  const renderItem = React.useCallback(
+    ({ item }: ListRenderItemInfo<MedicationListScreenUIItem>) => (
+      <MedicationRow item={item} onItemPress={onItemPress} />
     ),
-    [],
+    [onItemPress],
   );
 
-  const listEmpty = useMemo(
-    () => <ListScreenEmptyPlaceholder message={emptyMessage} />,
-    [emptyMessage],
-  );
+  if (isLoading) {
+    return (
+      <ScreenContainer>
+        <View style={styles.stateWrap}>
+          <ActivityIndicator size="small" color={colors.primary} />
+          <Text style={[styles.stateText, { color: colors.textMuted }]}>
+            Medikamente werden geladen...
+          </Text>
+        </View>
+      </ScreenContainer>
+    );
+  }
 
-  const contentContainerStyle = useMemo(
-    () => [styles.contentContainer, items.length === 0 ? styles.contentEmpty : null],
-    [items.length],
-  );
+  if (error) {
+    return (
+      <ScreenContainer>
+        <View style={styles.stateWrap}>
+          <EmptyState
+            when={true}
+            message={error.message}
+            hint={error.hint}
+            action={
+              onRetry ? (
+                <ButtonSecondary
+                  label="Erneut versuchen"
+                  onPress={onRetry}
+                />
+              ) : undefined
+            }
+          />
+        </View>
+      </ScreenContainer>
+    );
+  }
 
   return (
-    <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-      <SectionHeader
-        title="Medikamentenliste"
-        description="Antippen fuer Dosierung, Hinweise und Algorithmen."
-        size="comfortable"
-        style={styles.header}
-      />
+    <ScreenContainer>
+      <View style={styles.root}>
+        <Header
+          title="Medikamente"
+          subtitle="Eintrag antippen fuer Details."
+        />
 
-      <View style={styles.filters}>
-        <CategoryFilterChips selected={categoryFilter} onChange={onCategoryFilterChange} />
+        <SearchBar
+          value={searchValue}
+          onChange={onSearchChange}
+          placeholder="Medikament suchen"
+        />
+
+        <FlatList
+          data={items}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          initialNumToRender={FLAT_LIST_INITIAL_NUM_TO_RENDER}
+          maxToRenderPerBatch={FLAT_LIST_MAX_TO_RENDER_PER_BATCH}
+          windowSize={FLAT_LIST_WINDOW_SIZE}
+          removeClippedSubviews
+          ListEmptyComponent={
+            <View style={styles.emptyWrap}>
+              <EmptyState
+                when={true}
+                message="Keine Treffer"
+                hint="Suchbegriff ändern oder Suche zurücksetzen"
+                action={
+                  <ButtonSecondary
+                    label="Suche löschen"
+                    onPress={() => onSearchChange('')}
+                  />
+                }
+              />
+            </View>
+          }
+          contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
-
-      <FlatList
-        style={styles.list}
-        data={items}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        initialNumToRender={INITIAL_RENDER}
-        maxToRenderPerBatch={MAX_BATCH}
-        updateCellsBatchingPeriod={50}
-        windowSize={WINDOW_SIZE}
-        removeClippedSubviews
-        contentContainerStyle={contentContainerStyle}
-        ListEmptyComponent={listEmpty}
-        showsVerticalScrollIndicator={false}
-      />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
 
+function keyExtractor(item: MedicationListScreenUIItem): string {
+  return item.id;
+}
+
 const styles = StyleSheet.create({
-  safeArea: {
+  root: {
     flex: 1,
-    backgroundColor: colors.base,
+    paddingTop: 16,
+    paddingBottom: 8,
+    gap: 16,
   },
-  list: {
+  listContent: {
+    gap: 12,
+    paddingBottom: 24,
+  },
+  stateWrap: {
     flex: 1,
+    justifyContent: 'center',
+    minHeight: 300,
+    paddingHorizontal: SPACING.screenPadding,
   },
-  header: {
-    paddingHorizontal: spacing.screenPaddingH,
-    paddingTop: spacing.itemGap,
-    paddingBottom: spacing.itemGap,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderDeep,
-    gap: spacing.badgeToText,
+  emptyWrap: {
+    flex: 1,
+    justifyContent: 'center',
+    minHeight: 300,
+    paddingHorizontal: SPACING.screenPadding,
   },
-  filters: {
-    paddingTop: spacing.sectionGap,
-  },
-  contentContainer: {
-    paddingHorizontal: spacing.screenPaddingH,
-    paddingTop: spacing.sectionGap,
-    paddingBottom: spacing.screenPaddingBottom,
-    gap: spacing.itemGap,
-  },
-  contentEmpty: {
-    flexGrow: 1,
+  stateText: {
+    marginTop: SPACING.gapMd,
+    textAlign: 'center',
   },
 });

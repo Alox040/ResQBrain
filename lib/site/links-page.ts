@@ -1,1 +1,1 @@
-export { linksPageContent } from "@/lib/site/links-content";
+export { linksPageContent } from "../../apps/website/lib/site/links-page";

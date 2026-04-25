@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -28,7 +28,7 @@ export type LookupListRowProps = {
 /**
  * One lookup list row: optional leading slot, title + subtitle, chevron.
  */
-export function LookupListRow({
+function LookupListRowComponent({
   title,
   subtitle,
   onPress,
@@ -70,6 +70,8 @@ export function LookupListRow({
     </Pressable>
   );
 }
+
+export const LookupListRow = memo(LookupListRowComponent);
 
 function createStyles(colors: AppPalette) {
   return StyleSheet.create({
