@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  type ListRenderItemInfo,
   StyleSheet,
   Text,
   View,
@@ -23,10 +24,15 @@ import {
   loadLookupSearchResults,
   type LookupSearchViewItem,
 } from '@/features/lookup/searchData';
+import { toLookupUiErrorState } from '@/lookup/lookupErrors';
 import type { RootTabParamList } from '@/navigation/AppNavigator';
 import { LAYOUT, SPACING, TYPOGRAPHY } from '@/theme';
 import type { AppPalette } from '@/theme/palette';
 import { useTheme } from '@/theme/ThemeContext';
+
+const SEARCH_RESULTS_INITIAL_NUM_TO_RENDER = 10;
+const SEARCH_RESULTS_MAX_TO_RENDER_PER_BATCH = 8;
+const SEARCH_RESULTS_WINDOW_SIZE = 6;
 
 function createSearchStyles(colors: AppPalette) {
   return StyleSheet.create({
@@ -93,6 +99,42 @@ function createSearchStyles(colors: AppPalette) {
   });
 }
 
+type SearchResultRowProps = {
+  item: LookupSearchViewItem;
+  onPressItem: (item: LookupSearchViewItem) => void;
+};
+
+const SearchResultRow = React.memo(function SearchResultRow({
+  item,
+  onPressItem,
+}: SearchResultRowProps) {
+  const isMed = item.kind === 'medication';
+  const badgeLabel = item.kind
+    ? isMed
+      ? 'Medikament'
+      : 'Algorithmus'
+    : 'Treffer';
+
+  const handlePress = React.useCallback(() => {
+    onPressItem(item);
+  }, [item, onPressItem]);
+
+  return (
+    <ContentListCard
+      title={item.title}
+      subtitle={item.summary}
+      onPress={item.kind ? handlePress : undefined}
+      accessibilityLabel={`${badgeLabel}. ${item.title}`}
+      metaStart={
+        <Badge
+          label={badgeLabel}
+          variant={isMed ? 'primary' : 'muted'}
+        />
+      }
+    />
+  );
+});
+
 export function SearchScreen() {
   const { colors } = useTheme();
   const styles = useMemo(() => createSearchStyles(colors), [colors]);
@@ -103,7 +145,11 @@ export function SearchScreen() {
   >('all');
   const [results, setResults] = useState<LookupSearchViewItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorState, setErrorState] = useState<{
+    message: string;
+    hint: string;
+  } | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
   const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
 
   useEffect(() => {
@@ -120,7 +166,7 @@ export function SearchScreen() {
     if (normalizedQuery.length === 0) {
       setResults([]);
       setIsLoading(false);
-      setErrorMessage(null);
+      setErrorState(null);
       return;
     }
 
@@ -128,7 +174,7 @@ export function SearchScreen() {
 
     const run = async () => {
       setIsLoading(true);
-      setErrorMessage(null);
+      setErrorState(null);
 
       try {
         const nextResults = await loadLookupSearchResults(normalizedQuery);
@@ -136,11 +182,9 @@ export function SearchScreen() {
           setResults(nextResults);
         }
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : 'Suche konnte nicht geladen werden.';
         if (!cancelled) {
           setResults([]);
-          setErrorMessage(message);
+          setErrorState(toLookupUiErrorState(error));
         }
       } finally {
         if (!cancelled) {
@@ -154,7 +198,7 @@ export function SearchScreen() {
     return () => {
       cancelled = true;
     };
-  }, [normalizedQuery]);
+  }, [normalizedQuery, retryCount]);
 
   const filteredResults = useMemo(() => {
     if (kindFilter === 'all') {
@@ -164,29 +208,32 @@ export function SearchScreen() {
     return results.filter((item) => item.kind === kindFilter);
   }, [kindFilter, results]);
 
-  const handlePressResult = (item: LookupSearchViewItem) => {
-    if (item.kind === 'medication') {
-      navigation.navigate('MedicationTab', {
-        screen: 'MedicationDetail',
-        params: { medicationId: item.id },
-      });
-      return;
-    }
+  const handlePressResult = React.useCallback(
+    (item: LookupSearchViewItem) => {
+      if (item.kind === 'medication') {
+        navigation.navigate('MedicationTab', {
+          screen: 'MedicationDetail',
+          params: { medicationId: item.id },
+        });
+        return;
+      }
 
-    if (item.kind === 'algorithm') {
-      navigation.navigate('AlgorithmTab', {
-        screen: 'AlgorithmDetail',
-        params: { algorithmId: item.id },
-      });
-    }
-  };
+      if (item.kind === 'algorithm') {
+        navigation.navigate('AlgorithmTab', {
+          screen: 'AlgorithmDetail',
+          params: { algorithmId: item.id },
+        });
+      }
+    },
+    [navigation],
+  );
 
   const showResultsList =
     normalizedQuery.length > 0 && filteredResults.length > 0;
   const showNoHits =
     normalizedQuery.length > 0 &&
     !isLoading &&
-    !errorMessage &&
+    !errorState &&
     filteredResults.length === 0;
   const filterLabel =
     kindFilter === 'all'
@@ -197,6 +244,12 @@ export function SearchScreen() {
 
   const listKeyExtractor = (item: LookupSearchViewItem) =>
     `${item.kind ?? 'unknown'}:${item.id}`;
+  const renderSearchResultItem = React.useCallback(
+    ({ item }: ListRenderItemInfo<LookupSearchViewItem>) => (
+      <SearchResultRow item={item} onPressItem={handlePressResult} />
+    ),
+    [handlePressResult],
+  );
 
   const renderResults = () => {
     if (!normalizedQuery) {
@@ -220,18 +273,18 @@ export function SearchScreen() {
       );
     }
 
-    if (errorMessage) {
+    if (errorState) {
       return (
         <View style={styles.emptyWrap}>
           <EmptyState
             when={true}
-            message={errorMessage}
-            hint="Offline-Bundle pruefen oder App neu starten."
+            message={errorState.message}
+            hint={errorState.hint}
             action={
               <ButtonSecondary
                 label="Erneut versuchen"
                 onPress={() => {
-                  setDebouncedQuery(query);
+                  setRetryCount((value) => value + 1);
                 }}
               />
             }
@@ -259,35 +312,11 @@ export function SearchScreen() {
           data={filteredResults}
           keyboardShouldPersistTaps="handled"
           keyExtractor={listKeyExtractor}
-          renderItem={({ item }) => {
-            const isMed = item.kind === 'medication';
-            const badgeLabel = item.kind
-              ? isMed
-                ? 'Medikament'
-                : 'Algorithmus'
-              : 'Treffer';
-
-            return (
-              <ContentListCard
-                title={item.title}
-                subtitle={item.summary}
-                onPress={
-                  item.kind
-                    ? () => {
-                        handlePressResult(item);
-                      }
-                    : undefined
-                }
-                accessibilityLabel={`${badgeLabel}. ${item.title}`}
-                metaStart={
-                  <Badge
-                    label={badgeLabel}
-                    variant={isMed ? 'primary' : 'muted'}
-                  />
-                }
-              />
-            );
-          }}
+          renderItem={renderSearchResultItem}
+          initialNumToRender={SEARCH_RESULTS_INITIAL_NUM_TO_RENDER}
+          maxToRenderPerBatch={SEARCH_RESULTS_MAX_TO_RENDER_PER_BATCH}
+          windowSize={SEARCH_RESULTS_WINDOW_SIZE}
+          removeClippedSubviews
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
         />

@@ -23,8 +23,8 @@ const primaryLinks: readonly LinkItem[] = [
 ] as const;
 
 const secondaryLinks: readonly LinkItem[] = [
-  { label: "Reddit", href: "https://www.reddit.com/search/?q=ResQBrain", external: true },
-  { label: "TikTok", href: "https://www.tiktok.com/@resqbrain", external: true },
+  { label: "Reddit", href: "https://www.reddit.com/r/ResQBrain/", external: true },
+  { label: "TikTok", href: publicLinks.tiktok, external: true },
   { label: "Website", href: publicLinks.website, external: true },
 ] as const;
 

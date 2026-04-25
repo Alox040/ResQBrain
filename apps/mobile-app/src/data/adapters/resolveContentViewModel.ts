@@ -15,11 +15,7 @@ export async function resolveContentViewModel(
   id: string,
   kind: ContentKind,
 ): Promise<ContentViewModel | undefined> {
-  try {
-    await ensureContentStoreReady();
-  } catch {
-    throw new Error('Inhalte konnten nicht geladen werden.');
-  }
+  await ensureContentStoreReady();
 
   if (kind === 'medication') {
     const m = getMedicationById(id);

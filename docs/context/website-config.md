@@ -41,7 +41,7 @@ Status: Vorschlag, noch nicht in Komponenten verdrahtet.
       "website": "https://resqbrain.de",
       "github": "https://github.com/Alox040/ResQBrain",
       "social": {
-        "tiktok": "https://tiktok.com/@resqbrain",
+        "tiktok": "https://tiktok.com/@wiwawunderbar",
         "reddit": "https://reddit.com/u/resqbrain",
         "youtube": "",
         "twitter": ""

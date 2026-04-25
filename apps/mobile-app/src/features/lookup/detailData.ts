@@ -4,6 +4,7 @@ import {
   getContentVersionInfo,
   getMedicationById,
 } from "@/data/contentIndex";
+import { LookupContentError } from "@/lookup/lookupErrors";
 import type { Algorithm, Medication } from "@/types/content";
 
 export type LookupDetailStep = Readonly<{
@@ -127,7 +128,10 @@ export async function loadAlgorithmDetailViewData(id: string): Promise<LookupDet
 
   const algorithm = getAlgorithmById(id);
   if (!algorithm) {
-    throw new Error('Eintrag nicht gefunden');
+    throw new LookupContentError({
+      code: 'LOOKUP_CONTENT_ITEM_NOT_FOUND',
+      message: `Lookup algorithm id "${id}" was not found in the embedded bundle.`,
+    });
   }
 
   const versionInfo = getContentVersionInfo();
@@ -144,7 +148,10 @@ export async function loadMedicationDetailViewData(id: string): Promise<LookupDe
 
   const medication = getMedicationById(id);
   if (!medication) {
-    throw new Error('Eintrag nicht gefunden');
+    throw new LookupContentError({
+      code: 'LOOKUP_CONTENT_ITEM_NOT_FOUND',
+      message: `Lookup medication id "${id}" was not found in the embedded bundle.`,
+    });
   }
 
   const versionInfo = getContentVersionInfo();

@@ -1,48 +1,57 @@
-import { Ionicons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import {
-  AccordionPanel,
-  ButtonSecondary,
-  DetailBodyText,
-  DetailContentHero,
-  EmptyState,
-} from '@/components/common';
-import { ScreenContainer } from '@/components/layout';
 import { FeedbackSheet } from '@/features/feedback';
 import {
   loadMedicationDetailViewData,
   type LookupDetailViewData,
 } from '@/features/lookup/detailData';
+import { toLookupUiErrorState } from '@/lookup/lookupErrors';
 import type { MedicationStackParamList } from '@/navigation/AppNavigator';
 import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
-import { SPACING } from '@/theme';
-import { useTheme } from '@/theme/ThemeContext';
+import { MedicationDetailHeaderActions } from '@/ui/components/MedicationDetailHeaderActions';
+import MedicationDetailScreenUI, {
+  type MedicationDetailSection,
+} from '@/ui/screens/MedicationDetailScreenUI';
 
 type Props = NativeStackScreenProps<
   MedicationStackParamList,
   'MedicationDetail'
 >;
 
-const HEADER_HIT = 56;
-const HEADER_ICON_SIZE = 28;
+function buildSections(medication: LookupDetailViewData): MedicationDetailSection[] {
+  return [
+    {
+      title: 'Zusammenfassung',
+      content: medication.summary,
+      defaultExpanded: true,
+    },
+    {
+      title: 'Quelle',
+      content: 'Freigegebener Referenzeintrag ohne operative Anleitung.',
+      defaultExpanded: true,
+    },
+    {
+      title: 'Tags',
+      content:
+        medication.tags.length > 0
+          ? medication.tags.join(', ')
+          : 'Keine Tags hinterlegt.',
+      defaultExpanded: false,
+      muted: medication.tags.length === 0,
+    },
+  ];
+}
 
 export function MedicationDetailScreen({ navigation, route }: Props) {
-  const { colors } = useTheme();
   const [medication, setMedication] = React.useState<LookupDetailViewData | null>(
     null,
   );
   const [isLoading, setIsLoading] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [errorState, setErrorState] = React.useState<{
+    message: string;
+    hint: string;
+  } | null>(null);
   const [feedbackVisible, setFeedbackVisible] = React.useState(false);
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
@@ -59,18 +68,14 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
-    setErrorMessage(null);
+    setErrorState(null);
 
     try {
       const detail = await loadMedicationDetailViewData(route.params.medicationId);
       setMedication(detail);
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'Medikament konnte nicht geladen werden.';
       setMedication(null);
-      setErrorMessage(message);
+      setErrorState(toLookupUiErrorState(error));
     } finally {
       setIsLoading(false);
     }
@@ -82,40 +87,15 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     }
 
     return (
-      <View style={styles.headerActionsRow}>
-        <Pressable
-          onPress={() => {
-            setFeedbackVisible(true);
-          }}
-          hitSlop={10}
-          accessibilityRole="button"
-          accessibilityLabel="Feedback zu diesem Medikament senden"
-          style={styles.headerButton}
-        >
-          <Ionicons
-            name="chatbubble-ellipses-outline"
-            size={24}
-            color={colors.navHeaderText}
-          />
-        </Pressable>
-        <Pressable
-          onPress={onPressFavorite}
-          hitSlop={10}
-          accessibilityRole="button"
-          accessibilityLabel={
-            isFavorite ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
-          }
-          style={styles.headerButton}
-        >
-          <Ionicons
-            name={isFavorite ? 'star' : 'star-outline'}
-            size={HEADER_ICON_SIZE}
-            color="#fbbf24"
-          />
-        </Pressable>
-      </View>
+      <MedicationDetailHeaderActions
+        isFavorite={isFavorite}
+        onOpenFeedback={() => {
+          setFeedbackVisible(true);
+        }}
+        onToggleFavorite={onPressFavorite}
+      />
     );
-  }, [colors.navHeaderText, isFavorite, medication, onPressFavorite]);
+  }, [isFavorite, medication, onPressFavorite]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -134,117 +114,29 @@ export function MedicationDetailScreen({ navigation, route }: Props) {
     }
   }, [medication]);
 
-  if (isLoading) {
-    return (
-      <ScreenContainer>
-        <View style={styles.stateWrap}>
-          <ActivityIndicator size="small" color={colors.primary} />
-          <Text style={[styles.loadingText, { color: colors.textMuted }]}>
-            Medikament wird geladen...
-          </Text>
-        </View>
-      </ScreenContainer>
-    );
-  }
-
-  if (errorMessage || !medication) {
-    return (
-      <ScreenContainer>
-        <View style={styles.stateWrap}>
-          <EmptyState
-            when={true}
-            message={errorMessage ?? 'Medikament konnte nicht geladen werden.'}
-            hint="Offline-Bundle pruefen oder App neu starten."
-            action={
-              <ButtonSecondary
-                label="Erneut versuchen"
-                onPress={() => {
-                  void loadData();
-                }}
-              />
-            }
-          />
-        </View>
-      </ScreenContainer>
-    );
-  }
-
   return (
     <>
-      <ScreenContainer>
-        <ScrollView
-          style={styles.scroll}
-          contentContainerStyle={styles.content}
-          showsVerticalScrollIndicator={false}
-        >
-          <DetailContentHero
-            title={medication.title}
-            categoryLabel={medication.categoryLabel}
-            indication={medication.heroIndication}
-          />
-
-          <AccordionPanel title="Zusammenfassung" defaultExpanded>
-            <DetailBodyText variant="relaxed">{medication.summary}</DetailBodyText>
-          </AccordionPanel>
-
-          <AccordionPanel title="Quelle" defaultExpanded>
-            <DetailBodyText variant="relaxed">
-              Freigegebener Referenzeintrag ohne operative Anleitung.
-            </DetailBodyText>
-          </AccordionPanel>
-
-          <AccordionPanel title="Tags" defaultExpanded={false}>
-            {medication.tags.length > 0 ? (
-              <DetailBodyText variant="relaxed">
-                {medication.tags.join(', ')}
-              </DetailBodyText>
-            ) : (
-              <DetailBodyText variant="relaxed" style={{ color: colors.textMuted }}>
-                Keine Tags hinterlegt.
-              </DetailBodyText>
-            )}
-          </AccordionPanel>
-        </ScrollView>
-      </ScreenContainer>
-      <FeedbackSheet
-        visible={feedbackVisible}
-        bundleId={medication.versionLabel}
-        contextNote={`Medikament | ${medication.id} | ${medication.title}`}
-        onClose={() => {
-          setFeedbackVisible(false);
+      <MedicationDetailScreenUI
+        title={medication?.title ?? 'Medikament'}
+        description={medication?.heroIndication ?? ''}
+        categoryLabel={medication?.categoryLabel ?? null}
+        sections={medication ? buildSections(medication) : []}
+        isLoading={isLoading}
+        error={errorState}
+        onRetry={() => {
+          void loadData();
         }}
       />
+      {medication ? (
+        <FeedbackSheet
+          visible={feedbackVisible}
+          bundleId={medication.versionLabel}
+          contextNote={`Medikament | ${medication.id} | ${medication.title}`}
+          onClose={() => {
+            setFeedbackVisible(false);
+          }}
+        />
+      ) : null}
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  headerActionsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  headerButton: {
-    marginRight: 4,
-    minWidth: HEADER_HIT,
-    minHeight: HEADER_HIT,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  scroll: {
-    flex: 1,
-  },
-  content: {
-    paddingBottom: SPACING.screenPaddingBottom + SPACING.gapSm,
-    gap: SPACING.detailBlockGap,
-  },
-  stateWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    minHeight: 300,
-    paddingHorizontal: SPACING.screenPadding,
-  },
-  loadingText: {
-    marginTop: SPACING.gapMd,
-    textAlign: 'center',
-  },
-});

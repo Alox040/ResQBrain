@@ -2,6 +2,7 @@ import type { Algorithm, ContentItem, ContentKind, Medication } from '../types/c
 import type { LookupManifest } from './lookupSchema';
 import { isNewerBundle } from './lookupBundleVersion';
 import { loadAndValidateBundle } from './lookupCache';
+import { LookupContentError } from './lookupErrors';
 import { validateLookupBundle } from './validateLookupBundle';
 
 /** Kanonische Phase-0-Quelle: `apps/mobile-app/data/lookup-seed/`. */
@@ -119,6 +120,13 @@ export function buildLookupRamStore(bundle: {
  * Throws if the bundle is invalid (fail-fast at startup or test).
  */
 export function loadEmbeddedLookupBundle(): LookupRamStore {
+  if (manifestJson == null || medicationsJson == null || algorithmsJson == null) {
+    throw new LookupContentError({
+      code: 'LOOKUP_EMBEDDED_BUNDLE_MISSING',
+      message: 'Embedded lookup bundle is missing required JSON assets.',
+    });
+  }
+
   const result = validateLookupBundle({
     manifest: manifestJson as unknown,
     medications: medicationsJson as unknown,
@@ -126,9 +134,11 @@ export function loadEmbeddedLookupBundle(): LookupRamStore {
   });
 
   if (!result.ok) {
-    throw new Error(
-      `Invalid lookup bundle:\n${result.errors.map((e) => `- ${e}`).join('\n')}`,
-    );
+    throw new LookupContentError({
+      code: 'LOOKUP_BUNDLE_INVALID',
+      message: `Invalid lookup bundle:\n${result.errors.map((e) => `- ${e}`).join('\n')}`,
+      details: result.errors,
+    });
   }
 
   return buildLookupRamStore(result.data);

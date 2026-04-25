@@ -1,5 +1,5 @@
 import { Platform, Share, type ShareAction, type ShareContent, type ShareOptions } from 'react-native';
-import type { FeedbackCategory, FeedbackContext, FeedbackEntry } from './types';
+import type { FeedbackCategory, FeedbackContext, FeedbackEntry } from '@/types/feedback';
 
 const appConfig = require('../../../app.json') as {
   expo?: {

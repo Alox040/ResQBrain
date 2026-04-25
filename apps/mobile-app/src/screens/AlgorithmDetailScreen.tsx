@@ -22,6 +22,7 @@ import {
   loadAlgorithmDetailViewData,
   type LookupDetailViewData,
 } from '@/features/lookup/detailData';
+import { toLookupUiErrorState } from '@/lookup/lookupErrors';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 import { favoriteContentKey, useFavoritesStore } from '@/state/favoritesStore';
 import { addRecent, recentContentKey } from '@/state/recentStore';
@@ -39,7 +40,10 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     null,
   );
   const [isLoading, setIsLoading] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [errorState, setErrorState] = React.useState<{
+    message: string;
+    hint: string;
+  } | null>(null);
   const [feedbackVisible, setFeedbackVisible] = React.useState(false);
   const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
@@ -56,18 +60,14 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
-    setErrorMessage(null);
+    setErrorState(null);
 
     try {
       const detail = await loadAlgorithmDetailViewData(route.params.algorithmId);
       setAlgorithm(detail);
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'Algorithmus konnte nicht geladen werden.';
       setAlgorithm(null);
-      setErrorMessage(message);
+      setErrorState(toLookupUiErrorState(error));
     } finally {
       setIsLoading(false);
     }
@@ -144,14 +144,14 @@ export function AlgorithmDetailScreen({ navigation, route }: Props) {
     );
   }
 
-  if (errorMessage || !algorithm) {
+  if (errorState || !algorithm) {
     return (
       <ScreenContainer>
         <View style={styles.stateWrap}>
           <EmptyState
             when={true}
-            message={errorMessage ?? 'Algorithmus konnte nicht geladen werden.'}
-            hint="Offline-Bundle pruefen oder App neu starten."
+            message={errorState?.message ?? 'Algorithmus konnte nicht geladen werden.'}
+            hint={errorState?.hint ?? 'Bitte erneut versuchen oder die App neu starten.'}
             action={
               <ButtonSecondary
                 label="Erneut versuchen"

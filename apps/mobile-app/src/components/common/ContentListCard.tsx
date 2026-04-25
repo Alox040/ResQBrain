@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -23,7 +23,7 @@ export type ContentListCardProps = {
   style?: ViewStyle;
 };
 
-export function ContentListCard({
+function ContentListCardComponent({
   title,
   subtitle,
   onPress,
@@ -62,6 +62,8 @@ export function ContentListCard({
     </Pressable>
   );
 }
+
+export const ContentListCard = memo(ContentListCardComponent);
 
 function createStyles(colors: AppPalette) {
   return StyleSheet.create({

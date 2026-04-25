@@ -26,6 +26,7 @@ import {
   loadAlgorithmList,
   type LookupListRowItem,
 } from '@/features/lookup/listData';
+import { toLookupUiErrorState } from '@/lookup/lookupErrors';
 import type { AlgorithmStackParamList } from '@/navigation/AppNavigator';
 import { TAG_CONFIG } from '@/utils/tagConfig';
 import { SPACING } from '@/theme';
@@ -49,7 +50,43 @@ const algorithmListKeyExtractor = (item: LookupListRowItem): string =>
   item.id;
 
 const FLAT_LIST_INITIAL_NUM_TO_RENDER = 14;
+const FLAT_LIST_MAX_TO_RENDER_PER_BATCH = 10;
 const FLAT_LIST_WINDOW_SIZE = 7;
+
+type AlgorithmRowProps = {
+  item: LookupListRowItem;
+  onPressItem: (id: string) => void;
+};
+
+const AlgorithmRow = React.memo(function AlgorithmRow({
+  item,
+  onPressItem,
+}: AlgorithmRowProps) {
+  const handlePress = useCallback(() => {
+    onPressItem(item.id);
+  }, [item.id, onPressItem]);
+
+  const primaryTag = item.tags[0];
+  const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
+  const leading = tagCfg ? (
+    <ContentBadge
+      label={tagCfg.label}
+      backgroundColor={tagCfg.backgroundColor}
+      textColor={tagCfg.textColor}
+    />
+  ) : undefined;
+
+  return (
+    <LookupListRow
+      title={item.label}
+      subtitle={item.listSubtitle}
+      onPress={handlePress}
+      accessibilityLabel={`${item.label}. ${item.listSubtitle}`}
+      leading={leading}
+      favoriteSlot={<ListRowFavoriteStar kind="algorithm" id={item.id} />}
+    />
+  );
+});
 
 const styles = StyleSheet.create({
   wrap: {
@@ -87,7 +124,10 @@ export function AlgorithmListScreen() {
   );
   const [algorithmRows, setAlgorithmRows] = useState<LookupListRowItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorState, setErrorState] = useState<{
+    message: string;
+    hint: string;
+  } | null>(null);
 
   useEffect(() => {
     setCategoryFilter(route.params?.category ?? 'all');
@@ -95,17 +135,13 @@ export function AlgorithmListScreen() {
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
-    setErrorMessage(null);
+    setErrorState(null);
 
     try {
       const items = await loadAlgorithmList();
       setAlgorithmRows(items);
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'Algorithmen konnten nicht geladen werden.';
-      setErrorMessage(message);
+      setErrorState(toLookupUiErrorState(error));
       setAlgorithmRows([]);
     } finally {
       setIsLoading(false);
@@ -153,30 +189,9 @@ export function AlgorithmListScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<LookupListRowItem>) => {
-      const primaryTag = item.tags[0];
-      const tagCfg = primaryTag ? TAG_CONFIG[primaryTag] : undefined;
-      const leading = tagCfg ? (
-        <ContentBadge
-          label={tagCfg.label}
-          backgroundColor={tagCfg.backgroundColor}
-          textColor={tagCfg.textColor}
-        />
-      ) : undefined;
-
-      return (
-        <LookupListRow
-          title={item.label}
-          subtitle={item.listSubtitle}
-          onPress={() => handlePress(item.id)}
-          accessibilityLabel={`${item.label}. ${item.listSubtitle}`}
-          leading={leading}
-          favoriteSlot={
-            <ListRowFavoriteStar kind="algorithm" id={item.id} />
-          }
-        />
-      );
-    },
+    ({ item }: ListRenderItemInfo<LookupListRowItem>) => (
+      <AlgorithmRow item={item} onPressItem={handlePress} />
+    ),
     [handlePress],
   );
 
@@ -193,14 +208,14 @@ export function AlgorithmListScreen() {
     );
   }
 
-  if (errorMessage) {
+  if (errorState) {
     return (
       <ScreenContainer>
         <View style={styles.stateWrap}>
           <EmptyState
             when={true}
-            message={errorMessage}
-            hint="Offline-Bundle pruefen oder App neu starten."
+            message={errorState.message}
+            hint={errorState.hint}
             action={
               <ButtonSecondary
                 label="Erneut versuchen"
@@ -224,6 +239,7 @@ export function AlgorithmListScreen() {
           keyExtractor={algorithmListKeyExtractor}
           renderItem={renderItem}
           initialNumToRender={FLAT_LIST_INITIAL_NUM_TO_RENDER}
+          maxToRenderPerBatch={FLAT_LIST_MAX_TO_RENDER_PER_BATCH}
           windowSize={FLAT_LIST_WINDOW_SIZE}
           removeClippedSubviews
           ListHeaderComponent={listHeader}
