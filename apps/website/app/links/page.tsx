@@ -18,7 +18,7 @@ const primaryLinks: readonly LinkItem[] = [
     href: surveys.active.href,
     external: true,
   },
-  { label: "Community", href: publicLinks.github, external: true },
+  { label: "GitHub", href: publicLinks.github, external: true },
   { label: "Discord", href: publicLinks.discord, external: true },
 ] as const;
 
