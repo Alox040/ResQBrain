@@ -1,22 +1,36 @@
 # project-overview
 
-## Zweck
+Stand: April 2026
 
-- Stabiles, hochstufiges Produktbild fuer ResQBrain.
-- Gemeinsame Referenz fuer neue Features, Architekturentscheidungen und externe AIs.
-- Beschreibt das System auf Ebene von Ziel, Umfang und Grenze, nicht auf Ebene einzelner Tickets oder Implementierungsdetails.
+## Ziel des Projekts
 
-## Inhalt
+ResQBrain ist eine offline-first Lookup-App für den Rettungsdienst. Kernziel ist der schnelle, netzunabhängige Zugriff auf Medikamenten- und Algorithmen-Informationen im Einsatz. Begleitend gibt es eine öffentliche Website als Kommunikations- und Informationsfläche.
 
-- Produktziel: Offline-first Lookup-App fuer den Rettungsdienst plus oeffentliche Website als Kommunikations- und Informationsflaeche.
-- Langfristiges Zielbild: Domain-driven Aufbau mit klaren Boundaries fuer Content, Versionierung, Governance und Verteilung.
-- Kernnutzer: Einsatzpersonal, Reviewer, Betreiber und spaetere Organisationsrollen.
-- Leitprinzipien: lookup-first, offline-first, versioniert, domain-driven, UI-agnostisch im Domain-Core.
-- Kanonische Quellen fuer Detailfragen: `architecture.md`, `app-status.md`, `website-status.md`, `data-structure.md`, `roadmap.md`.
+## Kernfunktionen (was existiert)
 
-## Was NICHT rein darf
+### Mobile App (`apps/mobile-app`)
+- Offline-Lookup für Medikamente und Algorithmen aus eingebettetem Bundle
+- Listenansichten und Detailansichten für beide Content-Typen
+- Lokale Volltextsuche über alle Inhalte
+- Favoriten, Verlauf (History), Zuletzt-gesehen (Recent) — persistent
+- Vitalwerte-Referenz (statische Tabelle)
+- Theme-Unterstützung (Hell/Dunkel)
+- Expo/React Native, TypeScript
 
-- Sprintziele, Datumswerte, kurzfristige To-dos oder personenbezogene Notizen.
-- Implementierungsdetails, Dateinamen-Listen auf Code-Ebene oder Debug-Infos.
-- Temporare Aussagen wie "aktuell kaputt", "heute getestet" oder "dieser Branch".
-- Marketingtexte, Release-Notizen oder Content-Entwurfe.
+### Website (`apps/website`)
+- Öffentliche Next.js-Website mit Startseite (7 Sections)
+- Seiten: Mitwirkung, Mitwirken, Kontakt, Updates, Links, Impressum, Datenschutz
+- Aktive Survey-Integration (forms.cloud.microsoft)
+- Vercel-Deployment aus `apps/website`, Branch main
+
+## Was NICHT gebaut ist
+
+- `packages/domain` — Domain-Modell, Governance, Versionierung: Ordner vorhanden, kein Code
+- `packages/application` — Application Services, Ports: Ordner vorhanden, kein Code
+- `packages/api` — API-Adapter: Ordner vorhanden, kein Code
+- Authentifizierung / Nutzerverwaltung
+- Multi-Tenant-Logik / Organisationsverwaltung
+- ContentPackage-Freigabe-Workflow
+- Remote-Bundle-Updates (Infrastruktur vorhanden, bewusst deaktiviert für Phase-0)
+- Backend-Server / produktive API
+- Lern- oder Trainingsfunktionen

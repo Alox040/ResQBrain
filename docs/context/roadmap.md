@@ -1,34 +1,34 @@
 # roadmap
 
-## Zweck
+Stand: April 2026
 
-- Stabile Reihenfolge fuer neue Features und Architektur-Erweiterungen.
-- Macht klar, was vor was kommen muss.
-- Ist keine Terminplanung, sondern eine Abhaengigkeits- und Prioritaetsgrundlage.
+## Sofort umsetzbar (keine Voraussetzungen)
 
-## Inhalt
+1. `.gitignore` bereinigen: `tsconfig.tsbuildinfo`, `.next/`, `dist-validation/metadata.json` entfernen
+2. Root-Level-Duplikate klären: `lib/`, `app/`, `components/`, `src/` im Root — produktiv oder entfernen?
+3. `/mitwirkung` vs. `/mitwirken` entscheiden — eine Route entfernen oder Zweck klar trennen
+4. Website-Build lokal verifizieren — EPERM-Problem auf Windows diagnostizieren
 
-- Phase 0: Lookup-first
-  - Offline-Lookup fuer Medikamente und Algorithmen
-  - schnelle Suche, Listen, Details, Kernnavigation
-  - robuste Seed- und Bundle-Grundlage
-- Phase 1: Einsatznahe Erweiterungen
-  - Favoriten, Verlauf, Referenzen, komfortable Navigation
-  - optionale Hilfsfunktionen nur, wenn sie den Lookup-Kern nicht schwachen
-- Phase 2: Lern- und Trainingsfunktionen
-  - nur als eigene Produktlinie, nicht als Nebenprodukt der Phase 0
-- Phase 3: Organisation und Governance
-  - Versionierung, Freigaben, Rollen, Verteilung, Organisationslogik
-- Phase 4: Erweiterte Automatisierung
-  - nur wenn Produktgrenze, Regulierung und Nutzen eindeutig geklaert sind
-- Leitlinie:
-  - zuerst die Datenbasis stabilisieren
-  - dann Verteilung und Governance
-  - erst danach groessere Produktspruenge
+## Phase-0 Abschluss (Lookup-Kern stabilisieren)
 
-## Was NICHT rein darf
+5. Seed-Daten-Qualität prüfen: Vollständigkeit und Korrektheit der eingebetteten Medikamenten- und Algorithmen-Daten
+6. API-Test-Pipeline reparieren: `tsx --test` EPERM-Problem diagnostizieren (Umgebungsproblem Windows)
+7. HTTP-Client-Dead-Code entscheiden: entweder vollständig entfernen oder für Phase-2 als Stub markieren und dokumentieren
 
-- Datumsangaben, Sprint-Laengen oder Release-Termine.
-- Taktische Task-Listen, die bereits besser in Issue-Tracking gehoeren.
-- Ungepruefte Zukunftsversprechen oder Wunschlisten ohne Boundary-Check.
-- Temporare "naechste Woche"-Aussagen.
+## Phase-1 Vorbereitung (Domain-Grundlagen)
+
+8. `packages/domain` initialisieren: erste Domain-Entities aus `docs/architecture/domain-model.md` implementieren
+9. `packages/application` initialisieren: Port-Interfaces für zukünftige Dienste
+10. Mapping zwischen Mobile-Lookup-Modell und Plattform-Domain-Modell spezifizieren
+
+## Phase-2 Vorbereitung (Remote-Updates)
+
+11. Remote-Update-Konzept spezifizieren: welche Infrastruktur (Manifest, Bundle-Download, `bundleUpdateService`) bleibt, welche wird ersetzt
+12. Backend-Anforderungen für Manifest-Service definieren
+
+## Nicht umsetzbar ohne Voraussetzungen (Phase-2+)
+
+- Remote-Bundle-Updates: erfordert produktiven Backend-Service und Manifest-Endpoint
+- Authentifizierung: erfordert Entscheidung über Auth-Provider
+- Multi-Tenant-Logik: erfordert implementiertes Domain-Modell
+- ContentPackage-Freigabe-Workflow: erfordert Governance-Infrastruktur und Rollen-System

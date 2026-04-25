@@ -1,38 +1,50 @@
 # app-status
 
-## Zweck
+Stand: April 2026
 
-- Stabile Beschreibung des mobilen Produktpfads.
-- Antwortet auf die Frage: Was ist die Mobile-App aus Sicht der Architektur und des Produktumfangs?
-- Trennt aktive Kernfunktionen von vorbereiteten oder bewussten Nicht-Zustaenden.
+## Mobile App (`apps/mobile-app`)
 
-## Inhalt
+### Betrieb
+- Technologie: Expo / React Native, TypeScript
+- Startet: Ja — `App.tsx` ruft `ensureContentStoreReady()`, bei Fehler erscheint Retry-Screen
+- Offline-Grundfunktion: vollständig — kein Netzwerk für Kernfunktion erforderlich
+- Expo-Export: zuletzt erfolgreich verifiziert
 
-- App-Kontext:
-  - Expo / React Native Mobile-App unter `apps/mobile-app`
-  - Fokus auf schnellen Offline-Lookup fuer Medikamente und Algorithmen
-- Kernfunktionen:
-  - Listen- und Detailansichten
-  - lokale Suche
-  - Favoriten und Verlauf
-  - Start-/Home-Zugriff und Einstellungen
-  - offline nutzbares Lookup-Bundle als Basis
-- Datenpfad:
-  - eingebettete Seed-Daten als erste Quelle
-  - optionaler lokaler Cache
-  - optionale Update-Schicht nur als Erweiterung, nicht als Voraussetzung
-- Arbeitsgrenzen:
-  - kein produktiver Backend-Zwang fuer die Grundfunktion
-  - keine Authentifizierung als Voraussetzung fuer den Lookup-Kern
-  - keine klinische Entscheidungslogik als Standardmodus
-- Verifikation:
-  - Typecheck
-  - Navigations-Guards
-  - Bundle-Export / lokale Validierung
+### Navigation (stabil)
 
-## Was NICHT rein darf
+Bottom-Tab-Navigator mit 5 Tabs:
 
-- Tagesaktuelle Testresultate, Metriken oder Debug-Ausgaben.
-- Device-spezifische Probleme, die nur in einem Einzelfall auftraten.
-- Screenshots, Mockups oder UI-Kopie.
-- Branch-Namen, Work-in-progress-Kommentare oder persoenliche Notizen.
+| Tab | Stack-Screens |
+|---|---|
+| Start (Home) | HomeMain → History, VitalReference |
+| Suche | SearchScreen |
+| Einstellungen | SettingsScreen |
+| Medikamente | MedicationList → MedicationDetail |
+| Algorithmen | AlgorithmList → AlgorithmDetail |
+
+### Datenpfad
+
+1. `App.tsx` → `ensureContentStoreReady()` → `loadEmbeddedLookupBundle()` (compile-time embedded)
+2. Parallel: `hydrateFavorites()`, `hydrateHistory()`, `hydrateRecent()`
+3. Erst nach Abschluss: `AppNavigator` wird gerendert
+4. Bei Fehler: `AppError`-Screen mit Retry-Button
+
+Kein Netzwerkzugriff im Startpfad. Remote-Update-Pfad: Infrastruktur vorhanden, für Phase-0 vollständig deaktiviert.
+
+### Features (existiert und funktioniert)
+
+- Medikamente: Listenansicht mit Kategorie-Filter, Detailansicht
+- Algorithmen: Listenansicht mit Kategorie-Filter, Detailansicht
+- Suche: Volltext über alle ContentItems
+- Favoriten: persistent (AsyncStorage)
+- Verlauf: persistent (AsyncStorage)
+- Zuletzt gesehen: persistent (AsyncStorage)
+- Vitalwerte-Referenz: statische Referenztabelle
+- Einstellungen: Theme-Umschalter (Hell/Dunkel)
+
+### Offene Bugs / Risiken
+
+- Jeder Datenzugriff ohne vorheriges `ensureContentStoreReady()` wirft eine Laufzeit-Exception (`requireStore()`).
+- HTTP-Client (`src/lib/lookup-api/client.ts`) ist im Code vorhanden aber deaktiviert — jeder versehentliche Aufruf schlägt sofort fehl.
+- `bundleUpdateService.ts`: Version-Comparison-Logik ist funktional, aber `downloadBundle()` schlägt immer fehl — dormante Infrastruktur.
+- API-Tests konnten zuletzt nicht ausgeführt werden (EPERM bei `tsx --test`, Umgebungsproblem Windows).

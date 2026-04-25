@@ -1,5 +1,50 @@
 # Arbeitssession
 
+## 25. April 2026 — Mobile-/Lookup-Vereinfachung, Website-Hero, Statusdokumentation
+
+**Art:** Produkt- und Doku-Commits am 25.04.2026 laut `git log`; anschließend Verifikationsläufe und Aktualisierung von `PROJECT_STATUS.md` / dieser Datei.
+
+### Git (25.04.2026)
+
+| Commit | Kurzinhalt |
+| --- | --- |
+| `a81561d` | Großes „update“: u. a. `App.tsx` und Lookup-/Bundle-Hilfsmodule gestrafft; `contentIndex`, Lookup-Adapter/Datenpfade; `HomeScreen` / `HistoryScreen`; mehrere neue `docs/context/*`-Dateien und Anpassungen in `docs/context/architecture.md`, `project-overview.md`; `apps/website/lib/site/survey.ts`, `updates-form.ts`; Root `lib/site/survey.ts`; `.github/pull_request-template.md`; `.cursor/rules/multi-agent.md`; `dist-validation/metadata.json`. |
+| `dd2eea8` | `fix(website)`: `HeroSection.tsx` an `homeContent` und geteilte Typen; Re-Export `LandingPageHero` in `apps/website/lib/site/content.ts`. |
+
+### Verifikation (Exit 0, 25.04.2026)
+
+| Befehl | Ergebnis |
+| --- | --- |
+| `pnpm build` | Next.js 16.2.1; 12 Routen inkl. `/api/mitwirken`, `/lab/lookup` (ƒ). |
+| `pnpm --filter @resqbrain/website run typecheck` | `tsc --noEmit` ohne Diagnose. |
+| `pnpm mobile:verify` | `verify:static` + `expo export --platform android` → `dist-validation` OK. |
+| `pnpm --filter @resqbrain/domain exec tsc -p tsconfig.json --noEmit` | OK. |
+| `pnpm --filter @resqbrain/domain run test:content` | 20/20 Tests PASS. |
+
+### Was heute (laut Repo) umgesetzt wurde
+
+- Mobile: Lookup-/Update- und Indexpfadcode reduziert und Start/Home/History angepasst (`a81561d`).
+- Website: Hero-Section repariert und mit Content-Typen ausgerichtet (`dd2eea8`).
+- Kontext-Doku unter `docs/context/` erweitert bzw. umgebrochen (`a81561d`).
+
+### Was jetzt besser funktioniert
+
+- `pnpm mobile:verify` ist grün; `apps/mobile-app/tsconfig.json` schließt `figma`, `design`, `ui8` aus (kein Typecheck-Blocker durch Figma-Referenzordner).
+- Website-`HeroSection` wieder konsistent mit `app/page.tsx` und `content.ts` (`dd2eea8`).
+- Domain-Content-Tests `test:content` laufen durch.
+
+### Was neu kaputt ist
+
+- Im genannten Verifikationspfad: **kein** neuer FAIL nachweisbar.
+
+### Offene Punkte
+
+- `mobile:verify` prüft nur **Android**-Export, kein iOS-Bundle in derselben Kette.
+- Kein automatisierter Browser-E2E-Lauf für die Website in dieser Session.
+- MVP-Lücken (Backend, Auth, Mandant, geschlossene Bundle-Pipeline) unverändert außerhalb des grünen Gates — siehe `PROJECT_STATUS.md`.
+
+---
+
 ## 19. April 2026 — Website-Rebuild: Statusdokumentation
 
 **Art:** Dokumentationsupdate nach abgeschlossem Website-Rebuild (kein Produktcode in diesem Commit-Pfad durch diese Aufgabe beschrieben).
